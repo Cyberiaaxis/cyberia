@@ -14,3 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+Route::middleware('auth')->prefix('staff')->group(function(){ 
+    Route::get('/','StaffController@index');
+    Route::get('/roles','StaffController@roles'); 
+
+});
