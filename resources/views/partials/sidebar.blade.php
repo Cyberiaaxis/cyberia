@@ -9,7 +9,7 @@
                 <li>
                     <a title="Roles" href="/staff/roles" aria-expanded="false"><span class="educate-icon educate-event icon-wrap sub-icon-mg" aria-hidden="true"></span> <span class="mini-click-non">Roles</span></a>
                </li>
-                <li class="active">
+                <!-- <li class="active">
                     <a class="has-arrow" href="index.html">
 						   <span class="educate-icon educate-home icon-wrap"></span>
 						   <span class="mini-click-non">User Management</span>
@@ -141,7 +141,7 @@
                         <li><a title="404 Page" href="404.html"><span class="mini-sub-pro">404 Page</span></a></li>
                         <li><a title="500 Page" href="500.html"><span class="mini-sub-pro">500 Page</span></a></li>
                     </ul>
-                </li>
+                </li> -->
             </ul>
         </nav>
     </div>
