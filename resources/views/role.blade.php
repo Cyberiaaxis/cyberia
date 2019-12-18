@@ -9,50 +9,109 @@
 @section('content')
 
 <style type="text/css">
-.onoffswitch {
-    position: relative; width: 90px;
-    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+.switch {
+	position: relative;
+	display: block;
+	vertical-align: top;
+	width: 100px;
+	height: 30px;
+	padding: 3px;
+	margin: 0 10px 10px 0;
+	background: linear-gradient(to bottom, #eeeeee, #FFFFFF 25px);
+	background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF 25px);
+	border-radius: 18px;
+	box-shadow: inset 0 -1px white, inset 0 1px 1px rgba(0, 0, 0, 0.05);
+	cursor: pointer;
+	box-sizing:content-box;
 }
-.onoffswitch-checkbox {
-    display: none;
+.switch-input {
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	box-sizing:content-box;
 }
-.onoffswitch-label {
-    display: block; overflow: hidden; cursor: pointer;
-    border: 2px solid #999999; border-radius: 20px;
+.switch-label {
+	position: relative;
+	display: block;
+	height: inherit;
+	font-size: 10px;
+	text-transform: uppercase;
+	background: #eceeef;
+	border-radius: inherit;
+	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.15);
+	box-sizing:content-box;
 }
-.onoffswitch-inner {
-    display: block; width: 200%; margin-left: -100%;
-    transition: margin 0.3s ease-in 0s;
+.switch-label:before, .switch-label:after {
+	position: absolute;
+	top: 50%;
+	margin-top: -.5em;
+	line-height: 1;
+	-webkit-transition: inherit;
+	-moz-transition: inherit;
+	-o-transition: inherit;
+	transition: inherit;
+	box-sizing:content-box;
 }
-.onoffswitch-inner:before, .onoffswitch-inner:after {
-    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
-    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
-    box-sizing: border-box;
+.switch-label:before {
+	content: attr(data-off);
+	right: 11px;
+	color: #aaaaaa;
+	text-shadow: 0 1px rgba(255, 255, 255, 0.5);
 }
-.onoffswitch-inner:before {
-    content: "ON";
-    padding-left: 10px;
-    background-color: #34A7C1; color: #FFFFFF;
+.switch-label:after {
+	content: attr(data-on);
+	left: 11px;
+	color: #FFFFFF;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+	opacity: 0;
 }
-.onoffswitch-inner:after {
-    content: "OFF";
-    padding-right: 10px;
-    background-color: #EEEEEE; color: #999999;
-    text-align: right;
+.switch-input:checked ~ .switch-label {
+	background: purple;
+	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 0 3px rgba(0, 0, 0, 0.2);
 }
-.onoffswitch-switch {
-    display: block; width: 18px; margin: 6px;
-    background: #FFFFFF;
-    position: absolute; top: 0; bottom: 0;
-    right: 56px;
-    border: 2px solid #999999; border-radius: 20px;
-    transition: all 0.3s ease-in 0s; 
+.switch-input:checked ~ .switch-label:before {
+	opacity: 0;
 }
-.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
-    margin-left: 0;
+.switch-input:checked ~ .switch-label:after {
+	opacity: 1;
 }
-.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
-    right: 0px; 
+.switch-handle {
+	position: absolute;
+	top: 4px;
+	left: 4px;
+	width: 28px;
+	height: 28px;
+	background: linear-gradient(to bottom, #FFFFFF 40%, #f0f0f0);
+	background-image: -webkit-linear-gradient(top, #FFFFFF 40%, #f0f0f0);
+	border-radius: 100%;
+	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+}
+.switch-handle:before {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -6px 0 0 -6px;
+	width: 12px;
+	height: 12px;
+	background: linear-gradient(to bottom, #eeeeee, #FFFFFF);
+	background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF);
+	border-radius: 6px;
+	box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
+}
+.switch-input:checked ~ .switch-handle {
+	left: 74px;
+	box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
+}
+ 
+/* Transition
+========================== */
+.switch-label, .switch-handle {
+	transition: All 0.3s ease;
+	-webkit-transition: All 0.3s ease;
+	-moz-transition: All 0.3s ease;
+	-o-transition: All 0.3s ease;
 }
 </style>
 
@@ -75,45 +134,37 @@
                             </div>
                             <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
                                 <thead>
+                                <input type="hidden" class="_method" value="PATCH" >
                                     <tr>
                                         <th data-field="state" data-checkbox="true"></th>
                                         <!-- <th data-field="id">Role Id</th> -->
-                                        <th data-field="name" data-editable="true">Role Name</th>
-                                        <th data-field="status">Role Status</th>
-                                        <th data-field="date" data-editable="true">Last Modification</th>
-                                        <!-- <th data-field="phone" data-editable="true">Last Modification</th>
-                                        <th data-field="complete">Completed</th>
-                                        <th data-field="task" data-editable="true">Task</th>
-                                        <th data-field="price" data-editable="true">Price</th>
-                                        <th data-field="action">Action</th> -->
+                                        <th data-field="roleName" data-editable="true">Role Name</th>
+                                        <th data-field="roleDescription" data-editable="true">Role Description</th>
+                                        <th data-field="roleStatus">Role Status</th>
+                                        <th data-field="date" >Last Modified</th>
+                                        <th data-field="date" >Created</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+
+                                @foreach($roles as $role)
                                     <tr>
                                         <td></td>
                                         <!-- <td>1</td> -->
-                                        <td>Administrator</td>
+                                        <td>{{ $role->name }}</td>
+                                        <td>{{ $role->description }}</td>
                                         <td>
-                                            <div class="onoffswitch">
-                                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
-                                                <label class="onoffswitch-label" for="myonoffswitch">
-                                                    <span class="onoffswitch-inner"></span>
-                                                    <span class="onoffswitch-switch"></span>
-                                                </label>
-                                            </div>
+                                            <label class="switch">
+                                                <input class="switch-input" type="checkbox" @if($role->status) checked @endif />
+                                                <span class="switch-label" data-on="active" data-off="inactive"></span> 
+                                                <span class="switch-handle"></span> 
+                                            </label>
                                         </td>
-                                        <td>Jun 6, 2013</td>
-
-                                        <!-- <td>hasad@uth.com</td>
-                                        <td>+8801962067301</td>
-                                        <td class="datatable-ct"><span class="pie">2,7</span>
-                                        </td>
-                                        <td>15%</td>
-                                        <td>Jun 6, 2013</td>
-                                        <td>$4565656</td>
-                                        <td class="datatable-ct"><i class="fa fa-check"></i>
-                                        </td> -->
+                                        <td>{{ $role->updated_at->format('F d, Y h:i a') }}</td>
+                                        <td>{{ $role->created_at->format('F d, Y h:i a') }}</td>
                                     </tr>
+                                @endforeach
+
                                 </tbody>
                             </table>
                         </div>
@@ -134,23 +185,30 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="add-new" method="post" enctype="multipart/form-data">
+            <!-- <form id="addRole" method="post" enctype="multipart/form-data"> -->
                 <div class="modal-body">
-
+                    <input type="text" id="_method" value="put" hidden>
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Role Name:</label>
-                        <input type="text" class="form-control" id="recipient-name">
+                        <label for="roleName" class="col-form-label">Role Name:</label>
+                        <input type="text" class="form-control" id="roleName">
                     </div>
                     <div class="form-group">
-                        <label for="message-text" class="col-form-label">Description:</label>
-                        <textarea class="form-control" id="message-text" name="msg"></textarea>
+                        <label for="roleDescription" class="col-form-label">Role Description:</label>
+                        <textarea class="form-control"  id="roleDescription"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="roleStatus" class="col-form-label">Role Status</label>
+                    <select id="roleStatus" class="form-control">
+                        <option value="0">Active</option>
+                        <option value="1">Inactive</option>
+                    </select>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-primary addRole" >Save</button>
                 </div>
-            </form>
+            <!-- </form> -->
         </div>
     </div>
 </div>
@@ -171,50 +229,53 @@
 @section('js') 
     @include('partials.footer')
 <script>
-    var $table = $('#table')
-    var $button = $('#button')
-    var $remove = $('#remove')
+$(function() {
+    $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content') } });
+
+    jQuery.each( [ "put", "delete" ], function( i, method ) {
+  jQuery[ method ] = function( url, data, callback, type ) {
+    if ( jQuery.isFunction( data ) ) {
+      type = type || callback;
+      callback = data;
+      data = undefined;
+    }
+
+    return jQuery.ajax({
+      url: url,
+      type: method,
+      dataType: type,
+      data: data,
+      success: callback
+    });
+  };
+});
+});
+
+
+//     let processRoleRequest = function(requestType, processRole) {
     
+//     if(['insert', 'update'].includes(requestType)){
+//         $.post('/staff/roles', { processRole })
+//         .done(response => { console.log(response) })
+//         .fail(response => { console.log(response) }); 
+//     }else{
+//         $.get('/staff/roles', { processRole })
+//         .done(response => { console.log(response) })
+//         .fail(response => { console.log(response) }); 
+//     }
 
-    $(function() {
-        $button.click(function() {
-            var randomId = 100 + ~~(Math.random() * 100)
-            $table.bootstrapTable('insertRow', {
-                index: 0,
-                row: {
-                    id: randomId,
-                    name: 'Item ' + randomId,
-                    price: '$' + randomId
-                }
-            })
-        })
-    })
-
-    $(function() {
-        $remove.click(function() {
-            var ids = $.map($table.bootstrapTable('getSelections'), function(row) {
-                return row.id
-            })
-            $table.bootstrapTable('remove', {
-                field: 'id',
-                values: ids
-            })
-        })
-    })
+// }
+// let $table = $('table').bootstrapTable();
+// $table.on('editable-save.bs.table', function(e, field, row){
+//     let roleStatus  = ($(".myonoffswitch").is(':checked')) ? 1 : 0;
+//     console.log(row);
+//     console.log(processRoleRequest('update', {_method: row._method, roleName: row.roleName, roleDescription: row.roleDescription, roleStatus: roleStatus}));
+// });
+// $('.addRole').on('click', function(event){
+//     console.log($('#_method').val());
+//     // console.log(processRoleRequest('insert', {_method: $('#_method').val(), roleName: $('#roleName').val(), roleDescription: $('#roleDescription').val(), roleStatus: $('#roleStatus').val()}));
+//     // $('#insert').modal('hide');
+// });
+// });
 </script>
-<!-- $insert.submit(function(e) {
-e.preventDefault(); // avoid to execute the actual submit of the form.
-var form = $(this);
-var url = form.attr('action');
-var randomId = 100 + ~~(Math.random() * 100)
-$table.bootstrapTable('insertRow', {
-    index: 0,
-        row: {
-        id: randomId,
-        name: 'Item ' + randomId,
-        price: '$' + randomId
-        }
-    })
-   }); -->
-
 @endsection
