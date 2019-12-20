@@ -241,7 +241,7 @@ $(function() {
             success: function(data){
                 alert(data.msg);
 
-                console.log(data.name);
+                console.log(data.role);
                 $('#insert').modal('hide');
 
                 data.role.state = null;
@@ -273,12 +273,12 @@ let $table = $('table').bootstrapTable();
 
 
 $table.on('editable-save.bs.table', function(e,field, row, oldValue, $el){
-    // console.log(row);
-    // processRoleRequest('patch','update',{url : row._id_data.href,'name': row.name,'desc':row.description});
+    console.log(row);
+    processRoleRequest('patch','update',{url : row._id_data.href,'name': row.name,'desc':row.description});
 });
 $('.addRole').on('click', function(event){
-    // console.log($('#roleStatus').val());
-    // processRoleRequest('post','insert', {url: '/staff/roles/',name: $('#roleName').val(), desc: $('#roleDescription').val(), status: $('#roleStatus').val()});
+    console.log($('#_method').val());
+    processRoleRequest('post','insert', {url: '/staff/roles/',name: $('#roleName').val(), desc: $('#roleDescription').val(), status: $('#roleStatus').val()});
 });
 });
 </script>
