@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -13,8 +12,14 @@ class StaffController extends Controller
      *
      * @return void
      */
-    public function home()
+    public function home(Request $request)
     {
+
+        if($request->ajax())
+        {
+            return response()->json(['role' => Role::orderBy('name')->get()]);
+        }
+
         return view('dashboard');
     }
 
@@ -49,20 +54,20 @@ class StaffController extends Controller
      */
     public function store(Request $request)
     {
-            return $request;
-        // $request->validate([
-        //     'name' => ['required','unique:roles,name'],
-        //     'desc' => ['required'],
-        //     'status' => ['required','integer']
-        // ]);
 
-        // $role = Role::firstorCreate([
-        //     'name' => $request->input('name'),
-        //     'description' => $request->input('desc'),
-        //     'status' => $request->input('status')
-        // ]);
+        $request->validate([
+            'name' => ['required','unique:roles,name'],
+            'desc' => ['required'],
+            'status' => ['required','integer']
+        ]);
 
-        // return response()->json(['status' => true,'msg' => 'Role created successfully','role' => $role]);
+        $role = Role::firstorCreate([
+            'name' => $request->input('name'),
+            'description' => $request->input('desc'),
+            'status' => $request->input('status')
+        ]);
+
+        return response()->json(['status' => true,'msg' => 'Role created successfully','role' => $role]);
     }
 
     /**
@@ -97,12 +102,22 @@ class StaffController extends Controller
     public function update(Request $request, $id)
     {
 
+        $request->validate([
+            'name' => ['required'],
+            'desc' => ['required'],
+            'status' => ['required']
+        ]);
+
         $name = $request->input('name');
         $desc = $request->input('desc');
+        // $status = $request->input('status',0);
+        $role = Role::find($id);
+        $role->name = $name;
+        $role->description = $desc;
+        // $role->status = $status;
+        $role->save();
 
-        $role = Role::where('id',$id)->update(['name'=> $name,'description' => $desc ]);
-
-        return response()->json(['success' => true,'msg' => 'role updated']);
+        return response()->json(['success' => true,'msg' => 'role updated','role' => $role]);
     }
 
     /**

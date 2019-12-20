@@ -10,108 +10,108 @@
 
 <style type="text/css">
 .switch {
-	position: relative;
-	display: block;
-	vertical-align: top;
-	width: 100px;
-	height: 30px;
-	padding: 3px;
-	margin: 0 10px 10px 0;
-	background: linear-gradient(to bottom, #eeeeee, #FFFFFF 25px);
-	background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF 25px);
-	border-radius: 18px;
-	box-shadow: inset 0 -1px white, inset 0 1px 1px rgba(0, 0, 0, 0.05);
-	cursor: pointer;
-	box-sizing:content-box;
+    position: relative;
+    display: block;
+    vertical-align: top;
+    width: 100px;
+    height: 30px;
+    padding: 3px;
+    margin: 0 10px 10px 0;
+    background: linear-gradient(to bottom, #eeeeee, #FFFFFF 25px);
+    background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF 25px);
+    border-radius: 18px;
+    box-shadow: inset 0 -1px white, inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    box-sizing:content-box;
 }
 .switch-input {
-	position: absolute;
-	top: 0;
-	left: 0;
-	opacity: 0;
-	box-sizing:content-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    box-sizing:content-box;
 }
 .switch-label {
-	position: relative;
-	display: block;
-	height: inherit;
-	font-size: 10px;
-	text-transform: uppercase;
-	background: #eceeef;
-	border-radius: inherit;
-	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.15);
-	box-sizing:content-box;
+    position: relative;
+    display: block;
+    height: inherit;
+    font-size: 10px;
+    text-transform: uppercase;
+    background: #eceeef;
+    border-radius: inherit;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.15);
+    box-sizing:content-box;
 }
 .switch-label:before, .switch-label:after {
-	position: absolute;
-	top: 50%;
-	margin-top: -.5em;
-	line-height: 1;
-	-webkit-transition: inherit;
-	-moz-transition: inherit;
-	-o-transition: inherit;
-	transition: inherit;
-	box-sizing:content-box;
+    position: absolute;
+    top: 50%;
+    margin-top: -.5em;
+    line-height: 1;
+    -webkit-transition: inherit;
+    -moz-transition: inherit;
+    -o-transition: inherit;
+    transition: inherit;
+    box-sizing:content-box;
 }
 .switch-label:before {
-	content: attr(data-off);
-	right: 11px;
-	color: #aaaaaa;
-	text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+    content: attr(data-off);
+    right: 11px;
+    color: #aaaaaa;
+    text-shadow: 0 1px rgba(255, 255, 255, 0.5);
 }
 .switch-label:after {
-	content: attr(data-on);
-	left: 11px;
-	color: #FFFFFF;
-	text-shadow: 0 1px rgba(0, 0, 0, 0.2);
-	opacity: 0;
+    content: attr(data-on);
+    left: 11px;
+    color: #FFFFFF;
+    text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+    opacity: 0;
 }
 .switch-input:checked ~ .switch-label {
-	background: purple;
-	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 0 3px rgba(0, 0, 0, 0.2);
+    background: purple;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 0 3px rgba(0, 0, 0, 0.2);
 }
 .switch-input:checked ~ .switch-label:before {
-	opacity: 0;
+    opacity: 0;
 }
 .switch-input:checked ~ .switch-label:after {
-	opacity: 1;
+    opacity: 1;
 }
 .switch-handle {
-	position: absolute;
-	top: 4px;
-	left: 4px;
-	width: 28px;
-	height: 28px;
-	background: linear-gradient(to bottom, #FFFFFF 40%, #f0f0f0);
-	background-image: -webkit-linear-gradient(top, #FFFFFF 40%, #f0f0f0);
-	border-radius: 100%;
-	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(to bottom, #FFFFFF 40%, #f0f0f0);
+    background-image: -webkit-linear-gradient(top, #FFFFFF 40%, #f0f0f0);
+    border-radius: 100%;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
 }
 .switch-handle:before {
-	content: "";
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin: -6px 0 0 -6px;
-	width: 12px;
-	height: 12px;
-	background: linear-gradient(to bottom, #eeeeee, #FFFFFF);
-	background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF);
-	border-radius: 6px;
-	box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -6px 0 0 -6px;
+    width: 12px;
+    height: 12px;
+    background: linear-gradient(to bottom, #eeeeee, #FFFFFF);
+    background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF);
+    border-radius: 6px;
+    box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
 }
 .switch-input:checked ~ .switch-handle {
-	left: 74px;
-	box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
+    left: 74px;
+    box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* Transition
 ========================== */
 .switch-label, .switch-handle {
-	transition: All 0.3s ease;
-	-webkit-transition: All 0.3s ease;
-	-moz-transition: All 0.3s ease;
-	-o-transition: All 0.3s ease;
+    transition: All 0.3s ease;
+    -webkit-transition: All 0.3s ease;
+    -moz-transition: All 0.3s ease;
+    -o-transition: All 0.3s ease;
 }
 </style>
 
@@ -230,56 +230,45 @@
 <script>
 $(function() {
 
-    $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content') } });
-    let processRoleRequest = function(method = 'get',requestType, processRole) {
+const csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
 
-    if(['insert', 'update'].includes(requestType)){
-        $.ajax({
-            url: processRole.url,
-            data: processRole,
-            method: method,
-            success: function(data){
-                alert(data.msg);
-
-                console.log(data.role);
-                $('#insert').modal('hide');
-
-                data.role.state = null;
-
-                $('table').bootstrapTable('insertRow', {
-                    index : 0,
-                    row: data.role
-                });
-            },
-            error: function(){
-                alert('an error occured');
-            },
-            statusCode: {
-                500: function(){
-                    alert('internel server error');
-                }
-            }
-        })
-        .done(response => { console.log(response) })
-        .fail(response => { console.log(response) });
-    }else{
-        $.get('/staff/roles', { processRole })
-        .done(response => { console.log(response) })
-        .fail(response => { console.log(response) });
-    }
-
+function processRequest(data) {
+    let method = (data.method) ? data.method : 'get';
+    let url = (data.url) ? data.url : '/staff/roles';
+    fetch(url,{
+        method: method,
+        body: JSON.stringify(data),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "X-CSRF-Token": csrfToken
+        }
+    })
+    .then(response => {
+        return response.text();
+    })
+    .then(text => {
+        return console.log(text);
+    })
+    .catch(error => console.error(error));
 }
+
+
 let $table = $('table').bootstrapTable();
 
 
 $table.on('editable-save.bs.table', function(e,field, row, oldValue, $el){
-    console.log(row);
-    processRoleRequest('patch','update',{url : row._id_data.href,'name': row.name,'desc':row.description});
+
+    processRequest({action: 'update',method: 'put',url : row._id_data.href,'name': row.name,'desc':row.description,'status' : row.status});
 });
 $('.addRole').on('click', function(event){
     console.log($('#_method').val());
-    processRoleRequest('post','insert', {url: '/staff/roles/',name: $('#roleName').val(), desc: $('#roleDescription').val(), status: $('#roleStatus').val()});
+    processRequest({action: 'update',method: 'post',name: $('#roleName').val(), desc: $('#roleDescription').val(), status: $('#roleStatus').val()});
 });
+
+
+
+
 });
 </script>
 @endsection
