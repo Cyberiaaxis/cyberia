@@ -1,10 +1,10 @@
-@extends('layouts.app') 
-@section('sidebar') 
-    @include('partials.sidebar') 
-@endsection 
-@section('moblie') 
-    @include('partials.moblie') 
-@endsection 
+@extends('layouts.app')
+@section('sidebar')
+    @include('partials.sidebar')
+@endsection
+@section('moblie')
+    @include('partials.moblie')
+@endsection
 
 @section('content')
 
@@ -104,7 +104,7 @@
 	left: 74px;
 	box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
 }
- 
+
 /* Transition
 ========================== */
 .switch-label, .switch-handle {
@@ -134,15 +134,14 @@
                             </div>
                             <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
                                 <thead>
-                                <input type="hidden" class="_method" value="PATCH" >
                                     <tr>
                                         <th data-field="state" data-checkbox="true"></th>
-                                        <!-- <th data-field="id">Role Id</th> -->
-                                        <th data-field="roleName" data-editable="true">Role Name</th>
-                                        <th data-field="roleDescription" data-editable="true">Role Description</th>
-                                        <th data-field="roleStatus">Role Status</th>
-                                        <th data-field="date" >Last Modified</th>
-                                        <th data-field="date" >Created</th>
+                                        <th data-field="id">Role Id</th>
+                                        <th data-field="name" data-editable="true">Role Name</th>
+                                        <th data-field="description" data-editable="true">Role Description</th>
+                                        <th data-field="status">Role Status</th>
+                                        <th data-field="created_at" >Created</th>
+                                        <th data-field="updated_at" >Last Modified</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -150,14 +149,14 @@
                                 @foreach($roles as $role)
                                     <tr>
                                         <td></td>
-                                        <!-- <td>1</td> -->
+                                        <td data-href="{{ route('roles.update',$role->id) }}">{{ $role->id }}</td>
                                         <td>{{ $role->name }}</td>
                                         <td>{{ $role->description }}</td>
                                         <td>
                                             <label class="switch">
                                                 <input class="switch-input" type="checkbox" @if($role->status) checked @endif />
-                                                <span class="switch-label" data-on="active" data-off="inactive"></span> 
-                                                <span class="switch-handle"></span> 
+                                                <span class="switch-label" data-on="active" data-off="inactive"></span>
+                                                <span class="switch-handle"></span>
                                             </label>
                                         </td>
                                         <td>{{ $role->updated_at->format('F d, Y h:i a') }}</td>
@@ -199,8 +198,8 @@
                     <div class="form-group">
                         <label for="roleStatus" class="col-form-label">Role Status</label>
                     <select id="roleStatus" class="form-control">
-                        <option value="0">Active</option>
-                        <option value="1">Inactive</option>
+                        <option value="0">Inactive</option>
+                        <option value="1">Active</option>
                     </select>
                     </div>
                 </div>
@@ -225,57 +224,62 @@
     </div>
 </div>
 </div>
-@endsection 
-@section('js') 
+@endsection
+@section('js')
     @include('partials.footer')
 <script>
 $(function() {
-    $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content') } });
 
-    jQuery.each( [ "put", "delete" ], function( i, method ) {
-  jQuery[ method ] = function( url, data, callback, type ) {
-    if ( jQuery.isFunction( data ) ) {
-      type = type || callback;
-      callback = data;
-      data = undefined;
+    $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content') } });
+    let processRoleRequest = function(method = 'get',requestType, processRole) {
+
+    if(['insert', 'update'].includes(requestType)){
+        $.ajax({
+            url: processRole.url,
+            data: processRole,
+            method: method,
+            success: function(data){
+                alert(data.msg);
+
+                console.log(data.name);
+                $('#insert').modal('hide');
+
+                data.role.state = null;
+
+                $('table').bootstrapTable('insertRow', {
+                    index : 0,
+                    row: data.role
+                });
+            },
+            error: function(){
+                alert('an error occured');
+            },
+            statusCode: {
+                500: function(){
+                    alert('internel server error');
+                }
+            }
+        })
+        .done(response => { console.log(response) })
+        .fail(response => { console.log(response) });
+    }else{
+        $.get('/staff/roles', { processRole })
+        .done(response => { console.log(response) })
+        .fail(response => { console.log(response) });
     }
 
-    return jQuery.ajax({
-      url: url,
-      type: method,
-      dataType: type,
-      data: data,
-      success: callback
-    });
-  };
+}
+let $table = $('table').bootstrapTable();
+
+
+$table.on('editable-save.bs.table', function(e,field, row, oldValue, $el){
+    // console.log(row);
+    // processRoleRequest('patch','update',{url : row._id_data.href,'name': row.name,'desc':row.description});
+});
+$('.addRole').on('click', function(event){
+    // console.log($('#roleStatus').val());
+    // processRoleRequest('post','insert', {url: '/staff/roles/',name: $('#roleName').val(), desc: $('#roleDescription').val(), status: $('#roleStatus').val()});
 });
 });
-
-
-//     let processRoleRequest = function(requestType, processRole) {
-    
-//     if(['insert', 'update'].includes(requestType)){
-//         $.post('/staff/roles', { processRole })
-//         .done(response => { console.log(response) })
-//         .fail(response => { console.log(response) }); 
-//     }else{
-//         $.get('/staff/roles', { processRole })
-//         .done(response => { console.log(response) })
-//         .fail(response => { console.log(response) }); 
-//     }
-
-// }
-// let $table = $('table').bootstrapTable();
-// $table.on('editable-save.bs.table', function(e, field, row){
-//     let roleStatus  = ($(".myonoffswitch").is(':checked')) ? 1 : 0;
-//     console.log(row);
-//     console.log(processRoleRequest('update', {_method: row._method, roleName: row.roleName, roleDescription: row.roleDescription, roleStatus: roleStatus}));
-// });
-// $('.addRole').on('click', function(event){
-//     console.log($('#_method').val());
-//     // console.log(processRoleRequest('insert', {_method: $('#_method').val(), roleName: $('#roleName').val(), roleDescription: $('#roleDescription').val(), roleStatus: $('#roleStatus').val()}));
-//     // $('#insert').modal('hide');
-// });
-// });
 </script>
 @endsection

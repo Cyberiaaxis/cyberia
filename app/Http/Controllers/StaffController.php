@@ -3,19 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\{ Role, Permission };
+use Spatie\Permission\Models\Role;
 
 class StaffController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     /**
      * Create a new controller instance.
@@ -27,141 +18,103 @@ class StaffController extends Controller
         return view('dashboard');
     }
 
+
     /**
-     * Create a new controller instance.
+     * Display a listing of the resource.
      *
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $role = new Role;
-        $roles = $role->all();
-        return view('role', ["roles" => $roles]);
+
+        $roles = Role::orderBy('name')->get();
+
+        return view('role',['roles' => $roles]);
     }
 
     /**
-     * Create a new controller instance.
+     * Show the form for creating a new resource.
      *
-     * @return void
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $role = new Role;
-        return $role->firstOrCreate( 
-            [
-                'name' => $request->processRole['roleName'], 
-                'description' => $request->processRole['roleName'], 
-                'status' => $request->processRole['roleName']
-            ]
-        );
+            return $request;
+        // $request->validate([
+        //     'name' => ['required','unique:roles,name'],
+        //     'desc' => ['required'],
+        //     'status' => ['required','integer']
+        // ]);
+
+        // $role = Role::firstorCreate([
+        //     'name' => $request->input('name'),
+        //     'description' => $request->input('desc'),
+        //     'status' => $request->input('status')
+        // ]);
+
+        // return response()->json(['status' => true,'msg' => 'Role created successfully','role' => $role]);
     }
 
-        /**
-     * Create a new controller instance.
+    /**
+     * Display the specified resource.
      *
-     * @return void
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function show($id)
     {
-        return $request;
-        
-        
-        // $role = new Role;
-        // return $role->firstOrCreate( 
-        //     [
-        //         'name' => $request->processRole['roleName'], 
-        //         'description' => $request->processRole['roleName'], 
-        //         'status' => $request->processRole['roleName']
-        //     ]
-        // );
+        //
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+
+        $name = $request->input('name');
+        $desc = $request->input('desc');
+
+        $role = Role::where('id',$id)->update(['name'=> $name,'description' => $desc ]);
+
+        return response()->json(['success' => true,'msg' => 'role updated']);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $role = Role::delete($id);
+
+        return response()->json(['success' => true,'msg' => 'Role has been deleted']);
+    }
 }
-
-
-
-
-// namespace App\Http\Controllers;
-
-// use Illuminate\Http\Request;
-// use Spatie\Permission\Models\{ Role, Permission };
-
-// class StaffController extends Controller
-// {
-//     /**
-//      * Create a new controller instance.
-//      *
-//      * @return void
-//      */
-//     public function __construct()
-//     {
-//         $this->middleware('auth');
-//     }
-
-
-//     public function home()
-//     {
-//         return view('dashboard');
-//     }
-
-//     /**
-//      * Create a new controller instance.
-//      *
-//      * @return void
-//      */
-//     public function index()
-//     {
-//         return view('role');
-//     }
-    
-//     public function show($id)    
-//     {
-//         return "Showing item";
-//     }
-    
-//     /**
-//      * Show Create form
-//      */
-//      public function create()
-//      {
-//          return 'create Something';
-//      }
-
-//     /**
-//      * Create a new controller instance.
-//      *
-//      * @return void
-//      */
-//     public function store($request)
-//     {
-//         $role = new Role;
-//         return $role->firstOrCreate( 
-//             ['name' => $request->role, 'description' => $request->description, 'status' => $request->status]
-//         );
-//     }
-
-//     /**
-//     * Editing enries
-//     */
-    
-//     public function edit()
-//     {
-        
-//     }
-
-//     /*
-//      * Save editied entried
-//      */
-     
-//     public function update()
-//     {
-        
-//     }
-
-//     /*
-//     * Delete Entries
-//     */
-//     public function destory()
-//     {
-//     }

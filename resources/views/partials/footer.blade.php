@@ -39,9 +39,9 @@
 <script src="{{ asset('js/metisMenu/metisMenu-active.js') }}"></script>
 <!-- morrisjs JS
 	============================================ -->
-<script src="{{ asset('js/morrisjs/raphael-min.js') }}"></script>
+<!-- <script src="{{ asset('js/morrisjs/raphael-min.js') }}"></script> -->
 <!-- <script src="{{ asset('js/morrisjs/morris.js') }}"></script> -->
-<script src="{{ asset('js/morrisjs/home3-active.js') }}"></script>
+<!-- <script src="{{ asset('js/morrisjs/home3-active.js') }}"></script> -->
 <!-- morrisjs JS
 	============================================ -->
 <script src="{{ asset('js/sparkline/jquery.sparkline.min.js') }}"></script>
@@ -66,8 +66,8 @@
 <script src="{{ asset('js/data-table/bootstrap-table.js') }}"></script> 
 <script src="{{ asset('js/data-table/tableExport.js') }}"></script>
 <script src="{{ asset('js/data-table/data-table-active.js') }}"></script>
-<script src="{{ asset('js/data-table/bootstrap-table-editable.js') }}"></script> 
 <script src="{{ asset('js/data-table/bootstrap-editable.js') }}"></script> 
+<script src="{{ asset('js/data-table/bootstrap-table-editable.js') }}"></script> 
 <script src="{{ asset('js/data-table/bootstrap-table-resizable.js') }}"></script> 
 <script src="{{ asset('js/data-table/colResizable-1.5.source.js') }}"></script> 
 <script src="{{ asset('js/data-table/bootstrap-table-export.js') }}"></script> 
