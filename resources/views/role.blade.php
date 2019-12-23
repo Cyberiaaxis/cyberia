@@ -12,106 +12,106 @@
 .switch {
     position: relative;
     display: block;
-    vertical-align: top;
-    width: 100px;
-    height: 30px;
-    padding: 3px;
-    margin: 0 10px 10px 0;
-    background: linear-gradient(to bottom, #eeeeee, #FFFFFF 25px);
-    background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF 25px);
-    border-radius: 18px;
-    box-shadow: inset 0 -1px white, inset 0 1px 1px rgba(0, 0, 0, 0.05);
-    cursor: pointer;
-    box-sizing:content-box;
+	vertical-align: top;
+	width: 100px;
+	height: 30px;
+	padding: 3px;
+	margin: 0 10px 10px 0;
+	background: linear-gradient(to bottom, #eeeeee, #FFFFFF 25px);
+	background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF 25px);
+	border-radius: 18px;
+	box-shadow: inset 0 -1px white, inset 0 1px 1px rgba(0, 0, 0, 0.05);
+	cursor: pointer;
+	box-sizing:content-box;
 }
 .switch-input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    box-sizing:content-box;
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	box-sizing:content-box;
 }
 .switch-label {
-    position: relative;
-    display: block;
-    height: inherit;
-    font-size: 10px;
-    text-transform: uppercase;
-    background: #eceeef;
-    border-radius: inherit;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.15);
-    box-sizing:content-box;
+	position: relative;
+	display: block;
+	height: inherit;
+	font-size: 10px;
+	text-transform: uppercase;
+	background: #eceeef;
+	border-radius: inherit;
+	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.15);
+	box-sizing:content-box;
 }
 .switch-label:before, .switch-label:after {
-    position: absolute;
-    top: 50%;
-    margin-top: -.5em;
-    line-height: 1;
-    -webkit-transition: inherit;
-    -moz-transition: inherit;
-    -o-transition: inherit;
-    transition: inherit;
-    box-sizing:content-box;
+	position: absolute;
+	top: 50%;
+	margin-top: -.5em;
+	line-height: 1;
+	-webkit-transition: inherit;
+	-moz-transition: inherit;
+	-o-transition: inherit;
+	transition: inherit;
+	box-sizing:content-box;
 }
 .switch-label:before {
-    content: attr(data-off);
-    right: 11px;
-    color: #aaaaaa;
-    text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+	content: attr(data-off);
+	right: 11px;
+	color: #aaaaaa;
+	text-shadow: 0 1px rgba(255, 255, 255, 0.5);
 }
 .switch-label:after {
-    content: attr(data-on);
-    left: 11px;
-    color: #FFFFFF;
-    text-shadow: 0 1px rgba(0, 0, 0, 0.2);
-    opacity: 0;
+	content: attr(data-on);
+	left: 11px;
+	color: #FFFFFF;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+	opacity: 0;
 }
 .switch-input:checked ~ .switch-label {
-    background: purple;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 0 3px rgba(0, 0, 0, 0.2);
+	background: purple;
+	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 0 3px rgba(0, 0, 0, 0.2);
 }
 .switch-input:checked ~ .switch-label:before {
-    opacity: 0;
+	opacity: 0;
 }
 .switch-input:checked ~ .switch-label:after {
-    opacity: 1;
+	opacity: 1;
 }
 .switch-handle {
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    width: 28px;
-    height: 28px;
-    background: linear-gradient(to bottom, #FFFFFF 40%, #f0f0f0);
-    background-image: -webkit-linear-gradient(top, #FFFFFF 40%, #f0f0f0);
-    border-radius: 100%;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+	position: absolute;
+	top: 4px;
+	left: 4px;
+	width: 28px;
+	height: 28px;
+	background: linear-gradient(to bottom, #FFFFFF 40%, #f0f0f0);
+	background-image: -webkit-linear-gradient(top, #FFFFFF 40%, #f0f0f0);
+	border-radius: 100%;
+	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
 }
 .switch-handle:before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -6px 0 0 -6px;
-    width: 12px;
-    height: 12px;
-    background: linear-gradient(to bottom, #eeeeee, #FFFFFF);
-    background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF);
-    border-radius: 6px;
-    box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -6px 0 0 -6px;
+	width: 12px;
+	height: 12px;
+	background: linear-gradient(to bottom, #eeeeee, #FFFFFF);
+	background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF);
+	border-radius: 6px;
+	box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
 }
 .switch-input:checked ~ .switch-handle {
-    left: 74px;
-    box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
+	left: 74px;
+	box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* Transition
 ========================== */
 .switch-label, .switch-handle {
-    transition: All 0.3s ease;
-    -webkit-transition: All 0.3s ease;
-    -moz-transition: All 0.3s ease;
-    -o-transition: All 0.3s ease;
+	transition: All 0.3s ease;
+	-webkit-transition: All 0.3s ease;
+	-moz-transition: All 0.3s ease;
+	-o-transition: All 0.3s ease;
 }
 </style>
 
@@ -142,6 +142,7 @@
                                         <th data-field="status">Role Status</th>
                                         <th data-field="created_at" >Created</th>
                                         <th data-field="updated_at" >Last Modified</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -149,7 +150,7 @@
                                 @foreach($roles as $role)
                                     <tr>
                                         <td></td>
-                                        <td data-href="{{ route('roles.update',$role->id) }}">{{ $role->id }}</td>
+                                        <td class="delete" data-id="{{ $role->id }}" data-href="{{ route('roles.update',$role->id) }}">{{ $role->id }}</td>
                                         <td>{{ $role->name }}</td>
                                         <td>{{ $role->description }}</td>
                                         <td>
@@ -161,6 +162,7 @@
                                         </td>
                                         <td>{{ $role->updated_at->format('F d, Y h:i a') }}</td>
                                         <td>{{ $role->created_at->format('F d, Y h:i a') }}</td>
+                                    <td><button type="button" class="btn btn-danger btn-sm delete" title="Delete" data-href="{{ route('roles.destroy',$role->id) }}" data-id="{{ $role->id }}"><i class="fa fa-trash"></i></button></td>
                                     </tr>
                                 @endforeach
 
@@ -184,9 +186,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <!-- <form id="addRole" method="post" enctype="multipart/form-data"> -->
+            <form id="addRole" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
-                    <input type="text" id="_method" value="put" hidden>
                     <div class="form-group">
                         <label for="roleName" class="col-form-label">Role Name:</label>
                         <input type="text" class="form-control" id="roleName">
@@ -207,7 +208,7 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary addRole" >Save</button>
                 </div>
-            <!-- </form> -->
+            </form>
         </div>
     </div>
 </div>
@@ -227,47 +228,74 @@
 @endsection
 @section('js')
     @include('partials.footer')
+
+    <script src="{{ asset('/js/requestprocess.js') }}" type="text/javascript"></script>
+
+
+
+
 <script>
-$(function() {
 
-const csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
+$(document).ready(function() {
+    const csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
+    const $table = $('table').bootstrapTable();
 
-function processRequest(data) {
-    let method = (data.method) ? data.method : 'get';
-    let url = (data.url) ? data.url : '/staff/roles';
-    fetch(url,{
-        method: method,
-        body: JSON.stringify(data),
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            "X-CSRF-Token": csrfToken
+    function showMessage(response){
+
+        if(!response) return false;
+
+        if(response.success){
+            toastr["success"](response.msg);
+
+            $('#insert').modal('hide');
+            $('#addRole').trigger('reset');
+            response.role.state = null;
+            response.role.action = null;
+            $table.bootstrapTable('insertRow',{
+                index: 0,
+                row: response.role
+            });
+
+        } else {
+            $.each( response.errors, function( key, value ) {
+            toastr["error"](value);
+            });
+
         }
-    })
-    .then(response => {
-        return response.text();
-    })
-    .then(text => {
-        return console.log(text);
-    })
-    .catch(error => console.error(error));
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
 }
 
-
-let $table = $('table').bootstrapTable();
-
-
-$table.on('editable-save.bs.table', function(e,field, row, oldValue, $el){
-
-    processRequest({action: 'update',method: 'put',url : row._id_data.href,'name': row.name,'desc':row.description,'status' : row.status});
-});
-$('.addRole').on('click', function(event){
-    console.log($('#_method').val());
-    processRequest({action: 'update',method: 'post',name: $('#roleName').val(), desc: $('#roleDescription').val(), status: $('#roleStatus').val()});
-});
-
-
-
+    $('.delete').click(function(){
+        let  id = $(this).attr('data-id');
+        let url = $(this).attr('data-href');
+        let data = {url: url, method: 'delete', csrfToken: csrfToken};
+        requestProcess(data,showMessage);
+    });
+    $table.on('editable-save.bs.table', function(e,field, row, oldValue, $el){
+        let data = {url : row._id_data.href, method: 'put', csrfToken: csrfToken,'name': row.name,'desc':row.description,'status' : row.status};
+        requestProcess(data,showMessage);
+    });
+    $('.addRole').on('click', function(event){
+        let data = {url: '/staff/roles', method: 'post', csrfToken: csrfToken, name: $('#roleName').val(), desc: $('#roleDescription').val(), status: $('#roleStatus').val()};
+        requestProcess(data,showMessage);
+    });
 
 });
 </script>

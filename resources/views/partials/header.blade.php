@@ -59,6 +59,9 @@
 <!-- responsive CSS
 	============================================ -->
 <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+<!-- popup CSS
+	============================================ -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" /
 
 
 

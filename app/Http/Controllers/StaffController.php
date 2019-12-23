@@ -56,9 +56,7 @@ class StaffController extends Controller
     {
 
         $request->validate([
-            'name' => ['required','unique:roles,name'],
-            'desc' => ['required'],
-            'status' => ['required','integer']
+            'name' => ['required','unique:roles,name'],  'desc' => ['required'],  'status' => ['required','integer']
         ]);
 
         $role = Role::firstorCreate([
@@ -67,7 +65,7 @@ class StaffController extends Controller
             'status' => $request->input('status')
         ]);
 
-        return response()->json(['status' => true,'msg' => 'Role created successfully','role' => $role]);
+        return response()->json(['success' => true, 'status' => true, 'msg' => 'Role created successfully','role' => $role]);
     }
 
     /**
@@ -128,7 +126,8 @@ class StaffController extends Controller
      */
     public function destroy($id)
     {
-        $role = Role::delete($id);
+        $role = Role::findorFail($id);
+        $role->delete($id);
 
         return response()->json(['success' => true,'msg' => 'Role has been deleted']);
     }

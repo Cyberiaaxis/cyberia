@@ -74,4 +74,6 @@
 
 <!-- modernizr JS
 	============================================ -->
-	<script src="{{ asset('js/vendor/modernizr-2.8.3.min.js') }}"></script>
+<script src="{{ asset('js/vendor/modernizr-2.8.3.min.js') }}"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
