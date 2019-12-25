@@ -132,7 +132,7 @@
                                 <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#insert"><i class="fa fa-plus"></i> Insert</button>
                                 <button type="button" id="remove" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Remove</button>
                             </div>
-                            <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                            <table id="table" data-toggle="table" data-unique-id="id" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
                                 <thead>
                                     <tr>
                                         <th data-field="state" data-checkbox="true"></th>
@@ -142,13 +142,13 @@
                                         <th data-field="status">Role Status</th>
                                         <th data-field="created_at" >Created</th>
                                         <th data-field="updated_at" >Last Modified</th>
-                                        <th data-field="operate" data-events="operateEvents">Action</th>
+                                        <th data-field="action">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                 @foreach($roles as $role)
-                                    <tr>
+                                    <tr data-index="{{ $loop->index }}" data-uniqueid="{{ $role->id }}"> 
                                         <td></td>
                                         <td class="delete" data-id="{{ $role->id }}" data-href="{{ route('roles.update',$role->id) }}">{{ $role->id }}</td>
                                         <td>{{ $role->name }}</td>
@@ -235,11 +235,8 @@
 
 
 <script>
-        const csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
-
     $(document).ready(function() {
-
-
+        const csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
         const $table = $('table').bootstrapTable();
 
         function show(response) {
@@ -253,29 +250,26 @@
                     $('#insert').modal('hide');
                     $('#addRole').trigger('reset');
 
-                    var status = (response.role.status) ? 'checked' : '';
+                    let status = (response.role.status) ? 'checked' : '';
 
-                    var html = '';
+                    let html = '';
                     html += '<label class="switch">';
                     html += '<input class="switch-input" type="checkbox"' + status + ' />';
                     html += '<span class="switch-label" data-on="active" data-off="inactive"></span>';
                     html += '<span class="switch-handle"></span>';
                     html += '</label>';
 
-
-                    var deletebtn = '<button type="button" class="btn btn-danger btn-sm delete" title="Delete" data-href="/staff/roles/'+response.role.id+'" data-id="'+response.role.id+'">';
+                    let deletebtn = '<button type="button" class="btn btn-danger btn-sm delete" title="Delete" data-href="/staff/roles/'+response.role.id+'" data-id="'+response.role.id+'">';
                     deletebtn += '<i class="glyphicon glyphicon-trash"></i>';
                     deletebtn += '</button>';
 
+                    //$date = Date.parse(new Date(response.role.created_at));
+                    //$date = $date.toString('F d, Y h:i a');
+
+                    //response.role.created_at = $date;
                     response.role.status = html;
                     response.role.state = null;
-                    response.role.operate = deletebtn;
-
-                    response.role._id_data = {
-                        href: '/staff/roles/'+response.role.id,
-                        id: response.role.id
-                    }
-
+                    response.role.action = deletebtn;
                     $table.bootstrapTable('insertRow', {
                         index: 0,
                         row: response.role
@@ -317,6 +311,8 @@
                 csrfToken: csrfToken
             };
             requestProcess(data, show);
+
+            // $table.bootstrapTable('removeByUniqueId', id);
         });
 
         $table.on('editable-save.bs.table', function(e, field, row, oldValue, $el) {
@@ -346,24 +342,5 @@
         });
 
     });
-
-    window.operateEvents = {
-            'click .delete': function (e, value, row, index) {
-                let url = row._id_data.href;
-                let data = {
-                    url: url,
-                    method: 'delete',
-                    csrfToken: csrfToken
-                };
-              $(document).ready(function(){
-                  $table = $('table');
-                    $table.bootstrapTable('remove', {
-                    field: 'id',
-                    values: [row.id]
-                })
-              });
-
-            }
-        }
 </script>
 @endsection

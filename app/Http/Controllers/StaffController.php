@@ -99,7 +99,6 @@ class StaffController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $request->validate([
             'name' => ['required'],
             'desc' => ['required'],
@@ -108,11 +107,11 @@ class StaffController extends Controller
 
         $name = $request->input('name');
         $desc = $request->input('desc');
-        // $status = $request->input('status',0);
+        $status = $request->input('status');
         $role = Role::find($id);
         $role->name = $name;
         $role->description = $desc;
-        // $role->status = $status;
+        $role->status = $status;
         $role->save();
 
         return response()->json(['success' => true,'msg' => 'role updated','role' => $role]);
