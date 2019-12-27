@@ -6,8 +6,8 @@
 <!-- CSRF Token -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <!-- favicon
-	============================================ -->
-<link rel="shortcut icon" type="image/x-icon" href="{{ asset('img/favicon.ico') }}">
+	============================================ -->   
+<link rel="shortcut icon" type="image/x-icon" href="{{ asset('storage/templateimages/favicon.ico') }}">
 <!-- Google Fonts
 	============================================ -->
 <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
@@ -61,8 +61,10 @@
 <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
 <!-- popup CSS
 	============================================ -->
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" /
-
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<!-- staff CSS
+	============================================ -->
+<link rel="stylesheet" href="{{ asset('css/staff.css') }}">
 
 
 

@@ -76,4 +76,9 @@
 	============================================ -->
 <script src="{{ asset('js/vendor/modernizr-2.8.3.min.js') }}"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
+<!-- fetch JS
+	============================================ -->
+<script src="{{ asset('/js/requestprocess.js') }}" type="text/javascript"></script>
+<!-- staffpanel JS
+	============================================ -->
+<script src="{{ asset('/js/staff.js') }}" type="text/javascript"></script>

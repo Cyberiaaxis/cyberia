@@ -100,7 +100,7 @@ class StaffController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => ['required'],
+            'name' => ['required','unique:roles,name'],
             'desc' => ['required'],
             'status' => ['required']
         ]);

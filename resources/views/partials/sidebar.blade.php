@@ -6,9 +6,16 @@
     <div class="left-custom-menu-adp-wrap comment-scrollbar">
         <nav class="sidebar-nav left-sidebar-menu-pro">
             <ul class="metismenu" id="menu1">
-                <li>
+            <li>
+                    <a class="has-arrow" href="/staff/roles" aria-expanded="false"><span class="educate-icon educate-professor icon-wrap"></span> <span class="mini-click-non">Role Managment</span></a>
+                    <ul class="submenu-angle" aria-expanded="false">
+                        <li><a title="All Professors" href="/staff/roles"><span class="mini-sub-pro">Roles</span></a></li>
+                        <li><a title="Add Professor" href="/staff/rolespolicy"><span class="mini-sub-pro">Role Policy</span></a></li>
+                    </ul>
+                </li>
+                <!-- <li>
                     <a title="Roles" href="/staff/roles" aria-expanded="false"><span class="educate-icon educate-event icon-wrap sub-icon-mg" aria-hidden="true"></span> <span class="mini-click-non">Roles</span></a>
-               </li>
+               </li> -->
                 <!-- <li class="active">
                     <a class="has-arrow" href="index.html">
 						   <span class="educate-icon educate-home icon-wrap"></span>

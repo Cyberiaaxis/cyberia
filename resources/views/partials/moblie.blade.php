@@ -2,8 +2,8 @@
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="logo-pro">
-                <a href="index.html"><img class="main-logo" src="img/logo/logo.png" alt="" /></a>
-            </div>
+                <a href="/staff/"><img class="main-logo" src="{{ asset('storage/templateimages/logo/logo.png') }}" alt="" /></a>
+            </div> 
         </div>
     </div>
     <div class="header-advance-area">
@@ -55,8 +55,8 @@
                                                     <ul class="message-menu">
                                                         <li>
                                                             <a href="#">
-                                                                <div class="message-img">
-                                                                    <img src="img/contact/1.jpg" alt="">
+                                                                <div class="message-img"> 
+                                                                    <img src="{{ asset('storage/templateimages/contact/1.jpg') }}" alt="">
                                                                 </div>
                                                                 <div class="message-content">
                                                                     <span class="message-date">16 Sept</span>
@@ -68,7 +68,7 @@
                                                         <li>
                                                             <a href="#">
                                                                 <div class="message-img">
-                                                                    <img src="img/contact/4.jpg" alt="">
+                                                                    <img src="{{ asset('storage/templateimages/contact/4.jpg') }}" alt="">
                                                                 </div>
                                                                 <div class="message-content">
                                                                     <span class="message-date">16 Sept</span>
@@ -80,7 +80,7 @@
                                                         <li>
                                                             <a href="#">
                                                                 <div class="message-img">
-                                                                    <img src="img/contact/3.jpg" alt="">
+                                                                    <img src="{{ asset('storage/templateimages/contact/3.jpg') }}" alt="">
                                                                 </div>
                                                                 <div class="message-content">
                                                                     <span class="message-date">16 Sept</span>
@@ -91,8 +91,8 @@
                                                         </li>
                                                         <li>
                                                             <a href="#">
-                                                                <div class="message-img">
-                                                                    <img src="img/contact/2.jpg" alt="">
+                                                                <div class="message-img"> 
+                                                                    <img src="{{ asset('storage/templateimages/contact/2.jpg') }}" alt="">
                                                                 </div>
                                                                 <div class="message-content">
                                                                     <span class="message-date">16 Sept</span>
@@ -169,7 +169,7 @@
                                             </li>
                                             <li class="nav-item">
                                                 <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
-                                                    <img src="img/product/pro4.jpg" alt="" />
+                                                    <img src="{{ asset('storage/templateimages/product/pro4.jpg') }}" alt="" /> 
                                                     <span class="admin-name">Prof.Anderson</span>
                                                     <i class="fa fa-angle-down edu-icon edu-down-arrow"></i>
                                                 </a>
@@ -211,8 +211,8 @@
                                                                         <li>
                                                                             <a href="#">
                                                                                 <div class="notes-list-flow">
-                                                                                    <div class="notes-img">
-                                                                                        <img src="img/contact/4.jpg" alt="" />
+                                                                                    <div class="notes-img"> 
+                                                                                        <img src="{{ asset('storage/templateimages/contact/4.jpg') }}" alt="" />
                                                                                     </div>
                                                                                     <div class="notes-content">
                                                                                         <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
@@ -225,7 +225,7 @@
                                                                             <a href="#">
                                                                                 <div class="notes-list-flow">
                                                                                     <div class="notes-img">
-                                                                                        <img src="img/contact/1.jpg" alt="" />
+                                                                                        <img src="{{ asset('storage/templateimages/contact/1.jpg') }}" alt="" />
                                                                                     </div>
                                                                                     <div class="notes-content">
                                                                                         <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
@@ -238,7 +238,20 @@
                                                                             <a href="#">
                                                                                 <div class="notes-list-flow">
                                                                                     <div class="notes-img">
-                                                                                        <img src="img/contact/2.jpg" alt="" />
+                                                                                        <img src="{{ asset('storage/templateimages/contact/2.jpg') }}" alt="" />
+                                                                                    </div>
+                                                                                    <div class="notes-content">
+                                                                                        <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
+                                                                                        <span>Yesterday 2:45 pm</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#">
+                                                                                <div class="notes-list-flow">
+                                                                                    <div class="notes-img"> 
+                                                                                        <img src="{{ asset('storage/templateimages/contact/3.jpg') }}" alt="" />
                                                                                     </div>
                                                                                     <div class="notes-content">
                                                                                         <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
@@ -251,7 +264,7 @@
                                                                             <a href="#">
                                                                                 <div class="notes-list-flow">
                                                                                     <div class="notes-img">
-                                                                                        <img src="img/contact/3.jpg" alt="" />
+                                                                                        <img src="{{ asset('storage/templateimages/contact/4.jpg') }}" alt="" />
                                                                                     </div>
                                                                                     <div class="notes-content">
                                                                                         <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
@@ -264,7 +277,7 @@
                                                                             <a href="#">
                                                                                 <div class="notes-list-flow">
                                                                                     <div class="notes-img">
-                                                                                        <img src="img/contact/4.jpg" alt="" />
+                                                                                        <img src="{{ asset('storage/templateimages/contact/1.jpg') }}" alt="" />
                                                                                     </div>
                                                                                     <div class="notes-content">
                                                                                         <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
@@ -277,7 +290,7 @@
                                                                             <a href="#">
                                                                                 <div class="notes-list-flow">
                                                                                     <div class="notes-img">
-                                                                                        <img src="img/contact/1.jpg" alt="" />
+                                                                                        <img src="{{ asset('storage/templateimages/contact/2.jpg') }}" alt="" />
                                                                                     </div>
                                                                                     <div class="notes-content">
                                                                                         <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
@@ -290,7 +303,7 @@
                                                                             <a href="#">
                                                                                 <div class="notes-list-flow">
                                                                                     <div class="notes-img">
-                                                                                        <img src="img/contact/2.jpg" alt="" />
+                                                                                        <img src="{{ asset('storage/templateimages/contact/1.jpg') }}" alt="" />
                                                                                     </div>
                                                                                     <div class="notes-content">
                                                                                         <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
@@ -303,7 +316,7 @@
                                                                             <a href="#">
                                                                                 <div class="notes-list-flow">
                                                                                     <div class="notes-img">
-                                                                                        <img src="img/contact/1.jpg" alt="" />
+                                                                                        <img src="{{ asset('storage/templateimages/contact/2.jpg') }}" alt="" />
                                                                                     </div>
                                                                                     <div class="notes-content">
                                                                                         <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
@@ -316,20 +329,7 @@
                                                                             <a href="#">
                                                                                 <div class="notes-list-flow">
                                                                                     <div class="notes-img">
-                                                                                        <img src="img/contact/2.jpg" alt="" />
-                                                                                    </div>
-                                                                                    <div class="notes-content">
-                                                                                        <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
-                                                                                        <span>Yesterday 2:45 pm</span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="#">
-                                                                                <div class="notes-list-flow">
-                                                                                    <div class="notes-img">
-                                                                                        <img src="img/contact/3.jpg" alt="" />
+                                                                                        <img src="{{ asset('storage/templateimages/contact/3.jpg') }}" alt="" />
                                                                                     </div>
                                                                                     <div class="notes-content">
                                                                                         <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
