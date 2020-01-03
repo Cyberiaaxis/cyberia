@@ -99,22 +99,23 @@ class StaffController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => ['required','unique:roles,name'],
-            'desc' => ['required'],
-            'status' => ['required']
-        ]);
+        // return $request;
+        $rules = [];
 
-        $name = $request->input('name');
-        $desc = $request->input('desc');
-        $status = $request->input('status');
-        $role = Role::find($id);
-        $role->name = $name;
-        $role->description = $desc;
-        $role->status = $status;
-        $role->save();
+        if($request->input('name')){
+            $rules['name'] = ['required','unique:roles,name'];
+        }elseif($request->input('description')){
+            $rules['description'] = ['required']; 
+        }elseif($request->input('status')){
+            $rules['status'] = ['required'];
+        }
+         
+        $request->validate($rules);
+        $role = Role::findorFail($id);
+        $input = $request->except(['url','method','csrfToken']);
+        $role->fill($input)->save();
 
-        return response()->json(['success' => true,'msg' => 'role updated','role' => $role]);
+        return response()->json(['success' => true,'msg' => 'role updated']);
     }
 
     /**

@@ -7,10 +7,10 @@
         <nav class="sidebar-nav left-sidebar-menu-pro">
             <ul class="metismenu" id="menu1">
             <li>
-                    <a class="has-arrow" href="/staff/roles" aria-expanded="false"><span class="educate-icon educate-professor icon-wrap"></span> <span class="mini-click-non">Role Managment</span></a>
+                    <a class="has-arrow" href="#" aria-expanded="false"><span class="educate-icon educate-professor icon-wrap"></span> <span class="mini-click-non">Role Managment</span></a>
                     <ul class="submenu-angle" aria-expanded="false">
-                        <li><a title="All Professors" href="/staff/roles"><span class="mini-sub-pro">Roles</span></a></li>
-                        <li><a title="Add Professor" href="/staff/rolespolicy"><span class="mini-sub-pro">Role Policy</span></a></li>
+                        <li class="{{ set_active('staff*') }}"><a title="Roles" href="/staff/roles"><span class="mini-sub-pro">Roles</span></a></li>
+                        <li class="{{ set_active('staff*') }}"><a title="Role Manager" href="/staff/rolemanager"><span class="mini-sub-pro">Role Mnanager</span></a></li>
                     </ul>
                 </li>
                 <!-- <li>

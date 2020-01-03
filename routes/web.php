@@ -18,7 +18,6 @@ Route::get('/', function () {
 Auth::routes();
 Route::middleware('auth')->prefix('staff')->group(function(){ 
     Route::get('/','StaffController@home');
-    // Route::get('/roles','StaffController@roles'); 
-    Route::resource('/roles','StaffController'); 
-
+    Route::resource('/roles','StaffController');
+    Route::resource('/rolemanager','RoleManagerController'); 
 });

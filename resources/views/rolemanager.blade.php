@@ -47,7 +47,7 @@
                                         <td>{{ $role->description }}</td>
                                         <td>
                                             <label class="switch">
-                                                <input class="switch-input"  data-href="{{ route('roles.update',$role->id) }}" type="checkbox" @if($role->status) checked @endif />
+                                                <input class="switch-input" type="checkbox" @if($role->status) checked @endif />
                                                 <span class="switch-label" data-on="active" data-off="inactive"></span>
                                                 <span class="switch-handle"></span>
                                             </label>

@@ -64,28 +64,28 @@ $(document).ready(function() {
     }
 
     $(document).on('click','.delete',function() {
-        let url = $(this).attr('data-href');
-        let id = $(this).attr('data-id');
-        let data = {
-            url: url,
-            method: 'delete',
-            csrfToken: csrfToken
-        };
-        requestProcess(data, show);
+        let success = confirm("Are you sure you want to delete it?");
+
+        if(success){
+            let url = $(this).attr('data-href');
+            let id = $(this).attr('data-id');
+            let data = {
+                url: url,
+                method: 'delete',
+                csrfToken: csrfToken
+            };
+            requestProcess(data, show);
+        }
+
     });
 
     $table.on('editable-save.bs.table', function(e, field, row, oldValue, $el) {
-        console.log(row.status);
-        let checkBox = document.querySelector('.switch-input');
-        let status = (checkBox.checked) ? 1 : 0;
         let data = {
             url: row._id_data.href,
             method: 'put',
             csrfToken: csrfToken,
-            'name': row.name,
-            'desc': row.description,
-            'status': status
         };
+        data[field] = row[field];
         requestProcess(data, show);
     });
 
@@ -101,6 +101,17 @@ $(document).ready(function() {
         requestProcess(data, show);
     });
 
+    $(document).on('change','.switch-input',function(e){
+        var url = $(this).attr('data-href');
+
+        let data = {
+            url: url,
+            method: 'put',
+            status: $(this).is(':checked'),
+            csrfToken: csrfToken
+        };
+        requestProcess(data, show);
+    });
 });
 
 window.operateEvents = {
