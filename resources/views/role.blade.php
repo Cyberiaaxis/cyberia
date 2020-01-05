@@ -78,27 +78,27 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="addRole" method="post" enctype="multipart/form-data">
+            <form id="addRole" method="post" action="{{ route('roles.store') }}" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="roleName" class="col-form-label">Role Name:</label>
-                        <input type="text" class="form-control" id="roleName">
+                        <label for="name" class="col-form-label">Role Name:</label>
+                        <input type="text" class="form-control" name="name">
                     </div>
                     <div class="form-group">
-                        <label for="roleDescription" class="col-form-label">Role Description:</label>
-                        <textarea class="form-control"  id="roleDescription"></textarea>
+                        <label for="description" class="col-form-label">Role Description:</label>
+                        <textarea class="form-control" name="description"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="roleStatus" class="col-form-label">Role Status</label>
-                    <select id="roleStatus" class="form-control">
-                        <option value="0">Inactive</option>
-                        <option value="1" selected>Active</option>
+                        <label for="status" class="col-form-label">Role Status</label>
+                    <select name="status" class="form-control">
+                        <option value="0"selected>Inactive</option>
+                        <option value="1">Active</option>
                     </select>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary addRole" >Save</button>
+                    <button type="submit" class="btn btn-primary" >Save</button>
                 </div>
             </form>
         </div>
@@ -121,5 +121,3 @@
 @section('js')
     @include('partials.footer')
 @endsection
-
-<!-- date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', }) -->

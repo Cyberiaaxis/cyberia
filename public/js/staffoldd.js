@@ -1,6 +1,16 @@
-const csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
-$(document).ready(function() {
-    const $table = $('table');
+(document).ready(function () {
+
+    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    var $table = $('table');
+
+
 
     function show(response) {
         // console.log(response);
@@ -64,6 +74,7 @@ $(document).ready(function() {
         }
     }
 
+
     $(document).on('click','.delete',function() {
         let success = confirm("Are you sure you want to delete it?");
 
@@ -79,13 +90,15 @@ $(document).ready(function() {
             requestProcess(data, show);
             var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
                 return row.id
-              })
-              console.log(ids);
+             });
+
+            console.log(ids);
+
             $table.bootstrapTable('remove', {
                 field: 'id',
                 values: ids
-            })
-            
+              });
+
         }else {
             alert('Your canceled delete process');
         }
@@ -106,11 +119,10 @@ $(document).ready(function() {
         event.preventDefault();
         const form = $(this);
         const url = form.attr('action');
-        $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
         $.post(url,  form.serializeArray())
         .done(response => { show(response) })
-        .fail((function(e) 
-        { 
+        .fail((function(e)
+        {
             const error = e.responseJSON;
             show(error);
         }));

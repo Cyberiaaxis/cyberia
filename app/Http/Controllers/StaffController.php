@@ -54,15 +54,14 @@ class StaffController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
-            'name' => ['required','unique:roles,name'],  'desc' => ['required'],  'status' => ['required','integer']
+            'name' => ['required','unique:roles,name'],  'description' => ['required'],  'status' => ['required','integer']
         ]);
 
         $role = Role::firstorCreate([
-            'name' => $request->input('name'),
-            'description' => $request->input('desc'),
-            'status' => $request->input('status')
+            'name' => $request->name,
+            'description' => $request->description,
+            'status' => $request->status
         ]);
 
         return response()->json(['success' => true, 'status' => true, 'msg' => 'Role created successfully','role' => $role]);
@@ -102,11 +101,11 @@ class StaffController extends Controller
         // return $request;
         $rules = [];
 
-        if($request->input('name')){
+        if($request->name){
             $rules['name'] = ['required','unique:roles,name'];
-        }elseif($request->input('description')){
+        }elseif($request->description){
             $rules['description'] = ['required']; 
-        }elseif($request->input('status')){
+        }elseif($request->status){
             $rules['status'] = ['required'];
         }
          
@@ -115,7 +114,7 @@ class StaffController extends Controller
         $input = $request->except(['url','method','csrfToken']);
         $role->fill($input)->save();
 
-        return response()->json(['success' => true,'msg' => 'role updated']);
+        return response()->json(['success' => true,'msg' => 'Role updated']);
     }
 
     /**
@@ -128,7 +127,6 @@ class StaffController extends Controller
     {
         $role = Role::findorFail($id);
         $role->delete($id);
-
-        return response()->json(['success' => true,'msg' => 'Role has been deleted']);
+      return response()->json(['success' => true, 'msg' => 'Role has been deleted']);
     }
 }
