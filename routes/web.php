@@ -19,5 +19,5 @@ Auth::routes();
 Route::middleware('auth')->prefix('staff')->group(function(){ 
     Route::get('/','StaffController@home');
     Route::resource('/roles','StaffController');
-    Route::resource('/rolemanager','RoleManagerController'); 
+    Route::resource('permissions','PermissionsController'); 
 });

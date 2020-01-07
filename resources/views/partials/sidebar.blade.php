@@ -10,7 +10,7 @@
                     <a class="has-arrow" href="#" aria-expanded="false"><span class="educate-icon educate-professor icon-wrap"></span> <span class="mini-click-non">Role Managment</span></a>
                     <ul class="submenu-angle" aria-expanded="false">
                         <li class="{{ set_active('staff*') }}"><a title="Roles" href="/staff/roles"><span class="mini-sub-pro">Roles</span></a></li>
-                        <li class="{{ set_active('staff*') }}"><a title="Role Manager" href="/staff/rolemanager"><span class="mini-sub-pro">Role Mnanager</span></a></li>
+                        <li class="{{ set_active('staff*') }}"><a title="Role Manager" href="/staff/permissions"><span class="mini-sub-pro">Role Mnanager</span></a></li>
                     </ul>
                 </li>
                 <!-- <li>

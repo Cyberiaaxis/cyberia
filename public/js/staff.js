@@ -1,5 +1,5 @@
-const csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
 $(document).ready(function() {
+    const csrfToken = $('meta[name="csrf-token"]').attr('content');;
     const $table = $('table');
 
     function show(response) {
@@ -102,11 +102,14 @@ $(document).ready(function() {
         requestProcess(data, show);
     });
 
-    $('#addRole').on('submit', function(event) {
+    $('#addRole', '#addRolePermission').on('submit', function(event) {
+
+        alert("iamhere");
         event.preventDefault();
         const form = $(this);
         const url = form.attr('action');
         $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+        console.log(form.serializeArray());
         $.post(url,  form.serializeArray())
         .done(response => { show(response) })
         .fail((function(e) 

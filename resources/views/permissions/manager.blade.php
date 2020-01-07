@@ -28,23 +28,21 @@
                                 <thead>
                                     <tr>
                                         <th data-field="state" data-checkbox="true"></th>
-                                        <th data-field="id">Role Id</th>
-                                        <th data-field="name" data-editable="true">Role Name</th>
-                                        <th data-field="description" data-editable="true">Role Description</th>
-                                        <th data-field="status">Role Status</th>
-                                        <th data-field="created_at" >Created</th>
-                                        <th data-field="updated_at" >Last Modified</th>
-                                        <th data-field="operate" data-events="operateEvents">Action</th>
+                                        <th data-field="id">Role Name</th>
+                                        <th data-field="name" data-editable="true">IDK</th>
+                                        <th data-field="description" data-editable="true">IDK</th>
+                                        <th data-field="status">IDK</th>
+                                        <th data-field="created_at" >IDK</th>
+                                        <th data-field="updated_at" >IDK</th>
+                                        <th data-field="operate" data-events="operateEvents">IDK</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
-                                
                                     <tr>
                                         <td></td>
-                                        <td class="delete" data-id=" $role->id " data-href=" route('roles.update',$role->id) "> $role->id </td>
-                                        <td> $role->name </td>
-                                        <td> $role->description </td>
+                                        <td class="delete" data-id=" $role->id " data-href=" route('roles.update',$role->id) "> Field </td>
+                                        <td> Field </td>
+                                        <td> Field </td>
                                         <td>
                                             <label class="switch">
                                                 <input class="switch-input" type="checkbox" />
@@ -52,12 +50,10 @@
                                                 <span class="switch-handle"></span>
                                             </label>
                                         </td>
-                                        <td> $role->updated_at->format('F d, Y h:i a') </td>
-                                        <td> $role->created_at->format('F d, Y h:i a') </td>
-                                    <td><button type="button" class="btn btn-danger btn-sm delete" title="Delete" data-href=" route('roles.destroy',$role->id) " data-id=" $role->id "><i class="glyphicon glyphicon-trash"></i></button></td>
+                                        <td> Field </td>
+                                        <td> Field </td>
+                                    <td><button type="button" class="btn btn-danger btn-sm delete" title="Delete" data-href=" url " data-id=" id "><i class="glyphicon glyphicon-trash"></i></button></td>
                                     </tr>
-                               
-
                                 </tbody>
                             </table>
                         </div>
@@ -73,32 +69,43 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title" id="exampleModalLabel">Add Role</h1>
+                <h1 class="modal-title" id="exampleModalLabel">Role's Permissions</h1>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="addRole" method="post" enctype="multipart/form-data">
+            <form id="addRolePermission" method="post" action="{{ route('permissions.store') }}" enctype="multipart/form-data">
+                @csrf
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="roleName" class="col-form-label">Role Name:</label>
-                        <input type="text" class="form-control" id="roleName">
+                        <label for="role" class="col-form-label">Roles</label>
+                        <select class="js-example-basic-single" name="role">
+                            @foreach($roles as $role)
+                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                            @endforeach   
+                        </select>
                     </div>
-                    <div class="form-group">
-                        <label for="roleDescription" class="col-form-label">Role Description:</label>
-                        <textarea class="form-control"  id="roleDescription"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="roleStatus" class="col-form-label">Role Status</label>
-                    <select id="roleStatus" class="form-control">
-                        <option value="0">Inactive</option>
-                        <option value="1" selected>Active</option>
-                    </select>
-                    </div>
+                    <div class="form-group form-group-row">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <label for="permissions Name" class="col-form-label">Permissions Name</label>
+                                <input type="test" class="form-control input-xs" id="permissions Name" placeholder="Permission Name" name="permissionsPartfirst">
+                            </div>
+                            <div class="col-xs-6">
+                                <label for="permissionsType[]" class="col-form-label">Permissions Type</label>
+                                <select class="form-control js-example-basic-single" multiple="multiple" name="permissionsType[]">
+                                    <option value='create'>Create</option>
+                                    <option value='edit'>Edit</option>
+                                    <option value='delete'>Delete</option>
+                                    <option value='lock'>Lock</option>                                    
+                                </select>
+                            </div>
+                        </div>
+                    </div>                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary addRole" >Save</button>
+                    <button type="submit" class="btn btn-primary addRolePermission" >Save</button>
                 </div>
             </form>
         </div>
@@ -120,4 +127,12 @@
 @endsection
 @section('js')
     @include('partials.footer')
+    <script>
+        $(document).ready(function() {
+         $('.js-example-basic-single').select2({width: '100%'});
+     });
+
+    </script>
 @endsection
+
+

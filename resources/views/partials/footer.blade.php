@@ -82,3 +82,6 @@
 <!-- staffpanel JS
 	============================================ -->
 <script src="{{ asset('/js/staff.js') }}" type="text/javascript"></script>
+<!-- select2 JS
+	============================================ -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
