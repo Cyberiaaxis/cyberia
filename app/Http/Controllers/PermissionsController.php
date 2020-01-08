@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\{Permission, Role};
 
 class PermissionsController extends Controller
 {
@@ -36,7 +36,35 @@ class PermissionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['sometimes','unique:permissions,name'],
+            'permissions' => ['required','array'],
+            'role' => ['required']
+        ]);
+
+        $name = $request->name;
+
+        $permissions = $request->permissions;
+
+        $permission_full_name = null;
+
+        if($name)
+        {
+            $permission_full_name = $name.'-';
+        }
+
+        $permissions_list = [];
+        foreach($permissions as $permission)
+        {
+            $permission_name = ($permission_full_name) ? $permission_full_name.$permission :  $permission;
+            Permission::firstorCreate(['name' => $permission_name]);
+
+            $permissions_list[] = $permission_name;
+        }
+
+        $role = Role::findorFail($request->role);
+        $role->syncPermissions($permissions_list);
+        return response()->json(['success' => true,'msg' => 'Permissions has been attached to role.']);
     }
 
     /**

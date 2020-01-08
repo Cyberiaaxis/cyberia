@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +12,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        DB::table('permissions')->insert([
+            'name' => "create",
+            'guard_name' => 'web',
+        ]);
+        DB::table('permissions')->insert([
+            'name' => "edit",
+            'guard_name' => 'web',
+        ]);
+        DB::table('permissions')->insert([
+            'name' => "delete",
+            'guard_name' => 'web',
+        ]);
+        DB::table('permissions')->insert([
+            'name' => "lock",
+            'guard_name' => 'web',
+        ]);
     }
 }
+
+
+

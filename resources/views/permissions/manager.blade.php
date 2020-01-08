@@ -78,7 +78,7 @@
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="role" class="col-form-label">Roles</label>
+                        <label for="role_id" class="col-form-label">Roles</label>
                         <select class="js-example-basic-single" name="role">
                             @foreach($roles as $role)
                                 <option value="{{ $role->id }}">{{ $role->name }}</option>
@@ -88,17 +88,19 @@
                     <div class="form-group form-group-row">
                         <div class="row">
                             <div class="col-xs-6">
-                                <label for="permissions Name" class="col-form-label">Permissions Name</label>
-                                <input type="test" class="form-control input-xs" id="permissions Name" placeholder="Permission Name" name="permissionsPartfirst">
+                                <label for="Permissions Name" class="col-form-label">Permissions Name</label>
+                                <input type="text" class="form-control input-xs" id="Permissions Name" placeholder="Permission Name" name="name">
                             </div>
                             <div class="col-xs-6">
-                                <label for="permissionsType[]" class="col-form-label">Permissions Type</label>
-                                <select class="form-control js-example-basic-single" multiple="multiple" name="permissionsType[]">
+                                <label for="permissionsType" class="col-form-label">Permissions Type</label>
+                                
+                                <select class="form-control js-example-basic-single" multiple="multiple" name="permissions[]" aria-describedby="helpBlock">
                                     <option value='create'>Create</option>
                                     <option value='edit'>Edit</option>
                                     <option value='delete'>Delete</option>
                                     <option value='lock'>Lock</option>                                    
                                 </select>
+                                <span id="helpBlock" class="help-block">New permission addition is possible at selection permissions.</span>
                             </div>
                         </div>
                     </div>                    
@@ -129,7 +131,10 @@
     @include('partials.footer')
     <script>
         $(document).ready(function() {
-         $('.js-example-basic-single').select2({width: '100%'});
+         $('.js-example-basic-single').select2({
+             width: '100%',
+             tags: true
+             });
      });
 
     </script>
