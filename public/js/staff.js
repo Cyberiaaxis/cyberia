@@ -6,10 +6,10 @@ $(document).ready(function() {
         // console.log(response);
         if (response.success) {
             toastr["success"](response.msg);
+            $('#insert').modal('hide');
 
             if (response.role) {
                 console.log(response.role.status);
-                $('#insert').modal('hide');
                 $('#addRole').trigger('reset');
                 let status = (response.role.status == 1) ? 'checked' : '';
                 let html = '';
@@ -102,9 +102,7 @@ $(document).ready(function() {
         requestProcess(data, show);
     });
 
-    $('#addRole', '#addRolePermission').on('submit', function(event) {
-
-        alert("iamhere");
+    $('#addRole,#addRolePermission').on('submit', function(event) {
         event.preventDefault();
         const form = $(this);
         const url = form.attr('action');

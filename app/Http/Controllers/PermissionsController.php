@@ -12,9 +12,16 @@ class PermissionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $roles = Role::orderBy('name')->get();
+
+        $roles  = Role::all();
+
+        if($request->ajax())
+        {
+            return Permission::orderBy('name')->get(['id','name']);
+        }
+
         return view('permissions.manager', ['roles'=> $roles]);
     }
 
@@ -43,9 +50,7 @@ class PermissionsController extends Controller
         ]);
 
         $name = $request->name;
-
         $permissions = $request->permissions;
-
         $permission_full_name = null;
 
         if($name)

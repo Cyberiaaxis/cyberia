@@ -21,40 +21,20 @@
                     <div class="sparkline13-graph">
                         <div class="datatable-dashv1-list custom-datatable-overright">
                             <div id="toolbar">
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#insert"><i class="fa fa-plus"></i> Insert</button>
-                                <button type="button" id="remove" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Remove</button>
+                                <button type="button" class="btn btn-sm btn-primary"  data-url="{{ route('roles.store') }}" data-toggle="modal" data-target="#insert"><i class="fa fa-plus"></i> Add Role's Permissions</button>
+                                <!-- <button type="button" id="remove" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Remove</button> -->
                             </div>
-                            <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                            <table id="table" data-url="{{ route('permissions.index') }}" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
                                 <thead>
                                     <tr>
                                         <th data-field="state" data-checkbox="true"></th>
-                                        <th data-field="id">Role Name</th>
-                                        <th data-field="name" data-editable="true">IDK</th>
-                                        <th data-field="description" data-editable="true">IDK</th>
-                                        <th data-field="status">IDK</th>
-                                        <th data-field="created_at" >IDK</th>
-                                        <th data-field="updated_at" >IDK</th>
-                                        <th data-field="operate" data-events="operateEvents">IDK</th>
+                                        <th data-field="id">ID</th>
+                                        <th data-field="name">Name</th>
+                                        <th data-field="created_at" >Created</th>
+                                        <th data-field="updated_at" >Modified</th>
+                                        <th data-field="operate" data-events="operateEvents">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td class="delete" data-id=" $role->id " data-href=" route('roles.update',$role->id) "> Field </td>
-                                        <td> Field </td>
-                                        <td> Field </td>
-                                        <td>
-                                            <label class="switch">
-                                                <input class="switch-input" type="checkbox" />
-                                                <span class="switch-label" data-on="active" data-off="inactive"></span>
-                                                <span class="switch-handle"></span>
-                                            </label>
-                                        </td>
-                                        <td> Field </td>
-                                        <td> Field </td>
-                                    <td><button type="button" class="btn btn-danger btn-sm delete" title="Delete" data-href=" url " data-id=" id "><i class="glyphicon glyphicon-trash"></i></button></td>
-                                    </tr>
-                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -131,13 +111,31 @@
     @include('partials.footer')
     <script>
         $(document).ready(function() {
+            var url = $('table').attr('data-url');
          $('.js-example-basic-single').select2({
              width: '100%',
-             tags: true
-             });
+             tags: true,
+             ajax: {
+                url: url,
+                dataType: 'json',
+                type: "GET",
+                quietMillis: 50,
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.name,
+                                id: item.id
+                            }
+                        })
+                    };
+                }
+            }
+         });
      });
 
     </script>
 @endsection
 
 
+<!-- https://examples.bootstrap-table.com/index.html#view-source -->
