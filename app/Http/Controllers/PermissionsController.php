@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\{Permission, Role};
+use Spatie\Permission\Models\{Permission};
 
 class PermissionsController extends Controller
 {
@@ -14,15 +14,18 @@ class PermissionsController extends Controller
      */
     public function index(Request $request)
     {
-
-        $roles  = Role::all();
+        $permissions  = Permission::orderBy('name')->get(['id','name']);
 
         if($request->ajax())
         {
-            return Permission::orderBy('name')->get(['id','name']);
+            foreach ($permissions as $key => $value) 
+            {
+                    $value->_id_data = ["id" => $value->id,"href" => route('permissions.update',$value->id)];
+            }
+            return $permissions;
         }
 
-        return view('permissions.manager', ['roles'=> $roles]);
+        return view('permissions.permission');
     }
 
     /**
@@ -43,33 +46,17 @@ class PermissionsController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request;
         $request->validate([
-            'name' => ['sometimes','unique:permissions,name'],
-            'permissions' => ['required','array'],
-            'role' => ['required']
+            'name' => ['required','array'],
         ]);
 
-        $name = $request->name;
-        $permissions = $request->permissions;
-        $permission_full_name = null;
-
-        if($name)
+        foreach($request->name as $permissionName)
         {
-            $permission_full_name = $name.'-';
+            Permission::firstorCreate(['name' => $permissionName]);
         }
 
-        $permissions_list = [];
-        foreach($permissions as $permission)
-        {
-            $permission_name = ($permission_full_name) ? $permission_full_name.$permission :  $permission;
-            Permission::firstorCreate(['name' => $permission_name]);
-
-            $permissions_list[] = $permission_name;
-        }
-
-        $role = Role::findorFail($request->role);
-        $role->syncPermissions($permissions_list);
-        return response()->json(['success' => true,'msg' => 'Permissions has been attached to role.']);
+        return response()->json(['success' => true,'msg' => 'Permissions has been created.']);
     }
 
     /**
@@ -103,7 +90,16 @@ class PermissionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $request->validate([
+            'name' => ['required','unique:permissions,name']
+        ]);
+
+        $permission = Permission::findorFail($id);
+        $permission->name = $request->input('name');
+        $permission->save();
+
+        return response()->json(['success' => true,'msg' => 'Permission has been updated']);
     }
 
     /**
@@ -114,6 +110,8 @@ class PermissionsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $permission = Permission::findorFail($id);
+        $permission->delete($id);
+      return response()->json(['success' => true, 'msg' => 'Permission has been deleted']);
     }
 }

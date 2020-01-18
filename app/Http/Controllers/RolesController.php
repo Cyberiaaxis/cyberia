@@ -2,39 +2,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\RoleResource;
 use Spatie\Permission\Models\Role;
 
-class StaffController extends Controller
+class RolesController extends Controller
 {
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function home(Request $request)
-    {
-
-        if($request->ajax())
-        {
-            return response()->json(['role' => Role::orderBy('name')->get()]);
-        }
-
-        return view('dashboard');
-    }
-
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $roles = Role::with('permissions')->orderBy('name')->get();
 
-        $roles = Role::orderBy('name')->get();
+        if($request->ajax())
+        {
+            foreach ($roles as $key => $value) 
+            {
+                    $value->_id_data = ["id" => $value->id,"href" => route('roles.update',$value->id)];
+            }
+            return RoleResource::collection($roles);
+        }
 
-        return view('role',['roles' => $roles]);
+        return view('roles.role');
     }
 
     /**
@@ -75,7 +66,8 @@ class StaffController extends Controller
      */
     public function show($id)
     {
-        //
+       $role = Role::findorFail($id);
+       return view('operations.operations',['role' => $role]);
     }
 
     /**
@@ -86,7 +78,24 @@ class StaffController extends Controller
      */
     public function edit($id)
     {
-        //
+        $role = Role::findorFail($id);
+
+        if($request->ajax())
+        {
+            return $role->permissions;
+        }
+
+        $request->validate([
+            'name' => ['required','exists:permissions,name']
+        ]);
+
+        $permission = $request->input('name');
+
+        $permission = Permission::findByName($permission);
+
+        $role->revokePermissionTo($permission);
+
+        return response()->json(['success' => true,'msg' => 'Permission has been revoked from Role']);
     }
 
     /**

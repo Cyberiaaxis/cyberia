@@ -31,6 +31,7 @@
                                         <th data-field="id">Role Id</th>
                                         <th data-field="name" data-editable="true">Role Name</th>
                                         <th data-field="description" data-editable="true">Role Description</th>
+                                        <th data-field="permissions">Permissions</th>
                                         <th data-field="status">Role Status</th>
                                         <th data-field="created_at" >Created</th>
                                         <th data-field="updated_at" >Last Modified</th>
@@ -45,6 +46,11 @@
                                         <td class="delete" data-id="{{ $role->id }}" data-href="{{ route('roles.update',$role->id) }}">{{ $role->id }}</td>
                                         <td>{{ $role->name }}</td>
                                         <td>{{ $role->description }}</td>
+                                        <td>
+                                            @foreach ($role->permissions as $permission)
+                                                <div class="label label-primary">{{ $permission->name }}</div>
+                                            @endforeach
+                                        </td>
                                         <td>
                                             <label class="switch">
                                                 <input class="switch-input"  data-href="{{ route('roles.update',$role->id) }}" type="checkbox" @if($role->status) checked @endif />

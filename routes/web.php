@@ -17,7 +17,11 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::middleware('auth')->prefix('staff')->group(function(){ 
-    Route::get('/','StaffController@home');
-    Route::resource('/roles','StaffController');
-    Route::resource('permissions','PermissionsController'); 
+    Route::resource('/','StaffsController');
+    Route::resource('/roles','RolesController');
+    Route::resource('/permissions','PermissionsController');     
+    Route::delete('/staff/operations/{id}','RolesController@edit');
+    Route::get('/operations/{id}','OperationsController@show')->name('operations');
+    Route::post('/operations/{id}','OperationsController@createPermission')->name('operations.store');
+    Route::delete('/operations/{id}','OperationsController@removePermission');
 });

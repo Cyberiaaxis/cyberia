@@ -6,6 +6,7 @@ $(document).ready(function() {
         // console.log(response);
         if (response.success) {
             toastr["success"](response.msg);
+            $('table').bootstrapTable('refresh');
             $('#insert').modal('hide');
 
             if (response.role) {
@@ -70,13 +71,16 @@ $(document).ready(function() {
         if(success){
             let url = $(this).attr('data-href');
             let id = $(this).attr('data-id');
+            let name = $(this).attr('data-name');
             let data = {
                 url: url,
                 method: 'delete',
                 csrfToken: csrfToken
             };
-
-            requestProcess(data, show);
+            if (name) {
+                data['name'] = name;
+             }
+                                requestProcess(data, show);
             var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
                 return row.id
               })
@@ -109,7 +113,9 @@ $(document).ready(function() {
         $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
         console.log(form.serializeArray());
         $.post(url,  form.serializeArray())
-        .done(response => { show(response) })
+        .done(response => { 
+           show(response) 
+        })
         .fail((function(e) 
         { 
             const error = e.responseJSON;
