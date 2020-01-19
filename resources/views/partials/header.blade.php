@@ -70,7 +70,7 @@
 	<link href="https://select2.github.io/select2-bootstrap-theme/css/select2-bootstrap.css" rel="stylesheet" />
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
 
-
+<link rel="stylesheet" href="/css/app.css">
 
 
 

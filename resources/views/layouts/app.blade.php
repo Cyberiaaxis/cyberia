@@ -22,5 +22,6 @@
         @yield('js')
         <!-- End Footer area -->    
     </div>
+    <script type="text/javascript" src="/js/app.js"></script>
 </body>
 </html>

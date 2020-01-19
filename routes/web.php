@@ -15,13 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
-Route::middleware('auth')->prefix('staff')->group(function(){ 
+Auth::routes(['verify' => true]);
+Route::group(['prefix' => 'staff', 'middleware' => 'auth'], function(){
     Route::resource('/','StaffsController');
-    Route::resource('/roles','RolesController');
-    Route::resource('/permissions','PermissionsController');     
-    Route::delete('/staff/operations/{id}','RolesController@edit');
-    Route::get('/operations/{id}','OperationsController@show')->name('operations');
-    Route::post('/operations/{id}','OperationsController@createPermission')->name('operations.store');
-    Route::delete('/operations/{id}','OperationsController@removePermission');
+    Route::resources([ '/roles'=>'RolesController',  '/permissions' => 'PermissionsController'  ]);
+    Route::delete('/staff/operations/{id}','RolesController@edit')->middleware(['role:admin']);
+    Route::get('/operations/{id}','OperationsController@show')->name('operations')->middleware(['role:admin']);
+    Route::post('/operations/{id}','OperationsController@createPermission')->name('operations.store')->middleware(['role:admin']);
+    Route::delete('/operations/{id}','OperationsController@removePermission')->middleware(['role:admin']);
+    Route::resource('/users','UsersController');
 });
