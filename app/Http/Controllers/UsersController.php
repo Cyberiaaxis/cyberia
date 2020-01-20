@@ -1,15 +1,12 @@
 <?php
-
-
-
-namespace App\Http\Controllers\Admin;
-
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
-use App\Models\User;
+use App\User;
+use App\Http\Resources\UserResource;
 
-class UsersController extends AdminController
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,11 +14,15 @@ class UsersController extends AdminController
      * @return \Illuminate\Http\Response
      */
 
-    public function index()
-
+    public function index(Request $request)
     {
-        $users = User::all();
-        return view('admin.users.index',['user_list' => $users]);
+        $users = User::with('permissions')->orderBy('name')->get();
+
+        if($request->ajax())
+        {
+            return UserResource::collection($users);
+        }
+         return view('users.users');
     }
 
 
@@ -120,10 +121,10 @@ class UsersController extends AdminController
 
      */
 
-    public function edit($id)
+    public function edit(Request $request, $id)
 
     {
-
+        return $request;
         $title = "User Editing";
 
         $user = User::findOrFail($id); //Get user with specified id
@@ -153,39 +154,23 @@ class UsersController extends AdminController
      */
 
     public function update(Request $request, $id)
-
     {
+        $rules = [];
 
-        $this->validate($request, [
+        if($request->name){
+            $rules['name'] = ['required','unique:users,name'];
+        }elseif($request->email){
+            $rules['email'] = ['required','unique:users,email']; 
+        }elseif($request->status){
+            $rules['status'] = ['required'];
+        }
+         
+        $request->validate($rules);
+        $role = User::findorFail($id);
+        $input = $request->except(['url','method','csrfToken']);
+        $role->fill($input)->save();
 
-            'user_name' => 'required|max:120',
-
-            'email' => 'required|email|unique:users,email,' . $id,
-
-            'roles' => 'required'
-
-        ]);
-
-
-
-        $user = User::findorFail($id);
-
-
-
-
-
-        $roles = $request->input("roles");
-
-        $user->roles()->sync($roles);
-
-
-
-
-
-
-
-        return redirect()->route('users.index')->with('flash_message','User successfully edited.');
-
+        return response()->json(['success' => true,'msg' => 'User updated']);
     }
 
 
@@ -203,17 +188,10 @@ class UsersController extends AdminController
      */
 
     public function destroy($id)
-
     {
-
         $user = User::findOrFail($id);
-
         $user->delete();
-
-
-
         return redirect()->route('users.index')->with('flash_message','User successfully deleted.');
-
     }
 
 }

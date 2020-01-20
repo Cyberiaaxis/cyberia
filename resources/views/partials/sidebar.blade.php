@@ -22,7 +22,9 @@
             <li>
                 <a title="operations" href="/staff/operations" aria-expanded="false"><span class="educate-icon educate-event icon-wrap sub-icon-mg" aria-hidden="true"></span> <span class="mini-click-non">Operations</span></a>
             </li>
-                <!-- <li class="active">
+            <li>
+                <a title="users" href="/staff/users" aria-expanded="false"><span class="educate-icon educate-event icon-wrap sub-icon-mg" aria-hidden="true"></span> <span class="mini-click-non">Users</span></a>
+            </li>                <!-- <li class="active">
                     <a class="has-arrow" href="index.html">
 						   <span class="educate-icon educate-home icon-wrap"></span>
 						   <span class="mini-click-non">User Management</span>

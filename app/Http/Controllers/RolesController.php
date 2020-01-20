@@ -18,10 +18,6 @@ class RolesController extends Controller
 
         if($request->ajax())
         {
-            foreach ($roles as $key => $value) 
-            {
-                    $value->_id_data = ["id" => $value->id,"href" => route('roles.update',$value->id)];
-            }
             return RoleResource::collection($roles);
         }
 
