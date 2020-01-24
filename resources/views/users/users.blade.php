@@ -31,10 +31,10 @@
                                         <th data-field="id">User Id</th>
                                         <th data-field="name" data-editable="true">User Name</th>
                                         <th data-field="email" data-editable="true">User Email</th>
-                                        <th data-field="permissions">Roles</th>
-                                        <th data-field="status">User Status</th>
+                                        <th data-field="roles">Roles</th>
+                                        <!-- <th data-field="status">User Status</th> -->
                                         <th data-field="created_at" >Created</th>
-                                        <th data-field="updated_at" >Last Modified</th>
+                                        <!-- <th data-field="updated_at" >Last Modified</th> -->
                                         <th data-field="operate">Action</th>
                                     </tr>
                                 </thead>
@@ -66,16 +66,20 @@
                         <input type="text" class="form-control" name="name">
                     </div>
                     <div class="form-group">
-                        <label for="description" class="col-form-label">User Email:</label>
-                        <textarea class="form-control" name="description"></textarea>
+                        <label for="email" class="col-form-label">User Email:</label>
+                        <input type="email" class="form-control" name="email">
+                    </div>
+                        <div class="form-group">
+                        <label for="password" class="col-form-label">Password:</label>
+                        <input type="password" class="form-control" name="password">
                     </div>
                     <div class="form-group">
-                        <label for="status" class="col-form-label">User Status</label>
-                    <select name="status" class="form-control">
-                        <option value="0"selected>Inactive</option>
-                        <option value="1">Active</option>
-                    </select>
-                    </div>
+                        <label for="roles" class="col-form-label">Roles</label>
+                         <select class="form-control roles" multiple="multiple" name="roles[]" aria-describedby="helpBlock">
+                        </select>
+                        <span id="helpBlock" class="help-block">You can assign roles a user.</span>
+                    </div>   
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -101,4 +105,9 @@
 @endsection
 @section('js')
     @include('partials.footer')
+    <script>
+        $(document).ready(function() {
+          console.log(selectfetch(".roles", "{{ route('roles.index') }}" ));
+        });
+    </script>
 @endsection

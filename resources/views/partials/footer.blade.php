@@ -87,4 +87,4 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
 
 
-<script type="text/javascript" src="/js/app.js"></script>
+<!-- <script type="text/javascript" src="/js/app.js"></script> -->

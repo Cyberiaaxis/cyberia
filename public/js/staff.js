@@ -1,7 +1,10 @@
+
+
+
 $(document).ready(function() {
     const csrfToken = $('meta[name="csrf-token"]').attr('content');;
     const $table = $('table');
-
+   
     function show(response) {
         // console.log(response);
         if (response.success) {
@@ -134,4 +137,29 @@ $(document).ready(function() {
         };
         requestProcess(data, show);
     });
+
+
+   
 });
+
+function selectfetch(selector, url, addrecord = false){ 
+
+    if(!selector) return 'Selector is required';
+
+    if(!url) return 'URL is required';
+
+       $.getJSON(url,function(data) {
+        var items = $.map(data.data, function (item) {
+            return {
+                text: item.name,
+                id: item.name
+            }
+        });
+        $(selector).select2({
+            width: '100%',
+            tags:  addrecord,
+            data: items
+        });
+    });
+}
+

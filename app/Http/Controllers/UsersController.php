@@ -2,8 +2,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
-use App\User;
+use Spatie\Permission\Models\{Role, Permission};
+use Hash;
+use App\{ User };
 use App\Http\Resources\UserResource;
 
 class UsersController extends Controller
@@ -17,7 +18,7 @@ class UsersController extends Controller
     public function index(Request $request)
     {
         $users = User::with('permissions')->orderBy('name')->get();
-
+        // dd($users);
         if($request->ajax())
         {
             return UserResource::collection($users);
@@ -64,21 +65,25 @@ class UsersController extends Controller
      */
 
     public function store(Request $request)
-
     {
-
         $this->validate($request, [
 
-            'user_name'=>'required|max:120',
-
-            'email'=>'required|email|unique:users,email,'.$request->input("email"),
-
+            'name'=>'required|max:120',
+            'password'=>'required',
+            'email'=>'required|email|unique:users,email,'.$request->email,
+            'roles'=>"required|array",
         ]);
+        
+        $password = Hash::make($request->password);    
+        
+        $user = User::create([ 
+                'name' => $request->name,  
+                'email' => $request->email,  
+                'password' => $password 
+            ]);
 
-
-
-        return redirect()->route('users.index')->with('flash_message','User created successfully.');
-
+        $user->syncRoles($request->roles);
+    return response()->json(['success' => true,'msg' => 'User has been created.']);
     }
 
 

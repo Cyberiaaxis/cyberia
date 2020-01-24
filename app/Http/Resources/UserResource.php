@@ -14,30 +14,29 @@ class UserResource extends JsonResource
      */
 public function toArray($request)
 {
-
         $checked = null;
 
         if($this->status){
             $checked = "checked";
         }
 
-        $html = ' <label  class="switch switch-sm">
-        <input class="switch-input" data-href="'.route('users.update',$this->id).'" type="checkbox"' .$checked.'/>
-        <span class="switch-label" data-on="active" data-off="inactive"></span>
-        <span class="switch-handle"></span>
-        </label>';
+        // $html = ' <label  class="switch switch-sm">
+        // <input class="switch-input" data-href="'.route('users.update',$this->id).'" type="checkbox"' .$checked.'/>
+        // <span class="switch-label" data-on="active" data-off="inactive"></span>
+        // <span class="switch-handle"></span>
+        // </label>';
         $delete = '<button type="button" class="btn btn-danger btn-sm delete" title="Delete" data-href="'.route('users.destroy',$this->id).'" data-id="'.$this->id.'">
         <i class="glyphicon glyphicon-trash"></i></button>';
-        $permissions = '<a href="'.route('operations', $this->id).'">'. $this->getPermissionViaRoles()->pluck('name') .'</a>';
+        $roles = '<a href="'.route('operations', $this->id).'">'. $this->roles->pluck('name') .'</a>';
         $data =  [
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'permissions' => $permissions, 
-            'status' => $html,
+            'roles' => $roles, 
+            // 'status' => $html,
             'operate' => $delete,
-            'created_at' => $this->created_at->diffForHumans(),
-            'updated_at' => $this->updated_at->diffForHumans()
+            'created_at' => $this->created_at->diffForHumans()
+            // 'updated_at' => $this->updated_at->diffForHumans()
         ];
 
         $data['_id_data'] = ["id" => $this->id, "href" => route('users.update', $this->id)];

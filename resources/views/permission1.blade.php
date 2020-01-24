@@ -90,7 +90,7 @@
                     </div>
                     <div class="form-group">
                         <label for="roleStatus" class="col-form-label">Role Status</label>
-                    <select id="roleStatus" class="form-control">
+                        <select id="roleStatus" class="form-control">
                         <option value="0">Inactive</option>
                         <option value="1" selected>Active</option>
                     </select>
