@@ -56,10 +56,10 @@
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
-                                <label for="name" class="col-form-label">Permissions</label>
-                                <select class="form-control js-example-basic-single" multiple="multiple" name="name[]" aria-describedby="helpBlock">
-                                </select>
-                                <span id="helpBlock" class="help-block">New permission & addition is possible at selection permissions.</span>
+                        <label for="permissions" class="col-form-label">Permissions</label>
+                        <select class="form-control permissions" multiple="multiple" name="permissions[]" aria-describedby="helpBlock">
+                        </select>
+                        <span id="helpBlock" class="help-block">New permission & addition is possible at selection permissions.</span>
                     </div>                    
                 </div>
                 <div class="modal-footer">
@@ -86,30 +86,13 @@
 @endsection
 @section('js')
     @include('partials.footer')
+        <script>
+        $(document).ready(function() {
+          console.log(selectfetch(".permissions", $('table').attr('data-url'), true ));
+        });
+    </script>
     <script>
         $(document).ready(function() {
-            var url = $('table').attr('data-url');
-         $('.js-example-basic-single').select2({
-             width: '100%',
-             tags: true,
-             ajax: {
-                url: url,
-                dataType: 'json',
-                type: "GET",
-                quietMillis: 50,
-                processResults: function (data) {
-                    return {
-                        results: $.map(data, function (item) {
-                            return {
-                                text: item.name,
-                                id: item.name
-                            }
-                        })
-                    };
-                }
-            }
-         });
-     });
      function operateFormatter(value, row, index) {
         return [
             '<a class="remove delete" href="javascript:void(0)" data-href="/staff/permissions/'+row.id+'" data-id="'+row.id+'" title="Remove">',

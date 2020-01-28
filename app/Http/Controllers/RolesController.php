@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Resources\RoleResource;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class RolesController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
+     * Display a listing of the roles.
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -21,7 +22,7 @@ class RolesController extends Controller
             return RoleResource::collection($roles);
         }
 
-        return view('roles.role');
+    return view('roles.role');
     }
 
     /**
@@ -34,8 +35,7 @@ class RolesController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
+     * Store a newly created role with save assign permissions in storage.
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -44,19 +44,19 @@ class RolesController extends Controller
         $request->validate([
             'name' => ['required','unique:roles,name'],  'description' => ['required'],  'status' => ['required','integer']
         ]);
+        $role = Role::create([  'name' => $request->name,  
+                                'description' => $request->description,  
+                                'status' => $request->status,
+                                'updated_at' => now(),
+                                'created_at' => now()
 
-        $role = Role::firstorCreate([
-            'name' => $request->name,
-            'description' => $request->description,
-            'status' => $request->status
-        ]);
-
-        return response()->json(['success' => true, 'status' => true, 'msg' => 'Role created successfully','role' => $role]);
+                            ]);
+        $role->syncPermissions($request->permissions);
+    return response()->json(['success' => true, 'status' => true, 'msg' => 'Role has been created successfully','role' => $role]);
     }
 
     /**
-     * Display the specified resource.
-     *
+     * Display the specified role.
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -68,63 +68,48 @@ class RolesController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, Role $role)
     {
-        $role = Role::findorFail($id);
-
-        if($request->ajax())
-        {
-            return $role->permissions;
-        }
-
-        $request->validate([
-            'name' => ['required','exists:permissions,name']
-        ]);
-
-        $permission = $request->input('name');
-
-        $permission = Permission::findByName($permission);
-
-        $role->revokePermissionTo($permission);
-
-        return response()->json(['success' => true,'msg' => 'Permission has been revoked from Role']);
+        $permissions = Permission::orderBy('name')->get();
+        return view('roles.edit', ['permissions' => $permissions, 'role' => $role]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
+     * Update the specified role in storage.
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Request $request, int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        // return $request;
-        $rules = [];
-
-        if($request->name){
-            $rules['name'] = ['required','unique:roles,name'];
-        }elseif($request->description){
-            $rules['description'] = ['required']; 
-        }elseif($request->status){
-            $rules['status'] = ['required'];
-        }
+        // $rules = [];
+        // $rules['status'] = $request->input('status',0);
+        $request->validate([
+             'name' => ['required','exists:roles,name'],
+             'description' => ['required'],
+             'status' => ['nullable','integer'],
+             'permissions' => ['required','array']
+         ]);
+        // if($request->name){
+        //     $rules['name'] = ['required','unique:roles,name'];
+        // }elseif($request->description){
+        //     $rules['description'] = ['required']; 
+        // }
          
-        $request->validate($rules);
+        // $request->validate($rules);
         $role = Role::findorFail($id);
-        $input = $request->except(['url','method','csrfToken']);
+        $input = $request->except(['url', 'method', 'csrfToken','permissions']);
+        $input['status'] = $request->input('status',0);
         $role->fill($input)->save();
-
-        return response()->json(['success' => true,'msg' => 'Role updated']);
+        $role->syncPermissions($request->permissions);
+    return response()->json(['success' => true,'msg' => 'Role has been updated']);
     }
 
     /**
      * Remove the specified resource from storage.
-     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -132,6 +117,6 @@ class RolesController extends Controller
     {
         $role = Role::findorFail($id);
         $role->delete($id);
-      return response()->json(['success' => true, 'msg' => 'Role has been deleted']);
+    return response()->json(['success' => true, 'msg' => 'Role has been deleted']);
     }
 }

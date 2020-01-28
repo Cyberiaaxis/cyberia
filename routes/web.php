@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::group(['prefix' => 'staff', 'middleware' => ['auth', 'role:Admin']], function(){
+Route::group(['prefix' => 'staff', 'middleware' => ['auth']], function(){
     Route::resource('/','StaffsController');
     Route::resources([ '/roles'=>'RolesController',  '/permissions' => 'PermissionsController'  ]);
     Route::delete('/staff/operations/{id}','RolesController@edit');

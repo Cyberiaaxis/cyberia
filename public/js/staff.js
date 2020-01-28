@@ -1,71 +1,33 @@
-
-
-
 $(document).ready(function() {
     const csrfToken = $('meta[name="csrf-token"]').attr('content');;
     const $table = $('table');
-   
-    function show(response) {
-        // console.log(response);
-        if (response.success) {
-            toastr["success"](response.msg);
-            $('table').bootstrapTable('refresh');
-            $('#insert').modal('hide');
 
-            if (response.role) {
-                console.log(response.role.status);
-                $('#addRole').trigger('reset');
-                let status = (response.role.status == 1) ? 'checked' : '';
-                let html = '';
-                html += '<label class="switch">';
-                html += '<input class="switch-input" type="checkbox"' + status + ' />';
-                html += '<span class="switch-label" data-on="active" data-off="inactive"></span>';
-                html += '<span class="switch-handle"></span>';
-                html += '</label>';
-                let deletebtn = '<button type="button" class="btn btn-danger btn-sm delete" title="Delete" data-href="/staff/roles/'+response.role.id+'" data-id="'+response.role.id+'">';
-                deletebtn += '<i class="glyphicon glyphicon-trash"></i>';
-                deletebtn += '</button>';
-                let created_at = new Intl.DateTimeFormat('en', {month: 'long', day: 'numeric',year: 'numeric', hour: '2-digit', minute: '2-digit'}).format(new Date(response.role.created_at));
-                response.role.created_at = created_at;
-                let updated_at = new Intl.DateTimeFormat('en', {month: 'long', day: 'numeric',year: 'numeric', hour: '2-digit', minute: '2-digit'}).format(new Date(response.role.updated_at));
-                response.role.updated_at = updated_at;
-                response.role.status = html;
-                response.role.state = null;
-                response.role.operate = deletebtn;
-                response.role._id_data = {
-                    href: '/staff/roles/'+response.role.id,
-                    id: response.role.id
-                }
-                $table.bootstrapTable('insertRow', {
-                    index: 0,
-                    row: response.role
-                });
+    function message (text, status = 'error'){
+       toastr.options = { 
+            "closeButton": true, "debug": false,  "newestOnTop": true, "progressBar": true,
+            "positionClass": "toast-top-right", "preventDuplicates": true,  "onclick": null,  "showDuration": "300",
+            "hideDuration": "1000",  "timeOut": "5000",  "extendedTimeOut": "1000",  "showEasing": "swing",
+            "hideEasing": "linear",  "showMethod": "fadeIn",  "hideMethod": "fadeOut"
             }
+    return toastr[status](text);
+    }
 
-        } else {
+    function showMessage(response, hide = false) {
+        console.log(response);
+        if (response.errors) 
+        {
             $.each(response.errors, function(key, value) {
-                toastr["error"](value);
+                 $('input[name="'+key+'"]').parent().addClass('has-error');
+            message(value);
             });
-
+    
+        return false;    
         }
 
-        toastr.options = {
-            "closeButton": true,
-            "debug": false,
-            "newestOnTop": true,
-            "progressBar": true,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": true,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        }
+        $('table').bootstrapTable('refresh');
+        $(hide).modal('hide');
+        $('#addmodel').trigger('reset');
+    return message(response.msg, "success");
     }
 
     $(document).on('click','.delete',function() {
@@ -83,7 +45,7 @@ $(document).ready(function() {
             if (name) {
                 data['name'] = name;
              }
-                                requestProcess(data, show);
+            requestProcess(data, showMessage);
             var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
                 return row.id
               })
@@ -99,6 +61,11 @@ $(document).ready(function() {
 
     });
 
+    $(document).on('click','.edit',function(){
+        var url = $(this).attr('data-href');
+        $('#update').load(url);
+    });
+    
     $table.on('editable-save.bs.table', function(e, field, row, oldValue, $el) {
         let data = {
             url: row._id_data.href,
@@ -106,23 +73,24 @@ $(document).ready(function() {
             csrfToken: csrfToken,
         };
         data[field] = row[field];
-        requestProcess(data, show);
+        requestProcess(data, showMessage);
     });
 
-    $('#addRole,#addRolePermission').on('submit', function(event) {
+     $(document).on('submit','#addModel,#updateModel',function(event) {
         event.preventDefault();
         const form = $(this);
         const url = form.attr('action');
+        const modalId = '#'+form.parent().parent().parent().attr('id');
         $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
-        console.log(form.serializeArray());
+        // console.log(form.serializeArray());
         $.post(url,  form.serializeArray())
         .done(response => { 
-           show(response) 
+           showMessage(response, modalId) 
         })
         .fail((function(e) 
         { 
             const error = e.responseJSON;
-            show(error);
+            showMessage(error);
         }));
      });
 
@@ -135,7 +103,7 @@ $(document).ready(function() {
             status: $(this).is(':checked'),
             csrfToken: csrfToken
         };
-        requestProcess(data, show);
+        requestProcess(data, showMessage);
     });
 
 
@@ -149,7 +117,7 @@ function selectfetch(selector, url, addrecord = false){
     if(!url) return 'URL is required';
 
        $.getJSON(url,function(data) {
-        var items = $.map(data.data, function (item) {
+        var items = $.map(data, function (item) {
             return {
                 text: item.name,
                 id: item.name

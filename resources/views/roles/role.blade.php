@@ -29,13 +29,13 @@
                                     <tr>
                                         <th data-field="state" data-checkbox="true"></th>
                                         <th data-field="id">Role Id</th>
-                                        <th data-field="name" data-editable="true">Role Name</th>
-                                        <th data-field="description" data-editable="true">Role Description</th>
+                                        <th data-field="name">Role Name</th>
+                                        <th data-field="description">Role Description</th>
                                         <th data-field="permissions">Permissions</th>
                                         <th data-field="status">Role Status</th>
-                                        <th data-field="created_at" >Created</th>
-                                        <th data-field="updated_at" >Last Modified</th>
-                                        <th data-field="operate" data-events="operateEvents">Action</th>
+                                        <th data-field="created_at">Created</th>
+                                        <th data-field="updated_at">Last Modified</th>
+                                        <th data-field="operate">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -59,22 +59,28 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="addRole" method="post" action="{{ route('roles.store') }}" enctype="multipart/form-data">
+            <form id="addmodel" method="post" action="{{ route('roles.store') }}" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name" class="col-form-label">Role Name:</label>
-                        <input type="text" class="form-control" name="name">
+                        <input type="text" class="form-control" name="name" required autofocus>
                     </div>
                     <div class="form-group">
                         <label for="description" class="col-form-label">Role Description:</label>
-                        <textarea class="form-control" name="description"></textarea>
+                        <textarea class="form-control" name="description" required autofocus></textarea>
                     </div>
                     <div class="form-group">
+                        <label for="permissions" class="col-form-label">Role's Permissions</label>
+                         <select class="form-control permissions" multiple="multiple" name="permissions[]" aria-describedby="helpBlock" required autofocus>
+                        </select>
+                        <span id="helpBlock" class="help-block">You can assign permissions to a role.</span>
+                    </div>   
+                    <div class="form-group">
                         <label for="status" class="col-form-label">Role Status</label>
-                    <select name="status" class="form-control">
-                        <option value="0"selected>Inactive</option>
-                        <option value="1">Active</option>
-                    </select>
+                        <select name="status" class="form-control">
+                            <option value="0"selected>Inactive</option>
+                            <option value="1">Active</option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -86,6 +92,11 @@
     </div>
 </div>
 <!-- Modal End -->
+<!-- Modal Edit Start -->
+<div class="modal fade" id="update" tabindex="-1" role="dialog" aria-labelledby="update" aria-hidden="true">
+</div>
+<!-- Modal Edit End -->
+
 <div class="footer-copyright-area">
     <div class="container-fluid">
         <div class="row">
@@ -101,4 +112,9 @@
 @endsection
 @section('js')
     @include('partials.footer')
+    <script>
+        $(document).ready(function() {
+            console.log(selectfetch(".permissions", "{{ route('permissions.index') }}" ));
+        });
+    </script>
 @endsection
