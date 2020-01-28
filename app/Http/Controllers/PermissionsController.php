@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\PermissionResource;
 use Spatie\Permission\Models\{Permission};
 
 class PermissionsController extends Controller
@@ -14,18 +15,14 @@ class PermissionsController extends Controller
      */
     public function index(Request $request)
     {
-        $permissions  = Permission::orderBy('name')->get(['id','name']);
+         $permissions = Permission::orderBy('name')->get();
 
-        if($request->ajax())
-        {
-            foreach ($permissions as $key => $value) 
-            {
-                    $value->_id_data = ["id" => $value->id,"href" => route('permissions.update',$value->id)];
-            }
-            return $permissions;
-        }
+         if($request->ajax())
+         {
+             return PermissionResource::collection($permissions);
+         }
 
-        return view('permissions.permission');
+    return view('permissions.permissions');
     }
 
     /**
@@ -48,10 +45,10 @@ class PermissionsController extends Controller
     {
         // return $request;
         $request->validate([
-            'name' => ['required','array'],
+            'permissions' => ['required','array'],
         ]);
 
-        foreach($request->name as $permissionName)
+        foreach($request->permissions as $permissionName)
         {
             Permission::firstorCreate(['name' => $permissionName]);
         }
@@ -90,7 +87,6 @@ class PermissionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $request->validate([
             'name' => ['required','unique:permissions,name']
         ]);

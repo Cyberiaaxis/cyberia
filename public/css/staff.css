@@ -114,6 +114,11 @@
     height: 1rem;
 }
 
+.switch.disabled,
+.switch.disabled .switch-handle{
+     cursor: not-allowed;
+ }
+
 .editableform-loading {  
     background: url('../storage/templateimages/loading.gif') center center no-repeat;  
 }

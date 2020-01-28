@@ -59,7 +59,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="addmodel" method="post" action="{{ route('roles.store') }}" enctype="multipart/form-data">
+            <form id="addModel" method="post" action="{{ route('roles.store') }}" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name" class="col-form-label">Role Name:</label>

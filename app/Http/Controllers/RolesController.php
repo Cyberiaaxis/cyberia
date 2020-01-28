@@ -62,19 +62,18 @@ class RolesController extends Controller
      */
     public function show($id)
     {
-       $role = Role::findorFail($id);
-       return view('operations.operations',['role' => $role]);
+        //
     }
 
     /**
-     * Show the form for editing the specified resource.
-     * @param  int  $id
+     * Show the form for editing.
+     * @param  Request $request, Role $role
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request, Role $role)
     {
         $permissions = Permission::orderBy('name')->get();
-        return view('roles.edit', ['permissions' => $permissions, 'role' => $role]);
+    return view('roles.edit', ['permissions' => $permissions, 'role' => $role]);
     }
 
     /**
@@ -85,21 +84,12 @@ class RolesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $rules = [];
-        // $rules['status'] = $request->input('status',0);
         $request->validate([
              'name' => ['required','exists:roles,name'],
              'description' => ['required'],
              'status' => ['nullable','integer'],
              'permissions' => ['required','array']
          ]);
-        // if($request->name){
-        //     $rules['name'] = ['required','unique:roles,name'];
-        // }elseif($request->description){
-        //     $rules['description'] = ['required']; 
-        // }
-         
-        // $request->validate($rules);
         $role = Role::findorFail($id);
         $input = $request->except(['url', 'method', 'csrfToken','permissions']);
         $input['status'] = $request->input('status',0);

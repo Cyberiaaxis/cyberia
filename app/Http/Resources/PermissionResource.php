@@ -14,33 +14,17 @@ class PermissionResource extends JsonResource
      */
     public function toArray($request)
     {
+        // dd($this);
         $checked = null;
-
-        if($this->status){
-            $checked = "checked";
-        }
-
-        // $html = ' <label  class="switch switch-sm">
-        // <input class="switch-input" data-href="'.route('roles.update',$this->id).'" type="checkbox"' .$checked.'/>
-        // <span class="switch-label" data-on="active" data-off="inactive"></span>
-        // <span class="switch-handle"></span>
-        // </label>';
-        $delete = '<button type="button" class="btn btn-danger btn-sm delete" title="Delete" data-href="'.route('roles.destroy',$this->id).'" data-id="'.$this->id.'">
+        $delete = '<button type="button" class="btn-sm delete" title="Delete" data-href="'.route('permissions.destroy',$this->id).'" data-id="'.$this->id.'">
         <i class="glyphicon glyphicon-trash"></i></button>';
-        $permissions = '<a href="'.route('operations', $this->id).'">'. $this->permissions->pluck('name') .'</a>';
         $data =  [
             'id' => $this->id,
             'name' => $this->name,
-            // 'description' => $this->description,
-            'permissions' => $permissions, 
-            // 'status' => $html,
-            'operate' => $delete,
-            'created_at' => $this->created_at->diffForHumans(),
-            'updated_at' => $this->updated_at->diffForHumans()
+            'operate' => $delete
         ];
 
-        $data['_id_data'] = ["id" => $this->id, "href" => route('roles.update', $this->id)];
-
+        $data['_id_data'] = ["id" => $this->id, "href" => route('permissions.update', $this->id)];
     return $data;
     }
 }

@@ -73,6 +73,7 @@ $(document).ready(function() {
             csrfToken: csrfToken,
         };
         data[field] = row[field];
+        console.log(data);
         requestProcess(data, showMessage);
     });
 

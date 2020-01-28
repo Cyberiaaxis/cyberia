@@ -21,12 +21,12 @@ public function toArray($request)
 
         $permission = $this->permissions->pluck('name');
         $html = '<label class="switch switch-sm">
-        <input class="switch-input" type="checkbox"' .$checked.'/>
+        <input class="switch-input" type="checkbox"' .$checked.' disabled/>
         <span class="switch-label" data-on="active" data-off="inactive"></span>
         <span class="switch-handle"></span>
         </label>';
-        $edit = '<button type="button" data-href="'.route('roles.edit',$this->id).'" class="btn btn-sm btn-primary edit" data-toggle="modal" data-target="#update"><i class="fa fa-edit"></i></button>';
-        $action = '<button type="button" class="btn btn-danger btn-sm delete" title="Delete" data-href="'.route('roles.destroy',$this->id).'" data-id="'.$this->id.'"><i class="glyphicon glyphicon-trash"></i></button>';
+        $edit = '<button type="button" data-href="'.route('roles.edit',$this->id).'" class="btn-sm btn-primary edit" data-toggle="modal" data-target="#update"><i class="fa fa-edit"></i></button>';
+        $action = '<button type="button" class="btn-danger btn-sm delete" title="Delete" data-href="'.route('roles.destroy',$this->id).'" data-id="'.$this->id.'"><i class="glyphicon glyphicon-trash"></i></button>';
         $data =  [
            'id' => $this->id,
             'name' => $this->name,

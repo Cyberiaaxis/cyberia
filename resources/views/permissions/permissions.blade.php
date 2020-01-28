@@ -30,7 +30,7 @@
                                         <th data-field="state" data-checkbox="true"></th>
                                         <th data-field="id">ID</th>
                                         <th data-field="name" data-editable="true">Name</th>
-                                        <th data-field="operate" data-formatter="operateFormatter">Actions</th>
+                                        <th data-field="operate">Actions</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -52,7 +52,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="addRolePermission" method="post" action="{{ route('permissions.store') }}" enctype="multipart/form-data">
+            <form id="addModel" method="post" action="{{ route('permissions.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
@@ -88,18 +88,7 @@
     @include('partials.footer')
         <script>
         $(document).ready(function() {
-          console.log(selectfetch(".permissions", $('table').attr('data-url'), true ));
+          console.log(selectfetch(".permissions", '{{ route('permissions.index') }}', true ));
         });
-    </script>
-    <script>
-        $(document).ready(function() {
-     function operateFormatter(value, row, index) {
-        return [
-            '<a class="remove delete" href="javascript:void(0)" data-href="/staff/permissions/'+row.id+'" data-id="'+row.id+'" title="Remove">',
-            '<i class="fa fa-trash"></i>',
-            '</a>'
-        ].join('')
-    }
-
     </script>
 @endsection
