@@ -18,7 +18,7 @@
     @if(Route::has('login'))
         <div class="absolute top-0 right-0 mt-4 mr-4">
             @auth
-                <a href="{{ url('/staff') }}" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase">Staff Panel</a>
+                <a href="{{ url('/staff') }}" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase">Player {{ auth()->user()->name }}'s Staff Panel</a>
             @else
                 <a href="{{ route('login') }}" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase pr-6">{{ __('Login') }}</a>
                 @if (Route::has('register'))

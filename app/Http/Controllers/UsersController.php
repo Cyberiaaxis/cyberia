@@ -42,15 +42,19 @@ class UsersController extends Controller
     {
         $this->validate($request, [
             'name'=>'required|max:120',
+            'gender'=>'required',
+            'type'=>'required',
             'password'=>'required',
-            'email'=>'required|email|unique:users,email,'.$request->email,
+            'email'=>'required|email|unique:users,email',
             'roles'=>"required|array",
         ]);
         $password = Hash::make($request->password);    
         $user = User::create([ 
                 'name' => $request->name,  
                 'email' => $request->email,  
-                'password' => $password 
+                'password' => $password, 
+                'gender'=> $request->gender,
+                'type'=> $request->type,
             ]);
         $user->syncRoles($request->roles);
     return response()->json(['success' => true,'msg' => 'User has been created.']);
@@ -88,7 +92,9 @@ class UsersController extends Controller
         $request->validate([
             'name'=>'required|max:120',
             'email'=>'required|email|exists:users,email',
-            'roles'=>"required|array"
+            'roles'=>"required|array",
+            'type'=>'required',
+            'gender'=>'required',
         ]);
         $user = User::findorFail($id);
         $input = $request->except(['url','method','csrfToken', 'roles']);

@@ -74,6 +74,20 @@
                         <input type="password" class="form-control" name="password" required autofocus>
                     </div>
                     <div class="form-group">
+                        <label for="gender" class="col-form-label">User Gender</label>
+                        <select name="gender" class="form-control">
+                            <option value="male"selected>Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="type" class="col-form-label">User Type</label>
+                        <select name="type" class="form-control">
+                            <option value="player"selected>Player</option>
+                            <option value="npc">NPC</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="roles" class="col-form-label">Roles</label>
                          <select class="form-control roles" multiple="multiple" name="roles[]" aria-describedby="helpBlock" required autofocus>
                         </select>

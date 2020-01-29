@@ -19,6 +19,20 @@
                         <input type="email" class="form-control" name="email"  value="{{ $user->email }}" required autofocus>
                     </div>
                     <div class="form-group">
+                        <label for="gender" class="col-form-label">User Gender</label>
+                        <select name="gender" class="form-control">
+                            <option value="male" @if($user->gender === 'male') 'selected' @endif >Male</option>
+                            <option value="Female" @if($user->gender === 'female') 'selected' @endif >Female</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="type" class="col-form-label">User Type</label>
+                        <select name="type" class="form-control">
+                            <option value="player" @if($user->type === 'player') selected @endif>Player</option>
+                            <option value="npc" @if($user->type === 'npc') selected @endif >NPC</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="roles" class="col-form-label">Roles</label>
                          <select class="form-control roles" multiple="multiple" name="roles[]" aria-describedby="helpBlock" required autofocus>
                             @foreach ($roles as $role)
