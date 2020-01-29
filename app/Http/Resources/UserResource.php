@@ -15,19 +15,17 @@ class UserResource extends JsonResource
 public function toArray($request)
 {
         $checked = null;
-
-        if($this->status){
-            $checked = "checked";
-        }
-        $delete = '<button type="button" class="btn btn-danger btn-sm delete" title="Delete" data-href="'.route('users.destroy',$this->id).'" data-id="'.$this->id.'">
+        $delete = '<button type="button" class="btn-sm delete" title="Delete" data-href="'.route('users.destroy',$this->id).'" data-id="'.$this->id.'">
         <i class="glyphicon glyphicon-trash"></i></button>';
-        $roles = '<a href="'.route('operations', $this->id).'">'. $this->roles->pluck('name') .'</a>';
+        $roles = $this->roles->pluck('name');
+        $edit = '<button type="button" data-href="'.route('users.edit',$this->id).'" class="btn-sm btn-primary edit" data-toggle="modal" data-target="#update"><i class="fa fa-edit"></i></button>';
+
         $data =  [
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
             'roles' => $roles, 
-            'operate' => $delete,
+            'operate' => "$delete $edit",
             'created_at' => $this->created_at->diffForHumans()
         ];
 

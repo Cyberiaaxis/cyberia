@@ -16,11 +16,8 @@
             <li>
                 <a class="has-arrow" href="#" aria-expanded="false"><span class="educate-icon educate-professor icon-wrap"></span> <span class="mini-click-non">Permission Managment</span></a>
                 <ul class="submenu-angle" aria-expanded="false">
-                    <li class="{{ set_active('staff*') }}"><a title="Roles" href="/staff/permissions"><span class="mini-sub-pro">Permissions</span></a></li>
+                    <li class="{{ set_active('staff*') }}"><a title="Permissions" href="/staff/permissions"><span class="mini-sub-pro">Permissions</span></a></li>
                 </ul>
-            </li>
-            <li>
-                <a title="operations" href="/staff/operations" aria-expanded="false"><span class="educate-icon educate-event icon-wrap sub-icon-mg" aria-hidden="true"></span> <span class="mini-click-non">Operations</span></a>
             </li>
             <li>
                 <a title="users" href="/staff/users" aria-expanded="false"><span class="educate-icon educate-event icon-wrap sub-icon-mg" aria-hidden="true"></span> <span class="mini-click-non">Users</span></a>

@@ -29,8 +29,8 @@
                                     <tr>
                                         <th data-field="state" data-checkbox="true"></th>
                                         <th data-field="id">User Id</th>
-                                        <th data-field="name" data-editable="true">User Name</th>
-                                        <th data-field="email" data-editable="true">User Email</th>
+                                        <th data-field="name">User Name</th>
+                                        <th data-field="email">User Email</th>
                                         <th data-field="roles">Roles</th>
                                         <!-- <th data-field="status">User Status</th> -->
                                         <th data-field="created_at" >Created</th>
@@ -59,23 +59,23 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="addRole" method="post" action="{{ route('users.store') }}" enctype="multipart/form-data">
+            <form id="addModel" method="post" action="{{ route('users.store') }}" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name" class="col-form-label">User Name:</label>
-                        <input type="text" class="form-control" name="name">
+                        <input type="text" class="form-control" name="name" required autofocus>
                     </div>
                     <div class="form-group">
                         <label for="email" class="col-form-label">User Email:</label>
-                        <input type="email" class="form-control" name="email">
+                        <input type="email" class="form-control" name="email" required autofocus>
                     </div>
                         <div class="form-group">
                         <label for="password" class="col-form-label">Password:</label>
-                        <input type="password" class="form-control" name="password">
+                        <input type="password" class="form-control" name="password" required autofocus>
                     </div>
                     <div class="form-group">
                         <label for="roles" class="col-form-label">Roles</label>
-                         <select class="form-control roles" multiple="multiple" name="roles[]" aria-describedby="helpBlock">
+                         <select class="form-control roles" multiple="multiple" name="roles[]" aria-describedby="helpBlock" required autofocus>
                         </select>
                         <span id="helpBlock" class="help-block">You can assign roles a user.</span>
                     </div>   
@@ -90,6 +90,10 @@
     </div>
 </div>
 <!-- Modal End -->
+<!-- Modal Edit Start -->
+<div class="modal fade" id="update" tabindex="-1" role="dialog" aria-labelledby="update" aria-hidden="true">
+</div>
+<!-- Modal Edit End -->
 <div class="footer-copyright-area">
     <div class="container-fluid">
         <div class="row">

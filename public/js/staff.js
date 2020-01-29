@@ -26,7 +26,7 @@ $(document).ready(function() {
 
         $('table').bootstrapTable('refresh');
         $(hide).modal('hide');
-        $('#addmodel').trigger('reset');
+        $('#addModel').trigger('reset');
     return message(response.msg, "success");
     }
 

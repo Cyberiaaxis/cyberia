@@ -10,20 +10,20 @@ use App\Http\Resources\UserResource;
 class UsersController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
+     * Display a listing of the users.
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
 
     public function index(Request $request)
     {
         $users = User::with('permissions')->orderBy('name')->get();
-        // dd($users);
         if($request->ajax())
         {
             return UserResource::collection($users);
         }
-         return view('users.users');
+
+    return view('users.users');
     }
 
 
@@ -126,20 +126,10 @@ class UsersController extends Controller
 
      */
 
-    public function edit(Request $request, $id)
-
+    public function edit(Request $request, Role $role)
     {
-        return $request;
-        $title = "User Editing";
-
-        $user = User::findOrFail($id); //Get user with specified id
-
-        $roles = Role::get(); //Get all roles
-
-
-
-        return view('admin.users.edit', compact('user', 'roles'))->with(["title" => $title,"user_edit" => true]);
-
+        $user = User::orderBy('name')->get();
+    return view('users.edit', ['user' => $user, 'role' => $role]);
     }
 
 

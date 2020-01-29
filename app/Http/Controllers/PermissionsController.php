@@ -9,8 +9,8 @@ use Spatie\Permission\Models\{Permission};
 class PermissionsController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
+     * Display a listing of the permissions.
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -36,29 +36,24 @@ class PermissionsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
+     * Store newly created permissions in storage.
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        // return $request;
-        $request->validate([
-            'permissions' => ['required','array'],
-        ]);
+        $request->validate([ 'permissions' => ['required','array'] ]);
 
         foreach($request->permissions as $permissionName)
         {
             Permission::firstorCreate(['name' => $permissionName]);
         }
 
-        return response()->json(['success' => true,'msg' => 'Permissions has been created.']);
+    return response()->json(['success' => true,'msg' => 'Permissions has been created.']);
     }
 
     /**
      * Display the specified resource.
-     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -79,10 +74,8 @@ class PermissionsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * Update the specified permission in storage.
+     * @param  int  $id \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -94,13 +87,11 @@ class PermissionsController extends Controller
         $permission = Permission::findorFail($id);
         $permission->name = $request->input('name');
         $permission->save();
-
-        return response()->json(['success' => true,'msg' => 'Permission has been updated']);
+    return response()->json(['success' => true,'msg' => 'Permission has been updated']);
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
+     * Remove the specified permission from storage.
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -108,6 +99,6 @@ class PermissionsController extends Controller
     {
         $permission = Permission::findorFail($id);
         $permission->delete($id);
-      return response()->json(['success' => true, 'msg' => 'Permission has been deleted']);
+    return response()->json(['success' => true, 'msg' => 'Permission has been deleted']);
     }
 }

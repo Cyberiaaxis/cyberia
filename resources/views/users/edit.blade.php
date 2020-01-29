@@ -7,7 +7,7 @@
             </button>
         </div>
         <div class="msg alert hidden"></div>
-        <form id="updateModel" method="post" action="{{ route('roles.update',$role->id) }}" enctype="multipart/form-data">
+        <form id="updateModel" method="post" action="{{ route('users.update',$role->id) }}" enctype="multipart/form-data">
             @csrf @method('put')
             <div class="modal-body">
                 <div class="form-group has-feedback">
