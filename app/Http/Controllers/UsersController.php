@@ -14,7 +14,6 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
     public function index(Request $request)
     {
         $users = User::with('permissions')->orderBy('name')->get();
@@ -26,167 +25,88 @@ class UsersController extends Controller
     return view('users.users');
     }
 
-
-
     /**
-
      * Show the form for creating a new resource.
-
-     *
-
      * @return \Illuminate\Http\Response
-
      */
-
     public function create()
-
     {
-
-        $title = "User Create";
-
-        $roles = Role::all();
-
-        return view('admin.users.create',["title" => $title,"roles" => $roles,"user_create" => true]);
-
     }
 
-
-
     /**
-
      * Store a newly created resource in storage.
-
-     *
-
      * @param  \Illuminate\Http\Request  $request
-
      * @return \Illuminate\Http\Response
-
      */
-
     public function store(Request $request)
     {
         $this->validate($request, [
-
             'name'=>'required|max:120',
             'password'=>'required',
             'email'=>'required|email|unique:users,email,'.$request->email,
             'roles'=>"required|array",
         ]);
-        
         $password = Hash::make($request->password);    
-        
         $user = User::create([ 
                 'name' => $request->name,  
                 'email' => $request->email,  
                 'password' => $password 
             ]);
-
         $user->syncRoles($request->roles);
     return response()->json(['success' => true,'msg' => 'User has been created.']);
     }
 
-
-
     /**
-
      * Display the specified resource.
-
-     *
-
      * @param  int  $id
-
      * @return \Illuminate\Http\Response
-
      */
-
     public function show($id)
-
     {
-
-        $title = "User Editing";
-
-        $roles = Role::all();
-
-        return view('admin.users.create',["title" => $title,"roles" => $roles]);
 
     }
 
-
-
     /**
-
      * Show the form for editing the specified resource.
-
-     *
-
      * @param  int  $id
-
      * @return \Illuminate\Http\Response
-
      */
-
-    public function edit(Request $request, Role $role)
+    public function edit($id)
     {
-        $user = User::orderBy('name')->get();
-    return view('users.edit', ['user' => $user, 'role' => $role]);
+        $roles = Role::all();  
+        $user = User::findorFail($id);
+    return view('users.edit', ['user' => $user, 'roles' => $roles]);
     }
 
-
-
     /**
-
      * Update the specified resource in storage.
-
-     *
-
-     * @param  \Illuminate\Http\Request  $request
-
-     * @param  int  $id
-
+     * @param  \Illuminate\Http\Request  $request, int  $id
      * @return \Illuminate\Http\Response
-
      */
-
     public function update(Request $request, $id)
     {
-        $rules = [];
-
-        if($request->name){
-            $rules['name'] = ['required','unique:users,name'];
-        }elseif($request->email){
-            $rules['email'] = ['required','unique:users,email']; 
-        }elseif($request->status){
-            $rules['status'] = ['required'];
-        }
-         
-        $request->validate($rules);
-        $role = User::findorFail($id);
-        $input = $request->except(['url','method','csrfToken']);
-        $role->fill($input)->save();
-
-        return response()->json(['success' => true,'msg' => 'User updated']);
+        $request->validate([
+            'name'=>'required|max:120',
+            'email'=>'required|email|exists:users,email',
+            'roles'=>"required|array"
+        ]);
+        $user = User::findorFail($id);
+        $input = $request->except(['url','method','csrfToken', 'roles']);
+        $user->fill($input)->save();
+        $user->syncRoles($request->roles);
+    return response()->json(['success' => true,'msg' => 'User has been updated']);
     }
 
-
-
     /**
-
      * Remove the specified resource from storage.
-
-     *
-
      * @param  int  $id
-
      * @return \Illuminate\Http\Response
-
      */
-
     public function destroy($id)
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return redirect()->route('users.index')->with('flash_message','User successfully deleted.');
+    return response()->json(['success' => true,'msg' => 'User has been deleted']);
     }
 
 }
