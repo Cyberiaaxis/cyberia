@@ -20,6 +20,6 @@ class StaffsController extends Controller
             return response()->json(['role' => Role::orderBy('name')->get()]);
         }
 
-        return view('dashboard');
+    return view('staff.dashboard');
     }
 }

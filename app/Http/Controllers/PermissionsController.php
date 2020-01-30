@@ -22,7 +22,7 @@ class PermissionsController extends Controller
              return PermissionResource::collection($permissions);
          }
 
-    return view('permissions.permissions');
+    return view('staff.permissions.permissions');
     }
 
     /**

@@ -22,7 +22,7 @@ class RolesController extends Controller
             return RoleResource::collection($roles);
         }
 
-    return view('roles.role');
+    return view('staff.roles.role');
     }
 
     /**
@@ -73,7 +73,7 @@ class RolesController extends Controller
     public function edit(Request $request, Role $role)
     {
         $permissions = Permission::orderBy('name')->get();
-    return view('roles.edit', ['permissions' => $permissions, 'role' => $role]);
+    return view('staff.roles.edit', ['permissions' => $permissions, 'role' => $role]);
     }
 
     /**

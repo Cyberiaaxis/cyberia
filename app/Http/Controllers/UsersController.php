@@ -22,7 +22,7 @@ class UsersController extends Controller
             return UserResource::collection($users);
         }
 
-    return view('users.users');
+    return view('staff.users.users');
     }
 
     /**
@@ -79,7 +79,7 @@ class UsersController extends Controller
     {
         $roles = Role::all();  
         $user = User::findorFail($id);
-    return view('users.edit', ['user' => $user, 'roles' => $roles]);
+    return view('staff.users.edit', ['user' => $user, 'roles' => $roles]);
     }
 
     /**
