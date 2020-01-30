@@ -10,7 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::view('/forum','player.forums.index');
+Route::view('/player','player.index');
 Route::get('/', function () {
     return view('welcome');
 });
