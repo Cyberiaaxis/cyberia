@@ -23,6 +23,7 @@ Route::group(['prefix' => 'staff', 'middleware' => ['auth']], function(){
                         '/roles'=>'RolesController',  
                         '/permissions' => 'PermissionsController',
                         '/users'=>'UsersController',
+                        '/categories'=>'CategoriesController',
                     ]);
     // Route::delete('/staff/operations/{id}','RolesController@edit');
     // Route::get('/operations/{id}','OperationsController@show')->name('operations');
