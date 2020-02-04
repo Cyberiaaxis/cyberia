@@ -34,6 +34,12 @@
                                         <th data-field="created_at">Created</th>
                                         <th data-field="updated_at">Last Modified</th>
                                         <th data-field="operate">Action</th>
+                                    'description'=> $this->description, 
+            'categoryId'=> $this->categoryId,  
+            'itemType'=> $this->itemType,  
+            'buyPrice'=> $this->buyPrice,  
+            'sellPrice'=> $this->sellPrice,  
+            'locationId'=> $this->locationId,
                                     </tr>
                                 </thead>
                                 <tbody>

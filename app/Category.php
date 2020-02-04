@@ -12,11 +12,13 @@ class Category extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description'
+        'name', 'description',
     ];
 
     public function items() 
     { 
-        return $this->hasMany(Items::class);
+        return $this->hasMany(Item::class,  'categoryId');
     }
 }
+
+   
