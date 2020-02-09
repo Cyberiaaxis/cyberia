@@ -24,7 +24,7 @@
                                 <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#insert"><i class="fa fa-plus"></i> Insert</button>
                                 <button type="button" id="remove" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Remove</button>
                             </div>
-                            <table id="table" data-url="{{ route('categories.index') }}" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                            <table id="table" data-url="{{ route('itemCategories.index') }}" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
                                 <thead>
                                     <tr>
                                         <th data-field="state" data-checkbox="true"></th>
@@ -57,7 +57,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="addModel" method="post" action="{{ route('categories.store') }}" enctype="multipart/form-data">
+            <form id="addModel" method="post" action="{{ route('itemCategories.store') }}" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name" class="col-form-label">Category Name:</label>

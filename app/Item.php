@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\ItemType;
 use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
@@ -18,6 +19,21 @@ class Item extends Model
     public function categories() 
     { 
         return $this->belongsTo(Category::class);
+    }
+
+    public function items() 
+    { 
+        return $this->morphTo(); 
+    }
+
+    public function itemTypes()
+    {
+         return $this->belongsTo(ItemType::class,'itemTypeId');
+    }
+
+    public function itemCategories()
+    {
+         return  $this->belongsTo(ItemCategory::class,'id');
     }
 }
 

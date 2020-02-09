@@ -113,10 +113,9 @@ $(document).ready(function() {
 
 function selectfetch(selector, url, addrecord = false){ 
 
-    if(!selector) return 'Selector is required';
-
-    if(!url) return 'URL is required';
-
+    if(!selector) throw ('Selector is required');
+    if(!url) throw ('URL is required');
+      console.log(url);      
        $.getJSON(url,function(data) {
         var items = $.map(data, function (item) {
             return {

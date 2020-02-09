@@ -9,7 +9,7 @@
                 <li class="{{ set_active('staff*') }}"><a title="roles" href="/staff/roles"><i class="fa fa-users"></i><span class="mini-click-non">Roles</span></a></li>
                 <li class="{{ set_active('staff*') }}"><a title="Permissions" href="/staff/permissions"><i class="fa fa-users"></i><span class="mini-click-non"> Permissions</span></a></li>
                 <li class="{{ set_active('staff*') }}"><a title="user" href="/staff/users"><i class="fa fa-users"></i><span class="mini-click-non"> Users</span></a></li></a></li>
-                <li class="{{ set_active('staff*') }}"><a title="category" href="/staff/categories"><i class="fa fa-users"></i><span class="mini-click-non"> Categories</span></a></li></a></li>                                
+                <li class="{{ set_active('staff*') }}"><a title="category" href="/staff/itemCategories"><i class="fa fa-users"></i><span class="mini-click-non">Item Categories</span></a></li></a></li>                                
                 <li class="{{ set_active('staff*') }}"><a title="category" href="/staff/items"><i class="fa fa-users"></i><span class="mini-click-non"> Items</span></a></li></a></li>                                
             </ul>
         </nav>

@@ -1,3 +1,4 @@
+dd('categories.index')
 @extends('layouts.app')
 @section('sidebar')
     @include('partials.sidebar')
@@ -15,7 +16,7 @@
                 <div class="sparkline13-list">
                     <div class="sparkline13-hd">
                         <div class="main-sparkline13-hd">
-                            <h1>Category <span class="table-project-n">Management</span></h1>
+                            <h1>Item <span class="table-project-n"> Management</span></h1>
                         </div>
                     </div>
                     <div class="sparkline13-graph">
@@ -24,22 +25,20 @@
                                 <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#insert"><i class="fa fa-plus"></i> Insert</button>
                                 <button type="button" id="remove" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Remove</button>
                             </div>
-                            <table id="table" data-url="{{ route('categories.index') }}" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                            <table id="table" data-url="{{ route('items.index') }}" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
                                 <thead>
                                     <tr>
                                         <th data-field="state" data-checkbox="true"></th>
-                                        <th data-field="id">Category Id</th>
-                                        <th data-field="name" data-editable='true'>Category Name</th>
-                                        <th data-field="description" data-editable='true'>Category Description</th> 
+                                        <th data-field="id">Item Id</th>
+                                        <th data-field="itemCategory">Category Name</th>
+                                        <th data-field="itemType">Item Type</th>
+                                        <th data-field="name">Item Name</th>
+                                        <th data-field='description'data-editable='true'>description</th>, 
+                                        <th data-field="buyPrice">Buy Price</th>
+                                        <th data-field="sellPrice">Sell Price</th>
                                         <th data-field="created_at">Created</th>
                                         <th data-field="updated_at">Last Modified</th>
                                         <th data-field="operate">Action</th>
-                                    'description'=> $this->description, 
-            'categoryId'=> $this->categoryId,  
-            'itemType'=> $this->itemType,  
-            'buyPrice'=> $this->buyPrice,  
-            'sellPrice'=> $this->sellPrice,  
-            'locationId'=> $this->locationId,
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -58,13 +57,25 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title" id="exampleModalLabel">Add Category</h1>
+                <h1 class="modal-title" id="exampleModalLabel">Add Item</h1>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="addModel" method="post" action="{{ route('categories.store') }}" enctype="multipart/form-data">
+            <form id="addModel" method="post" action="{{ route('items.store') }}" enctype="multipart/form-data">
                 <div class="modal-body">
+                    <div class="form-group">
+                        <label for="itemcategories" class="col-form-label">Item Category</label>
+                        <select class="form-control js-example-basic-single" name="itemcategories[]" aria-describedby="helpBlock">
+                        </select>
+                        <span id="helpBlock" class="help-block">Select Item Category.</span>
+                    </div>    
+                    <div class="form-group">
+                        <label for="itemtypes" class="col-form-label">Item Type</label>
+                        <select class="form-control itemtypes" name="itemtypes[]" aria-describedby="helpBlock">
+                        </select>
+                        <span id="helpBlock" class="help-block">Category as per item type.</span>
+                    </div>    
                     <div class="form-group">
                         <label for="name" class="col-form-label">Category Name:</label>
                         <input type="text" class="form-control" name="name" required autofocus>
@@ -100,7 +111,11 @@
     @include('partials.footer')
     <script>
         $(document).ready(function() {
-            console.log(selectfetch(".permissions", "{{ route('permissions.index') }}" ));
+          console.log(selectfetch(".js-example-basic-single", '{{ route('itemCategories.index') }}'));
+             $('.js-example-basic-single').on('select2:select', function (e) {
+                const data = e.params.data;
+                 console.log(selectfetch(".itemtypes", '/staff/itemCategories/'+data.id));
+            });
         });
     </script>
 @endsection

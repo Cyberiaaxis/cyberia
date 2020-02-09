@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
+use App\ItemCategory;
 use Illuminate\Http\Request;
-use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ItemCategoryResource;
 
 
-class CategoriesController extends Controller
+class ItemCategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +16,11 @@ class CategoriesController extends Controller
      */
     public function index(Request $request)
     {
-        $categories = Category::all();
+        $itemcategories = ItemCategory::all();
 
         if($request->ajax())
         {
-            return CategoryResource::collection($categories);
+            return ItemCategoryResource::collection($itemcategories);
         }
 
     return view('staff.categories.categories');
@@ -33,7 +33,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        //
+        echo "create";
     }
 
     /**
@@ -47,24 +47,25 @@ class CategoriesController extends Controller
         $request->validate([
             'name' => ['required','unique:categories,name'],  'description' => ['required']
         ]);
-        $category = Category::create([  'name' => $request->name,  
+        $itemCategory = ItemCategory::create([  'name' => $request->name,  
                                 'description' => $request->description,  
                                 'updated_at' => now(),
                                 'created_at' => now()
                             ]);
-    return response()->json(['success' => true, 'msg' => 'Category has been created successfully','category' => $category]);
+    return response()->json(['success' => true, 'msg' => 'Item category has been created successfully','category' => $category]);
     }
 
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\category  $category
+     * @param  \App\ItemCategory  $ItemCategory
      * @return \Illuminate\Http\Response
      */
-    public function show(category $category)
+    public function show($name)
     {
-        //
+         $category = ItemCategory::where('name',$name)->first();
+         $category->itemtypes;
     }
 
     /**
@@ -73,10 +74,10 @@ class CategoriesController extends Controller
      * @param  \App\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(category $category)
-    {
-        //
-    }
+    // public function edit(category $category)
+    // {
+    //     //
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -96,7 +97,7 @@ class CategoriesController extends Controller
              'description' => ['required'],
          ]);
         }
-        $category = Category::findorFail($id);
+        $category = ItemCategory::findorFail($id);
         $inputs = $request->except(['url', 'method', 'csrfToken']);
         $category->fill($inputs)->save();
     return response()->json(['success' => true,'msg' => 'Category has been updated']);
@@ -105,12 +106,12 @@ class CategoriesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\category  $category
+     * @param  \App\ItemCategory  $category
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $category = Category::findorFail($id);
+        $category = ItemCategory::findorFail($id);
         $category->delete($id);
     return response()->json(['success' => true, 'msg' => 'Category has been deleted']);
     }

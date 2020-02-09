@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Item;
 use Illuminate\Http\Request;
+use App\Http\Resources\ItemResource;
+use App\{Item, ItemType};
+use DB;
 
 
 class ItemsController extends Controller
@@ -15,7 +17,7 @@ class ItemsController extends Controller
      */
     public function index(Request $request)
     {
-        $items = Item::all();
+        $items = Item::with(['itemTypes', 'itemCategories'])->get();
 
         if($request->ajax())
         {
