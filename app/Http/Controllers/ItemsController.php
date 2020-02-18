@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\ItemResource;
-use App\{Item, ItemType};
+use App\{Item, ItemCategory, ItemType};
 use DB;
 
 
@@ -45,15 +45,20 @@ class ItemsController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request;
         $request->validate([
-            'name' => ['required','unique:categories,name'],  'description' => ['required']
+             'name' => 'required|unique:items,name,itemCategoryId'. $request->itemcategory, 'itemTypeId'. $request->itemtype,
+            'description' => 'required'
         ]);
-        $category = Category::create([  'name' => $request->name,  
-                                'description' => $request->description,  
-                                'updated_at' => now(),
-                                'created_at' => now()
+        $item = Item::create([  
+                            'itemCategoryId' => $request->itemcategory,
+                            'itemTypeId' => $request->itemtype,
+                            'name' => $request->name,  
+                            'description' => $request->description,
+                            'buyPrice' => $request->buyPrice,  
+                            'sellPrice'=> $request->sellPrice, 
                             ]);
-    return response()->json(['success' => true, 'msg' => 'Category has been created successfully','category' => $category]);
+    return response()->json(['success' => true, 'msg' => 'Category has been created successfully','item' => $item]);
     }
 
 
@@ -63,7 +68,7 @@ class ItemsController extends Controller
      * @param  \App\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(category $category)
+    public function show()
     {
         //
     }
@@ -74,7 +79,7 @@ class ItemsController extends Controller
      * @param  \App\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(category $category)
+    public function edit()
     {
         //
     }
@@ -88,18 +93,17 @@ class ItemsController extends Controller
      */
     public function update(Request $request, $id)
     {
-       if($request->name){
+        if($request->name){
             $request->validate([
-             'name' => ['required'],
-         ]);
-        }elseif(($request->name)){
-            $request->validate([
-             'description' => ['required'],
-         ]);
+                'name' => 'required|unique:items,name',
+            ]);
         }
-        $category = Category::findorFail($id);
+
+        $item = Item::findorFail($id);
         $inputs = $request->except(['url', 'method', 'csrfToken']);
-        $category->fill($inputs)->save();
+     return $inputs;
+
+        $item->fill($inputs)->save();
     return response()->json(['success' => true,'msg' => 'Category has been updated']);
     }
 
@@ -111,8 +115,8 @@ class ItemsController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::findorFail($id);
-        $category->delete($id);
+        $item = ItemCategory::findorFail($id);
+        $item->delete($id);
     return response()->json(['success' => true, 'msg' => 'Category has been deleted']);
     }
 }

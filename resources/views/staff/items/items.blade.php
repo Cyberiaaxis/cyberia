@@ -32,10 +32,10 @@ dd('categories.index')
                                         <th data-field="id">Item Id</th>
                                         <th data-field="itemCategory">Category Name</th>
                                         <th data-field="itemType">Item Type</th>
-                                        <th data-field="name">Item Name</th>
+                                        <th data-field="name" data-editable="true">Item Name</th>
                                         <th data-field='description'data-editable='true'>description</th>, 
-                                        <th data-field="buyPrice">Buy Price</th>
-                                        <th data-field="sellPrice">Sell Price</th>
+                                        <th data-field="buyPrice" data-editable="true" data-editable-inputClass='mask'>Buy Price</th>
+                                        <th data-field="sellPrice" data-editable="true" data-editable-inputClass='mask'>Sell Price</th>
                                         <th data-field="created_at">Created</th>
                                         <th data-field="updated_at">Last Modified</th>
                                         <th data-field="operate">Action</th>
@@ -65,21 +65,31 @@ dd('categories.index')
             <form id="addModel" method="post" action="{{ route('items.store') }}" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="itemcategories" class="col-form-label">Item Category</label>
-                        <select class="form-control js-example-basic-single" name="itemcategories[]" aria-describedby="helpBlock">
+                        <label for="itemcategory" class="col-form-label">Item Category</label>
+                        <select class="form-control js-example-basic-single" name="itemcategory" aria-describedby="helpBlock">
+                        <option>Select Item Category</option>
                         </select>
                         <span id="helpBlock" class="help-block">Select Item Category.</span>
                     </div>    
                     <div class="form-group">
-                        <label for="itemtypes" class="col-form-label">Item Type</label>
-                        <select class="form-control itemtypes" name="itemtypes[]" aria-describedby="helpBlock">
+                        <label for="itemtype" class="col-form-label">Item Type</label>
+                        <select class="form-control itemtype" name="itemtype" aria-describedby="helpBlock">
+                        <option>Select Item Type</option>
                         </select>
-                        <span id="helpBlock" class="help-block">Category as per item type.</span>
+                        <span id="helpBlock" class="help-block">Item types as per item category.</span>
                     </div>    
                     <div class="form-group">
                         <label for="name" class="col-form-label">Category Name:</label>
                         <input type="text" class="form-control" name="name" required autofocus>
                     </div>
+                    <div class="form-group">
+                        <label for="buyprice" class="col-form-label">Buy Price</label>
+                        <input name="buyPrice" id="buyprice" class="form-control" data-inputmask="'alias': 'decimal', 'groupSeparator': ',', 'autoGroup': true, 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
+                    </div>
+                    <div class="form-group">
+                        <label for="sellprice" class="col-form-label">Sell Price</label>
+                        <input name="sellPrice" id="sellprice" class="form-control" data-inputmask="'alias': 'decimal', 'groupSeparator': ',', 'autoGroup': true, 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
+                    </div>                    
                     <div class="form-group">
                         <label for="description" class="col-form-label">Category Description:</label>
                         <textarea class="form-control" name="description" required autofocus></textarea>
@@ -109,13 +119,28 @@ dd('categories.index')
 @endsection
 @section('js')
     @include('partials.footer')
+    <script src="{{ asset('js/input-mask/input-mask.js') }}" type="text/javascript"></script>
     <script>
-        $(document).ready(function() {
-          console.log(selectfetch(".js-example-basic-single", '{{ route('itemCategories.index') }}'));
+        $(document).ready(function() { 
+             $('#buyprice, #sellprice').inputmask();  
+          console.log(selectfetch(".js-example-basic-single", '{{ route('itemCategories.index') }}', false,  true));
              $('.js-example-basic-single').on('select2:select', function (e) {
-                const data = e.params.data;
-                 console.log(selectfetch(".itemtypes", '/staff/itemCategories/'+data.id));
-            });
+                //  $(".itemtypes").removeClass('hidden');
+                 const data = e.params.data;
+                //  $(".itemtypes").empty().trigger("change");
+                 console.log(selectfetch(".itemtype", '{{ route('itemCategories.index') }}/'+data.id, false,  true));
+                });
         });
+
+          $(document).on('focus','.mask',function(){
+                 $(this).inputmask({
+                     'alias': 'currency',
+                     'groupSeparator': ',',
+                     'autoGroup': true,
+                     'digits': 2,
+                     'digitsOptional': false,
+                     'placeholder': '0'
+                 });
+           });
     </script>
 @endsection

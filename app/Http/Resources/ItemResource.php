@@ -14,7 +14,7 @@ class ItemResource extends JsonResource
      */
     public function toArray($request)
     {
-        // dd($this->itemCategories->itemCategoryName);
+        // return $this->itemTypes;
         $checked = null;
         $delete = '<button type="button" class="btn-sm delete" title="Delete" data-href="'.route('items.destroy',$this->id).'" data-id="'.$this->id.'">
         <i class="glyphicon glyphicon-trash"></i></button>';
@@ -23,10 +23,10 @@ class ItemResource extends JsonResource
             'name' => $this->name,
             'description'=> 'kkkkkk',   
             'itemCategory'=> $this->itemCategories->name,  
-            'itemType'=> $this->itemTypes->itemTypeName,  
+            'itemType'=> $this->itemTypes->name,  
             'buyPrice'=> $this->buyPrice,  
             'sellPrice'=> $this->sellPrice,  
-            'locationId'=> $this->locationId, 
+            // 'locationId'=> $this->locationId, 
             'updated_at' => $this->updated_at->diffForHumans(),
             'created_at' => $this->created_at->diffForHumans(),
             'operate' => $delete

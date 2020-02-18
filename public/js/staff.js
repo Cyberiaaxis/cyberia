@@ -111,23 +111,37 @@ $(document).ready(function() {
    
 });
 
-function selectfetch(selector, url, addrecord = false){ 
 
-    if(!selector) throw ('Selector is required');
-    if(!url) throw ('URL is required');
-      console.log(url);      
-       $.getJSON(url,function(data) {
-        var items = $.map(data, function (item) {
-            return {
+function selectfetch( selector, url, add = false,  override_id = false ){ 
+
+    if(!selector) retrun ('Selector is required');
+    if(!url) retrun ('URL is required');
+    // console.log(url);
+    // console.log(selector);
+    $.getJSON(url,function(data) {
+        let items = $.map(data, function (item) {
+        let id = (override_id) ? item.id : item.name;
+        return {
                 text: item.name,
-                id: item.name
-            }
+                id: id
+              }
         });
+        // console.log("url");
         $(selector).select2({
             width: '100%',
-            tags:  addrecord,
+            tags:  add,
             data: items
         });
     });
 }
+
+
+
+// const selectFetch = ({ selector: '', url:  'test',  options: { addRole = '1', getId = '2' } = {},
+// } = {}) => {
+//   console.log(addRole)
+// }
+
+
+// selectFetch()
 

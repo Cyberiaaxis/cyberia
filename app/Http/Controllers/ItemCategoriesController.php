@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\ItemCategory;
+
 use Illuminate\Http\Request;
 use App\Http\Resources\ItemCategoryResource;
-
+use App\ItemCategory;
+use DB;
 
 class ItemCategoriesController extends Controller
 {
@@ -62,10 +63,9 @@ class ItemCategoriesController extends Controller
      * @param  \App\ItemCategory  $ItemCategory
      * @return \Illuminate\Http\Response
      */
-    public function show($name)
+    public function show(ItemCategory $itemCategory)
     {
-         $category = ItemCategory::where('name',$name)->first();
-         $category->itemtypes;
+         return $itemCategory->itemTypes;
     }
 
     /**

@@ -14,7 +14,7 @@ class ItemType extends Model
      *
      * @var array
      */
-    protected $fillable = [ 'itemTypeName' ];
+    protected $fillable = [ 'id','name' ];
 
     public function categories() 
     { 
@@ -23,6 +23,6 @@ class ItemType extends Model
 
     public function items() 
     { 
-        return $this->belongsTo(Item::class, 'id');
+        return $this->belongsTo(Item::class, 'ItemTypeId');
     }
 }

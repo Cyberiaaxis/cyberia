@@ -13,28 +13,20 @@ class Item extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'categoryId',  'itemType',  'buyPrice',  'sellPrice',  'locationId',  'expiry',  'updated_at',  'created_at'
+        'name', 'description', 'itemCategoryId',  'itemTypeId',  'buyPrice',  'sellPrice',  'locationId',  'expiry',  'updated_at',  'created_at'
     ];
 
-    public function categories() 
+    public function itemCategories() 
     { 
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(ItemCategory::class, 'itemCategoryId');
     }
 
-    public function items() 
-    { 
-        return $this->morphTo(); 
-    }
 
     public function itemTypes()
     {
          return $this->belongsTo(ItemType::class,'itemTypeId');
     }
 
-    public function itemCategories()
-    {
-         return  $this->belongsTo(ItemCategory::class,'id');
-    }
-}
 
+}
 
