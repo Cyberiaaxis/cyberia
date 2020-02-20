@@ -16,6 +16,8 @@ class Item extends Model
         'name', 'description', 'itemCategoryId',  'itemTypeId',  'buyPrice',  'sellPrice',  'locationId',  'expiry',  'updated_at',  'created_at'
     ];
 
+    protected $appends = ['category_name','item_type_name'];
+
     public function itemCategories() 
     { 
         return $this->belongsTo(ItemCategory::class, 'itemCategoryId');
@@ -32,6 +34,21 @@ class Item extends Model
          return $this->belongsToMany(User::class,'userItems','user_id');
     }
 
+    /**
+     * get Item Category Name
+     */
+    public function getItemCategoryNameAttribute()
+    {
+        return $this->itemCategories()->value('name');
+    }
+
+        /**
+     * get Item Type Name
+     */
+    public function getItemTypeNameAttribute()
+    {
+        return $this->itemTypes()->value('name');
+    }
 
 }
 

@@ -26,10 +26,11 @@ Route::group(['prefix' => 'staff', 'middleware' => ['auth']], function(){
                         '/itemCategories'=>'ItemCategoriesController',
                         '/items'=>'ItemsController',
                     ]);
-    // Route::delete('/staff/operations/{id}','RolesController@edit');
-    // Route::get('/operations/{id}','OperationsController@show')->name('operations');
-    // Route::post('/operations/{id}','OperationsController@createPermission')->name('operations.store');
-    // Route::delete('/operations/{id}','OperationsController@removePermission');
-    // Route::post('/user/giveRole/{id},  UserController@giveRole');
     // Route::resource('/users','UsersController');
 });
+Route::group(['middleware' => ['auth']], function(){
+    Route::resources([
+        '/playeritems'=>'PlayerItemsController',
+    ]);
+});
+
