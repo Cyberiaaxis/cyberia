@@ -101,10 +101,8 @@ class ItemsController extends Controller
 
         $item = Item::findorFail($id);
         $inputs = $request->except(['url', 'method', 'csrfToken']);
-     return $inputs;
-
-        $item->fill($inputs)->save();
-    return response()->json(['success' => true,'msg' => 'Category has been updated']);
+        $item->update($inputs);
+    return response()->json(['success' => true,'msg' => 'Item has been updated']);
     }
 
     /**

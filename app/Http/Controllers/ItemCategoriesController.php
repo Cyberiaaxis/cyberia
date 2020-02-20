@@ -92,7 +92,7 @@ class ItemCategoriesController extends Controller
             $request->validate([
              'name' => ['required'],
          ]);
-        }elseif(($request->name)){
+        }elseif(($request->description)){
             $request->validate([
              'description' => ['required'],
          ]);

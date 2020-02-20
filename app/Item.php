@@ -27,6 +27,11 @@ class Item extends Model
          return $this->belongsTo(ItemType::class,'itemTypeId');
     }
 
+    public function user()
+    {
+         return $this->belongsToMany(User::class,'userItems','user_id');
+    }
+
 
 }
 

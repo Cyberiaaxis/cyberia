@@ -21,7 +21,7 @@ class ItemResource extends JsonResource
         $data =  [
             'id' => $this->id,
             'name' => $this->name,
-            'description'=> 'kkkkkk',   
+            'description'=> $this->description,   
             'itemCategory'=> $this->itemCategories->name,  
             'itemType'=> $this->itemTypes->name,  
             'buyPrice'=> $this->buyPrice,  
