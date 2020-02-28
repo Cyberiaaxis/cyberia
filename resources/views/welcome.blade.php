@@ -2,589 +2,531 @@
 
 <html lang="en">
 
-
-
 <head>
 
-	<!-- Required meta tags -->
+    <!-- Required meta tags -->
 
-	<meta charset="utf-8">
+    <meta charset="utf-8">
 
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <title>Cyberia Games!</title>
 
+    <!-- Bootstrap CSS -->
 
-	<title>Cyberia Games!</title>
+    <link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap.min.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
 
-
-	<!-- Bootstrap CSS -->
-
-	<link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap.min.css') }}">
-
-	<link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
-
-     <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
-
-
+    <link rel="stylesheet" href="{{ asset('css/slider.css') }}">
 
 </head>
 
+<body scroll="no" class="bg-g">
 
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-transparent">
 
-<body scroll="no" style="overflow: hidden" >
+        <div class="container">
 
-	<nav class="navbar navbar-expand-lg navbar-dark bg-transperent fixed-top">
+            <a class="navbar-brand" href="#">
 
-		<div class="container">
+                <img src="{{ asset('img/logo/logo.png') }}" alt="Logo" width="100" height="30" class="img-fluid d-inline-block align-top">
 
-			<button type="button" class="btn btn-default btn-circle" data-toggle="collapse" id="sidebar-nav" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Menu">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 
                 <span class="navbar-toggler-icon"></span>
 
-			</button>
+            </button>
 
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
+                <ul class="navbar-nav ml-auto">
 
-			<a class="navbar-brand d-flex align-items-center" href="/">
+                    <li class="nav-item active">
 
-				<img src="{{ asset('img/logo/logo.png') }}" alt="Logo" width="100" height="30" class="img-responsive d-inline-block align-top">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
 
-			</a>
+                    </li>
 
-			<ul class="navbar-nav flex-row ml-auto">
+                    <li class="nav-item">
 
-				<li class="nav-item mr-3">
+                        <a class="nav-link" href="#">Link</a>
 
-					<div class="dropdown">
+                    </li>
 
-						<a href="#" role="button" class="btn btn-default options-btn" id="options-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <li class="nav-item dropdown">
 
-							<i class="fa fa-ellipsis-v "></i>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-						</a>
+                Dropdown
 
-						<div class="dropdown-menu" aria-labelledby="options-btn">
+              </a>
 
-							<div class="dropdown-item">
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-								<div class="custom-control custom-switch">
+                            <a class="dropdown-item" href="#">Action</a>
 
-									<input type="checkbox" class="custom-control-input" id="theme">
+                            <a class="dropdown-item" href="#">Another action</a>
 
-									<label class="custom-control-label" for="theme">Dark Theme</label>
+                            <div class="dropdown-divider"></div>
 
-								  </div>
+                            <a class="dropdown-item" href="#">Something else here</a>
 
-							</div>
+                        </div>
 
-						  </div>
+                    </li>
 
-					</div>
+                    <li class="nav-item">
 
-				</li>
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
 
-				@auth
+                    </li>
 
-				<li>
+                    @auth
 
-					<div class="dropdown mr-1">
+                    <li>
 
-						<a class="dropdown-toggle" href="javascript:void(0)" role="button" id="user-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="dropdown mr-1">
+
+                            <a class="dropdown-toggle" href="javascript:void(0)" role="button" id="user-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
 						<img src="{{ user_avatar(auth()->id()) }}" alt="{{ auth()->user()->full_name }}" class="img-circle img-responsive avatar">
 
 						</a>
 
+                            <div class="dropdown-menu" aria-labelledby="user-menu">
 
+                                <a class="dropdown-item" href="#">Action</a>
 
-						<div class="dropdown-menu" aria-labelledby="user-menu">
+                                <a class="dropdown-item" href="#">Another action</a>
 
-						  <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
 
-						  <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
 
-						  <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
 
-						  <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                        </div>
 
+                    </li>
 
+                    <li>
 
-						</div>
+                        <a class="btn btn-primary" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
 
-					</div>
+                            <i class="fa fa-sign-out"></i> Logout
 
-				</li>
+                        </a>
 
-				<li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="post" class="d-none">
 
-					<a class="btn btn-outline-primary" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            @csrf
 
-						<i class="fa fa-sign-out"></i> Logout
+                        </form>
 
-					</a>
+                    </li>
 
-					<form id="logout-form" action="{{ route('logout') }}" method="post" class="d-none">
+                    @else
 
-						@csrf
+                    <li>
 
-					</form>
+                        <a href="{{ route('login') }}" class="btn btn-info text-uppercase" data-toggle="modal" data-target="#exampleModal">
 
-				</li>
+                            <i class="fa fa-lg fa-user-circle"></i> Sign in</a>
 
-				@else
+                    </li>
 
-				<li>
+                    @endauth
 
-					<a href="{{ route('login') }}" class="btn btn-outline-info text-uppercase" data-toggle="modal" data-target="#exampleModal">
-
-						<i class="fa fa-lg fa-user-circle"></i> Sign in</a>
-
-					</li>
-
-				@endauth
-
-			</ul>
-
-		</div>
-
-	</nav>
-
-
-
-<!-- Modal -->
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-
-  <div class="modal-dialog" role="document">
-
-    <div class="modal-content bg-transparent">
-
-      <div class="modal-header">
-
-        <h5 class="modal-title text-white" id="exampleModalLabel">Login</h5>
-
-        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-
-          <span aria-hidden="true">&times;</span>
-
-        </button>
-
-      </div>
-
-      <form id="#" method="post" action="#" enctype="multipart/form-data">
-
-        <div class="modal-body">
-
-            <div class="form-group">
-
-                <label for="name" class="col-form-label text-white">User Name:</label>
-
-                <input type="text" class="form-control" name="username" required autofocus>
-
-            </div>
-
-            <div class="form-group">
-
-                <label for="password" class="col-form-label text-white">Password:</label>
-
-                <input type="password" class="form-control" name="password" required autofocus>
+                </ul>
 
             </div>
 
         </div>
 
-        <div class="modal-footer">
+    </nav>
 
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <!-- Modal -->
 
-            <button type="submit" class="btn btn-primary" >Login</button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+        <div class="modal-dialog" role="document">
+
+            <div class="modal-content bg-transparent">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title text-white" id="exampleModalLabel">Login</h5>
+
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+
+                        <span aria-hidden="true">&times;</span>
+
+                    </button>
+
+                </div>
+
+                <form id="#" method="post" action="#" enctype="multipart/form-data">
+
+                    <div class="modal-body">
+
+                        <div class="form-group">
+
+                            <label for="name" class="col-form-label text-white">User Name:</label>
+
+                            <input type="text" class="form-control" name="username" required autofocus>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="password" class="col-form-label text-white">Password:</label>
+
+                            <input type="password" class="form-control" name="password" required autofocus>
+
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                        <button type="submit" class="btn btn-primary">Login</button>
+
+                    </div>
+
+                </form>
+
+            </div>
 
         </div>
-
-    </form>
 
     </div>
 
-  </div>
+    <ul class="list-group fixed-bottom w-10">
+        <li class="list-group-item bg-transparent text-white text-center">test</li>
+        <li class="list-group-item bg-transparent">test</li>
+        <li class="list-group-item bg-transparent">test</li>
+        <li class="list-group-item bg-transparent">test</li>
+        <li class="list-group-item bg-transparent">test</li>
+        <li class="list-group-item bg-transparent">test</li>
+    </ul>
+    <div id="carouselExampleFade" class="carousel slide" data-ride="carousel">
 
-</div>
 
 
+        <div class="carousel-inner">
 
-	<div id="carouselExampleFade" class="carousel slide" data-ride="carousel">
+            <div class="carousel-item active">
 
-		<div class="carousel-inner">
+                <img src="{{ asset('img/1.jpg') }}" class="d-block w-100 h-100" alt="Slide 1">
 
-			<div class="carousel-item active">
-
-				<img src="{{ asset('img/city.jpg') }}" class="d-block w-100 h-100 animated fadeOut slower" alt="Slide 1">
-
-			</div>
-
-			<div class="carousel-item">
-
-				<img src="{{ asset('img/city2.jpg') }}" class="d-block w-100 h-100 animated rotateInDownRight delay-10s" alt="Slide 2">
-
-			</div>
-
-			<div class="carousel-item">
-
-				<img src="{{ asset('img/city3.jpg') }}" class="d-block w-100 h-100 animated rotateInUpLeft delay-5s" alt="Slide 3">
-
-			</div>
+            </div>
 
             <div class="carousel-item">
 
-				<img src="{{ asset('img/city.jpg') }}" class="d-block w-100 h-100 animated rotateInUpRight delay-7s" alt="Slide 1">
+                <img src="{{ asset('img/2.jpg') }}" class="d-block w-100 h-100" alt="Slide 2">
 
-			</div>
+            </div>
 
+            <div class="carousel-item">
 
-		</div>
+                <img src="{{ asset('img/3.jpg') }}" class="d-block w-100 h-100" alt="Slide 3">
 
-		<a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+            </div>
 
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <div class="carousel-item">
 
-			<span class="sr-only">Previous</span>
+                <img src="{{ asset('img/4.jpg') }}" class="d-block w-100 h-100" alt="Slide 1">
 
-		</a>
+            </div>
 
-		<a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+        </div>
 
-			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
 
-			<span class="sr-only">Next</span>
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 
-		</a>
+            <span class="sr-only">Previous</span>
 
-	</div>
+        </a>
 
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
 
-	<script src="{{ asset('js/bootstrap/bootstrap.min.js') }}"></script>
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
 
-	<script>
+            <span class="sr-only">Next</span>
 
-      $(document).ready(function(){
+        </a>
 
+    </div>
 
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-        var delayEventsBy = 3,
+    <script src="{{ asset('js/bootstrap/bootstrap.min.js') }}"></script>
 
-            serverPollWait = 10,
+    <script>
+        $(document).ready(function() {
 
-            bubbleFadeDuration = 1,
+            var delayEventsBy = 3,
 
-            bubbleDuration = 10,
+                serverPollWait = 10,
 
-            maxTries = 5,
+                bubbleFadeDuration = 1,
 
-            maxSimultaneousBubbles = 10;
+                bubbleDuration = 10,
 
+                maxTries = 5,
 
+                maxSimultaneousBubbles = 10;
 
-        var spec = {
+            var spec = {
 
-            global: {
+                global: {
 
-                remoteParameters: {
+                    remoteParameters: {
 
-                    type: "events"
+                        type: "events"
 
-                },
+                    },
 
-                element: $(".carousel")
+                    element: $(".carousel")
 
-            }
+                }
 
-        };
+            };
 
-        renderBubble(spec);
+            renderBubble(spec);
 
+            function renderBubble(spec) {
 
+                var boxes = {};
 
-    function renderBubble(spec) {
+                for (var name in spec) {
 
-        var boxes = {};
+                    boxes[name] = {};
 
-        for (var name in spec) {
+                    boxes[name].box = $(spec[name].element).find(".carousel-inner");
 
-            boxes[name] = {};
+                    boxes[name].queue = [];
 
-            boxes[name].box = $(spec[name].element).find(".carousel-inner");
+                    boxes[name].lastSeen = null;
 
-            boxes[name].queue = [];
+                    boxes[name].remoteParameters = spec[name].remoteParameters;
 
-            boxes[name].lastSeen = null;
+                }
 
-            boxes[name].remoteParameters = spec[name].remoteParameters;
+                function positionBubble(livebox, bubble) {
 
-        }
+                    var w = bubble.width(),
 
+                        h = bubble.height(),
 
+                        x = 0,
 
+                        y = 0;
 
+                    var others = [];
 
-        function positionBubble(livebox, bubble) {
+                    livebox.box.children().each(function() {
 
-            var w = bubble.width(),
+                        var layout = $(this).data("layout");
 
-                h = bubble.height(),
+                        if (layout) {
 
-                x = 0,
+                            var l = layout.split(":");
 
-                y = 0;
+                            others.push({
 
-            var others = [];
+                                x1: +l[0],
 
-            livebox.box.children().each(function() {
+                                y1: +l[1],
 
-                var layout = $(this).data("layout");
+                                x2: +l[2],
 
-                if (layout) {
+                                y2: +l[3]
 
-                    var l = layout.split(":");
+                            });
 
-                    others.push({
+                        }
 
-                        x1: +l[0],
+                    });
 
-                        y1: +l[1],
+                    var boundingBox = {
 
-                        x2: +l[2],
+                        w: livebox.box.width(),
 
-                        y2: +l[3]
+                        h: 120
+
+                    };
+
+                    for (var i = 0; i < maxTries; ++i) {
+
+                        x = Math.floor(Math.random() * (boundingBox.w - w));
+
+                        y = Math.floor(Math.random() * 120);
+
+                        var space = true;
+
+                        for (var j = 0; j < others.length; ++j) {
+
+                            var o = others[j];
+
+                            if (!(x + w <= o.x1 || x >= o.x2 || y + h <= o.y1 || y >= o.y2)) {
+
+                                space = false;
+
+                                break;
+
+                            }
+
+                        }
+
+                        if (space)
+
+                            break;
+
+                    }
+
+                    bubble.data("layout", x + ":" + y + ":" + (x + w) + ":" + (y + h));
+
+                    bubble.css({
+
+                        'margin-left': x,
+
+                        'margin-top': y
 
                     });
 
                 }
 
-            });
+                function enqueue(livebox, objects) {
 
-            var boundingBox = {
+                    if (!objects || objects.length == 0)
 
-                    w: livebox.box.width(),
+                        return;
 
-                    h: 120
+                    objects.sort(function(a, b) {
 
-                };
+                        return b.secondssince - a.secondssince;
 
-            for (var i = 0; i < maxTries; ++i) {
+                    });
 
-                x = Math.floor(Math.random() * (boundingBox.w - w));
+                    var now = (new Date()).getTime(),
 
-                y = Math.floor(Math.random() * 120);
+                        i;
 
-                var space = true;
+                    for (i = objects.length - 1; i >= 0; --i) {
 
-                for (var j = 0; j < others.length; ++j) {
+                        if (objects[i].id == livebox.lastSeen)
 
-                    var o = others[j];
-
-                    if (!(x + w <= o.x1 || x >= o.x2 || y + h <= o.y1 || y >= o.y2)) {
-
-                        space = false;
-
-                        break;
+                            break;
 
                     }
 
+                    ++i;
+
+                    for (; i < objects.length; ++i)
+
+                        insertBubble(livebox, objects[i]);
+
+                    livebox.lastSeen = objects[objects.length - 1].id;
+
                 }
 
-                if (space)
+                function insertBubble(livebox, o) {
 
-                    break;
+                    var delay = delayEventsBy * 1000 - o.secondssince * 1000;
 
-            }
+                    if (delay < -delayEventsBy * 1000 / 2)
 
-            bubble.data("layout", x + ":" + y + ":" + (x + w) + ":" + (y + h));
+                        return;
 
-            bubble.css({
+                    if (delay < 0)
 
-                'margin-left': x,
+                        delay = Math.random() * delayEventsBy * 1000;
 
-                'margin-top': y
+                    if (livebox.box.children().length >= maxSimultaneousBubbles)
 
-            });
+                        return;
 
-        }
+                    var d = $('<div class="bubble" style="display:none;"><div class="bubble-inner"><div class="bubble-text">' + o.text + '</div></div><div class="bubble-tail"></div></div>');
 
+                    livebox.box.append(d);
 
+                    d.delay(delay).queue(function(next) {
 
-        function enqueue(livebox, objects) {
+                        positionBubble(livebox, $(this));
 
-            if (!objects || objects.length == 0)
+                        next();
 
-                return;
+                    }).fadeIn(bubbleFadeDuration * 1000).delay(bubbleDuration * 1000).fadeOut(bubbleFadeDuration * 1000, function() {
 
-            objects.sort(function(a, b) {
+                        $(this).remove();
 
-                return b.secondssince - a.secondssince;
+                    });
 
-            });
+                }
 
-            var now = (new Date()).getTime(),
+                var k = '{"global":[{"id":"5e52e25ea86d0dd3bd21cb67","text":"FadenK  was attacked","secondssince":0},{"id":"5e52e25e0bbda5bcb1723556","text":"_RAVEN_ left iribuya on the street","secondssince":0},{"id":"5e52e25ea86d0dad784e945e","text":"RedAlex177789  was attacked","secondssince":0},{"id":"5e52e25d9b1c9e44bf334d8c","text":"YorkTzu left ManWithNoName on the street","secondssince":1},{"id":"5e52e25d0bbda5ca0b6f59fa","text":"Capt-Archie  was attacked","secondssince":1},{"id":"5e52e25c9b1c9e516601dd76","text":"Someone mugged rockleegui","secondssince":2},{"id":"5e52e25ca86d0da18254b279","text":"spellwhiz  was attacked","secondssince":2},{"id":"5e52e25b0bbda5e64f0b5c72","text":"iribuya  was attacked","secondssince":3},{"id":"5e52e25aa86d0dddb60f6048","text":"Flojob mugged ANYB22","secondssince":4},{"id":"5e52e2599b1c9e3b3f2dd9db","text":"Someone mugged Thesaurus","secondssince":5}],"chat":[{"id":"1582490181-3105954","text":"LordOfPears says: Tea lans","secondssince":25},{"id":"1582490175-3105953","text":"Malvo says: Like australia does","secondssince":31},{"id":"1582490173-3105952","text":"PrincessJulie says: the british subcontinent","secondssince":33},{"id":"1582490156-3105951","text":"betcho says: Uk*","secondssince":50},{"id":"1582490153-3105950","text":"Malvo says: I say they just call themselves the 8th continent","secondssince":53},{"id":"1582490131-3105949","text":"AcidCypher says: yeh Britain is part of Europe. just not e.u","secondssince":75},{"id":"1582490087-3105948","text":"Malvo says: I m Good, how are you porter","secondssince":119},{"id":"1582490073-3105947","text":"porter2927 says: Nevermind","secondssince":133},{"id":"1582490029-3105946","text":"Malvo says: Is britain even europe anymore?","secondssince":177},{"id":"1582490026-3105945","text":"porter2927 says: How is everyone?","secondssince":180}]}';
 
-                i;
+                k = JSON.parse(k);
 
-            for (i = objects.length - 1; i >= 0; --i) {
-
-                if (objects[i].id == livebox.lastSeen)
-
-                    break;
+                enqueue(boxes[name], k[name]);
 
             }
 
-            ++i;
-
-            for (; i < objects.length; ++i)
-
-                insertBubble(livebox, objects[i]);
-
-            livebox.lastSeen = objects[objects.length - 1].id;
-
-        }
-
-
-
-		function insertBubble(livebox, o) {
-
-            var delay = delayEventsBy * 1000 - o.secondssince * 1000;
-
-            if (delay < -delayEventsBy * 1000 / 2)
-
-                return;
-
-            if (delay < 0)
-
-                delay = Math.random() * delayEventsBy * 1000;
-
-            if (livebox.box.children().length >= maxSimultaneousBubbles)
-
-                return;
-
-
-
-            var d = $('<div class="bubble" style="display:none;"><div class="bubble-inner"><div class="bubble-text">' + o.text + '</div></div><div class="bubble-tail"></div></div>');
-
-            livebox.box.append(d);
-
-            d.delay(delay).queue(function(next) {
-
-                positionBubble(livebox, $(this));
-
-                next();
-
-            }).fadeIn(bubbleFadeDuration * 1000).delay(bubbleDuration * 1000).fadeOut(bubbleFadeDuration * 1000, function() {
-
-                $(this).remove();
-
-            });
-
-        }
-
-
-
-		var k = '{"global":[{"id":"5e52e25ea86d0dd3bd21cb67","text":"FadenK  was attacked","secondssince":0},{"id":"5e52e25e0bbda5bcb1723556","text":"_RAVEN_ left iribuya on the street","secondssince":0},{"id":"5e52e25ea86d0dad784e945e","text":"RedAlex177789  was attacked","secondssince":0},{"id":"5e52e25d9b1c9e44bf334d8c","text":"YorkTzu left ManWithNoName on the street","secondssince":1},{"id":"5e52e25d0bbda5ca0b6f59fa","text":"Capt-Archie  was attacked","secondssince":1},{"id":"5e52e25c9b1c9e516601dd76","text":"Someone mugged rockleegui","secondssince":2},{"id":"5e52e25ca86d0da18254b279","text":"spellwhiz  was attacked","secondssince":2},{"id":"5e52e25b0bbda5e64f0b5c72","text":"iribuya  was attacked","secondssince":3},{"id":"5e52e25aa86d0dddb60f6048","text":"Flojob mugged ANYB22","secondssince":4},{"id":"5e52e2599b1c9e3b3f2dd9db","text":"Someone mugged Thesaurus","secondssince":5}],"chat":[{"id":"1582490181-3105954","text":"LordOfPears says: Tea lans","secondssince":25},{"id":"1582490175-3105953","text":"Malvo says: Like australia does","secondssince":31},{"id":"1582490173-3105952","text":"PrincessJulie says: the british subcontinent","secondssince":33},{"id":"1582490156-3105951","text":"betcho says: Uk*","secondssince":50},{"id":"1582490153-3105950","text":"Malvo says: I say they just call themselves the 8th continent","secondssince":53},{"id":"1582490131-3105949","text":"AcidCypher says: yeh Britain is part of Europe. just not e.u","secondssince":75},{"id":"1582490087-3105948","text":"Malvo says: I m Good, how are you porter","secondssince":119},{"id":"1582490073-3105947","text":"porter2927 says: Nevermind","secondssince":133},{"id":"1582490029-3105946","text":"Malvo says: Is britain even europe anymore?","secondssince":177},{"id":"1582490026-3105945","text":"porter2927 says: How is everyone?","secondssince":180}]}';
-
-			k = JSON.parse(k);
-
-			enqueue(boxes[name], k[name]);
-
-
-
-	}
-
-
-
-    });
-
-
-
-
-
+        });
     </script>
 
-
-
     <style>
+        .bubble {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding-top: 10px;
+            z-index: 4
+        }
+        
+        .bubble .bubble-tail {
+            padding-bottom: 12px
+        }
+        
+        .bubble-inner {
+            background-color: #222;
+            background-image: -moz-linear-gradient(rgb(58, 58, 58) 0%, rgb(34, 34, 34) 100%);
+            background-image: -webkit-gradient(linear, color-stop(0, rgb(58, 58, 58)), color-stop(1, rgb(34, 34, 34)));
+            background-image: -webkit-linear-gradient(rgb(58, 58, 58) 0%, rgb(34, 34, 34) 100%);
+            background-image: -o-linear-gradient(rgb(58, 58, 58) 0%, rgb(34, 34, 34) 100%);
+            background-image: -ms-linear-gradient(rgb(58, 58, 58) 0%, rgb(34, 34, 34) 100%);
+            background-image: linear-gradient(rgb(58, 58, 58) 0%, rgb(34, 34, 34) 100%);
+            -moz-box-shadow: 1px 1px 4px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .1);
+            -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .1);
+            box-shadow: 1px 1px 4px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .1);
+            line-height: 16px;
+            color: #ccc;
+            padding: 5px 10px;
+            border-radius: 5px
+        }
+        
+        .bubble a {
+            text-decoration: none
+        }
+        
+        .bubble a {
+            color: #30a7a7
+        }
+        
+        .bg-g {
+            overflow: hidden;
+            background: transparent url("{{ asset('img/Night-Mountain.jpg') }} ");
+            background-size: cover;
+        }
+    </style>
 
-    .bubble {
-
-        position: absolute;
-
-        top: 0;
-
-        left: 0;
-
-        padding-top: 10px;
-
-        z-index: 4
-
-    }
-
-
-
-    .bubble .bubble-tail {
-
-        padding-bottom: 12px
-
-    }
-
-
-
-    .bubble-inner {
-
-        background-color: #222;
-
-        background-image: -moz-linear-gradient(rgb(58, 58, 58) 0%, rgb(34, 34, 34) 100%);
-
-        background-image: -webkit-gradient(linear, color-stop(0, rgb(58, 58, 58)), color-stop(1, rgb(34, 34, 34)));
-
-        background-image: -webkit-linear-gradient(rgb(58, 58, 58) 0%, rgb(34, 34, 34) 100%);
-
-        background-image: -o-linear-gradient(rgb(58, 58, 58) 0%, rgb(34, 34, 34) 100%);
-
-        background-image: -ms-linear-gradient(rgb(58, 58, 58) 0%, rgb(34, 34, 34) 100%);
-
-        background-image: linear-gradient(rgb(58, 58, 58) 0%, rgb(34, 34, 34) 100%);
-
-        -moz-box-shadow: 1px 1px 4px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .1);
-
-        -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .1);
-
-        box-shadow: 1px 1px 4px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .1);
-
-        line-height: 16px;
-
-        color: #ccc;
-
-        padding: 5px 10px;
-
-        border-radius: 5px
-
-    }
-
-
-
-    .bubble a {
-
-        text-decoration: none
-
-    }
-
-
-
-    .bubble a {
-
-        color: #30a7a7
-
-    }
-
-</style>
-
-  </body>
+</body>
 
 </html>
