@@ -218,7 +218,7 @@
 
 			<div class="carousel-item active">
 
-				<img src="{{ asset('img/city.jpg') }}" class="d-block w-100 h-100 animated rotateIn  delay-10s" alt="Slide 1">
+				<img src="{{ asset('img/city.jpg') }}" class="d-block w-100 h-100 animated fadeOut slower" alt="Slide 1">
 
 			</div>
 
