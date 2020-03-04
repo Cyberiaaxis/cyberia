@@ -24,13 +24,13 @@
 
 <body scroll="no" class="bg-g">
 
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-transparent">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-transparent">
 
         <div class="container">
 
             <a class="navbar-brand" href="#">
 
-                <img src="{{ asset('img/logo/logo.png') }}" alt="Logo" width="100" height="30" class="img-fluid d-inline-block align-top">
+                <img src="{{ asset('img/logo/logo.png') }}" alt="Logo" class="img-fluid d-inline-block align-top">
 
             </a>
 
@@ -46,41 +46,18 @@
 
                     <li class="nav-item active">
 
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#">Home <span class="sr-only">Link1</span></a>
+                    </li>
+
+                    <li class="nav-item">
+
+                        <a class="nav-link" href="#">Link2</a>
 
                     </li>
 
                     <li class="nav-item">
 
-                        <a class="nav-link" href="#">Link</a>
-
-                    </li>
-
-                    <li class="nav-item dropdown">
-
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-                Dropdown
-
-              </a>
-
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-                            <a class="dropdown-item" href="#">Action</a>
-
-                            <a class="dropdown-item" href="#">Another action</a>
-
-                            <div class="dropdown-divider"></div>
-
-                            <a class="dropdown-item" href="#">Something else here</a>
-
-                        </div>
-
-                    </li>
-
-                    <li class="nav-item">
-
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                        <a class="nav-link" href="#">Link3</a>
 
                     </li>
 
@@ -206,68 +183,71 @@
 
     </div>
 
-    <ul class="list-group fixed-bottom w-10">
-        <li class="list-group-item bg-transparent text-white text-center">test</li>
-        <li class="list-group-item bg-transparent">test</li>
-        <li class="list-group-item bg-transparent">test</li>
-        <li class="list-group-item bg-transparent">test</li>
-        <li class="list-group-item bg-transparent">test</li>
-        <li class="list-group-item bg-transparent">test</li>
-    </ul>
-    <div id="carouselExampleFade" class="carousel slide" data-ride="carousel">
+    <div class="notification">
 
+    </div>
 
+ <div class="card fixed-bottom w-25 rightlist">
+     <h3 class="card-header">Player List</h3>
+     <div class="card-body">
+         <div class="list-group">
+             <a class="list-group-item" href="#">List1</a>
+             <a class="list-group-item" href="#">List1</a>
+             <a class="list-group-item" href="#">List1</a>
+             <a class="list-group-item" href="#">List1</a>
+             <a class="list-group-item" href="#">List1</a>
+         </div>
+     </div>
+ </div>    
+  <div class="card fixed-bottom w-25 leftlist">
+     <h3 class="card-header">Player List</h3>
+     <div class="card-body">
+         <div class="list-group">
+             <a class="list-group-item" href="#">List1</a>
+             <a class="list-group-item" href="#">List1</a>
+             <a class="list-group-item" href="#">List1</a>
+             <a class="list-group-item" href="#">List1</a>
+             <a class="list-group-item" href="#">List1</a>
+         </div>
+     </div>
+ </div>    
+
+    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
 
         <div class="carousel-inner">
 
             <div class="carousel-item active">
 
-                <img src="{{ asset('img/1.jpg') }}" class="d-block w-100 h-100" alt="Slide 1">
+                <img src="{{ asset('img/city.jpg') }}" class="d-block w-100 h-100" alt="Slide 1">
 
             </div>
 
             <div class="carousel-item">
 
-                <img src="{{ asset('img/2.jpg') }}" class="d-block w-100 h-100" alt="Slide 2">
+                <img src="{{ asset('img/city2.jpg') }}" class="d-block w-100 h-100" alt="Slide 2">
 
             </div>
 
             <div class="carousel-item">
 
-                <img src="{{ asset('img/3.jpg') }}" class="d-block w-100 h-100" alt="Slide 3">
+                <img src="{{ asset('img/city3.jpg') }}" class="d-block w-100 h-100" alt="Slide 3">
 
             </div>
 
             <div class="carousel-item">
 
-                <img src="{{ asset('img/4.jpg') }}" class="d-block w-100 h-100" alt="Slide 1">
+                <img src="{{ asset('img/city.jpg') }}" class="d-block w-100 h-100" alt="Slide 1">
 
             </div>
 
         </div>
 
-        <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
-
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-
-            <span class="sr-only">Previous</span>
-
-        </a>
-
-        <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
-
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-
-            <span class="sr-only">Next</span>
-
-        </a>
-
     </div>
 
+
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
+    <script src="//cdn.jsdelivr.net/npm/jquery.marquee@1.5.0/jquery.marquee.min.js" type="text/javascript"></script>
     <script src="{{ asset('js/bootstrap/bootstrap.min.js') }}"></script>
-
     <script>
         $(document).ready(function() {
 
@@ -277,7 +257,7 @@
 
                 bubbleFadeDuration = 1,
 
-                bubbleDuration = 10,
+                bubbleDuration = 30,
 
                 maxTries = 5,
 
@@ -293,7 +273,7 @@
 
                     },
 
-                    element: $(".carousel")
+                    element: $(".notification")
 
                 }
 
@@ -309,7 +289,7 @@
 
                     boxes[name] = {};
 
-                    boxes[name].box = $(spec[name].element).find(".carousel-inner");
+                    boxes[name].box = $(spec[name].element);
 
                     boxes[name].queue = [];
 
@@ -355,13 +335,15 @@
 
                     });
 
-                    var boundingBox = {
+                    var maxTries = 100,
 
-                        w: livebox.box.width(),
+                        boundingBox = {
 
-                        h: 120
+                            w: livebox.box.width(),
 
-                    };
+                            h: 120
+
+                        };
 
                     for (var i = 0; i < maxTries; ++i) {
 
@@ -397,7 +379,7 @@
 
                         'margin-left': x,
 
-                        'margin-top': y
+                        'margin-top': y,
 
                     });
 
@@ -479,52 +461,19 @@
 
             }
 
+         $(".list-group").marquee({
+             duration: 5000,
+             duplicated: true,
+             direction: 'up',
+             gap: 0,
+             pauseOnHover: true,
+       });
+
         });
     </script>
 
     <style>
-        .bubble {
-            position: absolute;
-            top: 0;
-            left: 0;
-            padding-top: 10px;
-            z-index: 4
-        }
-        
-        .bubble .bubble-tail {
-            padding-bottom: 12px
-        }
-        
-        .bubble-inner {
-            background-color: #222;
-            background-image: -moz-linear-gradient(rgb(58, 58, 58) 0%, rgb(34, 34, 34) 100%);
-            background-image: -webkit-gradient(linear, color-stop(0, rgb(58, 58, 58)), color-stop(1, rgb(34, 34, 34)));
-            background-image: -webkit-linear-gradient(rgb(58, 58, 58) 0%, rgb(34, 34, 34) 100%);
-            background-image: -o-linear-gradient(rgb(58, 58, 58) 0%, rgb(34, 34, 34) 100%);
-            background-image: -ms-linear-gradient(rgb(58, 58, 58) 0%, rgb(34, 34, 34) 100%);
-            background-image: linear-gradient(rgb(58, 58, 58) 0%, rgb(34, 34, 34) 100%);
-            -moz-box-shadow: 1px 1px 4px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .1);
-            -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .1);
-            box-shadow: 1px 1px 4px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .1);
-            line-height: 16px;
-            color: #ccc;
-            padding: 5px 10px;
-            border-radius: 5px
-        }
-        
-        .bubble a {
-            text-decoration: none
-        }
-        
-        .bubble a {
-            color: #30a7a7
-        }
-        
-        .bg-g {
-            overflow: hidden;
-            background: transparent url("{{ asset('img/Night-Mountain.jpg') }} ");
-            background-size: cover;
-        }
+
     </style>
 
 </body>

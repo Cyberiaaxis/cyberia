@@ -1,215 +1,150 @@
-.carousel .carousel-item{
+/**
 
+* Navbar
+
+*/
+
+.navbar-dark .navbar-nav .active>.nav-link,
+.navbar-dark .navbar-nav .nav-link.active,
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: red;
+    transition: all 1s linear;
+}
+
+.leftlist,
+.rightlist {
+    background: transparent;
+    color: white;
+    text-align: center;
+}
+
+.rightlist {
+    left: auto;
+}
+
+.leftlist .card-body,
+.rightlist .card-body {
+    overflow: hidden;
+    background: transparent;
+}
+
+.leftlist .list-group,
+.rightlist .list-group {
+    /* animation: marquee 5s linear infinite; */
+}
+
+.leftlist a,
+.rightlist a {
+    border: none;
+    background: transparent;
+    text-align: center;
+    color: white;
+
+}
+
+.leftlist li a:hover,
+.rightlist li a:hover,
+a:hover {
+    text-decoration: none;
+    color: red;
+    transition: all 1s linear;
+}
+
+/* @keyframes marquee {
+    0% {
+        -moz-transform: translate(0, 0);
+        -webkit-transform: translate(0, 0);
+        -o-transform: translate(0, 0);
+        -ms-transform: translate(0, 0);
+        transform: translate(0, 100%);
+        transform: translateY(100%);
+    }
+    100% {
+        -moz-transform: translate(0, -100%);
+        -webkit-transform: translate(0, -100%);
+        -o-transform: translate(0, -100%);
+        -ms-transform: translate(0, -100%);
+        transform: translate(0, -100%);
+        transform: translate(0);
+    }
+} */
+
+.notification {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    height: 300px;
+    width: 100%;
+    z-index: 100;
+}
+
+.bubble {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 1rem;
+    z-index: 4;
+    margin: 0 auto;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.bubble .bubble-tail {
+    background: transparent url('../img/tooltip_tail.png') center bottom no-repeat;
+    padding-bottom: 12px
+}
+
+.bubble-inner {
+    background-color: #000;
+    background-image: -moz-linear-gradient(rgb(58, 58, 58) 0%, rgb(34, 34, 34) 100%);
+    background-image: -webkit-gradient(linear, color-stop(0, rgb(58, 58, 58)), color-stop(1, rgb(34, 34, 34)));
+    background-image: -webkit-linear-gradient(rgb(58, 58, 58) 0%, rgb(34, 34, 34) 100%);
+    background-image: -o-linear-gradient(rgb(58, 58, 58) 0%, rgb(34, 34, 34) 100%);
+    background-image: -ms-linear-gradient(rgb(58, 58, 58) 0%, rgb(34, 34, 34) 100%);
+    background-image: linear-gradient(rgb(58, 58, 58) 0%, rgb(34, 34, 34) 100%);
+    -moz-box-shadow: 1px 1px 4px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .1);
+    -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .1);
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .1);
+    line-height: 16px;
+    color: #ccc;
+    padding: 5px 10px;
+    border-radius: 5px
+}
+
+.bg-g {
+    overflow: hidden;
+    background: transparent url("../img/Night-Mountain.jpg");
+    background-size: cover;
+}
+
+.carousel-fade .carousel-item.active,
+.carousel-fade .carousel-item-next.carousel-item-left,
+.carousel-fade .carousel-item-prev.carousel-item-right {
     -webkit-animation: imageAnimation 36s linear infinite 0s;
-
     -moz-animation: imageAnimation 36s linear infinite 0s;
-
     -o-animation: imageAnimation 36s linear infinite 0s;
-
     -ms-animation: imageAnimation 36s linear infinite 0s;
-
-    animation: imageAnimation 40s linear infinite 0s;
-
-}
-
-
-
-@-webkit-keyframes imageAnimation {
-
-	0% {
-
-	    opacity: 0;
-
-	    -webkit-animation-timing-function: ease-in;
-
-	}
-
-	8% {
-
-	    opacity: 1;
-
-	    -webkit-transform: scale(1.05);
-
-	    -webkit-animation-timing-function: ease-out;
-
-	}
-
-	17% {
-
-	    opacity: 1;
-
-	    -webkit-transform: scale(1.1) rotate(3deg);
-
-	}
-
-	25% {
-
-	    opacity: 0;
-
-	    -webkit-transform: scale(1.1) rotate(3deg);
-
-	}
-
-	100% { opacity: 0 }
-
-}
-
-@-moz-keyframes imageAnimation {
-
-	0% {
-
-	    opacity: 0;
-
-	    -moz-animation-timing-function: ease-in;
-
-	}
-
-	8% {
-
-	    opacity: 1;
-
-	    -moz-transform: scale(1.05);
-
-	    -moz-animation-timing-function: ease-out;
-
-	}
-
-	17% {
-
-	    opacity: 1;
-
-	    -moz-transform: scale(1.1) rotate(3deg);
-
-	}
-
-	25% {
-
-	    opacity: 0;
-
-	    -moz-transform: scale(1.1) rotate(3deg);
-
-	}
-
-	100% { opacity: 0 }
-
-}
-
-@-o-keyframes imageAnimation {
-
-	0% {
-
-	    opacity: 0;
-
-	    -o-animation-timing-function: ease-in;
-
-	}
-
-	8% {
-
-	    opacity: 1;
-
-	    -o-transform: scale(1.05);
-
-	    -o-animation-timing-function: ease-out;
-
-	}
-
-	17% {
-
-	    opacity: 1;
-
-	    -o-transform: scale(1.1) rotate(3deg);
-
-	}
-
-	25% {
-
-	    opacity: 0;
-
-	    -o-transform: scale(1.1) rotate(3deg);
-
-	}
-
-	100% { opacity: 0 }
-
-}
-
-@-ms-keyframes imageAnimation {
-
-	0% {
-
-	    opacity: 0;
-
-	    -ms-animation-timing-function: ease-in;
-
-	}
-
-	8% {
-
-	    opacity: 1;
-
-	    -ms-transform: scale(1.05);
-
-	    -ms-animation-timing-function: ease-out;
-
-	}
-
-	17% {
-
-	    opacity: 1;
-
-	    -ms-transform: scale(1.1) rotate(3deg);
-
-	}
-
-	25% {
-
-	    opacity: 0;
-
-	    -ms-transform: scale(1.1) rotate(3deg);
-
-	}
-
-	100% { opacity: 0 }
-
+    animation: imageAnimation 36s linear infinite 0s;
 }
 
 @keyframes imageAnimation {
-
-	0% {
-
-	    opacity: 0;
-
-	    animation-timing-function: ease-in;
-
-	}
-
-	8% {
-
-	    opacity: 1;
-
-	    transform: scale(1.05);
-
-	    animation-timing-function: ease-out;
-
-	}
-
-	17% {
-
-	    opacity: 1;
-
-	    transform: scale(1.1) rotate(3deg);
-
-	}
-
-	25% {
-
-	    opacity: 0;
-
-	    transform: scale(1.1) rotate(3deg);
-
-	}
-
-	100% { opacity: 0 }
-
+    8% {
+        opacity: 1;
+        transform: scale(1.05);
+        -moz-transform: scale(1.05);
+        -webkit-transform: scale(1.05);
+        -o-transform: scale(1.05);
+        -ms-transform: scale(1.05);
+    }
+    17% {
+        opacity: 1;
+        -moz-transform: scale(1.1) rotate(3deg);
+        -webkit-transform: scale(1.1) rotate(3deg);
+        -o-transform: scale(1.1) rotate(3deg);
+        -ms-transform: scale(1.1) rotate(3deg);
+        transform: scale(1.1) rotate(3deg);
+    }
 }
