@@ -159,11 +159,11 @@
                         <h2 class="form-title">Sign up</h2>
                         <form method="POST" class="register-form" id="login-form">
                             <div class="form-group">
-                                <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <label for="your_name"><i class="fa fa-users text-white"></i></label>
                                 <input type="text" name="your_name" id="your_name" placeholder="Your Name"/>
                             </div>
                             <div class="form-group">
-                                <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                                <label for="your_pass"><i class="fa fa-lock text-white"></i></label>
                                 <input type="password" name="your_pass" id="your_pass" placeholder="Password"/>
                             </div>
                             <div class="form-group">
