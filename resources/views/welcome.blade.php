@@ -127,7 +127,7 @@
 
     <!-- Modal -->
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade flipInX" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
         <div class="modal-dialog" role="document">
 
@@ -148,49 +148,43 @@
                 <form id="#" method="post" action="#" enctype="multipart/form-data">
 
                     <div class="modal-body">
-
-                <div class="signin-content">
-                    <div class="signin-image m-auto">
-                        <figure><i class="fa fa-2x fa-sign-in"></i></figure>
-                        <a href="#" class="signup-image-link">Create an account</a>
-                    </div>
-
-                    <div class="signin-form">
-                        <h2 class="form-title">Sign up</h2>
-                        <form method="POST" class="register-form" id="login-form">
-                            <div class="form-group">
-                                <label for="your_name"><i class="fa fa-users text-white"></i></label>
-                                <input type="text" name="your_name" id="your_name" placeholder="Your Name"/>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
                             </div>
-                            <div class="form-group">
-                                <label for="your_pass"><i class="fa fa-lock text-white"></i></label>
-                                <input type="password" name="your_pass" id="your_pass" placeholder="Password"/>
-                            </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
-                                <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
-                            </div>
-                            <div class="form-group form-button">
-                                <input type="submit" name="signin" id="signin" class="form-submit" value="Log in"/>
-                            </div>
-                        </form>
-                        <div class="social-login">
-                            <span class="social-label">Or login with</span>
-                            <ul class="socials">
-                                <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
-                                <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
-                                <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
-                            </ul>
                         </div>
-                    </div>
-                </div>
-
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                        <div class="form-group text-white">
+                            <input type="checkbox" name="remember-me" id="remember-me" class="agree-term">
+                            <label for="remember-me" class="label-agree-term">
+                                 <span>Stay signed in</span>
+                            </label>
+                        </div>
                     </div>
 
                     <div class="modal-footer">
-
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
+                        
+                        <div class="row text-white fa-2x">
+                            <div class="col">
+                                <i class="fa fa-google"></i>
+                            </div>
+                            <div class="col">
+                                <i class="fa fa-twitter"></i>
+                            </div>
+                            <div class="col">
+                                <i class="fa fa-facebook"></i>
+                            </div>
+                        </div>
                         <button type="submit" class="btn btn-primary">Login</button>
 
                     </div>
@@ -207,30 +201,30 @@
 
     </div>
 
- <div class="card fixed-bottom w-25 rightlist">
-     <h3 class="card-header">Player List</h3>
-     <div class="card-body">
-         <div class="list-group">
-             <a class="list-group-item" href="#">List1</a>
-             <a class="list-group-item" href="#">List1</a>
-             <a class="list-group-item" href="#">List1</a>
-             <a class="list-group-item" href="#">List1</a>
-             <a class="list-group-item" href="#">List1</a>
-         </div>
-     </div>
- </div>    
-  <div class="card fixed-bottom w-25 leftlist">
-     <h3 class="card-header">Player List</h3>
-     <div class="card-body">
-         <div class="list-group">
-             <a class="list-group-item" href="#">List1</a>
-             <a class="list-group-item" href="#">List1</a>
-             <a class="list-group-item" href="#">List1</a>
-             <a class="list-group-item" href="#">List1</a>
-             <a class="list-group-item" href="#">List1</a>
-         </div>
-     </div>
- </div>    
+    <div class="card fixed-bottom w-25 rightlist">
+        <h3 class="card-header">Player List</h3>
+        <div class="card-body">
+            <div class="list-group">
+                <a class="list-group-item" href="#">List1</a>
+                <a class="list-group-item" href="#">List1</a>
+                <a class="list-group-item" href="#">List1</a>
+                <a class="list-group-item" href="#">List1</a>
+                <a class="list-group-item" href="#">List1</a>
+            </div>
+        </div>
+    </div>
+    <div class="card fixed-bottom w-25 leftlist">
+        <h3 class="card-header">Player List</h3>
+        <div class="card-body">
+            <div class="list-group">
+                <a class="list-group-item" href="#">List1</a>
+                <a class="list-group-item" href="#">List1</a>
+                <a class="list-group-item" href="#">List1</a>
+                <a class="list-group-item" href="#">List1</a>
+                <a class="list-group-item" href="#">List1</a>
+            </div>
+        </div>
+    </div>
 
     <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
 
@@ -263,7 +257,6 @@
         </div>
 
     </div>
-
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/jquery.marquee@1.5.0/jquery.marquee.min.js" type="text/javascript"></script>
@@ -481,13 +474,13 @@
 
             }
 
-         $(".list-group").marquee({
-             duration: 5000,
-             duplicated: true,
-             direction: 'up',
-             gap: 0,
-             pauseOnHover: true,
-       });
+            $(".list-group").marquee({
+                duration: 5000,
+                duplicated: true,
+                direction: 'up',
+                gap: 0,
+                pauseOnHover: true,
+            });
 
         });
     </script>
