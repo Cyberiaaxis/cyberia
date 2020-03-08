@@ -75,13 +75,23 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <form id="addModel" method="post" action="{{ route('register') }}" enctype="multipart/form-data">
+                @csrf
                 <div class="modal-body">
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text bg-white border-0"><i class="fa fa-user"></i></span>
                             </div>
-                            <input type="text" class="form-control border-0" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                            <input type="text" name="name" class="form-control border-0" placeholder="Username" aria-label="name" aria-describedby="basic-addon1" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white border-0"><i class="fa fa-envelope"></i></span>
+                            </div>
+                            <input type="email" name="email" class="form-control border-0" placeholder="Email" aria-label="email" aria-describedby="basic-addon1" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -89,14 +99,22 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text bg-white border-0"><i class="fa fa-lock"></i></span>
                             </div>
-                            <input type="text" class="form-control border-0" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                            <input type="password" class="form-control border-0" placeholder="Password" aria-label="password" aria-describedby="basic-addon1" required>
                         </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block m-auto">Login</button>
+                    </div>                    
+                     <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white border-0"><i class="fa fa-lock"></i></span>
+                            </div>
+                            <input type="password" name="cpassword" class="form-control border-0" placeholder="Confirm Password" aria-label="password" aria-describedby="basic-addon1" required>
+                        </div>
+                    </div>                   
+                    <button type="submit" class="btn btn-primary btn-block m-auto">Registration</button>
                 </div>
                 <div class="modal-footer border-0">
                     <div class="col">
-                        <a class="text-white" href="{{ route('login') }}" class="btn btn-info text-uppercase" data-dismiss="modal" data-toggle="modal" data-target="#register">
+                        <a class="text-white" href="{{ route('login') }}" class="btn btn-info text-uppercase" data-dismiss="modal" data-toggle="modal" data-target="#login">
                         {{ __('login') }}
                     </a>
                     </div>
@@ -106,6 +124,7 @@
                         <i class="fa fa-facebook p-2"></i>
                     </div>
                 </div>
+                </form>
             </div>
         </div>
     </div>
@@ -119,6 +138,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <form id="addModel" method="post" action="{{ route('login') }}" enctype="multipart/form-data">
+                @csrf
                 <div class="modal-body">
                     <div class="form-group">
                         <div class="input-group">
@@ -163,6 +184,7 @@
                         <i class="fa fa-facebook p-2"></i>
                     </div>
                 </div>
+                </form>
             </div>
         </div>
     </div>
