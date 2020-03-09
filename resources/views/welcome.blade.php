@@ -75,7 +75,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="addModel" method="post" action="{{ route('register') }}" enctype="multipart/form-data">
+                <form method="post" action="{{ route('register') }}">
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
