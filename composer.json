@@ -20,8 +20,6 @@
 
         "php": "^7.2",
 
-        "chatter-laravel/core": "^6",
-
         "fideloper/proxy": "^4.0",
 
         "laravel/framework": "^6.2",

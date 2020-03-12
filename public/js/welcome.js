@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    const csrfToken = $('meta[name="csrf-token"]').attr('content');
     var delayEventsBy = 3,
         serverPollWait = 10,
         bubbleFadeDuration = 1,
@@ -132,4 +133,20 @@ $(document).ready(function () {
         gap: 0,
         pauseOnHover: true,
     });
+    
+    $(".email").focusout(function () {
+      $this = $(this);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+      let url = $(this).attr('data-url');
+            $.post(url, { email: $(this).val() }, function () {
+                $this.removeClass('is-invalid').addClass('is-valid');
+            }).fail(function () {
+                $this.removeClass('is-valid').addClass('is-invalid');
+            });
+      });
 });
+
