@@ -153,14 +153,25 @@ $(document).ready(function () {
         event.preventDefault();
         const form = $(this);
         const url = form.attr('action');
-        console.log(url);
+        // console.log(url);
         $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
-        console.log(form.serializeArray());
+        // console.log(form.serializeArray());
         $.post(url, form.serializeArray())
-            .done(response => { response })
-            .fail((function (e) {
-                const errors = e.responseJSON.errors;
-            }));
+        .done(response => { 
+            console.log(response);
+            $('#register form').trigger('reset');
+            location.reload(); 
+        })
+        .fail((function (e) {
+            const errors = e.responseJSON.errors;
+            $('#register .messages').addClass('alert alert-danger');
+            $.each(errors, function (key, value) {
+                $('#register .messages').append('<p>' + value + '</p>');
+                $('input[name="' + key + '"]').addClass('is-invaild');
+            })
+        }));
     });
 });
+
+
 

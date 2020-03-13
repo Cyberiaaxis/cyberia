@@ -37,7 +37,7 @@
                     <li>
                         <div class="dropdown mr-1">
                             <a class="dropdown-toggle" href="javascript:void(0)" role="button" id="user-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<img src="{{ user_avatar(auth()->id()) }}" alt="{{ auth()->user()->full_name }}" class="img-circle img-responsive avatar">
+						<img src="" alt="" class="img-circle img-responsive avatar">
 						</a>
                             <div class="dropdown-menu" aria-labelledby="user-menu">
                                 <a class="dropdown-item" href="#">Action</a>
@@ -76,9 +76,10 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="form" method="post" action="{{ route('register') }}">
+                <form method="post" action="{{ route('register') }}">
                 @csrf
                 <div class="modal-body">
+                     <div class="messages"></div>
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">
