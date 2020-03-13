@@ -76,15 +76,15 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="post" action="{{ route('register') }}">
+                <form id="form" method="post" action="{{ route('register') }}">
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text bg-white border-0"><i class="fa fa-user"></i></span>
+                                <span class="input-group-text bg-white"><i class="fa fa-user"></i></span>
                             </div>
-                            <input type="text" name="name" class="form-control border-0" placeholder="Username" aria-label="name" aria-describedby="basic-addon1" required>
+                            <input type="text" name="name" class="form-control border-0" placeholder="Username" aria-label="name" aria-describedby="basic-addon1" required autofocus>
                         </div>
                     </div>
                     <div class="form-group">
@@ -92,7 +92,10 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text bg-white"><i class="fa fa-envelope"></i></span>
                             </div>
-                            <input type="email" name="email" class="form-control border-0 email" data-url="{{ route('checkemail') }}" placeholder="Email" aria-label="email" aria-describedby="basic-addon1" required>
+                            <input type="email" name="email" class="form-control border-0 email" data-url="{{ route('checkemail') }}" placeholder="Email" aria-label="email" aria-describedby="basic-addon1" required autofocus>
+                             <div class="invalid-tooltip">
+                                
+                             </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -100,7 +103,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text bg-white border-0"><i class="fa fa-lock"></i></span>
                             </div>
-                            <input type="password" name="password" class="form-control border-0" placeholder="Password" aria-label="password" aria-describedby="basic-addon1" required>
+                            <input type="password" name="password" class="form-control border-0" placeholder="Password" aria-label="password" aria-describedby="basic-addon1" required autofocus>
                         </div>
                     </div>                    
                      <div class="form-group">
@@ -108,7 +111,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text bg-white border-0"><i class="fa fa-lock"></i></span>
                             </div>
-                            <input type="password" name="password_confirmation" class="form-control border-0" placeholder="Confirm Password" aria-label="password" aria-describedby="basic-addon1" required>
+                            <input type="password" name="password_confirmation" class="form-control border-0" placeholder="Confirm Password" aria-label="password" aria-describedby="basic-addon1" required autofocus>
                         </div>
                     </div>                   
                     <button type="submit" class="btn btn-primary btn-block m-auto">Registration</button>
@@ -243,7 +246,9 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/jquery.marquee@1.5.0/jquery.marquee.min.js" type="text/javascript"></script>
     <script src="{{ asset('js/bootstrap/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/welcome.js') }}"></script>
+    <script src="{{ asset('js/input-mask/input-mask.js') }}"></script>
+    <script src="{{ asset('js/welcome.js') }}"></script>    
+
 </body>
 
 </html>

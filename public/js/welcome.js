@@ -136,17 +136,31 @@ $(document).ready(function () {
     
     $(".email").focusout(function () {
       $this = $(this);
+        let url = $(this).attr('data-url');
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-      let url = $(this).attr('data-url');
-            $.post(url, { email: $(this).val() }, function () {
-                $this.removeClass('is-invalid').addClass('is-valid');
-            }).fail(function () {
-                $this.removeClass('is-valid').addClass('is-invalid');
-            });
-      });
+        $.post(url, { email: $(this).val() }, function () {
+            $this.removeClass('is-invalid').addClass('is-valid');
+        }).fail(function (e) {
+            $this.removeClass('is-valid').addClass('is-invalid');
+            $('.invalid-tooltip').html(e.responseJSON.errors.email[0]);
+        });
+    });
+    $(document).on('submit', '#register form,#login form', function (event) {
+        event.preventDefault();
+        const form = $(this);
+        const url = form.attr('action');
+        console.log(url);
+        $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+        console.log(form.serializeArray());
+        $.post(url, form.serializeArray())
+            .done(response => { response })
+            .fail((function (e) {
+                const errors = e.responseJSON.errors;
+            }));
+    });
 });
 

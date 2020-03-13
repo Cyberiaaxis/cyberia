@@ -16,7 +16,7 @@ Route::view('/player','player.index');
 Route::get('/', function () {
     return view('welcome');
 });
-Auth::routes();
+Auth::routes(['verify' => true]);
 // dd(Auth::routes());
 Route::post('/checkemail', 'Auth\RegisterController@checkEmail')->name('checkemail');
 Route::group(['prefix' => 'staff', 'middleware' => ['auth']], function(){
