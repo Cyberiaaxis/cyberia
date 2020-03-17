@@ -19,6 +19,7 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 // dd(Auth::routes());
 Route::post('/checkemail', 'Auth\RegisterController@checkEmail')->name('checkemail');
+Route::view('/story','player.story');
 Route::view('/home','player.index');
 Route::group(['prefix' => 'staff', 'middleware' => ['auth']], function(){
     Route::resource('/','StaffsController');
