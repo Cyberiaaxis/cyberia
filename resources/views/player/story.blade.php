@@ -37,7 +37,7 @@
 
     <div class="container-fluid">
 
-        <div class="card bg-transparent">
+        <div class="card border-0 bg-transparent">
             <div class="card-header bg-transparent border-success">Welcome</div>
               <div class="card-body text-justify bg-transparent border-success ml3">
                   Chairs in criminology these days are to be found primarily in faculties of law – such as at the universities in Cologne, Tübingen, Heidelberg, Münster, Bochum and Giessen. For the most part they are affiliated with departments of criminal law relating to juvenile offenders. And this is no coincidence: adolescents and young adults come into conflict with the law particularly often, even if they commit only minor offences in many cases. In Germany, young people are held legally responsible for their crimes from the age of 14. “One in five alleged criminals in Germany falls within the scope of juvenile criminal law”, says Professor Frank Neubacher, director of the Institute of Criminology at the University of Cologne (only in German).

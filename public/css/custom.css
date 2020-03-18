@@ -1,0 +1,28 @@
+.c-dark-theme .c-sidebar::before,
+
+.c-sidebar::before {
+    background: transparent url('../../img/city.jpg');
+    background-size: cover;
+    content: "";
+    opacity: 0.2;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+.c-sidebar-nav-item{
+ border-bottom: 1px solid #d8dbe0;
+ font-weight: 500;
+}
+
+.c-dark-theme .c-sidebar .c-sidebar-nav-link:hover,
+ .c-dark-theme .c-sidebar .c-sidebar-nav-dropdown-toggle:hover,
+ .c-sidebar .c-sidebar-nav-link:hover,
+ .c-sidebar .c-sidebar-nav-dropdown-toggle:hover,
+ .c-sidebar a:hover{
+     background: transparent;
+     color: black;
+ }
