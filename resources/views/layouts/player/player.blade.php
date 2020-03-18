@@ -15,8 +15,7 @@
                 margin-left: 200px;
             }
         }
-   
-   </style>
+    </style>
 </head>
 
 <body class="c-app c-dark-theme">
@@ -27,35 +26,35 @@
             {{ config('app.name') }}
 
         </div>
-<ul class="c-sidebar-nav">
-    <li class="c-sidebar-nav-item p-2">
-        <div class="p-2">
-            HP 10/10
-            <div class="progress progress-sm">
-                <div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-        </div>    
-        <div class="p-2">
-            HP 10/10
-            <div class="progress progress-sm">
-                <div class="progress-bar bg-warning" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-        </div>    
-        <div class="p-2">
-            HP 10/10
-            <div class="progress progress-sm">
-                <div class="progress-bar bg-info" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-        </div>    
-    </li>
+        <ul class="c-sidebar-nav">
+            <li class="c-sidebar-nav-item p-2">
+                <div class="p-2">
+                    HP 10/10
+                    <div class="progress progress-sm">
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: 50%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div class="p-2">
+                    HP 10/10
+                    <div class="progress progress-sm">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 60%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div class="p-2">
+                    HP 10/10
+                    <div class="progress progress-sm">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 70%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </li>
 
-    <li class="c-sidebar-nav-title">Menu</li>
-    <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
-        <a class="c-sidebar-nav-link" href="#">
-            <i class="fa fa-inbox mr-2"></i> Inventory
-        </a>
-    </li>
-</ul>
+            <li class="c-sidebar-nav-title">Menu</li>
+            <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-link" href="#">
+                    <i class="fa fa-inbox mr-2"></i> Inventory
+                </a>
+            </li>
+        </ul>
 
         <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-unfoldable"></button>
 
@@ -79,12 +78,12 @@
                 <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#"><i class="fa fa-cogs mfe-2"></i> Settings</a></li>
             </ul>
             <ul class="c-header-nav ml-auto mr-4">
-                 <li class="c-header-nav-item px-3">
-                     <button class="c-class-toggler c-header-nav-btn" type="button" data-target="body" data-class="c-dark-theme" data-toggle="tooltip" data-placement="bottom" title="Toggle Light/Dark Mode">
-                         <i class="fa fa-moon-o c-d-dark-none"></i>
-                         <i class="fa fa-sun-o c-d-default-none"></i>
-                     </button>
-                 </li>
+                <li class="c-header-nav-item px-3">
+                    <button class="c-class-toggler c-header-nav-btn" type="button" data-target="body" data-class="c-dark-theme" data-toggle="tooltip" data-placement="bottom" title="Toggle Light/Dark Mode">
+                        <i class="fa fa-moon-o c-d-dark-none"></i>
+                        <i class="fa fa-sun-o c-d-default-none"></i>
+                    </button>
+                </li>
                 <li class="c-header-nav-item d-md-down-none mx-2">
                     <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-bell"></i>
