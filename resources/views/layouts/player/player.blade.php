@@ -19,45 +19,60 @@
 </head>
 
 <body class="c-app c-dark-theme">
-    <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
-
-        <div class="c-sidebar-brand bg-transparent">
-
+    <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show text-center" id="sidebar">
+        <div class="c-sidebar-brand flex-sm-row bg-transparent">
             {{ config('app.name') }}
-
         </div>
-        <ul class="c-sidebar-nav">
-            <li class="c-sidebar-nav-item p-2">
-                <div class="p-2">
+        <ul class="c-sidebar-nav mt-1">
+            <li class="c-sidebar-nav-item ml-2 mr-2">
+                <div class="p-1">
                     HP 10/10
                     <div class="progress progress-sm">
                         <div class="progress-bar bg-danger" role="progressbar" style="width: 50%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
-                <div class="p-2">
+                <div class="p-1">
                     HP 10/10
                     <div class="progress progress-sm">
                         <div class="progress-bar bg-warning" role="progressbar" style="width: 60%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
-                <div class="p-2">
+                <div class="p-1">
                     HP 10/10
                     <div class="progress progress-sm">
                         <div class="progress-bar bg-info" role="progressbar" style="width: 70%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
             </li>
-
-            <li class="c-sidebar-nav-title">Menu</li>
-            <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
-                <a class="c-sidebar-nav-link" href="#">
-                    <i class="fa fa-inbox mr-2"></i> Inventory
-                </a>
+            <li class="c-sidebar-nav-title m-0">Information</li>
+            <li class="c-sidebar-nav-item">
+                 <!-- https://www.php.net/manual/en/numberformatter.formatcurrency.php -->
+                   Money :  1234567 <br>
+                   Point :  1000
+                
             </li>
-        </ul>
-
-        <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-unfoldable"></button>
-
+            <li class="c-sidebar-nav-title m-0">Menu</li>
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="#"> <i class="fa fa-inbox mr-2"></i> Inventory </a>
+            </li>
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="#"> <i class="fa fa-inbox mr-2"></i> Inventory </a>
+            </li>
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="#"> <i class="fa fa-inbox mr-2"></i> Inventory </a>
+            </li>
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="#"> <i class="fa fa-inbox mr-2"></i> Inventory </a>
+            </li>
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="#"> <i class="fa fa-inbox mr-2"></i> Inventory </a>
+            </li>
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="#"> <i class="fa fa-inbox mr-2"></i> Inventory </a>
+            </li>
+            </ul>
+            <ul>hereererer</ul>
+        <!-- <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-unfoldable"></button> -->
     </div>
 
     <div class="c-wrapper">
