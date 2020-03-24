@@ -5,6 +5,7 @@
     font-style: normal;
 }
 .c-sidebar-nav-title {
+    /* border-bottom: 1px solid #d8dbe0; */
     font-size: 1.2rem;
      color: transparent !important;
      text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.5);
@@ -62,4 +63,14 @@
     display: block;
     font-size: medium;
     /* text-align: left; */
+}
+
+.game-time{
+     position: absolute;
+     bottom: 0;
+     padding: 1rem;
+     display: block;
+     width: 100%;
+     z-index: 100;
+     text-align: center;
 }

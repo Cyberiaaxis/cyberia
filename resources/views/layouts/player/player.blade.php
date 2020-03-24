@@ -49,7 +49,6 @@
                  <!-- https://www.php.net/manual/en/numberformatter.formatcurrency.php -->
                    Money :  1234567 <br>
                    Point :  1000
-                
             </li>
             <li class="c-sidebar-nav-title m-0">Menu</li>
             <li class="c-sidebar-nav-item">
@@ -70,8 +69,9 @@
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link" href="#"> <i class="fa fa-inbox mr-2"></i> Inventory </a>
             </li>
+            <li  class="c-sidebar-nav-item"><time class="game-time" datetime="2008-02-14 20:00">Hue</time></li>
             </ul>
-            <ul>hereererer</ul>
+            
         <!-- <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-unfoldable"></button> -->
     </div>
 
