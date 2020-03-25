@@ -249,8 +249,11 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">
                             <i class="fa fa-lock mfe-2"></i> Lock Account</a>
-                        <a class="dropdown-item" href="#">
-                            <i class="fa fa-sign-out mfe-2"></i> Logout</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="fa fa-sign-out mfe-2"></i> Logout</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="post" class="d-none">
+                                @csrf
+                            </form>                        
                     </div>
                 </li>
             </ul>

@@ -161,7 +161,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text bg-white border-0"><i class="fa fa-user"></i></span>
                             </div>
-                            <input type="text" name="name" class="form-control border-0" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                            <input type="email" name="email" class="form-control border-0" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
                         </div>
                     </div>
                     <div class="form-group">

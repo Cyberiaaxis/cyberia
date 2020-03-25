@@ -13,14 +13,12 @@
 Route::view('/forum','player.forums.index');
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/','welcome')->middleware('guest');
 Auth::routes(['verify' => true]);
 // dd(Auth::routes());
 Route::post('/checkemail', 'Auth\RegisterController@checkEmail')->name('checkemail');
 Route::view('/story','player.story');
-Route::view('/home','player.index');
+Route::view('/home','player.index')->middleware('auth');
 Route::group(['prefix' => 'staff', 'middleware' => ['auth']], function(){
     Route::resource('/','StaffsController');
     Route::resources([ 
