@@ -24,11 +24,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * The attributes that should be hidden for arrays.
-     *
+     * 
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'pivot',
     ];
 
     /**
@@ -44,4 +44,20 @@ class User extends Authenticatable implements MustVerifyEmail
     {
          return $this->belongsToMany(User::class,'userItems','item_id');
     }
+
+    public function house() 
+    { 
+        return $this->belongsToMany(House::class, 'user_houses'); 
+    }
+
+    public function scopeGetHouse() 
+    { 
+        return $this->house()->wherePivot('active', 1)->first(); 
+    }
+
+    public function attacks() 
+    { 
+        return $this->hasOne(Attack::class); 
+    }
+
 }

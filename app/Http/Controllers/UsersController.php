@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\{Role, Permission};
 use Hash;
-use App\{ User };
+use App\{ User, house};
 use App\Http\Resources\UserResource;
 
 class UsersController extends Controller
@@ -114,5 +114,6 @@ class UsersController extends Controller
         $user->delete();
     return response()->json(['success' => true,'msg' => 'User has been deleted']);
     }
+
 
 }
