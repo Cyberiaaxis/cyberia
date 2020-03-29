@@ -52,7 +52,7 @@
             </li>
             <li class="c-sidebar-nav-title m-0">Menu</li>
             <li class="c-sidebar-nav-item">
-                <a class="c-sidebar-nav-link" href="#"> <i class="fa fa-inbox mr-2"></i> Inventory </a>
+                <a class="c-sidebar-nav-link" href="crime"> <i class="fa fa-inbox mr-2"></i> Crime </a>
             </li>
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link" href="#"> <i class="fa fa-inbox mr-2"></i> Inventory </a>
@@ -89,7 +89,7 @@
             </button>
             <ul class="c-header-nav d-md-down-none">
                 <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#"><i class="fa fa-dashboard mfe-2"></i> Dashboard</a></li>
-                <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#"><i class="fa fa-users mfe-2"></i> Users</a></li>
+                <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#"><i class="fa fa-users mfe-2"></i> Explore</a></li>
                 <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#"><i class="fa fa-cogs mfe-2"></i> Settings</a></li>
             </ul>
             <ul class="c-header-nav ml-auto mr-4">
