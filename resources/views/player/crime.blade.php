@@ -47,16 +47,19 @@
         <span class="border border-dark text-justify"> &nbsp; 
         -{{ $crime->nerve }} Nerve
         </span>
-        <input class="m-auto" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+        <input class="m-auto" type="radio" name="exampleRadios" id="exampleRadios1" value="{{ $crime->id }}" checked>
     </li>
     @endforeach
 </ul>
+@section('js')
 <script>
 $(document).ready(function() {
   $( "#exampleRadios1" ).click(function() {
-  alert( "Handler for .click() called." );
-});
+    console.log($(this).val());
+  });
 });
 </script>
+@stop
+
 
 @endsection
