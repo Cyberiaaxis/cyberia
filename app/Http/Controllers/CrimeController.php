@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Crime;
+use App\{Crime, UserStats};
 use Illuminate\Http\Request;
 
 class CrimeController extends Controller
@@ -14,8 +14,11 @@ class CrimeController extends Controller
      */
     public function index()
     {
-        $crimes = Crime::whereNull('parent_id')->orderBy('nerve')->get();
-        return view('player.crime', ['crimes' => $crimes]);
+        $user_level = auth()->user()->stats->location_id;
+        $location_id = auth()->user()->stats->level;
+        $crimes = Crime::where('location_id',$location_id)->where('level',$user_level)->get();
+        // dd($crimes);
+    return view('player.crime', ['crimes' => $crimes]);
     }
 
     /**

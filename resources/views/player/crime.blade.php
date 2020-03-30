@@ -36,7 +36,9 @@
       <span class="head text-white p-1">Crimes</span>
     </li>
     @foreach($crimes as $crime)
-    <li class="list-group-item d-flex border border-dark"> &nbsp;
+
+    <li class="list-group-item d-flex border border-dark list-group-item-action" data-toggle="collapse" href="#collapseExample"> &nbsp;
+      <div class="collapse" id="collapseExample"> dsfghj</div>
        <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" class="fluid-img img ">
        &nbsp;
         <span class="border border-dark text-justify">  
@@ -47,15 +49,25 @@
         <span class="border border-dark text-justify"> &nbsp; 
         -{{ $crime->nerve }} Nerve
         </span>
-        <input class="m-auto" type="radio" name="exampleRadios" id="exampleRadios1" value="{{ $crime->id }}" checked>
+        <input class="m-auto crimeId" type="radio" name="exampleRadios" id="exampleRadios1" value="{{ $crime->id }}">
     </li>
     @endforeach
 </ul>
 @section('js')
+<script src="{{ asset('/js/requestprocess.js') }}" type="text/javascript"></script>
 <script>
 $(document).ready(function() {
-  $( "#exampleRadios1" ).click(function() {
+  $( ".crimeId" ).click(function() {
     console.log($(this).val());
+            var url = $(this).attr('data-href');
+
+        let data = {
+            url: url,
+            method: 'put',
+            id: $(this).val(),
+            csrfToken: csrfToken
+        };
+        requestProcess(data, showMessage);
   });
 });
 </script>
