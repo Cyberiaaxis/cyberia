@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\{Crime, UserStats};
+use App\Model\UserCrime;
 use Illuminate\Http\Request;
 
 class CrimeController extends Controller
@@ -39,7 +41,18 @@ class CrimeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([ 'crime_id' => ['required','int'] ]);
+        $successRate = rand (15 , 30);
+        $statusKey = 'fail';
+        
+        if($successRate > 25){
+            $statusKey = 'success';
+        }
+        
+        $user = ['user_id' => auth()->user()->id, 'crime_id' => $request->crime_id ];
+        UserCrime::updateOrCreate($user)->increment($statusKey);
+        
+    return response()->view("ajax.crime", ['crime' => $crime]);    
     }
 
     /**

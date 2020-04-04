@@ -1,4 +1,5 @@
-function requestProcess(data,render = console.log(data)){
+function requestProcess(data, render = null ){
+
     if(!data.url) return 'URL is required';
     if(!data.method) data.method = 'get';
     if(!data.csrfToken) return 'CSRF TOKEN is missing';
@@ -18,9 +19,9 @@ function requestProcess(data,render = console.log(data)){
     })
     .then(json => {
         if(!json.success) throw json;
-        return render(json);
+        return (render) ? render(json) : console.log(data);
     }).catch(error => {
-        render(error);
+        return (render) ? render(error) : console.log(data);
     });
 
 }

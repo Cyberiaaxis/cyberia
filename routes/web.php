@@ -20,7 +20,12 @@ Route::post('/checkemail', 'Auth\RegisterController@checkEmail')->name('checkema
 Route::view('/story','player.story');
 Route::view('/home','player.index')->middleware('auth');
 // Route::view('/crime','player.crime')->middleware('auth');
-Route::get('crime', 'CrimeController@index')->middleware('auth');
+// Route::get('crime', 'CrimeController@index')->middleware('auth');
+Route::group(['middleware' => ['auth']], function(){
+    Route::resources([ 
+                        '/crime'=>'CrimeController',  
+                    ]);
+});
 Route::group(['prefix' => 'staff', 'middleware' => ['auth']], function(){
     Route::resource('/','StaffsController');
     Route::resources([ 
