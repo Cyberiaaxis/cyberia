@@ -1,4 +1,5 @@
-function requestProcess(data, render = null ){
+function requestProcess(data, renderSuccess = null, renderFailure = null) {
+
 
     if(!data.url) return 'URL is required';
     if(!data.method) data.method = 'get';
@@ -19,9 +20,9 @@ function requestProcess(data, render = null ){
     })
     .then(json => {
         if(!json.success) throw json;
-        return (render) ? render(json) : console.log(data);
+        return (renderSuccess) ? renderSuccess(json) : console.log(data);
     }).catch(error => {
-        return (render) ? render(error) : console.log(data);
+        return (renderFailure) ? renderFailure(error) : console.log(data);
     });
 
 }
@@ -63,12 +64,12 @@ function requestProcess(data, render = null ){
 //             'Accept': 'application/json',
 //             'Content-Type': 'application/json',
 //             "X-CSRF-Token": this.csrfToken
-//         } 
+//         }
 //        this.error = null;
-//        this.getFetch(this.url, this.method, this.body, this.headers) 
+//        this.getFetch(this.url, this.method, this.body, this.headers)
 //     }
 //     getFetch(url, method, body, headers){
-//         fetch(url,{ 
+//         fetch(url,{
 //             method: method,
 //             body: body,
 //             headers: headers
@@ -77,7 +78,7 @@ function requestProcess(data, render = null ){
 //             console.log(response);
 //         })
 //         .catch(error => {
-//             console.log(error) 
+//             console.log(error)
 //         })
 //     }
 // }

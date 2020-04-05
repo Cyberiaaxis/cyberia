@@ -44,15 +44,17 @@ class CrimeController extends Controller
         $request->validate([ 'crime_id' => ['required','int'] ]);
         $successRate = rand (15 , 30);
         $statusKey = 'fail';
-        
+        $messageType = false;
+
         if($successRate > 25){
             $statusKey = 'success';
+            $messageType = true;
         }
-        
+
         $user = ['user_id' => auth()->user()->id, 'crime_id' => $request->crime_id ];
-        UserCrime::updateOrCreate($user)->increment($statusKey);
+        $crime = UserCrime::updateOrCreate($user)->increment($statusKey);
         
-    return response()->view("ajax.crime", ['crime' => $crime]);    
+    return response()->json(['messageType' => $messageType]);    
     }
 
     /**

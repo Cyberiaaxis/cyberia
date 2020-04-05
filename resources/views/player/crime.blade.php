@@ -12,8 +12,8 @@
 .list-group-item .img{
   width:2rem;
   height:2rem;
-  border-radius: 50%; 
-  background: black; 
+  border-radius: 50%;
+  background: black;
 }
 .list-group-item span {
   width:45%;
@@ -52,7 +52,7 @@
             -{{ $crime->nerve ?? 1 }} Nerve
             </span>
         <input class="m-auto crimeId" type="radio" name="exampleRadios" id="exampleRadios1" value="{{ $crime->id ?? 1 }}" data-toggle="collapse" href="#collapseExample{{ $crime->id }}">
-          
+
     @endempty
 
     @if($crime->id = $crime->parent_id)
@@ -74,6 +74,9 @@
     </li>
 @endempty
       @endforeach
+      <li class="list-group-item"><div id='message'></div></li>
+      <li class="list-group-item"><button type="button" class="btn btn-outline-secondary">Try Again</button>
+<button type="button" class="btn btn-outline-secondary">Change</button></li>
 </ul>
 @section('js')
 <script src="{{ asset('/js/requestprocess.js') }}" type="text/javascript"></script>
@@ -89,9 +92,13 @@ $(document).ready(function() {
             crime_id: $(this).val(),
             csrfToken: csrfToken
         };
-        requestProcess(data);
+        console.log(requestProcess(data, message[]));
   });
 });
+function message (selector, type, content){
+  const mess = "<div class='alert alert-'+ type +'>'+ content +'<div>";
+  return $('selector').html(mess);;
+}
 </script>
 @stop
 
