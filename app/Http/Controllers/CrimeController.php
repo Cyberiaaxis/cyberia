@@ -14,12 +14,16 @@ class CrimeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user_level = auth()->user()->stats->location_id;
         $location_id = auth()->user()->stats->level;
-        $crimes = Crime::where('location_id',$location_id)->where('level',$user_level)->get();
-        // dd($crimes);
+        $crimes = Crime::where('location_id', $location_id)->where('level', $user_level)->get();
+
+        if ($request->ajax()) {
+            return $crimes;
+        }
+
     return view('player.crime', ['crimes' => $crimes]);
     }
 
@@ -52,9 +56,9 @@ class CrimeController extends Controller
         }
 
         $user = ['user_id' => auth()->user()->id, 'crime_id' => $request->crime_id ];
-        $crime = UserCrime::updateOrCreate($user)->increment($statusKey);
-        
-    return response()->json(['messageType' => $messageType]);    
+        UserCrime::updateOrCreate($user)->increment($statusKey);
+
+        return redirect()->route('crime.show', $request->crime_id);
     }
 
     /**
@@ -63,9 +67,11 @@ class CrimeController extends Controller
      * @param  \App\Crime  $crime
      * @return \Illuminate\Http\Response
      */
-    public function show(Crime $crime)
+    public function show(Request $request, Crime $crimes)
     {
-        //
+        return response()->json([
+            'html' => view('ajax.crime', ['crime' => $crimes])->render()
+        ]);
     }
 
     /**

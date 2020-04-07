@@ -42,7 +42,7 @@
   </li>
 @foreach($crimes as $crime)
     @empty($crime->parent_id)
-    <li class="list-group-item d-flex border border-dark list-group-item-action"> &nbsp;
+    <li id="crime" class="list-group-item d-flex border border-dark list-group-item-action"> &nbsp;
         <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" class="fluid-img img "> &nbsp;
         <span class="border border-dark text-justify">
             {{ $crime->name ?? 'hue' }}
@@ -55,7 +55,7 @@
 
     @endempty
 
-    @if($crime->id = $crime->parent_id)
+    @if($crime->id <=> $crime->parent_id)
 	  <div class="collapse p-1" id="collapseExample{{ $crime->parent_id }}" data-parent=".crime">
           <div class="list-group-item d-flex border border-dark list-group-item-action">
               <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" class="fluid-img img "> &nbsp;
@@ -76,7 +76,7 @@
       @endforeach
       <li class="list-group-item"><div id='message'></div></li>
       <li class="list-group-item"><button type="button" class="btn btn-outline-secondary">Try Again</button>
-<button type="button" class="btn btn-outline-secondary">Change</button></li>
+<div class="crime-list fadeIn" data-url="{{ route('crime.index') }}"></div>
 </ul>
 @section('js')
 <script src="{{ asset('/js/requestprocess.js') }}" type="text/javascript"></script>
@@ -92,8 +92,14 @@ $(document).ready(function() {
             crime_id: $(this).val(),
             csrfToken: csrfToken
         };
-        console.log(requestProcess(data, message[]));
+        console.log(requestProcess(data, message));
   });
+  let events = {};
+  requestProcess(events,myreplacefunction);
+function myreplacefunction(data) {
+    $('.crime-list').html(data.html).fadeIn();
+}
+
 });
 function message (selector, type, content){
   const mess = "<div class='alert alert-'+ type +'>'+ content +'<div>";
