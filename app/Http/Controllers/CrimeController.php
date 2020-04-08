@@ -19,12 +19,12 @@ class CrimeController extends Controller
         $user_level = auth()->user()->stats->location_id;
         $location_id = auth()->user()->stats->level;
         $crimes = Crime::where('location_id', $location_id)->where('level', $user_level)->get();
-
+        // dd($request->ajax());
         if ($request->ajax()) {
-            return $crimes;
+            return response()->json(['html' => view('ajax.crime', ['crimes' => $crimes])->render()]);
         }
 
-    return view('player.crime', ['crimes' => $crimes]);
+    return view('player.crime');
     }
 
     /**
@@ -67,10 +67,19 @@ class CrimeController extends Controller
      * @param  \App\Crime  $crime
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Crime $crimes)
+    public function show(Crime $crime)
     {
+
+        $exists = $crime->subCrimes($crime->id)->exists();
+
+        if ($exists) {
+            $data = ['crimes' => $crime->subCrimes($crime->id)->get()];
+        } else {
+            $data = ['done_crime' => $crime];
+        }
+
         return response()->json([
-            'html' => view('ajax.crime', ['crime' => $crimes])->render()
+            'html' => view('ajax.crime', $data)->render()
         ]);
     }
 
