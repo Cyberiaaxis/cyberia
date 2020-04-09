@@ -1,4 +1,5 @@
-@extends('layouts.player.player') @section('content')
+@extends('layouts.player.player')
+@section('content')
 <style>
     .crime .list-group-item {
         display: flex;
@@ -43,30 +44,36 @@
 @section('js')
 <script src="{{ asset('/js/requestprocess.js') }}" type="text/javascript"></script>
 <script>
-    $(document).ready(function() {
-        const csrfToken = $('meta[name="csrf-token"]').attr('content');
-        const urllist = $('.crime-list').attr('data-url');
-        $.getJSON(urllist,render);
-        function render(data)
-        {
-        return $('.crime-list').html(data.html);
-        }
+$(document).ready(function() {
+    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+    /**
+    * Get Crime
+    **/
+    let url = $('.crime-list').attr('data-url');
+    $.getJSON(url,render);
 
-         $(document).on("click",".crimeId",function() {
-            console.log($(this).val());
-            const urlstore = $(this).attr('data-url');
-            const data = {
-                url: urlstore,
-                method: 'post',
-                crime_id: $(this).val(),
+    function render(data)
+    {
+      return $('.crime-list').html(data.html);
+    }
+
+    $(document).on("click",".crimeId",function() {
+            let url = $(this).attr('data-url');
+            let method = $(this).attr('data-method');
+            let data = {
+                url: url,
+                method: method,
+                crime_id: $(this).attr('data-id') || $(this).val(),
                 csrfToken: csrfToken
             };
-            requestProcess(data, message);
-        });
+
+    requestProcess(data, message);
     });
 
-    function message(response) {
-         return $('.crime-list').html(response.html);
+    function message (response){
+      return $('.crime-list').html(response.html);
     }
+});
 </script>
-@stop @endsection
+@stop
+@endsection

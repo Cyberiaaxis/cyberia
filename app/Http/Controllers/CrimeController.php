@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\{Crime, UserStats};
+use App\model\CrimeMessage;
 use App\Model\UserCrime;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,7 @@ class CrimeController extends Controller
     {
         $user_level = auth()->user()->stats->location_id;
         $location_id = auth()->user()->stats->level;
-        $crimes = Crime::where('location_id', $location_id)->where('level', $user_level)->get();
+        $crimes = Crime::where('location_id', $location_id)->where('level', $user_level)->whereNull('parent_id')->get();
         // dd($request->ajax());
         if ($request->ajax()) {
             return response()->json(['html' => view('ajax.crime', ['crimes' => $crimes])->render()]);
@@ -46,19 +47,23 @@ class CrimeController extends Controller
     public function store(Request $request)
     {
         $request->validate([ 'crime_id' => ['required','int'] ]);
-        $successRate = rand (15 , 30);
+        $successRate = rand (5 , 50);
         $statusKey = 'fail';
-        $messageType = false;
 
-        if($successRate > 25){
+        if($successRate < 13 && $successRate > 10  ){
             $statusKey = 'success';
-            $messageType = true;
+        } elseif ($successRate < 10 && $successRate > 5) {
+            $statusKey = 'missed';
         }
 
-        $user = ['user_id' => auth()->user()->id, 'crime_id' => $request->crime_id ];
-        UserCrime::updateOrCreate($user)->increment($statusKey);
+        $message = CrimeMessage::where('status', $statusKey)->where('crime_id', $request->crime_id)->first();
 
-        return redirect()->route('crime.show', $request->crime_id);
+        if($statusKey ==! 'missed') {
+            $user = ['user_id' => auth()->user()->id, 'crime_id' => $request->crime_id];
+            UserCrime::updateOrCreate($user)->increment($statusKey);
+        }
+
+    return response()->json(['html' => view('ajax.crime', ['status' => $statusKey, 'message' => $message])->render()]);
     }
 
     /**
@@ -67,9 +72,8 @@ class CrimeController extends Controller
      * @param  \App\Crime  $crime
      * @return \Illuminate\Http\Response
      */
-    public function show(Crime $crime)
+    public function show(Request $request, Crime $crime)
     {
-
         $exists = $crime->subCrimes($crime->id)->exists();
 
         if ($exists) {
@@ -78,9 +82,7 @@ class CrimeController extends Controller
             $data = ['done_crime' => $crime];
         }
 
-        return response()->json([
-            'html' => view('ajax.crime', $data)->render()
-        ]);
+    return response()->json([ 'html' => view('ajax.crime', $data)->render() ]);
     }
 
     /**

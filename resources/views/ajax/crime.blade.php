@@ -1,45 +1,31 @@
-
 @isset($crimes)
 <ul class="list-group crime accordion">
     <li class="list-group">
         <span class="head text-white p-1">Crimes</span>
     </li>
-    @foreach($crimes as $crime) @empty($crime->parent_id)
+    @foreach($crimes as $crime)
     <li class="list-group-item d-flex border border-dark list-group-item-action"> &nbsp;
         <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" class="fluid-img img "> &nbsp;
         <span class="border border-dark text-justify">
             {{ $crime->name ?? 'hue' }}
-            &nbsp;
-            </span>
+        </span>
         <span class="border border-dark text-justify"> &nbsp;
-            -{{ $crime->nerve ?? 1 }} Nerve
-            </span>
-        <input class="m-auto crimeId" type="radio" name="exampleRadios" id="exampleRadios1" value="{{ $crime->id ?? 1 }}" data-toggle="collapse" href="#collapseExample{{ $crime->id }}">
-        @endempty
-        @if($crime->id <=> $crime->parent_id)
-        <div class="collapse" id="collapseExample{{ $crime->parent_id }}" data-parent=".crime">
-            <div class="list-group-item d-flex border border-success list-group-item-action">
-                <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" class="fluid-img img "> &nbsp;
-                <span class="border border-dark text-justify">
-          {{ $crime->name ?? 'hue' }}
-          &nbsp;
-          </span>
-                <span class="border border-dark text-justify"> &nbsp;
-          -{{ $crime->nerve ?? 1 }} Nerve
-          </span>
-                <input class="m-auto crimeId" type="radio" name="exampleRadios" id="exampleRadios1" value="{{ $crime->id ?? 1 }}" data-url="{{ route('crime.store') }}">
-            </div>
-        </div>
-        @endif
-        @empty($crime->parent_id)
+            -{{ $crime->nerve }} Nerve
+        </span>
+        <input class="m-auto crimeId" type="radio" name="crime" value="{{ $crime->id }}" data-url="{{ ($crime->parent_id) ?  route('crime.store') : route('crime.show',$crime->id) }}"  @if($crime->parent_id) data-method ="post" @endif data-toggle="collapse" href="#collapseExample{{ $crime->id }}">
     </li>
-    @endempty
     @endforeach
 </ul>
 @endisset
-@isset($done_crime)
-<div class="alert alert-{{ $done_crime->status ?? 'danger' }}">Error</div>
-<a href="{{ route('crime.store',$done_crime->id) }}" class="btn btn-success">Do again</a>
+@isset($message)
+<div class="card text-white bg-success">
+  <div class="card-header">Result</div>
+  <div class="card-body">
+    <h5 class="card-title">{{$message->status}}</h5>
+    <p class="card-text text-white"> {{$message->message}} Some quick example text to build on the panel title and make up the bulk of the panel's content.</p>
+  </div>
+</div>
+<div class="alert alert-{{ 'danger' }}">{{$message->message}} {{$message->status}}</div>
+<button type="button" class="btn btn-success crimeId" data-id="{{$message->crime_id}}"data-method ="post" data-url="{{ route('crime.store') }}">Do crime</button>
 <a href="{{ route('crime.index') }}" class="btn btn-danger">Change Crime</a>
 @endisset
-
