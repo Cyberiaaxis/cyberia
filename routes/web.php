@@ -18,22 +18,26 @@ Auth::routes(['verify' => true]);
 // dd(Auth::routes());
 Route::post('/checkemail', 'Auth\RegisterController@checkEmail')->name('checkemail');
 Route::view('/story','player.story');
+Route::view('/profile', 'player.profile');
 Route::view('/home','player.index')->middleware('auth');
 // Route::view('/crime','player.crime')->middleware('auth');
 // Route::get('crime', 'CrimeController@index')->middleware('auth');
 Route::group(['middleware' => ['auth']], function(){
-    Route::resources([ 
-                        '/crime'=>'CrimeController',  
+    Route::resources([
+                        '/crime'=>'CrimeController',
+                        '/player' => 'PlayerController',
+                        // '/profile' => 'CrimeController',
                     ]);
 });
 Route::group(['prefix' => 'staff', 'middleware' => ['auth']], function(){
     Route::resource('/','StaffsController');
-    Route::resources([ 
-                        '/roles'=>'RolesController',  
+    Route::resources([
+                        '/roles'=>'RolesController',
                         '/permissions' => 'PermissionsController',
                         '/users'=>'UsersController',
                         '/itemCategories'=>'ItemCategoriesController',
                         '/items'=>'ItemsController',
+
                     ]);
     // Route::resource('/users','UsersController');
 });

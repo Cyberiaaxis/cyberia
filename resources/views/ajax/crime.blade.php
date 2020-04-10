@@ -18,14 +18,13 @@
 </ul>
 @endisset
 @isset($message)
-<div class="card text-white bg-success">
+<div class="card text-white {{$statusType}}">
   <div class="card-header">Result</div>
   <div class="card-body">
-    <h5 class="card-title">{{$message->status}}</h5>
+    <h5 class="card-title">{{$statusKey}}</h5>
     <p class="card-text text-white"> {{$message->message}} Some quick example text to build on the panel title and make up the bulk of the panel's content.</p>
   </div>
 </div>
-<div class="alert alert-{{ 'danger' }}">{{$message->message}} {{$message->status}}</div>
 <button type="button" class="btn btn-success crimeId" data-id="{{$message->crime_id}}"data-method ="post" data-url="{{ route('crime.store') }}">Do crime</button>
 <a href="{{ route('crime.index') }}" class="btn btn-danger">Change Crime</a>
 @endisset

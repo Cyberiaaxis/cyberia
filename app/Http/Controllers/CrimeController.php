@@ -49,11 +49,15 @@ class CrimeController extends Controller
         $request->validate([ 'crime_id' => ['required','int'] ]);
         $successRate = rand (5 , 50);
         $statusKey = 'fail';
+        $statusType = 'bg-danger';
+
 
         if($successRate < 13 && $successRate > 10  ){
             $statusKey = 'success';
+            $statusType = 'bg-success';
         } elseif ($successRate < 10 && $successRate > 5) {
             $statusKey = 'missed';
+            $statusType = 'bg-warning';
         }
 
         $message = CrimeMessage::where('status', $statusKey)->where('crime_id', $request->crime_id)->first();
@@ -63,7 +67,7 @@ class CrimeController extends Controller
             UserCrime::updateOrCreate($user)->increment($statusKey);
         }
 
-    return response()->json(['html' => view('ajax.crime', ['status' => $statusKey, 'message' => $message])->render()]);
+    return response()->json(['html' => view('ajax.crime', ['statusKey' => $statusKey, 'statusType' => $statusType, 'message' => $message])->render()]);
     }
 
     /**
