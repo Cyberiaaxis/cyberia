@@ -59,3 +59,4 @@
     </div>
 </div>
 @endsection
+https://game-icons.net/tags/rank.html
