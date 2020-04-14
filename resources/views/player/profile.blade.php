@@ -1,62 +1,69 @@
 @extends('layouts.player.player') @section('content')
 <style>
     .fixed-img {
-        height: 12rem;
-        width: 12rem;
+        height: 9rem;
+        width: 9rem;
     }
 </style>
-<div class="row mb-3">
-    <div class="col-lg-8">
+<div class="row">
+    <div class="col-2 text-center">
+        <p class="text-center m-0">In Hospital</p>
+        <img class="rounded-circle img-fluid shadow fixed-img border border-primary mt-1" alt="No Image" src="https://www.broadheathcentral.co.uk/wp-content/uploads/2015/06/passport-photo-234x300.jpg">
+        <p class="card-text text-center">Online</p>
+    </div>
+    <div class="col-lg-10">
         <div class="card-group">
             <div class="card mb-3 shadow">
                 <div class="card-body">
                     <ul class="list-group">
-                        <li class="list-group-item border-0 p-0 d-flex justify-content-evenly">
-                            <span class="">Name</span>
-                            <span class="">Nitin Sharma</span>
+                        <li class="list-group-item border-0 p-0  d-flex justify-content-around">
+                            <span class="text-center">Name</span>
+                            <span class="text-center">Nitin Sharma</span>
                         </li>
-                        <li class="list-group-item border-0 p-0 d-flex justify-content-evenly">
-                            <span class="">Name</span>
-                            <span class="">Nitin Sharma</span>
+                        <li class="list-group-item border-0 p-0  d-flex justify-content-around">
+                            <span class="text-center">Name</span>
+                            <span class="text-center">Nitin Sharma</span>
                         </li>
-                        <li class="list-group-item border-0 p-0 d-flex justify-content-evenly">
-                            <span class="">Name</span>
-                            <span class="">Nitin Sharma</span>
+                        <li class="list-group-item border-0 p-0  d-flex justify-content-around">
+                            <span class="text-center">Name</span>
+                            <span class="text-center">Nitin Sharma</span>
                         </li>
-                        <li class="list-group-item border-0 p-0 d-flex justify-content-evenly">
-                            <span class="">Name</span>
-                            <span class="">Nitin Sharma</span>
+                        <li class="list-group-item border-0 p-0  d-flex justify-content-around">
+                            <span class="text-center">Name</span>
+                            <span class="text-center">Nitin Sharma</span>
                         </li>
-                        <li class="list-group-item border-0 p-0 d-flex justify-content-evenly">
-                            <span class="">Name</span>
-                            <span class="">Nitin Sharma</span>
+                        <li class="list-group-item border-0 p-0  d-flex justify-content-around">
+                            <span class="text-center">Name</span>
+                            <span class="text-center">Nitin Sharma</span>
                         </li>
-                        <li class="list-group-item border-0 p-0 d-flex justify-content-evenly">
-                            <span class="">Name</span>
-                            <span class="">Nitin Sharma</span>
+                        <li class="list-group-item border-0 p-0  d-flex justify-content-around">
+                            <span class="text-center">Name</span>
+                            <span class="text-center">Nitin Sharma</span>
                         </li>
-                        <li class="list-group-item border-0 p-0 d-flex justify-content-evenly">
-                            <span class="">Name</span>
-                            <span class="">Nitin Sharma</span>
+                        <li class="list-group-item border-0 p-0  d-flex justify-content-around">
+                            <span class="text-center">Name</span>
+                            <span class="text-center">Nitin Sharma</span>
                         </li>
-                   </ul>
+                    </ul>
                 </div>
             </div>
             <div class="card mb-3 shadow">
                 <div class="card-body">
+                    <ul class="list-group">
+                    </ul>
 
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-4 d-flex flex-row-reverse">
-        <img class="rounded-circle img-fluid shadow fixed-img" alt="No Image" src="https://www.broadheathcentral.co.uk/wp-content/uploads/2015/06/passport-photo-234x300.jpg">
-    </div>
 </div>
+<div class="card">
+    <p class="card-head">
+        hhhhhhhhhhhhhhhhhh
+</div>
+
 <div class="card shadow">
-    <div class="card-body">
-        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-    </div>
+    <p class="card-head">
+        hhhhhhhhhhhhhhhhhh
 </div>
-@endsection
-https://game-icons.net/tags/rank.html
+@endsection https://game-icons.net/tags/rank.html
