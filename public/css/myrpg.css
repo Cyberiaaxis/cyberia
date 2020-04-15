@@ -1,0 +1,19 @@
+[class^="rpg"], [class*=" rpg"] {
+  display: block;
+  height: 2.5rem;
+  width: 2.5rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.rpg-gun{
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ee/Gun_outline.svg');
+}
+
+.rpg-medal{
+    background-image: url('../img/star.svg');
+}
+.rpg-like{
+    background-image: url('../img/like.svg');
+}
+

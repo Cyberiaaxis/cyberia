@@ -9,4 +9,6 @@
 <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
 <!-- custom css -->
 <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+<!-- custom css -->
+<link rel="stylesheet" href="{{ asset('css/myrpg.css') }}">
 
