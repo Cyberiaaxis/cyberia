@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Model\UserDetail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -24,7 +25,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * The attributes that should be hidden for arrays.
-     * 
+     *
      * @var array
      */
     protected $hidden = [
@@ -37,31 +38,38 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime', 
+        'email_verified_at' => 'datetime',
     ];
+
+    protected $dates = ['created_at', 'updated_at', 'last_seen'];
+
+    public function userdetails()
+    {
+        return $this->HasOne(UserDetail::class);
+    }
 
     public function items()
     {
          return $this->belongsToMany(User::class,'userItems','item_id');
     }
 
-    public function house() 
-    { 
-        return $this->belongsToMany(House::class, 'user_houses'); 
+    public function house()
+    {
+        return $this->belongsToMany(House::class, 'user_houses');
     }
 
-    public function scopeGetHouse() 
-    { 
-        return $this->house()->wherePivot('active', 1)->first(); 
+    public function scopeGetHouse()
+    {
+        return $this->house()->wherePivot('active', 1)->first();
     }
 
-    public function attacks() 
-    { 
-        return $this->hasOne(Attack::class); 
+    public function attacks()
+    {
+        return $this->hasOne(Attack::class);
     }
 
-    public function stats() 
-    { 
-        return $this->hasOne(UserStats::class); 
+    public function stats()
+    {
+        return $this->hasOne(UserStats::class);
     }
 }

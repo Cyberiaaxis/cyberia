@@ -12,12 +12,32 @@ function set_active($path, $active = 'active',$boolean = false)
     if (Route::is($path)) {
 
         if ($boolean) {
-            return true;
+        return true;
         }
 
-        return $active;
+    return $active;
     }
 
-    return (request()->is($path)) ? $active : '';
+return (request()->is($path)) ? $active : '';
+}
+
+function getStatus($time)
+{
+    switch ($time) {
+        case 0:
+            $status = 'Now';
+            break;
+        case $time < 10:
+            $status = 'Online';
+            break;
+        case $time < 15:
+            $status = 'Afk';
+            break;
+        default:
+            $status = 'Offline';
+            break;
+    }
+
+return $status;
 }
 ?>

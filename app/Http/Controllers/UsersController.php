@@ -4,11 +4,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\{Role, Permission};
 use Hash;
+use Carbon\Carbon;
 use App\{ User, house};
 use App\Http\Resources\UserResource;
 
 class UsersController extends Controller
 {
+    /**
+     * Instantiate a new UserController instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the users.
      * @param  \Illuminate\Http\Request  $request
@@ -48,11 +57,11 @@ class UsersController extends Controller
             'email'=>'required|email|unique:users,email',
             'roles'=>"required|array",
         ]);
-        $password = Hash::make($request->password);    
-        $user = User::create([ 
-                'name' => $request->name,  
-                'email' => $request->email,  
-                'password' => $password, 
+        $password = Hash::make($request->password);
+        $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => $password,
                 'gender'=> $request->gender,
                 'type'=> $request->type,
             ]);
@@ -65,9 +74,10 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, User $profile)
     {
-
+        $now =  Carbon::now();
+    return view('player.profile', ['user' => $profile, 'currentdatetime' => $now]);
     }
 
     /**
@@ -77,7 +87,7 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        $roles = Role::all();  
+         $roles = Role::all();
         $user = User::findorFail($id);
     return view('staff.users.edit', ['user' => $user, 'roles' => $roles]);
     }
@@ -113,6 +123,16 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
     return response()->json(['success' => true,'msg' => 'User has been deleted']);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getUser($id)
+    {
+
     }
 
 

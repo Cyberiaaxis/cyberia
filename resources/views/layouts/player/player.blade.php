@@ -8,7 +8,7 @@
         .c-sidebar {
             width: 200px;
         }
-        
+
         @media(min-width:992px) and (min-width:992px) {
             html:not([dir=rtl]) .c-sidebar.c-sidebar-lg-show:not(.c-sidebar-right).c-sidebar-fixed~.c-wrapper,
             html:not([dir=rtl]) .c-sidebar.c-sidebar-show:not(.c-sidebar-right).c-sidebar-fixed~.c-wrapper {
@@ -26,21 +26,21 @@
         <ul class="c-sidebar-nav mt-1">
             <li class="c-sidebar-nav-item ml-2 mr-2">
                 <div class="p-1">
-                    HP 10/10
+                    Energy {{ auth()->user()->stats->energy }} / {{ auth()->user()->stats->max_energy }}
                     <div class="progress progress-sm">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: 50%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: {{ (auth()->user()->stats->energy / auth()->user()->stats->max_energy * 100) }}%;"></div>
                     </div>
                 </div>
                 <div class="p-1">
-                    HP 10/10
+                    Nerve {{ auth()->user()->stats->nerve }} / {{ auth()->user()->stats->max_nerve }}
                     <div class="progress progress-sm">
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: 60%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: {{ (auth()->user()->stats->nerve /  auth()->user()->stats->max_nerve * 100) }}%;"></div>
                     </div>
                 </div>
                 <div class="p-1">
-                    HP 10/10
+                    HP {{ auth()->user()->stats->hp }} / {{ auth()->user()->stats->max_hp }}
                     <div class="progress progress-sm">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: 70%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-info" role="progressbar" style="width: {{ (auth()->user()->stats->hp / auth()->user()->stats->max_hp * 100) }}%;"></div>
                     </div>
                 </div>
             </li>
@@ -69,9 +69,9 @@
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link" href="#"> <i class="fa fa-inbox mr-2"></i> Inventory </a>
             </li>
-            <li  class="c-sidebar-nav-item"><time class="game-time" datetime="2008-02-14 20:00">Hue</time></li>
+            <li  class="c-sidebar-nav-item"><div class="game-time" id="time"></div></li>
             </ul>
-            
+
         <!-- <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-unfoldable"></button> -->
     </div>
 
@@ -238,7 +238,7 @@
                         <a class="dropdown-item" href="#">
                             <i class="fa fa-comments mfe-2"></i> Comments<span class="badge badge-warning ml-auto">42</span></a>
                         <div class="dropdown-header bg-light py-2"><strong>Settings</strong></div>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="{{route('profile.show', auth()->id() )}}">
                             <i class="fa fa-user mfe-2"></i> Profile</a>
                         <a class="dropdown-item" href="#">
                             <i class="fa fa-cog mfe-2"></i> Settings</a>
@@ -253,7 +253,7 @@
                         <i class="fa fa-sign-out mfe-2"></i> Logout</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="post" class="d-none">
                                 @csrf
-                            </form>                        
+                            </form>
                     </div>
                 </li>
             </ul>
@@ -308,6 +308,16 @@
     </div>
 
     @include('partials.player.footer') @yield('js')
+    <script>
+    function updateTime() {
+    const now = "{{ time() }}";
+    const currentTime = new Date();
+    const v = currentTime.toLocaleString();
+    setTimeout("updateTime()",1000);
+        document.getElementById('time').innerHTML=v;
+    }
+    updateTime();
+</script>
 </body>
 
 </html>

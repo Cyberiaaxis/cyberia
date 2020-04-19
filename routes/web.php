@@ -26,7 +26,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::resources([
                         '/crime'=>'CrimeController',
                         '/player' => 'PlayerController',
-                        // '/profile' => 'CrimeController',
+                        '/profile' => 'UsersController',
                     ]);
 });
 Route::group(['prefix' => 'staff', 'middleware' => ['auth']], function(){
