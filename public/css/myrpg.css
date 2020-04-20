@@ -11,8 +11,13 @@
 }
 
 .rpg-medal{
-    background-image: url('../img/star.svg');
+    background-image: url('../img/medal.svg');
 }
+
+.rpg-award{
+    background-image: url('../img/award.svg');
+}
+
 .rpg-like{
     background-image: url('../img/like.svg');
 }

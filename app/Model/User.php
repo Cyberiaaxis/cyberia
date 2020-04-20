@@ -2,7 +2,11 @@
 
 namespace App;
 
+use App\Model\Award;
+use App\Model\Medal;
+use App\Model\Reward;
 use App\Model\UserDetail;
+use App\Model\UserReward;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -72,4 +76,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(UserStats::class);
     }
+
+    public function rewards()
+    {
+        return $this->belongsToMany(Reward::class, 'user_rewards');
+    }
+
 }
+

@@ -37,7 +37,7 @@
                 </ul>
                 <ul class="list-group w-50">
                     <li class="list-group-item border-0"> 1 </li>
-                    <li class="list-group-item border-0">{{ auth()->user()->created_at }}</li>
+                    <li class="list-group-item border-0">{{ auth()->user()->created_at->diffForHumans() }}</li>
                     <li class="list-group-item border-0">{{ auth()->user()->userdetails->location->name }}</li>
                     <li class="list-group-item border-0">{{  auth()->user()->scopeGetHouse()->name  }}</li>
                     <li class="list-group-item border-0">200</li>

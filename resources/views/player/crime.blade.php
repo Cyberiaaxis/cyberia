@@ -50,6 +50,7 @@ $(document).ready(function() {
     * Get Crime
     **/
     let url = $('.crime-list').attr('data-url');
+    console.log(url);
     $.getJSON(url,render);
 
     function render(data)

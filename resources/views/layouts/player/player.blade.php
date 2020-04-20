@@ -47,12 +47,12 @@
             <li class="c-sidebar-nav-title m-0">Information</li>
             <li class="c-sidebar-nav-item">
                  <!-- https://www.php.net/manual/en/numberformatter.formatcurrency.php -->
-                   Money :  1234567 <br>
-                   Point :  1000
+                   Money :  {{ auth()->user()->userdetails->money }} <br>
+                   Point :  {{ auth()->user()->userdetails->points }}
             </li>
             <li class="c-sidebar-nav-title m-0">Menu</li>
             <li class="c-sidebar-nav-item">
-                <a class="c-sidebar-nav-link" href="crime"> <i class="fa fa-inbox mr-2"></i> Crime </a>
+                <a class="c-sidebar-nav-link" href=" {{ route('crime.index')}} "> <i class="fa fa-inbox mr-2"></i> Crime </a>
             </li>
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link" href="#"> <i class="fa fa-inbox mr-2"></i> Inventory </a>

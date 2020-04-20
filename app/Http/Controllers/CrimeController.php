@@ -17,10 +17,10 @@ class CrimeController extends Controller
      */
     public function index(Request $request)
     {
-        $user_level = auth()->user()->stats->location_id;
-        $location_id = auth()->user()->stats->level;
+        $user_level = auth()->user()->userdetails->level_id;
+        $location_id = auth()->user()->userdetails->location_id;
         $crimes = Crime::where('location_id', $location_id)->where('level', $user_level)->whereNull('parent_id')->get();
-        // dd($request->ajax());
+        // dd($crimes);
         if ($request->ajax()) {
             return response()->json(['html' => view('ajax.crime', ['crimes' => $crimes])->render()]);
         }
