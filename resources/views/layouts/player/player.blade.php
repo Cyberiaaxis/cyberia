@@ -55,7 +55,7 @@
                 <a class="c-sidebar-nav-link" href=" {{ route('crime.index')}} "> <i class="fa fa-inbox mr-2"></i> Crime </a>
             </li>
             <li class="c-sidebar-nav-item">
-                <a class="c-sidebar-nav-link" href="#"> <i class="fa fa-inbox mr-2"></i> Inventory </a>
+                <a class="c-sidebar-nav-link" href="{{ route('gang.index')}}"> <i class="fa fa-inbox mr-2"></i> Gang </a>
             </li>
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link" href="#"> <i class="fa fa-inbox mr-2"></i> Inventory </a>

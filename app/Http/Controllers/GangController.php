@@ -14,7 +14,8 @@ class GangController extends Controller
      */
     public function index()
     {
-        //
+        $gangs = Gang::all();
+        return view('player.gang', ['gangs' => $gangs]);
     }
 
     /**
@@ -46,7 +47,7 @@ class GangController extends Controller
      */
     public function show(Gang $gang)
     {
-        //
+        return view('player.gangprofile', ['gangs' => $gang]);
     }
 
     /**
