@@ -29,6 +29,7 @@ Route::group(['middleware' => ['auth']], function(){
                         '/player' => 'PlayerController',
                         '/profile' => 'UsersController',
                         '/gang' => 'GangController',
+                        '/forums' => 'ForumsController',
                     ]);
 });
 Route::group(['prefix' => 'staff', 'middleware' => ['auth']], function(){

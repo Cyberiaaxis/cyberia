@@ -2,12 +2,15 @@
 
 namespace App;
 
+
+use App\Models\Thread;
 use Illuminate\Database\Eloquent\Model;
 
 class Forum extends Model
 {
 
     protected $table = 'forums';
+    protected $appends = ['poster'];
 
 
 
@@ -19,11 +22,17 @@ class Forum extends Model
 
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany('App\Models\Post');
     }
 
     public function users()
     {
         return $this->belongsTo("User");
     }
+
+    public function latestPost()
+    {
+         return $this->hasOne('App\Models\Post')->latest();
+    }
+
 }

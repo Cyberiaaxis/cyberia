@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Forum;
 use Illuminate\Http\Request;
 
 class ForumsController extends Controller
@@ -9,11 +10,28 @@ class ForumsController extends Controller
     /**
      * Forum List
      */
-    public function list(Request $request)
+    public function index()
     {
-
-        $forums = Forum::all();
-
-        return view('forums.list',['forums' => $forums]);
+        $forums = new Forum();
+        $forumsCount = $forums->withCount(['threads', 'posts'])->get();
+        return view('player.forums.index',['forums' => $forumsCount]);
     }
+
+    /**
+     * Forum List
+     */
+    public function show()
+    {
+        // return view('player.forums.create');
+    }
+
+    /**
+     * Forum List
+     */
+    public function create()
+    {
+        return view('player.forums.create');
+    }
+
+
 }

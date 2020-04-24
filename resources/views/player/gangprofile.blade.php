@@ -3,7 +3,6 @@
 <style>
 .w-20{
     width: 10%;
-    border-right: 1px:
 }
 .w-80{
     width: 90%;

@@ -17,9 +17,9 @@
     @yield('css')
    </head>
    <body>
-            @yield('sidebar')
-            @yield('content')
+    @yield('sidebar')
+    @yield('content')
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
     @yield('js')
-    <script src="{{ asset('js/vendor/jquery-1.12.4.min.js') }}" type="text/javascript"></script>
   </body>
 </html>

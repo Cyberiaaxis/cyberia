@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use App\Forum;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,6 +24,14 @@ class Post extends Model
     public function forum()
     {
         return $this->belongsTo(Forum::class);
+    }
+
+    /**
+     * get User Name
+     */
+    public function getPosterAttribute()
+    {
+        return $this->user()->value('name');
     }
 
 }
