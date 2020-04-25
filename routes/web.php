@@ -23,6 +23,7 @@ Route::view('/gang', 'player.gang');
 Route::view('/home','player.index')->middleware('auth');
 // Route::view('/crime','player.crime')->middleware('auth');
 // Route::get('crime', 'CrimeController@index')->middleware('auth');
+
 Route::group(['middleware' => ['auth']], function(){
     Route::resources([
                         '/crime'=>'CrimeController',
@@ -30,6 +31,7 @@ Route::group(['middleware' => ['auth']], function(){
                         '/profile' => 'UsersController',
                         '/gang' => 'GangController',
                         '/forums' => 'ForumsController',
+                        '/forums/{forum}/thread' => 'ThreadsController',
                     ]);
 });
 Route::group(['prefix' => 'staff', 'middleware' => ['auth']], function(){

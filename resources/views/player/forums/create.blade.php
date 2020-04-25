@@ -20,8 +20,10 @@
 </nav>
 <div class="container">
     <div class="row">
-         <form method="post" action="{{ route('forums.store') }}">
+         <form method="post" action="{{ route('thread.store', $forum->id) }}">
+            @csrf
             <textarea name="editor1" id="editor1" rows="10" cols="80"></textarea>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 </div>

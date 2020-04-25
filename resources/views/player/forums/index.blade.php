@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col">
                 <div class="d-flex align-items-center py-3">
-                    <h2 class="text-white mb-0 mr-auto">Forums</h2><a class="btn btn-dark btn-shadow" href="{{ route('forums.create')}}" role="button">Add new topic</a></div>
+                    <h2 class="text-white mb-0 mr-auto">Forums</h2></div>
             </div>
         </div>
     </div>
@@ -24,7 +24,7 @@
             <div class="col">
                 @foreach ($forums as $forum)
                 @if($forum->is_category)
-                <h6 class="subtitle font-size-md">{{$forum->name }}</h6>
+                 <h6 class="table-title">{{ $forum->name }}</h6>
                 <table class="table table-bordered table-dashed mb-5">
                     <thead>
                         <tr>
@@ -41,14 +41,14 @@
                         <tr>
                             <td class="d-none d-md-table-cell table-icon"><i class="fa fa-comments"></i></td>
                             <td>
-                                <h6 class="table-title"><a href="forum-topic.html">{{ $forum->name }}</a></h6>
+                                <h6 class="table-title"><a href="{{ route('forums.show',$forum->id) }}">{{ $forum->name }}</a></h6>
                                 <p class="table-text">{{ $forum->description }}.</p>
                             </td>
                             <td class="text-center">{{ $forum->threads_count }}</td>
                             <td class="d-none d-sm-table-cell text-center">{{ $forum->posts_count }}</td>
                             <td class="d-none d-lg-table-cell">
-                                <a class="table-subtitle" href="#">{{ $forum->latestPost->content }}</a>
-                                <div class="table-meta"><a href="#">{{ $forum->latestPost->poster }}</a> on {{ $forum->latestPost->created_at->format('M d, Y') }}</div>
+                                <a class="table-subtitle" href="#">{{ $forum->latestPost->content  ?? '' }}</a>
+                                <div class="table-meta"><a href="#">{{ $forum->latestPost->poster ?? '' }}</a> on {{ $forum->latestPost->created_at ?? '' }}</div>
                             </td>
                         </tr>
                     @endempty

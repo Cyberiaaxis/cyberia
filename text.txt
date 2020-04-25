@@ -1,0 +1,115 @@
++--------+-----------+------------------------------------------+------------------------+------------------------------------------------------------------------+------------------------------+
+| Domain | Method    | URI                                      | Name                   | Action                                                                 | Middleware                   |
++--------+-----------+------------------------------------------+------------------------+------------------------------------------------------------------------+------------------------------+
+|        | GET|HEAD  | /                                        |                        | Illuminate\Routing\ViewController                                      | web,guest                    |
+|        | GET|HEAD  | api/user                                 |                        | Closure                                                                | api,auth:api                 |
+|        | POST      | checkemail                               | checkemail             | App\Http\Controllers\Auth\RegisterController@checkEmail                | web,guest                    |
+|        | GET|HEAD  | crime                                    | crime.index            | App\Http\Controllers\CrimeController@index                             | web,auth                     |
+|        | POST      | crime                                    | crime.store            | App\Http\Controllers\CrimeController@store                             | web,auth                     |
+|        | GET|HEAD  | crime/create                             | crime.create           | App\Http\Controllers\CrimeController@create                            | web,auth                     |
+|        | DELETE    | crime/{crime}                            | crime.destroy          | App\Http\Controllers\CrimeController@destroy                           | web,auth                     |
+|        | GET|HEAD  | crime/{crime}                            | crime.show             | App\Http\Controllers\CrimeController@show                              | web,auth                     |
+|        | PUT|PATCH | crime/{crime}                            | crime.update           | App\Http\Controllers\CrimeController@update                            | web,auth                     |
+|        | GET|HEAD  | crime/{crime}/edit                       | crime.edit             | App\Http\Controllers\CrimeController@edit                              | web,auth                     |
+|        | POST      | email/resend                             | verification.resend    | App\Http\Controllers\Auth\VerificationController@resend                | web,auth,throttle:6,1        |
+|        | GET|HEAD  | email/verify                             | verification.notice    | App\Http\Controllers\Auth\VerificationController@show                  | web,auth                     |
+|        | GET|HEAD  | email/verify/{id}/{hash}                 | verification.verify    | App\Http\Controllers\Auth\VerificationController@verify                | web,auth,signed,throttle:6,1 |
+|        | GET|HEAD  | forum                                    |                        | Illuminate\Routing\ViewController                                      | web                          |
+|        | GET|HEAD  | forum/{forum}/create                     | thread.create          | App\Http\Controllers\ThreadsController@create                          | web                          |
+|        | POST      | forums                                   | forums.store           | App\Http\Controllers\ForumsController@store                            | web,auth                     |
+|        | GET|HEAD  | forums                                   | forums.index           | App\Http\Controllers\ForumsController@index                            | web,auth                     |
+|        | GET|HEAD  | forums/create                            | forums.create          | App\Http\Controllers\ForumsController@create                           | web,auth                     |
+|        | DELETE    | forums/{forum}                           | forums.destroy         | App\Http\Controllers\ForumsController@destroy                          | web,auth                     |
+|        | GET|HEAD  | forums/{forum}                           | forums.show            | App\Http\Controllers\ForumsController@show                             | web,auth                     |
+|        | PUT|PATCH | forums/{forum}                           | forums.update          | App\Http\Controllers\ForumsController@update                           | web,auth                     |
+|        | GET|HEAD  | forums/{forum}/edit                      | forums.edit            | App\Http\Controllers\ForumsController@edit                             | web,auth                     |
+|        | GET|HEAD  | forums/{forum}/thread                    | thread.index           | App\Http\Controllers\ThreadsController@index                           | web,auth                     |
+|        | POST      | forums/{forum}/thread                    | thread.store           | App\Http\Controllers\ThreadsController@store                           | web,auth                     |
+|        | GET|HEAD  | forums/{forum}/thread/create             | thread.create          | App\Http\Controllers\ThreadsController@create                          | web,auth                     |
+|        | PUT|PATCH | forums/{forum}/thread/{thread}           | thread.update          | App\Http\Controllers\ThreadsController@update                          | web,auth                     |
+|        | DELETE    | forums/{forum}/thread/{thread}           | thread.destroy         | App\Http\Controllers\ThreadsController@destroy                         | web,auth                     |
+|        | GET|HEAD  | forums/{forum}/thread/{thread}           | thread.show            | App\Http\Controllers\ThreadsController@show                            | web,auth                     |
+|        | GET|HEAD  | forums/{forum}/thread/{thread}/edit      | thread.edit            | App\Http\Controllers\ThreadsController@edit                            | web,auth                     |
+|        | GET|HEAD  | gang                                     | gang.index             | App\Http\Controllers\GangController@index                              | web,auth                     |
+|        | POST      | gang                                     | gang.store             | App\Http\Controllers\GangController@store                              | web,auth                     |
+|        | GET|HEAD  | gang/create                              | gang.create            | App\Http\Controllers\GangController@create                             | web,auth                     |
+|        | DELETE    | gang/{gang}                              | gang.destroy           | App\Http\Controllers\GangController@destroy                            | web,auth                     |
+|        | PUT|PATCH | gang/{gang}                              | gang.update            | App\Http\Controllers\GangController@update                             | web,auth                     |
+|        | GET|HEAD  | gang/{gang}                              | gang.show              | App\Http\Controllers\GangController@show                               | web,auth                     |
+|        | GET|HEAD  | gang/{gang}/edit                         | gang.edit              | App\Http\Controllers\GangController@edit                               | web,auth                     |
+|        | GET|HEAD  | home                                     |                        | Illuminate\Routing\ViewController                                      | web,auth                     |
+|        | POST      | login                                    |                        | App\Http\Controllers\Auth\LoginController@login                        | web,guest                    |
+|        | GET|HEAD  | login                                    | login                  | App\Http\Controllers\Auth\LoginController@showLoginForm                | web,guest                    |
+|        | POST      | logout                                   | logout                 | App\Http\Controllers\Auth\LoginController@logout                       | web                          |
+|        | POST      | password/email                           | password.email         | App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail  | web,guest                    |
+|        | POST      | password/reset                           | password.update        | App\Http\Controllers\Auth\ResetPasswordController@reset                | web,guest                    |
+|        | GET|HEAD  | password/reset                           | password.request       | App\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm | web,guest                    |
+|        | GET|HEAD  | password/reset/{token}                   | password.reset         | App\Http\Controllers\Auth\ResetPasswordController@showResetForm        | web,guest                    |
+|        | GET|HEAD  | player                                   | player.index           | App\Http\Controllers\PlayerController@index                            | web,auth                     |
+|        | POST      | player                                   | player.store           | App\Http\Controllers\PlayerController@store                            | web,auth                     |
+|        | GET|HEAD  | player/create                            | player.create          | App\Http\Controllers\PlayerController@create                           | web,auth                     |
+|        | GET|HEAD  | player/{player}                          | player.show            | App\Http\Controllers\PlayerController@show                             | web,auth                     |
+|        | PUT|PATCH | player/{player}                          | player.update          | App\Http\Controllers\PlayerController@update                           | web,auth                     |
+|        | DELETE    | player/{player}                          | player.destroy         | App\Http\Controllers\PlayerController@destroy                          | web,auth                     |
+|        | GET|HEAD  | player/{player}/edit                     | player.edit            | App\Http\Controllers\PlayerController@edit                             | web,auth                     |
+|        | POST      | playeritems                              | playeritems.store      | App\Http\Controllers\PlayerItemsController@store                       | web,auth                     |
+|        | GET|HEAD  | playeritems                              | playeritems.index      | App\Http\Controllers\PlayerItemsController@index                       | web,auth                     |
+|        | GET|HEAD  | playeritems/create                       | playeritems.create     | App\Http\Controllers\PlayerItemsController@create                      | web,auth                     |
+|        | GET|HEAD  | playeritems/{playeritem}                 | playeritems.show       | App\Http\Controllers\PlayerItemsController@show                        | web,auth                     |
+|        | PUT|PATCH | playeritems/{playeritem}                 | playeritems.update     | App\Http\Controllers\PlayerItemsController@update                      | web,auth                     |
+|        | DELETE    | playeritems/{playeritem}                 | playeritems.destroy    | App\Http\Controllers\PlayerItemsController@destroy                     | web,auth                     |
+|        | GET|HEAD  | playeritems/{playeritem}/edit            | playeritems.edit       | App\Http\Controllers\PlayerItemsController@edit                        | web,auth                     |
+|        | GET|HEAD  | profile                                  | profile.index          | App\Http\Controllers\UsersController@index                             | web,auth                     |
+|        | POST      | profile                                  | profile.store          | App\Http\Controllers\UsersController@store                             | web,auth                     |
+|        | GET|HEAD  | profile/create                           | profile.create         | App\Http\Controllers\UsersController@create                            | web,auth                     |
+|        | PUT|PATCH | profile/{profile}                        | profile.update         | App\Http\Controllers\UsersController@update                            | web,auth                     |
+|        | DELETE    | profile/{profile}                        | profile.destroy        | App\Http\Controllers\UsersController@destroy                           | web,auth                     |
+|        | GET|HEAD  | profile/{profile}                        | profile.show           | App\Http\Controllers\UsersController@show                              | web,auth                     |
+|        | GET|HEAD  | profile/{profile}/edit                   | profile.edit           | App\Http\Controllers\UsersController@edit                              | web,auth                     |
+|        | GET|HEAD  | register                                 | register               | App\Http\Controllers\Auth\RegisterController@showRegistrationForm      | web,guest                    |
+|        | POST      | register                                 |                        | App\Http\Controllers\Auth\RegisterController@register                  | web,guest                    |
+|        | POST      | staff                                    | store                  | App\Http\Controllers\StaffsController@store                            | web,auth                     |
+|        | GET|HEAD  | staff                                    | index                  | App\Http\Controllers\StaffsController@index                            | web,auth                     |
+|        | GET|HEAD  | staff/create                             | create                 | App\Http\Controllers\StaffsController@create                           | web,auth                     |
+|        | POST      | staff/itemCategories                     | itemCategories.store   | App\Http\Controllers\ItemCategoriesController@store                    | web,auth                     |
+|        | GET|HEAD  | staff/itemCategories                     | itemCategories.index   | App\Http\Controllers\ItemCategoriesController@index                    | web,auth                     |
+|        | GET|HEAD  | staff/itemCategories/create              | itemCategories.create  | App\Http\Controllers\ItemCategoriesController@create                   | web,auth                     |
+|        | DELETE    | staff/itemCategories/{itemCategory}      | itemCategories.destroy | App\Http\Controllers\ItemCategoriesController@destroy                  | web,auth                     |
+|        | PUT|PATCH | staff/itemCategories/{itemCategory}      | itemCategories.update  | App\Http\Controllers\ItemCategoriesController@update                   | web,auth                     |
+|        | GET|HEAD  | staff/itemCategories/{itemCategory}      | itemCategories.show    | App\Http\Controllers\ItemCategoriesController@show                     | web,auth                     |
+|        | GET|HEAD  | staff/itemCategories/{itemCategory}/edit | itemCategories.edit    | App\Http\Controllers\ItemCategoriesController@edit                     | web,auth                     |
+|        | GET|HEAD  | staff/items                              | items.index            | App\Http\Controllers\ItemsController@index                             | web,auth                     |
+|        | POST      | staff/items                              | items.store            | App\Http\Controllers\ItemsController@store                             | web,auth                     |
+|        | GET|HEAD  | staff/items/create                       | items.create           | App\Http\Controllers\ItemsController@create                            | web,auth                     |
+|        | DELETE    | staff/items/{item}                       | items.destroy          | App\Http\Controllers\ItemsController@destroy                           | web,auth                     |
+|        | PUT|PATCH | staff/items/{item}                       | items.update           | App\Http\Controllers\ItemsController@update                            | web,auth                     |
+|        | GET|HEAD  | staff/items/{item}                       | items.show             | App\Http\Controllers\ItemsController@show                              | web,auth                     |
+|        | GET|HEAD  | staff/items/{item}/edit                  | items.edit             | App\Http\Controllers\ItemsController@edit                              | web,auth                     |
+|        | GET|HEAD  | staff/permissions                        | permissions.index      | App\Http\Controllers\PermissionsController@index                       | web,auth                     |
+|        | POST      | staff/permissions                        | permissions.store      | App\Http\Controllers\PermissionsController@store                       | web,auth                     |
+|        | GET|HEAD  | staff/permissions/create                 | permissions.create     | App\Http\Controllers\PermissionsController@create                      | web,auth                     |
+|        | DELETE    | staff/permissions/{permission}           | permissions.destroy    | App\Http\Controllers\PermissionsController@destroy                     | web,auth                     |
+|        | PUT|PATCH | staff/permissions/{permission}           | permissions.update     | App\Http\Controllers\PermissionsController@update                      | web,auth                     |
+|        | GET|HEAD  | staff/permissions/{permission}           | permissions.show       | App\Http\Controllers\PermissionsController@show                        | web,auth                     |
+|        | GET|HEAD  | staff/permissions/{permission}/edit      | permissions.edit       | App\Http\Controllers\PermissionsController@edit                        | web,auth                     |
+|        | POST      | staff/roles                              | roles.store            | App\Http\Controllers\RolesController@store                             | web,auth                     |
+|        | GET|HEAD  | staff/roles                              | roles.index            | App\Http\Controllers\RolesController@index                             | web,auth                     |
+|        | GET|HEAD  | staff/roles/create                       | roles.create           | App\Http\Controllers\RolesController@create                            | web,auth                     |
+|        | DELETE    | staff/roles/{role}                       | roles.destroy          | App\Http\Controllers\RolesController@destroy                           | web,auth                     |
+|        | PUT|PATCH | staff/roles/{role}                       | roles.update           | App\Http\Controllers\RolesController@update                            | web,auth                     |
+|        | GET|HEAD  | staff/roles/{role}                       | roles.show             | App\Http\Controllers\RolesController@show                              | web,auth                     |
+|        | GET|HEAD  | staff/roles/{role}/edit                  | roles.edit             | App\Http\Controllers\RolesController@edit                              | web,auth                     |
+|        | POST      | staff/users                              | users.store            | App\Http\Controllers\UsersController@store                             | web,auth                     |
+|        | GET|HEAD  | staff/users                              | users.index            | App\Http\Controllers\UsersController@index                             | web,auth                     |
+|        | GET|HEAD  | staff/users/create                       | users.create           | App\Http\Controllers\UsersController@create                            | web,auth                     |
+|        | DELETE    | staff/users/{user}                       | users.destroy          | App\Http\Controllers\UsersController@destroy                           | web,auth                     |
+|        | PUT|PATCH | staff/users/{user}                       | users.update           | App\Http\Controllers\UsersController@update                            | web,auth                     |
+|        | GET|HEAD  | staff/users/{user}                       | users.show             | App\Http\Controllers\UsersController@show                              | web,auth                     |
+|        | GET|HEAD  | staff/users/{user}/edit                  | users.edit             | App\Http\Controllers\UsersController@edit                              | web,auth                     |
+|        | DELETE    | staff/{}                                 | destroy                | App\Http\Controllers\StaffsController@destroy                          | web,auth                     |
+|        | GET|HEAD  | staff/{}                                 | show                   | App\Http\Controllers\StaffsController@show                             | web,auth                     |
+|        | PUT|PATCH | staff/{}                                 | update                 | App\Http\Controllers\StaffsController@update                           | web,auth                     |
+|        | GET|HEAD  | staff/{}/edit                            | edit                   | App\Http\Controllers\StaffsController@edit                             | web,auth                     |
+|        | GET|HEAD  | story                                    |                        | Illuminate\Routing\ViewController                                      | web                          |
+|        | POST      | thread/{forum}/create                    | thread.create          | App\Http\Controllers\ThreadsController@create                          | web                          |
++--------+-----------+------------------------------------------+------------------------+------------------------------------------------------------------------+------------------------------+

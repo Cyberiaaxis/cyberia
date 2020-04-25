@@ -17,9 +17,23 @@
     @yield('css')
    </head>
    <body>
-    @yield('sidebar')
+    <section class="bg-primary">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="d-flex align-items-center">
+                    <h2 class="text-white mb-0 mr-auto">@yield('title','Forums')</h2>
+                    @yield('header_btn')
+                </div>
+        </div>
+    </div>
+</section>
+    <div class="container">
     @yield('content')
+    </div>
+            @yield('sidebar')
+
     <script src="{{ asset('js/jquery.min.js') }}"></script>
-    @yield('js')
+        @yield('js')
   </body>
 </html>
