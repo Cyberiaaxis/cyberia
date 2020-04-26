@@ -3,35 +3,90 @@
 namespace App\Http\Controllers;
 
 use App\Forum;
+use App\Models\Thread;
 use Illuminate\Http\Request;
 
 class ThreadsController extends Controller
 {
     /**
-     * Forum List
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function create(Request $request, Forum $forum)
     {
-       dd($forum);
-        return view('player.forums.create', ['forum' => $forum]);
+        return view('player.forums.threads.create', ['forum' => $forum]);
     }
 
     /**
-     * Forum List
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        // return view('player.forums.create');
+        return $request;
     }
 
     /**
-     * Forum List
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show(Request $request, Forum $forum, Thread $thread)
     {
-       dd($request);
-        return view('player.forums.create');
+        $post_list = $thread->posts()->paginate(20);
+
+        return view('player.forums.threads.show', [
+            'forum' => $forum,
+            'thread' => $thread,
+            'post_list' => $post_list
+        ]);
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
 }

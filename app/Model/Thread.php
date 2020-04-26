@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Forum;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,7 +22,7 @@ class Thread extends Model
         return $this->belongsTo(Forum::class);
     }
 
-    public function post()
+    public function posts()
     {
         return $this->hasMany(Post::class);
     }

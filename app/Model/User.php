@@ -7,6 +7,7 @@ use App\Model\Medal;
 use App\Model\Reward;
 use App\Model\UserDetail;
 use App\Model\UserReward;
+use App\Models\Post;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -82,5 +83,17 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Reward::class, 'user_rewards');
     }
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    /**
+    * get total posts
+    */
+     public function getTotalPostsAttribute()
+     {
+         return $this->posts()->count();
+    }
 }
 

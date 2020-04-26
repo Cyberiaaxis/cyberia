@@ -59,7 +59,7 @@
         <p class="text-center m-0 shadow">OK</p>
         <img class="img-fluid  fixed-img border border-primary mt-1" alt="No Image" src="https://www.broadheathcentral.co.uk/wp-content/uploads/2015/06/passport-photo-234x300.jpg">
         <p class="card-text text-center shadow">
-            {{ getStatus($user->last_seen->diffInMinutes($currentdatetime)) }}
+            {{ getStatus($user->last_seen->diffInMinutes(date('m/d/Y h:i:s a', time()))) }}
          </p>
     </div>
     <div class="col-lg-8 mt-4">
