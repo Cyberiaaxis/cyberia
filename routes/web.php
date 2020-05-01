@@ -19,6 +19,7 @@ Auth::routes(['verify' => true]);
 Route::post('/checkemail', 'Auth\RegisterController@checkEmail')->name('checkemail');
 Route::view('/story','player.story');
 Route::view('/profile', 'player.profile');
+Route::view('/attack', 'player.attack');
 Route::view('/gang', 'player.gang');
 Route::view('/home','player.index')->middleware('auth');
 // Route::view('/crime','player.crime')->middleware('auth');
@@ -32,6 +33,7 @@ Route::group(['middleware' => ['auth']], function(){
                         '/gang' => 'GangController',
                         '/forums' => 'ForumsController',
                         '/forums/{forum}/thread' => 'ThreadsController',
+                        // '/attack' => 'AttacksController',
                     ]);
 });
 Route::group(['prefix' => 'staff', 'middleware' => ['auth']], function(){
