@@ -1,4 +1,5 @@
 @extends('layouts.player.player') @section('content')
+
 <style>
     .fixed-img {
         height: 9rem;
@@ -118,7 +119,7 @@
 <div class="row border-top border-bottom">
     <ul class="list-inline m-auto">
         <li class="list-inline-item">
-            <button type="button" class="btn btn-outline-secondary rpg-gun rounded btn-sm" data-toggle="tooltip" data-placement="right" title="Attack"></button>
+            <a class="btn btn-outline-secondary rpg-gun rounded btn-sm" href="{{ route('attacks',  $user->id )}}" data-toggle="tooltip" data-placement="right" title="Attack"></a>
         </li>
         <li class="list-inline-item">
             <button type="button" class="btn btn-outline-secondary rpg-gun rounded btn-sm" data-toggle="tooltip" data-placement="right" title="Attack"></button>

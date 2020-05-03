@@ -33,8 +33,9 @@ Route::group(['middleware' => ['auth']], function(){
                         '/gang' => 'GangController',
                         '/forums' => 'ForumsController',
                         '/forums/{forum}/thread' => 'ThreadsController',
-                        // '/attack' => 'AttacksController',
+                        // '/attacks' => 'AttacksController',
                     ]);
+Route::get('attacks/{defender}', 'AttacksController@attack')->name('attacks');
 });
 Route::group(['prefix' => 'staff', 'middleware' => ['auth']], function(){
     Route::resource('/','StaffsController');

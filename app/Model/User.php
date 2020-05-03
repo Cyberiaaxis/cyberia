@@ -2,12 +2,8 @@
 
 namespace App;
 
-use App\Model\Award;
-use App\Model\Medal;
-use App\Model\Reward;
-use App\Model\UserDetail;
-use App\Model\UserReward;
-use App\Models\Post;
+use App\Model\{AttackRecord, Award, Medal, Reward, UserDetail, UserReward};
+use App\Models\{Post};
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\{ Attack };
+use App\Model\AttackRecord;
 use Illuminate\Http\Request;
 
-class AttackController extends Controller
+class AttackRecordController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class AttackController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Attack  $attack
+     * @param  \App\Model\AttackRecord  $attackRecord
      * @return \Illuminate\Http\Response
      */
-    public function show(Attack $attack)
+    public function show(AttackRecord $attackRecord)
     {
         //
     }
@@ -52,10 +52,10 @@ class AttackController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Attack  $attack
+     * @param  \App\Model\AttackRecord  $attackRecord
      * @return \Illuminate\Http\Response
      */
-    public function edit(Attack $attack)
+    public function edit(AttackRecord $attackRecord)
     {
         //
     }
@@ -64,10 +64,10 @@ class AttackController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Attack  $attack
+     * @param  \App\Model\AttackRecord  $attackRecord
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Attack $attack)
+    public function update(Request $request, AttackRecord $attackRecord)
     {
         //
     }
@@ -75,10 +75,10 @@ class AttackController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Attack  $attack
+     * @param  \App\Model\AttackRecord  $attackRecord
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Attack $attack)
+    public function destroy(AttackRecord $attackRecord)
     {
         //
     }
