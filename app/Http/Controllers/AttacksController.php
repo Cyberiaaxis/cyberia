@@ -12,7 +12,9 @@ class AttacksController extends Controller
 
     protected $attacker ;
 
-
+    /**
+     * Instantiate a new AttacksController instance.
+     */
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
@@ -28,109 +30,112 @@ class AttacksController extends Controller
      */
     public function attackPerform($defender)
     {
-
+        $damage = $this->attacker->stats->strength - (20 / 2);
+        dd($damage);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * To verify the Attacker's hospital, jail, energy and hp status.
      *
-     * @return \Illuminate\Http\Response
+     * @param  \App\User  $defender
+     * @return Boolean
      */
     public function attack(User $defender)
     {
-        try {
-            $this->isAttackable($defender);
-            $this->isSameLocation($defender);
-            $this->canAttack();
-            $this->canBeAttacked($defender);
-            $this->attackPerform($defender);
-            // $defender->canBeAttackedBy();
-        }catch (\Exception $e){
-             return $e->getMessage();
+        if(!$this->canBeAttackedBy($defender))
+        {
+            return $this->message;
         }
 
-        // try {
-        //     $this->attacker->canAttack();
-        //     $defender->canBeAttacked();
-        //     $defender->canBeAttackedBy();
-        //     $this->doAttack($src, $dst);
-        // } catch (Engine\Attack\Exception $e) {
-        //     // ... reporting
-        // }
+        if(!$this->canAttack())
+        {
+            return $this->message;
+        }
+        if(!$this->canBeAttacked($defender))
+        {
+            return $this->message;
+        }
+        $this->attackPerform($defender);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * To verify the Attacker's hospital, jail, energy and hp status.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param
+     * @return Boolean
      */
     public function canAttack()
     {
         if(!empty($this->attacker->userdetails->hospital))
         {
-            throw new \ErrorException('You are in hospital.');
+            $this->message = 'You are in hospital.';
+        return false;
         }
 
         if (!empty($this->attacker->userdetails->jail))
         {
-            throw new \ErrorException('You are in jail.');
+            $this->message = 'You are in jail.';
+        return false;
         }
 
         if($this->attacker->stats->energy < (int) ((50 / 100) * (int) $this->attacker->stats->max_energy))
         {
-            throw new \ErrorException('Your energy is down.');
+            $this->message = 'Your energy is down.';
+        return false;
         }
 
         if($this->attacker->stats->hp > 10)
         {
-            throw new \ErrorException('Your energy is hp.');
+            $this->message = 'Your hp is down.';
+        return false;
         }
 
-    return 'true';
+    return true;
     }
 
     /**
-     * Display the specified resource.
+     * To verify the defender's hospital and jail status.
      *
-     * @param  \App\Attack  $attack
-     * @return \Illuminate\Http\Response
+     * @param  \App\User  $defender
+     * @return Boolean
      */
     public function canBeAttacked($defender)
     {
-        if (!empty($defender->userdetails->hospital)) {
-            throw new \ErrorException('Defender are in hospital.');
+        if (!empty($defender->userdetails->hospital))
+        {
+            $this->message = 'Defender are in hospital.';
+        return false;
         }
 
-        if (!empty($defender->userdetails->jail)) {
-            throw new \ErrorException('Defender are in jail.');
+        if (!empty($defender->userdetails->jail))
+        {
+           $this->message = 'Defender are in jail.';
+        return false;
         }
 
-    return 'true';
+    return true;
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * To verify the defender and attacker location and protection from self attack.
      *
-     * @param  \App\Attack  $attack
-     * @return \Illuminate\Http\Response
+     * @param  \App\User  $defender
+     * @return Boolean
      */
-    public function isAttackable($defender)
+    public function canBeAttackedBy($defender)
     {
-        if ($this->attacker->id === $defender->id) {
-            throw new \ErrorException('You can not attack on yourself.');
+        // if ($this->attacker->id === $defender->id)
+        // {
+        //     $this->message = 'You can not attack on yourself.';
+        // return false;
+        // }
+        if ($this->attacker->userdetails->location->name !== $defender->userdetails->location->name)
+        {
+            $this->message = 'Both should be on same location.';
+        return false;
         }
 
-    return 'true';
-    }
-
-    public function isSameLocation($defender)
-    {
-        if ($this->attacker->userdetails->location !== $defender->userdetails->location) {
-            throw new \ErrorException('Both should be on same location.');
-        }
-
-    return 'true';
+    return true;
     }
 }
 
