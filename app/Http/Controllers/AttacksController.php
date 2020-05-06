@@ -30,10 +30,15 @@ class AttacksController extends Controller
      */
     public function attackPerform($defender)
     {
-        $damage = $this->attacker->stats->strength - (20 / 2);
-        dd($damage);
+        dd($this->attacker->items);
+        // $mydamage =
+        //     (int) (($r1['damage'] * $youdata['strength'] / $odata['guard'])
+        //         * (rand(8000, 12000) / 10000));
+        // $hitratio = min(50 * $ir['agility'] / $odata['agility'], 95);
+        // $damage = $this->attacker->stats->strength - (20 / 2);
+        // dd($damage);
     }
-
+// damage = mydamagepower * mystrength / defence * (rand(8000, 12000) / 10000));
     /**
      * To verify the Attacker's hospital, jail, energy and hp status.
      *

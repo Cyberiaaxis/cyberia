@@ -1,0 +1,32 @@
+<?php
+
+namespace App;
+
+use App\{Item, ItemType};
+use Illuminate\Database\Eloquent\Model;
+
+class ItemEffect extends Model
+{
+    protected $table = 'item_effects';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['id', 'item_id', 'damage', 'fire_rate', 'accuracy' ];
+
+
+    public function items()
+    {
+       return $this->belongsTo(Item::class);
+    }
+
+    public function itemTypes()
+    {
+         return $this->belongsTo(ItemType::class);
+    }
+
+}
+
+
