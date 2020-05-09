@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Model\{AttackRecord, Award, Medal, Reward, UserDetail, UserReward};
+use App\Model\{AttackRecord, Award, Medal, Reward, UserDetail, UserReward, UserSlot};
 use App\Models\{Post};
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -73,6 +73,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(UserStats::class);
     }
+
+    public function userSlot()
+    {
+        return $this->hasOne(UserSlot::class);
+    }
+
 
     public function rewards()
     {

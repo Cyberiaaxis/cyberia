@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth']], function(){
                         '/player' => 'PlayerController',
                         '/profile' => 'UsersController',
                         '/gang' => 'GangController',
+                        '/gym' => 'GymController',
                         '/forums' => 'ForumsController',
                         '/forums/{forum}/thread' => 'ThreadsController',
                         // '/attacks' => 'AttacksController',

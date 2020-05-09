@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\{ Attack, User};
+use App\{ Attack, ItemEffect, User};
+use App\Model\UserSlot;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -30,7 +31,11 @@ class AttacksController extends Controller
      */
     public function attackPerform($defender)
     {
-        dd($this->attacker->items);
+
+        $effect = UserSlot::find(1);
+        dd($effect->getWeaponValue('damage'));
+        // dd (UserSlot::getSlot("primary_slot", $this->attacker)->get()); , 'fire_rate', 'accuracy'
+        // dd($attack->where("item_id", $this->attacker->userslot->primary_slot)->select('damage')->value('damage'));
         // $mydamage =
         //     (int) (($r1['damage'] * $youdata['strength'] / $odata['guard'])
         //         * (rand(8000, 12000) / 10000));
@@ -89,7 +94,7 @@ class AttacksController extends Controller
         return false;
         }
 
-        if($this->attacker->stats->hp > 10)
+        if($this->attacker->stats->hp < 10)
         {
             $this->message = 'Your hp is down.';
         return false;

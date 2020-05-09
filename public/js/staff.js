@@ -1,9 +1,9 @@
 $(document).ready(function() {
-    const csrfToken = $('meta[name="csrf-token"]').attr('content');;
+    const csrfToken = $('meta[name="csrf-token"]').attr('content');
     const $table = $('table');
 
     function message (text, status = 'error'){
-       toastr.options = { 
+       toastr.options = {
             "closeButton": true, "debug": false,  "newestOnTop": true, "progressBar": true,
             "positionClass": "toast-top-right", "preventDuplicates": true,  "onclick": null,  "showDuration": "300",
             "hideDuration": "1000",  "timeOut": "5000",  "extendedTimeOut": "1000",  "showEasing": "swing",
@@ -14,14 +14,14 @@ $(document).ready(function() {
 
     function showMessage(response, hide = false) {
         console.log(response);
-        if (response.errors) 
+        if (response.errors)
         {
             $.each(response.errors, function(key, value) {
                  $('input[name="'+key+'"]').parent().addClass('has-error');
             message(value);
             });
-    
-        return false;    
+
+        return false;
         }
 
         $('table').bootstrapTable('refresh');
@@ -54,7 +54,7 @@ $(document).ready(function() {
                 field: 'id',
                 values: ids
             })
-            
+
         }else {
             alert('Your canceled delete process');
         }
@@ -65,7 +65,7 @@ $(document).ready(function() {
         var url = $(this).attr('data-href');
         $('#update').load(url);
     });
-    
+
     $table.on('editable-save.bs.table', function(e, field, row, oldValue, $el) {
         let data = {
             url: row._id_data.href,
@@ -85,11 +85,11 @@ $(document).ready(function() {
         $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
         // console.log(form.serializeArray());
         $.post(url,  form.serializeArray())
-        .done(response => { 
-           showMessage(response, modalId) 
+        .done(response => {
+           showMessage(response, modalId)
         })
-        .fail((function(e) 
-        { 
+        .fail((function(e)
+        {
             const error = e.responseJSON;
             showMessage(error);
         }));
@@ -108,11 +108,11 @@ $(document).ready(function() {
     });
 
 
-   
+
 });
 
 
-function selectfetch( selector, url, add = false,  override_id = false ){ 
+function selectfetch( selector, url, add = false,  override_id = false ){
 
     if(!selector) retrun ('Selector is required');
     if(!url) retrun ('URL is required');
