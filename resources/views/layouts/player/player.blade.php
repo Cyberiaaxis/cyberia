@@ -64,7 +64,7 @@
                 <a class="c-sidebar-nav-link" href="{{ route('gym.index')}}"> <i class="fa fa-inbox mr-2"></i> Gym </a>
             </li>
             <li class="c-sidebar-nav-item">
-                <a class="c-sidebar-nav-link" href="#"> <i class="fa fa-inbox mr-2"></i> Inventory </a>
+                <a class="c-sidebar-nav-link" href="{{ route('course.index')}}"> <i class="fa fa-inbox mr-2"></i> Course </a>
             </li>
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link" href="#"> <i class="fa fa-inbox mr-2"></i> Inventory </a>
