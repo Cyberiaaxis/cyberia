@@ -12,9 +12,15 @@ class CoursesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('player.course');
+        $courses = Course::whereNull('parent_id')->get();
+        // dd($courses);
+        if ($request->ajax()) {
+            return response()->json(['html' => view('ajax.course', ['courses' => $courses])->render()]);
+        }
+
+    return view('player.course');
     }
 
     /**
@@ -47,6 +53,12 @@ class CoursesController extends Controller
     public function show(Course $course)
     {
 
+        $exists = $course->SubCourses($course->id)->toSql();
+        // dd($exists);
+        if ($exists) {
+            $courses = ['courses' => $course->subCourses($course->id)->get()];
+        return response()->json(['html' => view('ajax.course', $courses)->render()]);
+        }
     }
 
     /**

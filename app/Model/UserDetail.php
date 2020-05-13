@@ -45,4 +45,9 @@ class UserDetail extends Model
     {
         return $this->belongsTo(Gang::class);
     }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class, 'active_course');
+    }
 }
