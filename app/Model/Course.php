@@ -2,12 +2,22 @@
 
 namespace App\Model;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
-    public function scopeSubCourses($query, $course)
+    public $timestamps = false;
+
+    public function scopeSubCourses($query)
     {
-        return $query->where('parent_id', $course);
+        return $query->whereNull('is_parent')->where('parent_id', $this->id);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
 }

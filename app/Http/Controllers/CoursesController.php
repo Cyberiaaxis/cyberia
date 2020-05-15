@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Model\Course;
+use App\Model\UserDetail;
+use App\User;
 use Illuminate\Http\Request;
 
 class CoursesController extends Controller
@@ -14,13 +16,13 @@ class CoursesController extends Controller
      */
     public function index(Request $request)
     {
-        $courses = Course::whereNull('parent_id')->get();
-        // dd($courses);
+        $course = Course::whereNull('parent_id')->get();
+
         if ($request->ajax()) {
-            return response()->json(['html' => view('ajax.course', ['courses' => $courses])->render()]);
+            return response()->json(['html' => view('ajax.courses', ['course_list' => $course, 'title' => 'Education'])->render()]);
         }
 
-    return view('player.course');
+    return view('player.course', ['courses' => $course, 'title' => 'Education']);
     }
 
     /**
@@ -41,7 +43,13 @@ class CoursesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(auth()->user()->doneCourse($request->courseId)){
+        return response()->json("You already completed this course");
+        }
+
+        auth()->user()->userdetails()->update(['active_course' => $request->courseId]);
+        auth()->user()->course()->attach($request->courseId);
+    return response()->json("You just Join the course");
     }
 
     /**
@@ -52,13 +60,15 @@ class CoursesController extends Controller
      */
     public function show(Course $course)
     {
+        $title = $course->name;
 
-        $exists = $course->SubCourses($course->id)->toSql();
-        // dd($exists);
-        if ($exists) {
-            $courses = ['courses' => $course->subCourses($course->id)->get()];
-        return response()->json(['html' => view('ajax.course', $courses)->render()]);
+        if ($course->subCourses()->exists()) {
+            $data = ['sub_courses' => $course->subCourses()->get(), 'title' => $title];
+        } else {
+            $data = ['course_display' => true, 'course' => $course, 'title' => $title];
         }
+
+    return response()->json(['html' => view('ajax.courses', $data)->render()]);
     }
 
     /**

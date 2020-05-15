@@ -12,43 +12,60 @@
     }
 </style>
 
-<div class="courses" data-url="{{ route('course.index') }}"></div>
+<div class="mycontent">
+    <div class="row">
+    @isset($courses)
+    @foreach ($courses as $course)
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header">{{ $course->name }}</div>
+            <a href="{{ route('course.show',$course->id) }}" class="course">
+                <img class="card-img-top" src="{{ asset('img/city.jpg') }}" alt="Card image cap">
+            </a>
+            <div class="card-body p-1">
+                <div class="progress mt-2">
+                    <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endforeach
+    @endisset
 
+    </div>
+</div>
+@endsection
 
 @section('js')
 <script>
-    $(document).ready(function() {
-    var csrfToken = $('meta[name="csrf-token"]').attr('content');
-    let url = $('.courses').attr('data-url');
-    console.log(url);
-    $.getJSON(url,render);
+$(document).ready(function(){
+  const csrfToken = $('meta[name="csrf-token"]').attr('content');
 
-    function render(data)
-    {
-      return $('.courses').html(data.html);
-    }
+  $(document).on('click','.course',function(e){
+        e.preventDefault();
 
-    $(document).on("click",".course",function() {
-        console.log($(this).attr('data-method'));
-            let url = $(this).attr('data-url');
-            let method = $(this).attr('data-method');
-            let data = {
-                url: url,
-                // method: method,
-                course_id: $(this).val(),
-                csrfToken: csrfToken
-            };
+        let url = $(this).attr('href');
 
-    requestProcess(data, message);
+        $.getJSON(url,function(data){
+            $('.mycontent').html(data.html);
+        });
     });
 
-    function message (response){
-        console.log(response);
-      return $('.courses').html(response.html);
-    }
+    $(document).on('click','.joinCourse',function(e){
+        e.preventDefault();
+        console.log( $(this).serializeArray());
+        let data = {
+            url: $(this).attr('action'),
+            method: $(this).attr('method'),
+            csrfToken: csrfToken
+        };
+
+        $.each($(this).serializeArray(), function() {
+                 data[this.name] = this.value;
+        });
+        // console.log(data);
+    requestProcess(data);
     });
-
-
+});
 </script>
-@stop
 @endsection

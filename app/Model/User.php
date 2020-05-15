@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Model\{AttackRecord, Award, Medal, Reward, UserDetail, UserReward, UserSlot};
+use App\Model\{AttackRecord, Award, Course, Medal, Reward, UserDetail, UserReward, UserSlot};
 use App\Models\{Post};
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -93,9 +93,19 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
     * get total posts
     */
-     public function getTotalPostsAttribute()
-     {
+    public function getTotalPostsAttribute()
+    {
          return $this->posts()->count();
+    }
+
+    public function course()
+    {
+         return $this->belongsToMany(Course::class, 'user_courses');
+    }
+
+    public function doneCourse($course_id)
+    {
+         return $this->course()->where('course_id',$course_id)->exists();
     }
 }
 
