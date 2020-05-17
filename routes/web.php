@@ -35,8 +35,10 @@ Route::group(['middleware' => ['auth']], function(){
                         '/forums' => 'ForumsController',
                         '/course' => 'CoursesController',
                         '/forums/{forum}/thread' => 'ThreadsController',
+                        // '/inventory' => 'InventoryController',
                         // '/attacks' => 'AttacksController',
                     ]);
+Route::get('inventory/trade/{item}', 'InventoryController@tradeItem')->name('inventory.trade');
 Route::get('attacks/{defender}', 'AttacksController@attack')->name('attacks');
 });
 Route::group(['prefix' => 'staff', 'middleware' => ['auth']], function(){
