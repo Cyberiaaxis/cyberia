@@ -40,4 +40,24 @@ function getStatus($time)
 
 return $status;
 }
+
+function useType($type){
+//  return $type;
+    switch ($type) {
+        case 'food':
+            break;
+        case 'collectiables':
+            break;
+        case "weapon":
+           return "fire";
+            break;
+        case 'drug':
+            break;
+        case 'medical':
+            break;
+        case 'clothes':
+            break;
+    }
+}
+
 ?>

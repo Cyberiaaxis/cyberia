@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Throwable;
 
 class Inventory extends Model
 {
@@ -18,9 +19,14 @@ class Inventory extends Model
      */
     public function incrementItem($userId, $itemId)
     {
-        $details = ['user_id' => $userId, 'item_id' => $itemId];
-        $this->updateOrCreate($details)->increment('quantity');
-        return true;
+        try {
+            $details = ['user_id' => $userId, 'item_id' => $itemId];
+            $this->updateOrCreate($details)->increment('quantity');
+            return true;
+        } catch (Throwable $e) {
+            report($e);
+            return false;
+        }
     }
 
     /**
@@ -32,9 +38,14 @@ class Inventory extends Model
      */
     public function decrementItem($userId, $itemId)
     {
-        $details = ['user_id' => $userId, 'item_id' => $itemId];
-        $this->where($details)->decrement('quantity');
-        return true;
+        try {
+            $details = ['user_id' => $userId, 'item_id' => $itemId];
+            $this->where($details)->decrement('quantity');
+            return true;
+        } catch (Throwable $e) {
+            report($e);
+            return false;
+        }
     }
 
 
@@ -46,13 +57,22 @@ class Inventory extends Model
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    function getItemQuantity($userId, $itemId)
+    function discardItem($userId, $itemId)
     {
-        $details = ['user_id' => $userId, 'item_id' => $itemId];
-        if($this->where($details)->where('quantity', '<=', 0)->exists())
-        {
-            return true;
+        try {
+            $details = ['user_id' => $userId, 'item_id' => $itemId];
+
+            if ($this->where($details)->where('quantity', '<=', 0)->exists())
+            {
+                return $this->removeItemtrue($userId, $itemId);
+            }
+
+        return $this->decrementItem($userId, $itemId);
+        } catch (Throwable $e) {
+            report($e);
+            return false;
         }
+
     }
 
     /**
@@ -64,7 +84,15 @@ class Inventory extends Model
      */
     function removeItem($userId, $itemId)
     {
-        $details = ['user_id' => $userId, 'item_id' => $itemId];
-        $this->where($details)->delete();
+        try {
+            $details = ['user_id' => $userId, 'item_id' => $itemId];
+            $this->where($details)->delete();
+            return true;
+        } catch (Throwable $e) {
+            report($e);
+            return false;
+        }
+
+
     }
 }

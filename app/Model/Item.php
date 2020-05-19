@@ -13,10 +13,10 @@ class Item extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description','itemTypeId',  'buyPrice',  'sellPrice',  'locationId',  'expiry',  'updated_at',  'created_at'
+        'name', 'description','item_type_id',  'buyPrice',  'sellPrice',  'locationId',  'expiry',  'updated_at',  'created_at'
     ];
 
-    // protected $appends = ['category_name','item_type_name'];
+    protected $appends = ['item_type_name'];
 
     public function itemeffects()
     {

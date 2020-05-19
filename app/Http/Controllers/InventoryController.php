@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Item;
+use App\ItemEffect;
 use App\Model\Inventory;
+use GeneralDrug;
 use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\Validator;
+use Validator;
 
 class InventoryController extends Controller
 {
@@ -33,9 +38,14 @@ class InventoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    function useItem(Item $item)
     {
-        //
+
+        dd(useType($item->itemTypes->effect_type));
+        $itemEffect = new ItemEffect();
+        dd($itemEffect->getEffect(1)->item_id);
+        $userItem = new Inventory();
+        $userItem->discardItem(auth()->user()->id, $item->id);
     }
 
     /**
@@ -46,6 +56,7 @@ class InventoryController extends Controller
      */
     public function tradeItem(Request $request)
     {
+        $this->validation($request);
         $userItem = new Inventory();
         $this->sender(auth()->id(), 1);
         $this->receiver(60, 1);
@@ -61,11 +72,7 @@ class InventoryController extends Controller
     public function sender($userId, $itemId)
     {
         $userItem = new Inventory();
-        if($userItem->getItemQuantity($userId, $itemId)){
-            return $userItem->removeItem($userId, $itemId);
-        }
-
-    return $userItem->decrementItem($userId, $itemId);
+    return $userItem->discardItem($userId, $itemId);
     }
 
     /**
@@ -77,7 +84,26 @@ class InventoryController extends Controller
     public function receiver($userId, $itemId)
     {
         $userItem = new Inventory();
-      return  $userItem->incrementItem($userId, $itemId);
+    return  $userItem->incrementItem($userId, $itemId);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function validation($inputs)
+    {
+        $validate = Validator::make($inputs->all(), [
+            'quantity' => 'required|min:0',
+        ]);
+
+        if ($validate->fails()) {
+            return "You dont have this item";
+        }
+
+    return $inputs;
     }
 
 }

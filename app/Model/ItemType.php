@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ItemType extends Model
 {
-    protected $table = 'itemTypes';
+    protected $table = 'item_types';
 
     /**
      * The attributes that are mass assignable.
@@ -16,13 +16,13 @@ class ItemType extends Model
      */
     protected $fillable = [ 'id','name' ];
 
-    public function categories() 
-    { 
-        return $this->belongsTo(Category::class);
-    }
+    // public function categories()
+    // {
+    //     return $this->belongsTo(Category::class);
+    // }
 
-    public function items() 
-    { 
-        return $this->belongsTo(Item::class, 'ItemTypeId');
+    public function items()
+    {
+        return $this->belongsTo(Item::class);
     }
 }
