@@ -5,13 +5,12 @@ namespace App\Http\Controllers;
 use App\Item;
 use App\ItemEffect;
 use App\Model\Inventory;
-use GeneralDrug;
 use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Validator;
 use Validator;
 
 class InventoryController extends Controller
 {
+    protected $types = [];
     /**
      * Display a listing of the resource.
      *
@@ -40,12 +39,16 @@ class InventoryController extends Controller
      */
     function useItem(Item $item)
     {
-
-        dd(useType($item->itemTypes->effect_type));
-        $itemEffect = new ItemEffect();
-        dd($itemEffect->getEffect(1)->item_id);
         $userItem = new Inventory();
-        $userItem->discardItem(auth()->user()->id, $item->id);
+        // return $userItem->getTypes();
+        dd($item->typeattribute);
+        // dd($this->typesHandling);
+        // dd(useType($item->itemTypes->effect_type));
+        // $itemEffect = new ItemEffect();
+        // dd($itemEffect->getEffect(1)->item_id);
+        // $userItem = new Inventory();
+        // $userItem->discardItem(auth()->user()->id, $item->id);
+        // suppose if a player eat a burger, by consume burger he can gain energy on temp basis like for 5 mints
     }
 
     /**
@@ -104,6 +107,17 @@ class InventoryController extends Controller
         }
 
     return $inputs;
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function applyChange(array $types)
+    {
+        return "works";
     }
 
 }

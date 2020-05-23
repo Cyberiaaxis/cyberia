@@ -3,6 +3,7 @@
 namespace App;
 
 use App\ItemType;
+use App\Model\TypeAttribute;
 use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
@@ -49,5 +50,12 @@ class Item extends Model
         return $this->itemTypes()->value('name');
     }
 
+    /**
+     * get Item Type Name
+     */
+    public function typeAttribute()
+    {
+        return $this->belongsTo(TypeAttribute::class);
+    }
 }
 

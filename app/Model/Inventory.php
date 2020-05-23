@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\ItemType;
 use Illuminate\Database\Eloquent\Model;
 use Throwable;
 
@@ -92,7 +93,24 @@ class Inventory extends Model
             report($e);
             return false;
         }
-
-
     }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    function getTypes()
+    {
+        try {
+            $itemtypes = new ItemType;
+            return $this->all();
+        } catch (Throwable $e) {
+            report($e);
+            return false;
+        }
+    }
+
 }
