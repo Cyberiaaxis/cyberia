@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Item;
 use App\ItemEffect;
+use App\ItemType;
 use App\Model\Inventory;
 use Illuminate\Http\Request;
 use Validator;
 
 class InventoryController extends Controller
 {
-    protected $types = [];
+    protected $types = ['Food', 'Drug', 'Medicine'];
+    protected $usable = false;
     /**
      * Display a listing of the resource.
      *
@@ -40,15 +42,17 @@ class InventoryController extends Controller
     function useItem(Item $item)
     {
         $userItem = new Inventory();
-        // return $userItem->getTypes();
-        dd($item->typeattribute);
-        // dd($this->typesHandling);
-        // dd(useType($item->itemTypes->effect_type));
-        // $itemEffect = new ItemEffect();
-        // dd($itemEffect->getEffect(1)->item_id);
-        // $userItem = new Inventory();
-        // $userItem->discardItem(auth()->user()->id, $item->id);
-        // suppose if a player eat a burger, by consume burger he can gain energy on temp basis like for 5 mints
+        $userItems = $userItem->getTypeAttribute($item->type_attribute_id);
+        $itemType = $userItem->getItemType($userItems->type_id);
+        $isUsable = $this->isUsable($itemType->name);
+
+        if($isUsable['usable']){
+            $userItemAttributes = $userItem->getItemAttributes($userItems->attribute_id);
+           //lol today's work
+            $this->applyChanges(['dgfd']);
+            return $userItemAttributes->getTableColumns();
+        }
+
     }
 
     /**
@@ -115,11 +119,26 @@ class InventoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function applyChange(array $types)
+    public function applyChanges(array $types)
     {
         return "works";
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function isUsable($itemType)
+    {
+
+        if (in_array($itemType, $this->types)) {
+              $this->usable =  true;
+        }
+
+     return ['usable' => $this->usable];
+    }
 }
 
 // function tradeItem()

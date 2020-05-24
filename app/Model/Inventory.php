@@ -2,8 +2,10 @@
 
 namespace App\Model;
 
+use App\Item;
 use App\ItemType;
 use Illuminate\Database\Eloquent\Model;
+
 use Throwable;
 
 class Inventory extends Model
@@ -26,7 +28,7 @@ class Inventory extends Model
             return true;
         } catch (Throwable $e) {
             report($e);
-            return false;
+            return $e->getMessage();
         }
     }
 
@@ -45,7 +47,7 @@ class Inventory extends Model
             return true;
         } catch (Throwable $e) {
             report($e);
-            return false;
+            return $e->getMessage();
         }
     }
 
@@ -58,7 +60,7 @@ class Inventory extends Model
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    function discardItem($userId, $itemId)
+    public function discardItem($userId, $itemId)
     {
         try {
             $details = ['user_id' => $userId, 'item_id' => $itemId];
@@ -71,7 +73,7 @@ class Inventory extends Model
         return $this->decrementItem($userId, $itemId);
         } catch (Throwable $e) {
             report($e);
-            return false;
+            return $e->getMessage();
         }
 
     }
@@ -83,7 +85,7 @@ class Inventory extends Model
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    function removeItem($userId, $itemId)
+    public function removeItem($userId, $itemId)
     {
         try {
             $details = ['user_id' => $userId, 'item_id' => $itemId];
@@ -91,7 +93,7 @@ class Inventory extends Model
             return true;
         } catch (Throwable $e) {
             report($e);
-            return false;
+            return $e->getMessage();
         }
     }
 
@@ -102,15 +104,104 @@ class Inventory extends Model
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    function getTypes()
+    public function getTypes()
     {
         try {
             $itemtypes = new ItemType;
             return $this->all();
         } catch (Throwable $e) {
             report($e);
-            return false;
+            return $e->getMessage();
         }
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getInventoryItems($userId)
+    {
+        try {
+            $inventory = new Inventory();
+            return $inventory->where('user_id', $userId)->get('item_id');
+        } catch (Throwable $e) {
+            report($e);
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getItem($itemId)
+    {
+        try {
+            $item = new Item();
+            return $item->find($itemId);
+        } catch (Throwable $e) {
+            report($e);
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getItemType($typeId)
+    {
+        try {
+            $itemType = new ItemType();
+            return $itemType->find($typeId);
+        } catch (Throwable $e) {
+            report($e);
+            return $e->getMessage();
+        }
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getItemAttributes($attributeId)
+    {
+        try {
+            $itemAttribute = new ItemAttribute();
+            return $itemAttribute->find($attributeId);
+        } catch (Throwable $e) {
+            report($e);
+            return $e->getMessage();
+        }
+    }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getTypeAttribute($typeAttributeId)
+    {
+        try {
+            $typeAttribute = new TypeAttribute();
+            return $typeAttribute->find($typeAttributeId);
+        } catch (Throwable $e) {
+            report($e);
+            return $e->getMessage();
+        }
+    }
 }
