@@ -15,28 +15,28 @@ class ItemEffect extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'item_id', 'damage', 'fire_rate', 'accuracy' ];
+    protected $fillable = ['id', 'effect_type', 'qty' ];
 
 
-    public function items()
-    {
-       return $this->belongsTo(Item::class);
-    }
+    // public function items()
+    // {
+    //    return $this->belongsTo(Item::class);
+    // }
 
-    public function itemTypes()
-    {
-         return $this->belongsTo(ItemType::class);
-    }
+    // public function itemTypes()
+    // {
+    //      return $this->belongsTo(ItemType::class);
+    // }
 
     // public static function getEffect($item_id)
     // {
     //     return $this->where('item_id', $item_id);
     // }
 
-    public function scopeGetEffect(Builder $query, $item_id)
-    {
-        return $query->where('item_id', $item_id)->get();
-    }
+    // public function scopeGetEffect(Builder $query, $item_id)
+    // {
+    //     return $query->where('item_id', $item_id)->get();
+    // }
 
 }
 

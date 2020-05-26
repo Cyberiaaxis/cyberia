@@ -3,7 +3,9 @@
 namespace App\Model;
 
 use App\Item;
+use App\ItemEffect;
 use App\ItemType;
+use App\UserStats;
 use Illuminate\Database\Eloquent\Model;
 
 use Throwable;
@@ -122,16 +124,15 @@ class Inventory extends Model
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getInventoryItems($userId)
+    public function getUserInventory($userId, $itemId)
     {
-        try {
-            $inventory = new Inventory();
-            return $inventory->where('user_id', $userId)->get('item_id');
+     try {
+            return  $this->where(['user_id' => $userId, 'item_id' => $itemId])->exists();
         } catch (Throwable $e) {
             report($e);
             return $e->getMessage();
         }
-    }
+}
 
     /**
      * Update the specified resource in storage.
@@ -177,11 +178,11 @@ class Inventory extends Model
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getItemAttributes($attributeId)
+    public function getWeaponAttributes($attributeId)
     {
         try {
-            $itemAttribute = new ItemAttribute();
-            return $itemAttribute->find($attributeId);
+            $weaponAttribute = new WeaponAttribute();
+            return $weaponAttribute->find($attributeId);
         } catch (Throwable $e) {
             report($e);
             return $e->getMessage();
@@ -203,5 +204,36 @@ class Inventory extends Model
             report($e);
             return $e->getMessage();
         }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getItemEffect($itemEffectId)
+    {
+        try {
+            $itemEffect = new ItemEffect();
+            return $itemEffect->find($itemEffectId);
+        } catch (Throwable $e) {
+            report($e);
+            return $e->getMessage();
+        }
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function apply($userId, $effectId)
+    {
+        $userstats = new UserStats();
+        return $userstats->where('user_id', $userId )->update([$effectId->effect_type => $effectId->qty]);
     }
 }

@@ -12,7 +12,7 @@ use Validator;
 class InventoryController extends Controller
 {
     protected $types = ['Food', 'Drug', 'Medicine'];
-    protected $usable = false;
+    protected $consumable = false;
     /**
      * Display a listing of the resource.
      *
@@ -42,15 +42,17 @@ class InventoryController extends Controller
     function useItem(Item $item)
     {
         $userItem = new Inventory();
-        $userItems = $userItem->getTypeAttribute($item->type_attribute_id);
-        $itemType = $userItem->getItemType($userItems->type_id);
+
+        if($userItem->getUserInventory(auth()->user()->id, $item->id) === false){
+            return "You don't have this item";
+        }
+
+        $typeAttribute = $userItem->getTypeAttribute($item->type_attribute_id);
+        $itemType = $userItem->getItemType($typeAttribute->type_id);
         $isUsable = $this->isUsable($itemType->name);
 
-        if($isUsable['usable']){
-            $userItemAttributes = $userItem->getItemAttributes($userItems->attribute_id);
-           //lol today's work
-            $this->applyChanges(['dgfd']);
-            return $userItemAttributes->getTableColumns();
+        if($isUsable['consumable']){
+            return  $userItem->apply(auth()->user()->id, $userItem->getItemEffect($typeAttribute->item_effect_id));
         }
 
     }
@@ -113,16 +115,6 @@ class InventoryController extends Controller
     return $inputs;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function applyChanges(array $types)
-    {
-        return "works";
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -134,10 +126,10 @@ class InventoryController extends Controller
     {
 
         if (in_array($itemType, $this->types)) {
-              $this->usable =  true;
+              $this->consumable =  true;
         }
 
-     return ['usable' => $this->usable];
+     return ['consumable' => $this->consumable];
     }
 }
 
