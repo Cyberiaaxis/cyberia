@@ -7,7 +7,7 @@ use App\ItemEffect;
 use App\ItemType;
 use App\UserStats;
 use Illuminate\Database\Eloquent\Model;
-
+use Schema;
 use Throwable;
 
 class Inventory extends Model
@@ -15,6 +15,7 @@ class Inventory extends Model
     protected $table = 'user_items';
     protected $fillable = ['user_id', 'item_id'];
     public $timestamps = false;
+    protected $slot = 'secondary_slot';
 
     /**
      * Show the form for editing the specified resource.
@@ -231,9 +232,65 @@ class Inventory extends Model
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function apply($userId, $effectId)
+    public function apply($userId, $effect)
     {
-        $userstats = new UserStats();
-        return $userstats->where('user_id', $userId )->update([$effectId->effect_type => $effectId->qty]);
+        try {
+                $userStats = new UserStats();
+                $userdetails = new UserDetail();
+                $builder = $this->getConnection()->getSchemaBuilder();
+
+                if ($builder->hasColumn($userdetails->getTable(), $effect->effect_type))
+                {
+
+                    return $userdetails->where('user_id', $userId)->update([$effect->effect_type => $effect->qty]);
+                }
+
+                if ($builder->hasColumn($userStats->getTable(), $effect->effect_type))
+                {
+
+                    return $userStats->where('user_id', $userId)->update([$effect->effect_type => $effect->qty]);
+                }
+
+        } catch (Throwable $e) {
+            report($e);
+            return $e->getMessage();
+        }
+
+    }
+
+    public function equip($request)
+    {
+        try {
+            $userSlot = new UserSlot();
+            $userItem = new UserItem();
+            if($request->primary)
+            {
+                $this->slot = 'primary_slot';
+            }
+
+            $userSlot->where('user_id', auth()->user()->id)->update([$this->slot => $request->weaponId]);
+            $userItem->where('user_id', auth()->user()->id)->where('item_id', $request->weaponId)->update(['active' => true]);
+        } catch (Throwable $e) {
+            report($e);
+            return $e->getMessage();
+        }
+    }
+
+    public function unEquip($request)
+    {
+        try {
+            $userSlot = new UserSlot();
+            $userItem = new UserItem();
+
+            if ($request->primary) {
+                $this->slot = 'primary_slot';
+            }
+
+            $userSlot->where('user_id', auth()->user()->id)->update([$this->slot => 1]);
+            $userItem->where('user_id', auth()->user()->id)->where('item_id', $request->weaponId)->update(['active' => false]);
+        } catch (Throwable $e) {
+            report($e);
+            return $e->getMessage();
+        }
     }
 }

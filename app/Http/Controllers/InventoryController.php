@@ -11,8 +11,11 @@ use Validator;
 
 class InventoryController extends Controller
 {
-    protected $types = ['Food', 'Drug', 'Medicine'];
+    protected $consumableTypes = ['food', 'drug', 'medicine'];
     protected $consumable = false;
+    protected $equipTypes = ['weapon'];
+    protected $equip = false;
+
     /**
      * Display a listing of the resource.
      *
@@ -39,20 +42,26 @@ class InventoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    function useItem(Item $item)
+    function useItem(Item $item, Request $request )
     {
         $userItem = new Inventory();
 
-        if($userItem->getUserInventory(auth()->user()->id, $item->id) === false){
-            return "You don't have this item";
-        }
+        // if($userItem->getUserInventory(auth()->user()->id, $item->id) === false){
+        //     return "You don't have this item";
+        // }
 
         $typeAttribute = $userItem->getTypeAttribute($item->type_attribute_id);
         $itemType = $userItem->getItemType($typeAttribute->type_id);
         $isUsable = $this->isUsable($itemType->name);
+        $isEquipable = $this->isEquipable($itemType->name);
 
-        if($isUsable['consumable']){
+        // dd($isEuipble);
+        if($isUsable){
             return  $userItem->apply(auth()->user()->id, $userItem->getItemEffect($typeAttribute->item_effect_id));
+        }
+
+        if($isEquipable){
+            return $userItem->equip($request);
         }
 
     }
@@ -124,13 +133,31 @@ class InventoryController extends Controller
      */
     public function isUsable($itemType)
     {
-
-        if (in_array($itemType, $this->types)) {
+        $itemType = strtolower($itemType);
+        if (in_array($itemType ,  $this->consumableTypes, true ))
+        {
               $this->consumable =  true;
         }
 
-     return ['consumable' => $this->consumable];
+    return $this->consumable;
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function isEquipable($itemType)
+    {
+        $itemType = strtolower($itemType);
+        if (in_array($itemType, $this->equipTypes, true)) {
+            $this->equip =  true;
+        }
+
+    return $this->equip;
+    }
+
 }
 
 // function tradeItem()
