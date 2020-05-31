@@ -4,7 +4,7 @@
 <style>
 
 </style>
-
+Inventory Page
 
 @endsection
 

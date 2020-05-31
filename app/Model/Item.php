@@ -57,5 +57,6 @@ class Item extends Model
     {
         return $this->belongsTo(TypeAttribute::class);
     }
+
 }
 

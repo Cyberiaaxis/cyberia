@@ -38,6 +38,9 @@ Route::group(['middleware' => ['auth']], function(){
                         // '/inventory' => 'InventoryController',
                         // '/attacks' => 'AttacksController',
                     ]);
+Route::get('job/{job}', 'JobController@join')->name('job');
+Route::get('jobs/leave', 'JobController@leave')->name('job.leave');
+Route::get('jobs/benefit', 'JobController@getJobBenefit')->name('job.benefit');
 Route::get('inventory/trade/{item}', 'InventoryController@tradeItem')->name('inventory.trade');
 Route::get('inventory/use/{item}', 'InventoryController@useItem')->name('inventory.use');
 Route::get('attacks/{defender}', 'AttacksController@attack')->name('attacks');

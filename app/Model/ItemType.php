@@ -4,6 +4,7 @@ namespace App;
 
 use App\Item;
 use Illuminate\Database\Eloquent\Model;
+use Throwable;
 
 class ItemType extends Model
 {
@@ -24,5 +25,22 @@ class ItemType extends Model
     public function items()
     {
         return $this->belongsTo(Item::class);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getItemTypes()
+    {
+        try {
+            return $this->all();
+        } catch (Throwable $e) {
+            report($e);
+            return $e->getMessage();
+        }
     }
 }

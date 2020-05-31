@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use app\Inventory;
 use App\Item;
 use App\ItemEffect;
 use App\ItemType;
-use App\Model\Inventory;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -44,6 +44,7 @@ class InventoryController extends Controller
      */
     function useItem(Item $item, Request $request )
     {
+
         $userItem = new Inventory();
 
         // if($userItem->getUserInventory(auth()->user()->id, $item->id) === false){
@@ -75,7 +76,6 @@ class InventoryController extends Controller
     public function tradeItem(Request $request)
     {
         $this->validation($request);
-        $userItem = new Inventory();
         $this->sender(auth()->id(), 1);
         $this->receiver(60, 1);
     return "Trade done";

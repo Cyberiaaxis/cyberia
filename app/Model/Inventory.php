@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Model;
+namespace App;
 
-use App\Item;
-use App\ItemEffect;
-use App\ItemType;
-use App\UserStats;
+use App\{Item, ItemEffect, ItemType, UserStats };
+use App\Model\{TypeAttribute, UserDetail, UserSlot, WeaponAttribute};
 use Illuminate\Database\Eloquent\Model;
-use Schema;
 use Throwable;
 
 class Inventory extends Model
@@ -110,7 +107,7 @@ class Inventory extends Model
     public function getTypes()
     {
         try {
-            $itemtypes = new ItemType;
+            $itemtypes = new ItemType();
             return $this->all();
         } catch (Throwable $e) {
             report($e);
@@ -262,14 +259,13 @@ class Inventory extends Model
     {
         try {
             $userSlot = new UserSlot();
-            $userItem = new UserItem();
             if($request->primary)
             {
                 $this->slot = 'primary_slot';
             }
 
             $userSlot->where('user_id', auth()->user()->id)->update([$this->slot => $request->weaponId]);
-            $userItem->where('user_id', auth()->user()->id)->where('item_id', $request->weaponId)->update(['active' => true]);
+            $this->where('user_id', auth()->user()->id)->where('item_id', $request->weaponId)->update(['active' => true]);
         } catch (Throwable $e) {
             report($e);
             return $e->getMessage();
@@ -280,14 +276,13 @@ class Inventory extends Model
     {
         try {
             $userSlot = new UserSlot();
-            $userItem = new UserItem();
 
             if ($request->primary) {
                 $this->slot = 'primary_slot';
             }
 
             $userSlot->where('user_id', auth()->user()->id)->update([$this->slot => 1]);
-            $userItem->where('user_id', auth()->user()->id)->where('item_id', $request->weaponId)->update(['active' => false]);
+            $this->where('user_id', auth()->user()->id)->where('item_id', $request->weaponId)->update(['active' => false]);
         } catch (Throwable $e) {
             report($e);
             return $e->getMessage();
