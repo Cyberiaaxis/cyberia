@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\ItemResource;
-use App\{Item, ItemCategory, ItemType};
+use App\Model\{Item, ItemCategory, ItemType};
 use DB;
 
 
@@ -50,13 +50,13 @@ class ItemsController extends Controller
              'name' => 'required|unique:items,name,itemCategoryId'. $request->itemcategory, 'itemTypeId'. $request->itemtype,
             'description' => 'required'
         ]);
-        $item = Item::create([  
+        $item = Item::create([
                             'itemCategoryId' => $request->itemcategory,
                             'itemTypeId' => $request->itemtype,
-                            'name' => $request->name,  
+                            'name' => $request->name,
                             'description' => $request->description,
-                            'buyPrice' => $request->buyPrice,  
-                            'sellPrice'=> $request->sellPrice, 
+                            'buyPrice' => $request->buyPrice,
+                            'sellPrice'=> $request->sellPrice,
                             ]);
     return response()->json(['success' => true, 'msg' => 'Category has been created successfully','item' => $item]);
     }

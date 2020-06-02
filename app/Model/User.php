@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use App\Model\{AttackRecord, Award, Course, Medal, Reward, UserDetail, UserReward, UserSlot};
 use App\Models\{Post};

@@ -47,7 +47,7 @@
             <li class="c-sidebar-nav-title m-0">Information</li>
             <li class="c-sidebar-nav-item">
                  <!-- https://www.php.net/manual/en/numberformatter.formatcurrency.php -->
-                   Money :  {{ auth()->user()->userdetails->money }} <br>
+                   Money :  {{ auth()->user()->userdetails()->toSql() }} <br>
                    Point :  {{ auth()->user()->userdetails->points }}
             </li>
             <li class="c-sidebar-nav-title m-0">Menu</li>

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Houses;
+// use App\Model\House;
+use App\Model\Houses;
 use Illuminate\Http\Request;
 
 class HousesController extends Controller
@@ -69,7 +70,7 @@ class HousesController extends Controller
      */
     public function update(Request $request, Houses $houses)
     {
-        //
+        new House()
     }
 
     /**

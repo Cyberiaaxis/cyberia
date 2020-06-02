@@ -14,8 +14,10 @@ class UserDetail extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'hospital', 'jail'
+        'user_id', 'jail', 'money',  'hospital',  'points', 'rates', 'rank_id', 'level_id', 'location_id', 'gang_id',  'active_course', 'course_started','job'
     ];
+
+
 
     public function location()
     {

@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Course;
-use App\Model\UserDetail;
-use App\User;
+use App\Model\{Course, UserDetail, User};
 use Illuminate\Http\Request;
 
 class CoursesController extends Controller

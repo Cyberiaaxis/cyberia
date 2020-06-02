@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use app\Inventory;
-use App\Item;
-use App\ItemEffect;
-use App\ItemType;
+use app\Model\{Inventory, Item, ItemEffect, ItemType};
 use Illuminate\Http\Request;
 use Validator;
 

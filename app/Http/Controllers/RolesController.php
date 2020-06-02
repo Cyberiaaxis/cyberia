@@ -3,8 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\RoleResource;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\{Role, Permission};
 
 class RolesController extends Controller
 {
@@ -44,8 +43,8 @@ class RolesController extends Controller
         $request->validate([
             'name' => ['required','unique:roles,name'],  'description' => ['required'],  'status' => ['required','integer']
         ]);
-        $role = Role::create([  'name' => $request->name,  
-                                'description' => $request->description,  
+        $role = Role::create([  'name' => $request->name,
+                                'description' => $request->description,
                                 'status' => $request->status,
                                 'updated_at' => now(),
                                 'created_at' => now()

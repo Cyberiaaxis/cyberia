@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\ItemCategoryResource;
-use App\ItemCategory;
+use App\Model\ItemCategory;
 use DB;
 
 class ItemCategoriesController extends Controller
@@ -48,8 +48,8 @@ class ItemCategoriesController extends Controller
         $request->validate([
             'name' => ['required','unique:categories,name'],  'description' => ['required']
         ]);
-        $itemCategory = ItemCategory::create([  'name' => $request->name,  
-                                'description' => $request->description,  
+        $itemCategory = ItemCategory::create([  'name' => $request->name,
+                                'description' => $request->description,
                                 'updated_at' => now(),
                                 'created_at' => now()
                             ]);

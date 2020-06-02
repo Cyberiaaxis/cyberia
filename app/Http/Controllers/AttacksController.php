@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\{ Attack, ItemEffect, User};
-use App\Model\UserSlot;
+use App\Model\{ Attack, ItemEffect, User, UserSlot};
 use Auth;
 use Illuminate\Http\Request;
 

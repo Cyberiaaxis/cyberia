@@ -25,7 +25,7 @@ Route::view('/home','player.index')->middleware('auth');
 // Route::view('/crime','player.crime')->middleware('auth');
 // Route::get('crime', 'CrimeController@index')->middleware('auth');
 
-Route::group(['middleware' => ['auth']], function(){
+Route::group(['middleware' => ['auth', 'verified']], function(){
     Route::resources([
                         '/crime'=>'CrimeController',
                         '/player' => 'PlayerController',

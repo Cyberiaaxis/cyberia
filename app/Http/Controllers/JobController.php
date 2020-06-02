@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\{ItemType, Inventory};
-use App\Model\ {Job, UserDetail };
+use App\Model\ {Job, UserDetail,ItemType, Inventory };
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 

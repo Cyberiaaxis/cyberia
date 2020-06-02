@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use App\{Item, ItemEffect, ItemType, UserStats };
 use App\Model\{TypeAttribute, UserDetail, UserSlot, WeaponAttribute};

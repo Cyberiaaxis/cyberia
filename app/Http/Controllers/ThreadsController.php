@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Forum;
-use App\Models\Thread;
+use App\Model\{Forum, Thread};
 use Illuminate\Http\Request;
 
 class ThreadsController extends Controller

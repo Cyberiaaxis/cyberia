@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Forum;
+use App\model\Forum;
 use Illuminate\Http\Request;
 
 class ForumsController extends Controller

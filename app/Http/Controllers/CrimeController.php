@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use DB;
-use App\{Crime, UserStats};
-use App\model\CrimeMessage;
-use App\Model\UserCrime;
+use App\Model\{Crime, UserStats, CrimeMessage, UserCrime};
 use Illuminate\Http\Request;
 
 class CrimeController extends Controller
