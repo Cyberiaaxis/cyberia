@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Model\{UserDetail, User, UserStats};
+use App\Model\{User, UserDetail, UserStats};
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Hash, Validator};
@@ -33,6 +33,12 @@ class RegisterController extends Controller
      */
     protected $redirectTo = '/home';
 
+    /**
+     * Where to redirect users after registration.
+     *
+     * @var string
+     */
+    protected $user = NULL;
 
     /**
      * Create a new controller instance.
@@ -73,77 +79,19 @@ class RegisterController extends Controller
         $user->getConnection()->beginTransaction();
 
         try {
-            $addedUser  = $this->addUser($request);
-            $this->addUserDetails($addedUser->id);
-            $this->addUserStats($addedUser->id);
+            $this->user  = $user->addUser($request);
+            $userDetail = new UserDetail();
+            $userDetail->addUserDetails($this->user->id);
+            $userStats = new UserStats();
+            $userStats->addUserStats($this->user->id);
+
             $user->getConnection()->commit();
         } catch (Throwable $e) {
             $user->getConnection()->rollback();
+            report($e);
             return abort(404);
         }
-    return $addedUser;
-    }
-
-    /**
-     * add a new user instance after a valid registration.
-     *
-     * @param  array  $request
-     * @return \App\User
-     */
-    protected function addUser($request){
-        $user = new User();
-        return $user->create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
-        ]);
-    }
-
-    /**
-     * Create a new userDetails instance after a valid registration.
-     *
-     * @param  array  $userIda
-     * @return \App\User
-     */
-    protected function addUserDetails($userId)
-    {
-        $userdetail = new UserDetail();
-        return $userdetail->create([
-            'user_id' => $userId,
-            'jail' => 0,
-            'money' => 100,
-            'hospital' => 0,
-            'points' => 10,
-            'rank_id' => 1,
-            'level_id' => 1,
-            'location_id'  => 1,
-        ]);
-    }
-
-    /**
-     * Create a new userstats instance after a valid registration.
-     *
-     * @param  $userId
-     * @return \App\User
-     */
-    protected function addUserStats($userId)
-    {
-        $userstats = new UserStats();
-        return $userstats->create([
-            'user_id' => $userId,
-            'strength' => 100,
-            'defense' => 100,
-            'agility' => 100,
-            'endurance' => 100,
-            'hp' => 100,
-            'max_hp' => 100,
-            'energy' => 10,
-            'max_energy' => 10,
-            'nerve' => 10,
-            'max_nerve' => 10,
-            'will' => 100,
-            'max_will' => 100,
-        ]);
+    return $this->user;
     }
 
     /**

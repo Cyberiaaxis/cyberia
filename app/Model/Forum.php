@@ -3,7 +3,7 @@
 namespace App\Model;
 
 
-use App\Models\Thread;
+use App\Model\Thread;
 use Illuminate\Database\Eloquent\Model;
 
 class Forum extends Model

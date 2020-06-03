@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\Model\{AttackRecord, Award, Course, Medal, Reward, UserDetail, UserReward, UserSlot};
 use App\Models\{Post};
+use Hash;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -107,5 +108,23 @@ class User extends Authenticatable implements MustVerifyEmail
     {
          return $this->course()->where('course_id',$course_id)->exists();
     }
+
+    /**
+     * add a new user instance after a valid registration.
+     *
+     * @param  array  $request
+     * @return \App\User
+     */
+    public function addUser($request)
+    {
+        return $this->create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+        ]);
+    }
+
+
+
 }
 

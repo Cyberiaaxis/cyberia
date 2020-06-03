@@ -38,4 +38,28 @@ class Crime extends Model
     {
         return $query->where('crime_id', $crime);
     }
+
+    /**
+     * Scope a query to only include crimes of a given type.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  mixed  $type
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function crimesList($locationId, $userLevel)
+    {
+        return $this->where('location_id', $locationId)->where('level', $userLevel)->whereNull('parent_id')->get();
+    }
+
+    /**
+     * Scope a query to only include crimes of a given type.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  mixed  $type
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function getNerve($crimeId)
+    {
+        return $this->where('id', $crimeId)->value('nerve');
+    }
 }

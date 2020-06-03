@@ -53,4 +53,26 @@ class UserDetail extends Model
     {
         return $this->belongsTo(Course::class, 'active_course');
     }
+
+
+    /**
+     * Create a new userDetails instance after a valid registration.
+     *
+     * @param  array  $userIda
+     * @return \App\User
+     */
+    public function addUserDetails($userId)
+    {
+        return $this->create([
+            'user_id' => $userId,
+            'jail' => 0,
+            'money' => 100,
+            'hospital' => 0,
+            'points' => 10,
+            'rank_id' => 1,
+            'level_id' => 1,
+            'location_id'  => 1,
+
+        ]);
+    }
 }
