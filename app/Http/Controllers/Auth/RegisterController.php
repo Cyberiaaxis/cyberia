@@ -89,7 +89,8 @@ class RegisterController extends Controller
         } catch (Throwable $e) {
             $user->getConnection()->rollback();
             report($e);
-            return abort(404);
+            $e->getMessage();
+            // return abort(404);
         }
     return $this->user;
     }

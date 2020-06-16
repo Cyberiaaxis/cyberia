@@ -4,11 +4,20 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\Model\{Crime, UserStats, CrimeMessage, UserCrime};
+use Dotenv\Regex\Success;
 use Illuminate\Http\Request;
 
 class CrimeController extends Controller
 {
     protected $crime;
+
+    protected $mode = ['easy', 'medium', 'hard'];
+    protected $chances = [
+        'easy' => ['success' => 70, 'fail' => 15, 'missed' => 15],
+        'medium' => ['success' => 50, 'fail' => 20, 'missed' => 30],
+        'hard' => ['success' => 25, 'fail' => 50, 'missed' => 25]
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -53,7 +62,8 @@ class CrimeController extends Controller
             return "You don't have enough nerve";
         }
 
-        $successRate = rand (5 , 50);
+        // return $this->getDifficulty($request->crime_id);
+        $successRate = mt_rand (5 , 50);
         $statusKey = 'fail';
         $statusType = 'bg-danger';
 
@@ -61,7 +71,7 @@ class CrimeController extends Controller
         if($successRate < 13 && $successRate > 10  ){
             $statusKey = 'success';
             $statusType = 'bg-success';
-        } elseif ($successRate < 10 && $successRate > 5) {
+        } else if ($successRate < 10 && $successRate > 5) {
             $statusKey = 'missed';
             $statusType = 'bg-warning';
         }
@@ -101,6 +111,35 @@ class CrimeController extends Controller
     return response()->json([ 'html' => view('ajax.crime', $data)->render() ]);
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Crime  $crime;
+     * @return \Illuminate\Http\Response
+     */
+    public function getDifficulty($crimeId)
+    {
+        $crime = new Crime();
+
+        // echo (($iq * mt_rand($min, $max)) / $nerve) + ($level / 4) ?? 0;
+// <newbie-chan> Player damage formula:  (attackers_attack + attackers_level) - (defenders_defense + difficulty_variable) + (random_number + (attackers_luck))
+        // dd($this->mode);
+        // $difficulty = array_rand($this->mode, 1);
+
+        // return current($this->mode[$difficulty]);
+
+
+        // $chance = mt_rand(1,100);
+
+        // if($chance <  && $chance ){
+        //     $color = 'bg-success';
+        // } else if ($chance   && $chance ) {
+        //     $color = 'bg-warning';
+        // } else if ($chance   && $chance ) {
+        //     $color = 'bg-danger';
+        // }
+
+    }
     /**
      * Display the specified resource.
      *

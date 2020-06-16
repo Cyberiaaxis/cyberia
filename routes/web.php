@@ -20,7 +20,7 @@ $route->view('/home','player.index')->middleware('auth');
 
 // $route->group(
 //     ['middleware' => ['auth', 'verified']],
-$route->group(['middleware' => ['auth']], function($route){
+$route->group(['middleware' => ['verified']], function($route){
         $route->resources([
                         '/crime'=>'CrimeController',
                         '/player' => 'PlayerController',

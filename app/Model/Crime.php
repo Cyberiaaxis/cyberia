@@ -23,9 +23,9 @@ class Crime extends Model
      * @param  mixed  $type
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeSubCrimes($query, $crime)
+    public function scopeSubCrimes($query)
     {
-        return $query->where('parent_id', $crime);
+        return $query->where('parent_id', $this->id);
     }
     /**
      * Scope a query to only include crimes of a given type.
@@ -62,4 +62,18 @@ class Crime extends Model
     {
         return $this->where('id', $crimeId)->value('nerve');
     }
+
+    /**
+     * Scope a query to only include crimes of a given type.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  mixed  $type
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function subCrimeCount($id)
+    {
+        return $this->where('parent_id', $id)->toSql();
+    }
+
+
 }
