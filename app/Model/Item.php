@@ -2,8 +2,7 @@
 
 namespace App\Model;
 
-use App\ItemType;
-use App\Model\TypeAttribute;
+use App\Model\{ItemType, TypeAttribute};
 use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model

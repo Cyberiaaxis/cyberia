@@ -2,7 +2,6 @@
 
 namespace App\Model;
 
-use App\Item;
 use Illuminate\Database\Eloquent\Model;
 use Throwable;
 
