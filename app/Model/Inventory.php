@@ -2,8 +2,8 @@
 
 namespace App\Model;
 
-use App\{Item, ItemEffect, ItemType, UserStats };
-use App\Model\{TypeAttribute, UserDetail, UserSlot, WeaponAttribute};
+use App\{Item, ItemEffect,  UserStats };
+use App\Model\{TypeAttribute, UserDetail, UserSlot, WeaponAttribute, ItemType};
 use Illuminate\Database\Eloquent\Model;
 use Throwable;
 
@@ -67,7 +67,7 @@ class Inventory extends Model
 
             if ($this->where($details)->where('quantity', '<=', 0)->exists())
             {
-                return $this->removeItemtrue($userId, $itemId);
+                return $this->removeItem($userId, $itemId);
             }
 
         return $this->decrementItem($userId, $itemId);

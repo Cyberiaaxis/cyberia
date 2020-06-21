@@ -30,7 +30,7 @@ $route->group(['middleware' => ['verified']], function($route){
                         '/forums' => 'ForumsController',
                         '/course' => 'CoursesController',
                         '/forums/{forum}/thread' => 'ThreadsController',
-                        '/market' => 'ShopsController',
+                        // '/market' => 'ShopsController',
                         // '/inventory' => 'InventoryController',
                         // '/attacks' => 'AttacksController',
                     ]);
@@ -40,6 +40,7 @@ $route->group(['middleware' => ['verified']], function($route){
         $route->get('inventory/trade/{item}', 'InventoryController@tradeItem')->name('inventory.trade');
         $route->get('inventory/use/{item}', 'InventoryController@useItem')->name('inventory.use');
         $route->get('attacks/{defender}', 'AttacksController@attack')->name('attacks');
+        $route->get('shops/{shop}', 'ShopsController@shopInventory')->name('shops');
         // $route->get('market', 'ShopsController@shops')->name('market');
         // $route->get('itemmarket', 'CityController@itemsMarket')->name('itemmarket');
 });

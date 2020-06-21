@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\City;
 use Illuminate\Database\Eloquent\Model;
+use Throwable;
 
 class UserDetail extends Model
 {
@@ -74,5 +75,23 @@ class UserDetail extends Model
             'location_id'  => 1,
 
         ]);
+    }
+
+    /**
+     * Create a new userDetails instance after a valid registration.
+     *
+     * @param  array  $userIda
+     * @return \App\User
+     */
+    public function decrementMoney($userId, $money)
+    {
+        try {
+            $details = ['user_id' => $userId];
+            return  $this->where($details)->decrement('money', $money);
+        } catch (Throwable $e) {
+            $e->getMessage();
+            report($e);
+
+        }
     }
 }
