@@ -94,4 +94,21 @@ class UserDetail extends Model
 
         }
     }
+
+    /**
+     * Create a new userDetails instance after a valid registration.
+     *
+     * @param  array  $userIda
+     * @return \App\User
+     */
+    public function changeTravelStatus($userId, $money)
+    {
+        try {
+            $details = ['user_id' => $userId];
+            return  $this->where($details)->decrement('money', $money);
+        } catch (Throwable $e) {
+            $e->getMessage();
+            report($e);
+        }
+    }
 }

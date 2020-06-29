@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Inventory;
-use App\Model\ItemType;
-use App\Model\Shop;
-use App\Model\UserDetail;
+use App\Model\{Inventory, Shop, UserDetail};
 use Illuminate\Http\Request;
 
 class ShopsController extends Controller
@@ -40,8 +37,8 @@ class ShopsController extends Controller
      */
     public function shopInventory(Shop $shop)
     {
-        $shoptiems = $shop->getShopItems($shop->item_type);
-    return ['shopdetails' => $shop, 'shopItems' => $shoptiems];
+        $shopItems = $shop->getShopItems($shop->item_type);
+    return ['shopDetails' => $shop, 'shopItems' => $shopItems];
     }
 
     /**
@@ -51,7 +48,8 @@ class ShopsController extends Controller
      */
     public function buyItem(Request $request)
     {
-        if($this->canBuy($request) === false) {
+        if($this->canBuy($request) === false)
+        {
             return $this->message;
         }
 
@@ -69,12 +67,14 @@ class ShopsController extends Controller
      */
     public function canBuy($request)
     {
-        if (auth()->user()->userdetails->money < $request->money) {
+        if (auth()->user()->userdetails->money < $request->money)
+        {
             $this->message =  "You dont have enough money to buy this item";
             return false;
         }
 
-        if (auth()->user()->userdetails->location_id === $request->location_id) {
+        if (auth()->user()->userdetails->location_id === $request->location_id)
+        {
             $this->message =  "You are not on same location as per required";
             return false;
         }

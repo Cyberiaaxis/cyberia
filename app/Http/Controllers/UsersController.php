@@ -7,6 +7,9 @@ use Hash;
 use Carbon\Carbon;
 use App\{ User, house};
 use App\Http\Resources\UserResource;
+use App\Model\TravelRoute;
+use App\Model\UserTravel;
+use Auth;
 
 class UsersController extends Controller
 {
@@ -134,6 +137,22 @@ class UsersController extends Controller
     {
 
     }
+
+    /**
+     * Remove the specified resource from storage.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function addTravel($destination)
+    {
+        // $travelroute = new TravelRoute();
+        // $travelroute->getTravelRoute($origin, $destination);
+        $userTravel = new UserTravel();
+        $userTravel->addTravel(auth()->user()->id, $destination);
+
+
+    }
+
 
 
 }

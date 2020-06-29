@@ -5,21 +5,15 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use Throwable;
 
-class Country extends Model
+class Area extends Model
 {
-
-    public function crimes()
-    {
-        return $this->hasMany(Crime::class);
-    }
-
     /**
      * Create a new userDetails instance after a valid registration.
      *
      * @param  array  $userIda
      * @return \App\User
      */
-    public function getCountryById($id)
+    public function getAreaById($id)
     {
         try {
             return $this->find($id);
@@ -27,5 +21,5 @@ class Country extends Model
             $e->getMessage();
             report($e);
         }
-    }
+    }    //
 }
