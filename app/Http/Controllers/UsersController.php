@@ -8,8 +8,11 @@ use Carbon\Carbon;
 use App\{ User, house};
 use App\Http\Resources\UserResource;
 use App\Model\TravelRoute;
+use App\Model\UserDetail;
 use App\Model\UserTravel;
 use Auth;
+use DateTime;
+use DateTimeZone;
 
 class UsersController extends Controller
 {
@@ -143,16 +146,72 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function addTravel($destination)
+    public function addTravel($travelroute)
     {
-        // $travelroute = new TravelRoute();
-        // $travelroute->getTravelRoute($origin, $destination);
         $userTravel = new UserTravel();
-        $userTravel->addTravel(auth()->user()->id, $destination);
-
-
+        $userTravel->addUserTravel(auth()->user()->id, $travelroute->destination);
+        $userDetails = new UserDetail();
+        $userDetails->changeTravelStatus(auth()->user()->id, $travelroute->destination);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function startTravel(TravelRoute $travelroute)
+    {
+        $userDetails = new UserDetail();
 
+        if($userDetails->getLocation(auth()->user()->id) === $travelroute->destination)
+        {
+            return "You already on destination";
+        }
+
+        $newTime = $this->addTravelTime($travelroute->duration);
+    return $userDetails->changeTravelStatus(auth()->user()->id, $travelroute->destination , $newTime);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function endTravel(TravelRoute $travelroute)
+    {
+        $carbon = new Carbon();
+        $userDetails = new UserDetail();
+        $this->verifyReaminTravelTime($userDetails, $carbon);
+        $this->addTravel($travelroute);
+    return $userDetails->changeTravelStatus(auth()->user()->id, $travelroute->destination);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function addTravelTime($duration)
+    {
+        $carbon = new Carbon();
+        return $carbon->now();
+    return $carbon->now()->addMinutes($duration);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function verifyReaminTravelTime($userDetails, $carbon)
+    {
+        if ($userDetails->getReaminTravelTime(auth()->user()->id) > $carbon->now()) {
+            return true;
+        }
+    }
 
 }
+
+
+
+

@@ -25,9 +25,8 @@ class UserTravel extends Model
      * @param  \App\Crime  $crime
      * @return \Illuminate\Http\Response
      */
-    public function addTravel(int $user, int $destination)
+    public function addUserTravel(int $user, int $destination)
     {
-        $data = ['user_id' => $user, 'location' => $destination];
-    return $this->updateOrCreate($data)->increment('travelled');
+        return $this->updateOrCreate(['user_id' => $user, 'location' => $destination])->increment('travelled', 1);
     }
 }

@@ -50,8 +50,7 @@ class UserStats extends Model
      */
     public function decrementNerve($userId, $userNerve)
     {
-        $this->where('user_id', $userId)->decrement('nerve', $userNerve);
-    return true;
+        return $this->where('user_id', $userId)->decrement('nerve', $userNerve);
     }
 
 }

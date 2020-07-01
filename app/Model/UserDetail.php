@@ -101,14 +101,46 @@ class UserDetail extends Model
      * @param  array  $userIda
      * @return \App\User
      */
-    public function changeTravelStatus($userId, $money)
+    public function changeTravelStatus(int $userId, int $location, string $startedAt = NULL)
     {
         try {
-            $details = ['user_id' => $userId];
-            return  $this->where($details)->decrement('money', $money);
+            return  $this->where(['user_id' => $userId])->update(['location_id' => $location, 'travel_started' => $startedAt ]);
         } catch (Throwable $e) {
             $e->getMessage();
             report($e);
         }
     }
+
+    /**
+     * Create a new userDetails instance after a valid registration.
+     *
+     * @param  array  $userIda
+     * @return \App\User
+     */
+    public function getLocation(int $userId)
+    {
+        try {
+            return  $this->where(['user_id' => $userId])->value('location_id');
+        } catch (Throwable $e) {
+            $e->getMessage();
+            report($e);
+        }
+    }
+
+    /**
+     * Create a new userDetails instance after a valid registration.
+     *
+     * @param  array  $userIda
+     * @return \App\User
+     */
+    public function getReaminTravelTime(int $userId)
+    {
+        try {
+            return  $this->where(['user_id' => $userId])->value('travel_started');
+        } catch (Throwable $e) {
+            $e->getMessage();
+            report($e);
+        }
+    }
+
 }

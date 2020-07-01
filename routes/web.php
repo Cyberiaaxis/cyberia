@@ -42,7 +42,8 @@ $route->group(['middleware' => ['verified']], function($route){
         $route->get('attacks/{defender}', 'AttacksController@attack')->name('attacks');
         $route->get('shops/{shop}', 'ShopsController@shopInventory')->name('shops');
         $route->get('travel', 'TravelRoutesController@travelRoutes')->name('travel');
-        $route->get('addtravel/{Id}', 'UsersController@addTravel')->name('addtravel');
+        $route->get('starttravel/{travelroute}', 'UsersController@startTravel')->name('starttravel');
+        $route->get('endtravel/{travelroute}', 'UsersController@endTravel')->name('endtravel');
         // $route->get('market', 'ShopsController@shops')->name('market');
         // $route->get('itemmarket', 'CityController@itemsMarket')->name('itemmarket');
 });
