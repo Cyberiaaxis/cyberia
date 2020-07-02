@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Model\RealEstate;
 use App\Model\UserDetail;
 use App\Model\UserRealEstate;
+use App\Model\UserStats;
+use Exception;
 use Illuminate\Http\Request;
 
 class RealEstateController extends Controller
@@ -104,8 +106,17 @@ class RealEstateController extends Controller
      */
     public function activeRealEstate(RealEstate $realEstate)
     {
+        $userRealEstate = new UserRealEstate();
+
+        if($userRealEstate->isUserRealEstate(auth()->user()->id, $realEstate->id) === false)
+        {
+            throw new Exception("you don't have this property");
+        }
+
         $userDetails = new UserDetail();
         $userDetails->setActiveEstate(auth()->user()->id, $realEstate->id);
+        $userStats = new UserStats();
+        $userStats->changeWill(auth()->user()->id, $realEstate->will);
     }
 
 

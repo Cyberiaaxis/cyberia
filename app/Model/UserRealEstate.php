@@ -28,4 +28,14 @@ class UserRealEstate extends Model
         return $this->updateOrCreate(['user_id' => $user, 'real_estate_id' => $realEstateId])->increment('total', 1);
     }
 
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    public function isUserRealEstate(int $user, int $realEstateId)
+    {
+        return $this->where(['user_id' => $user, 'real_estate_id' => $realEstateId])->exists();
+    }
+
 }

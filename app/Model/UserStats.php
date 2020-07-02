@@ -53,5 +53,16 @@ class UserStats extends Model
         return $this->where('user_id', $userId)->decrement('nerve', $userNerve);
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function changeWill($userId, $will)
+    {
+        return $this->where('user_id', $userId)->update(['max_will'=> $will]);
+    }
+
 }
 
