@@ -44,6 +44,8 @@ $route->group(['middleware' => ['verified']], function($route){
         $route->get('travel', 'TravelRoutesController@travelRoutes')->name('travel');
         $route->get('starttravel/{travelroute}', 'UsersController@startTravel')->name('starttravel');
         $route->get('endtravel/{travelroute}', 'UsersController@endTravel')->name('endtravel');
+        $route->get('realestatebuy/{realEstate}', 'RealEstateController@buy')->name('realestatebuy');
+        $route->get('realestateactive/{realEstate}', 'RealEstateController@activeRealEstate')->name('realestateactive');
         // $route->get('market', 'ShopsController@shops')->name('market');
         // $route->get('itemmarket', 'CityController@itemsMarket')->name('itemmarket');
 });

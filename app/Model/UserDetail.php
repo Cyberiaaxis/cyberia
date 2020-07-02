@@ -143,4 +143,19 @@ class UserDetail extends Model
         }
     }
 
+    /**
+     * Create a new userDetails instance after a valid registration.
+     *
+     * @param  array  $userIda
+     * @return \App\User
+     */
+    public function setActiveEstate(int $userId, int $realEstateId)
+    {
+        try {
+            return  $this->where(['user_id' => $userId])->update(['realestate' => $realEstateId]);
+        } catch (Throwable $e) {
+            $e->getMessage();
+            report($e);
+        }
+    }
 }

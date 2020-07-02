@@ -165,7 +165,7 @@ class UsersController extends Controller
 
         if($userDetails->getLocation(auth()->user()->id) === $travelroute->destination)
         {
-            return "You already on destination";
+            return "You are already on destination";
         }
 
         $newTime = $this->addTravelTime($travelroute->duration);
