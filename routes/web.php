@@ -46,7 +46,10 @@ $route->group(['middleware' => ['verified']], function($route){
         $route->get('endtravel/{travelroute}', 'UsersController@endTravel')->name('endtravel');
         $route->get('realestatebuy/{realEstate}', 'RealEstateController@buy')->name('realestatebuy');
         $route->get('realestateactive/{realEstate}', 'RealEstateController@activeRealEstate')->name('realestateactive');
-        // $route->get('market', 'ShopsController@shops')->name('market');
+        $route->get('heal/{userId}', 'UsersController@heal')->name('heal');
+        $route->get('bust/{userDetails}', 'UsersController@bust')->name('bust');
+        $route->get('attack/{userId}', 'AttacksController@attackPerform')->name('attack')->middleware('checkStatus');
+
         // $route->get('itemmarket', 'CityController@itemsMarket')->name('itemmarket');
 });
     $route->group(['prefix' => 'staff', 'middleware' => ['auth']], function($route){

@@ -19,6 +19,11 @@ class UserDetail extends Model
     ];
 
 
+    public function getRouteKeyName()
+    {
+        return 'user_id';
+    }
+
 
     public function location()
     {
@@ -158,4 +163,55 @@ class UserDetail extends Model
             report($e);
         }
     }
+
+
+    /**
+     * Create a new userDetails instance after a valid registration.
+     *
+     * @param  array  $userIda
+     * @return \App\User
+     */
+    public function jailTime(int $bustingId)
+    {
+        try {
+            return $this->where(['user_id' => $bustingId])->value('jail');
+        } catch (Throwable $e) {
+            $e->getMessage();
+            report($e);
+        }
+    }
+
+    /**
+     * Create a new userDetails instance after a valid registration.
+     *
+     * @param  array  $userIda
+     * @return \App\User
+     */
+    public function busted(int $busterId)
+    {
+        try {
+            return  $this->where(['user_id' => $busterId])->update(['jail' => Null]);
+        } catch (Throwable $e) {
+            $e->getMessage();
+            report($e);
+        }
+    }
+
+    /**
+     * Create a new userDetails instance after a valid registration.
+     *
+     * @param  array  $userIda
+     * @return \App\User
+     */
+    public function failbuster(int $bustedId, string $datetime)
+    {
+        try {
+            return  $this->where(['user_id' => $bustedId])->update(['jail', $datetime]);
+        } catch (Throwable $e) {
+            $e->getMessage();
+            report($e);
+        }
+    }
+
 }
+// ->decrement(['bust_experince', $experince])

@@ -5,17 +5,21 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\{Role, Permission};
 use Hash;
 use Carbon\Carbon;
-use App\{ User, house};
 use App\Http\Resources\UserResource;
-use App\Model\TravelRoute;
-use App\Model\UserDetail;
-use App\Model\UserTravel;
-use Auth;
-use DateTime;
-use DateTimeZone;
+use App\Model\{UserTravel, TravelRoute, UserDetail, User, UserStats};
+use Exception;
+
+// use Auth;
+// use DateTime;
+// use DateTimeZone;
+// use Illuminate\Foundation\Auth\User as AuthUser;
+// use Mockery\Expectation;
 
 class UsersController extends Controller
 {
+
+    private $nerveRequired;
+
     /**
      * Instantiate a new UserController instance.
      */
@@ -210,8 +214,121 @@ class UsersController extends Controller
         }
     }
 
+    /**
+     * Remove the specified resource from storage.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function bust(UserDetail $userDetails)
+    {
+        $carbon = new Carbon();
+        $user = new User();
+        $userStats = new UserStats();
+        $this->canBust($userStats, $userDetails);
+        $addDuration = $carbon->now()->addMinutes(mt_rand(0,60));
+    return  $this->chanceBust($userDetails, $user, $userStats, $carbon, $experince = 100);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function chanceBust($userDetails, $user, $userStats, $addDuration, $experince)
+    {
+        $randomChance = mt_rand(0, 100);
+
+        if ($randomChance >= 0 && $randomChance <= 25)
+        {
+            $this->successBust($userDetails, $userStats, $experince);
+        return "You bust successfully ". $user->getUserNameById($userDetails->user_id);
+        }
+
+        if ($randomChance >= 26 && $randomChance <= 50)
+        {
+            $this->failBust($userDetails, $userStats, $experince, $addDuration);
+        return "You failed in bust to " . $user->getUserNameById($userDetails->user_id);
+        }
+
+    return "You missed in bust to " . $user->getUserNameById($userDetails->user_id);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function failBust($userDetails, $userStats, $experince, $datetime)
+    {
+        $userDetails->failbuster(auth()->user()->id, $datetime);
+        $userStats->decrementBustExperince(auth()->user()->id, $experince);
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function successBust($userDetails, $userStats, $experince)
+    {
+        $userDetails->busted($userDetails->user_id);
+        $userStats->incrementBustExperince(auth()->user()->id, $experince);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function canBust($userStats, $userDetails)
+    {
+        $haveNerve = $userStats->haveNerve(auth()->user()->id);
+        $requireNerve = (int) round($userStats->maxNerve(auth()->user()->id) / 2);
+
+        if ($userDetails->jailTime($userDetails->user_id) === NULL)
+        {
+            throw new Exception("You can't bust a non jailed player");
+        }
+
+        if($haveNerve < $requireNerve)
+        {
+            throw new Exception("You don't have enough nerve to bust any");
+        }
+
+    return $userStats->decrementNerve(auth()->user()->id, $requireNerve);
+    }
+
+    public function heal(UserDetail $userDetails)
+    {
+        $carbon = new Carbon();
+        $user = new User();
+        $userStats = new UserStats();
+        $this->canHeal($userStats, $userDetails);
+        $addDuration = $carbon->now()->addMinutes(mt_rand(0, 60));
+        return  $this->chanceBust($userDetails, $user, $userStats, $carbon, $experince = 100);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function canHeal($userStats, $userDetails)
+    {
+        $haveNerve = $userStats->haveNerve(auth()->user()->id);
+        $requireNerve = (int) round($userStats->maxNerve(auth()->user()->id) / 2);
+
+        if ($userDetails->hospitalTime($userDetails->user_id) === NULL) {
+            throw new Exception("You can't bust a non jailed player");
+        }
+
+        //other conditions after get more information
+        // if ($haveNerve < $requireNerve) {
+        //     throw new Exception("You don't have enough nerve to bust any");
+        // }
+
+        // return $userStats->decrementNerve(auth()->user()->id, $requireNerve);
+    }
 }
-
-
-
 

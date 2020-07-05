@@ -124,6 +124,17 @@ class User extends Authenticatable implements MustVerifyEmail
         ]);
     }
 
+    /**
+     * add a new user instance after a valid registration.
+     *
+     * @param  array  $request
+     * @return \App\User
+     */
+    public function getUserNameById($userId)
+    {
+        return $this->where('id', $userId)->value('name');
+    }
+
 
 
 }

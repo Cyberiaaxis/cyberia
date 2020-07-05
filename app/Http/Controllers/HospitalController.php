@@ -82,4 +82,15 @@ class HospitalController extends Controller
     {
         //
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Model\Hospital  $hospital
+     * @return \Illuminate\Http\Response
+     */
+    public function heal(Hospital $hospital)
+    {
+        //
+    }
 }

@@ -48,9 +48,42 @@ class UserStats extends Model
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function decrementNerve($userId, $userNerve)
+    public function decrementNerve(int $userId, int $userNerve)
     {
         return $this->where('user_id', $userId)->decrement('nerve', $userNerve);
+    }
+
+    /**
+     * Create a new userDetails instance after a valid registration.
+     *
+     * @param  array  $userIda
+     * @return \App\User
+     */
+    public function decrementBustExperince(int $userId, $bustExperience)
+    {
+        try {
+            return  $this->where(['user_id' => $userId])->decrement(['bust_experience', $bustExperience]);
+        } catch (Throwable $e) {
+            $e->getMessage();
+            report($e);
+        }
+    }
+
+
+    /**
+     * Create a new userDetails instance after a valid registration.
+     *
+     * @param  array  $userIda
+     * @return \App\User
+     */
+    public function incrementBustExperince(int $userId, string $bustExperience)
+    {
+        try {
+            return  $this->where(['user_id' => $userId])->increment(['bust_experience', $bustExperience]);
+        } catch (Throwable $e) {
+            $e->getMessage();
+            report($e);
+        }
     }
 
     /**
@@ -62,6 +95,28 @@ class UserStats extends Model
     public function changeWill($userId, $will)
     {
         return $this->where('user_id', $userId)->update(['max_will'=> $will]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function haveNerve($userId)
+    {
+        return $this->where('user_id', $userId)->value('nerve');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function maxNerve($userId)
+    {
+        return $this->where('user_id', $userId)->value('max_nerve');
     }
 
 }
