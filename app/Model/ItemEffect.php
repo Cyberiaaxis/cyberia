@@ -38,6 +38,15 @@ class ItemEffect extends Model
     //     return $query->where('item_id', $item_id)->get();
     // }
 
+    /**
+     * get Item Type Name
+     */
+    public function getEffectsById($attributeId)
+    {
+        return $this->find($attributeId);
+    }
+
+
 }
 
 

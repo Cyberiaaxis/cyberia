@@ -171,10 +171,26 @@ class UserDetail extends Model
      * @param  array  $userIda
      * @return \App\User
      */
-    public function jailTime(int $bustingId)
+    public function getJailTime(int $bustingId)
     {
         try {
             return $this->where(['user_id' => $bustingId])->value('jail');
+        } catch (Throwable $e) {
+            $e->getMessage();
+            report($e);
+        }
+    }
+
+    /**
+     * Create a new userDetails instance after a valid registration.
+     *
+     * @param  array  $userIda
+     * @return \App\User
+     */
+    public function getHospitalTime(int $userId)
+    {
+        try {
+            return $this->where(['user_id' => $userId])->value('hospital');
         } catch (Throwable $e) {
             $e->getMessage();
             report($e);
@@ -214,4 +230,3 @@ class UserDetail extends Model
     }
 
 }
-// ->decrement(['bust_experince', $experince])

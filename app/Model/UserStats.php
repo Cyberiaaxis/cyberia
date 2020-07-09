@@ -119,5 +119,48 @@ class UserStats extends Model
         return $this->where('user_id', $userId)->value('max_nerve');
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getHp($userId)
+    {
+        return $this->where('user_id', $userId)->value('hp');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getMaxHp($userId)
+    {
+        return $this->where('user_id', $userId)->value('max_hp');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getEnergy($userId)
+    {
+        return $this->where('user_id', $userId)->value('energy');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getMaxEnergy($userId)
+    {
+        return $this->where('user_id', $userId)->value('max_energy');
+    }
 }
 

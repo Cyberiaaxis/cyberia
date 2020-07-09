@@ -12,8 +12,8 @@ class TypeAttribute extends Model
      *
      * @return \Illuminate\Http\Response
      */
-    public function getAttributeId($typeId)
+    public function getEffectsId($typeId)
     {
-        return $this->where('type_id', $typeId)->value('id');
+        return $this->where('type_id', $typeId)->value('item_effect_id');
     }
 }

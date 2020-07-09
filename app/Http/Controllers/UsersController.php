@@ -286,7 +286,7 @@ class UsersController extends Controller
         $haveNerve = $userStats->haveNerve(auth()->user()->id);
         $requireNerve = (int) round($userStats->maxNerve(auth()->user()->id) / 2);
 
-        if ($userDetails->jailTime($userDetails->user_id) === NULL)
+        if ($userDetails->getJailTime($userDetails->user_id) === NULL)
         {
             throw new Exception("You can't bust a non jailed player");
         }
@@ -299,36 +299,36 @@ class UsersController extends Controller
     return $userStats->decrementNerve(auth()->user()->id, $requireNerve);
     }
 
-    public function heal(UserDetail $userDetails)
-    {
-        $carbon = new Carbon();
-        $user = new User();
-        $userStats = new UserStats();
-        $this->canHeal($userStats, $userDetails);
-        $addDuration = $carbon->now()->addMinutes(mt_rand(0, 60));
-        return  $this->chanceBust($userDetails, $user, $userStats, $carbon, $experince = 100);
-    }
+    // public function heal(UserDetail $userDetails)
+    // {
+    //     $carbon = new Carbon();
+    //     $user = new User();
+    //     $userStats = new UserStats();
+    //     $this->canHeal($userStats, $userDetails);
+    //     $addDuration = $carbon->now()->addMinutes(mt_rand(0, 60));
+    //     return  $this->chanceBust($userDetails, $user, $userStats, $carbon, $experince = 100);
+    // }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function canHeal($userStats, $userDetails)
-    {
-        $haveNerve = $userStats->haveNerve(auth()->user()->id);
-        $requireNerve = (int) round($userStats->maxNerve(auth()->user()->id) / 2);
+    // /**
+    //  * Remove the specified resource from storage.
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function canHeal($userStats, $userDetails)
+    // {
+    //     $haveNerve = $userStats->haveNerve(auth()->user()->id);
+    //     $requireNerve = (int) round($userStats->maxNerve(auth()->user()->id) / 2);
 
-        if ($userDetails->hospitalTime($userDetails->user_id) === NULL) {
-            throw new Exception("You can't bust a non jailed player");
-        }
+    //     if ($userDetails->hospitalTime($userDetails->user_id) === NULL) {
+    //         throw new Exception("You can't bust a non jailed player");
+    //     }
 
-        //other conditions after get more information
-        // if ($haveNerve < $requireNerve) {
-        //     throw new Exception("You don't have enough nerve to bust any");
-        // }
+    //     //other conditions after get more information
+    //     // if ($haveNerve < $requireNerve) {
+    //     //     throw new Exception("You don't have enough nerve to bust any");
+    //     // }
 
-        // return $userStats->decrementNerve(auth()->user()->id, $requireNerve);
-    }
+    //     // return $userStats->decrementNerve(auth()->user()->id, $requireNerve);
+    // }
 }
 

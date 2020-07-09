@@ -48,7 +48,7 @@ $route->group(['middleware' => ['verified']], function($route){
         $route->get('realestateactive/{realEstate}', 'RealEstateController@activeRealEstate')->name('realestateactive');
         $route->get('heal/{userId}', 'UsersController@heal')->name('heal');
         $route->get('bust/{userDetails}', 'UsersController@bust')->name('bust');
-        $route->get('attack/{userId}', 'AttacksController@attackPerform')->name('attack')->middleware('checkStatus');
+        $route->get('attack/{user}', 'AttacksController@attack')->name('attack')->middleware('checkStatus');
 
         // $route->get('itemmarket', 'CityController@itemsMarket')->name('itemmarket');
 });

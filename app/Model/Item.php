@@ -57,5 +57,20 @@ class Item extends Model
         return $this->belongsTo(TypeAttribute::class);
     }
 
+    /**
+     * get Item Type Name
+     */
+    public function getWeaponNameById($itemId)
+    {
+        return $this->find($itemId)->value('name');
+    }
+    /**
+     * get Item Type Name
+     */
+    public function getItemAttributeById($itemId)
+    {
+        return $this->find($itemId)->value('type_attribute_id');
+    }
+
 }
 

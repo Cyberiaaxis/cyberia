@@ -37,4 +37,11 @@ class UserSlot extends Model
         return $this->itemEffects()->where($column, $column)->select($column)->value($column);
     }
 
+
+    public function getUserWeaponsById(int $userId)
+    {
+        return $this->where('user_id', $userId)->first();
+    }
+
+
 }
