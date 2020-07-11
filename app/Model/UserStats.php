@@ -158,9 +158,30 @@ class UserStats extends Model
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getMaxEnergy($userId)
+    public function getMaxEnergy(int $userId)
     {
         return $this->where('user_id', $userId)->value('max_energy');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getDefense(int $userId)
+    {
+        return $this->where('user_id', $userId)->value('defense');
+    }
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getAgility(int $userId)
+    {
+        return $this->where('user_id', $userId)->value('agility');
     }
 }
 

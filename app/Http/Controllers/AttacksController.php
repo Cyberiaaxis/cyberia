@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\{ Attack, User, Item, UserDetail, UserSlot, UserStats, WeaponAttribute};
+use App\Model\{ Attack, User, Item, UserDetail, UserItem, UserSlot, UserStats, WeaponAttribute};
 use Auth;
 use Exception;
 use Illuminate\Http\Request;
@@ -12,8 +12,13 @@ class AttacksController extends Controller
 {
 
     protected $message = [];
-    protected $attacker ;
-
+    protected  $attacker,
+               $defender,
+               $userDetails,
+               $userStats,
+               $weaponAttributes,
+               $userSlots,
+               $items;
 
     /**
      * Instantiate a new AttacksController instance.
@@ -24,17 +29,44 @@ class AttacksController extends Controller
             $this->attacker = auth()->user();
             return $next($request);
         });
+        $this->userDetails = new UserDetail();
+        $this->userStats = new UserStats();
+        $this->items = new Item();
+        $this->weaponAttributes = new WeaponAttribute();
+        $this->userSlots = new UserSlot();
+        $this->items = new Item();
     }
+
+     public function __invoke(Request $request, User $defender)
+     {
+        $this->defender = $defender;
+        $this->canAttack();
+        return view('player.attack',[
+             'attacker' => $this->attacker,
+             'defender' => $this->defender,
+             'defenderEquipped' => $this->equippedWeapons($this->defender->id),
+             'attackerEquipped' => $this->equippedWeapons($this->attacker->id)
+             ]);
+     }
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function attackStart($user, $userDeatils, $userStats)
+    public function attackStart($request)
     {
-        $this->canAttack($user, $userDeatils, $userStats);
-
+        $oldTurnNumber = session()->has('oldTurnNumber') ? session('oldTurnNumber') : session()->put('oldTurnNumber', 0);
+        $nextTurnAssignment = $this->turn($oldTurnNumber);
+        $turnOwner = $this->doTurn($nextTurnAssignment);
+        $selectedAttackerWeapon = $this->selectedWeaponName($this->attacker->id, $request->weaponId );
+        $selectedDefenderWeapon = $this->selectedWeaponName($this->defender->id);
+    return [
+            'turnNumber' => $nextTurnAssignment,
+            'turnOwner' => $turnOwner,
+            'selectedAttackerWeapon' => $selectedAttackerWeapon
+            'selectedDefenderWeapon' =>   $selectedDefenderWeapon
+        ];
     }
 
 
@@ -43,12 +75,10 @@ class AttacksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function attack(User $user)
+    public function attack(Request $request, User $user)
     {
-        $userDeatils = new UserDetail();
-        $userStats = new UserStats();
-        $this->attackStart($user, $userDeatils, $userStats);
-        dd($this->attackPerform($user));
+        $this->attackStart($request);
+        $this->attackPerform($user, $userStats);
         $this->attackEnd($user);
     }
 
@@ -67,23 +97,27 @@ class AttacksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function canAttack($user, $userDeatils, $userStats)
+    public function canAttack()
     {
-        $haveEnergy = $userStats->getEnergy($user->id) < (int) ($userStats->getMaxEnergy($user->id)/2);
-        $isSameLocation = $userDeatils->getLocation($user->id) !== $this->attacker->userDetails->location_id;
-        $isHospitalized = $userDeatils->getHospitalTime($user->id);
-        $isJailed = $userDeatils->getJailTime($user->id);
+        $haveEnergy = (int) $this->userStats->getEnergy($this->defender->id) < (int) ($this->userStats->getMaxEnergy($this->defender->id)/2);
+        $notSameLocation = $this->userDetails->getLocation($this->defender->id) !== $this->userDetails->getLocation($this->attacker->id);
+        $defenderHospitalized = $this->userDetails->getHospitalTime($this->defender->id);
+        $defenderJailed = $this->userDetails->getJailTime($this->defender->id);
+        $selfAttack = $this->defender->id === $this->attacker->id;
 
-        if($haveEnergy) {
-            throw new Exception("You don't have enough energy");
-        } elseif ($isSameLocation) {
-            throw new Exception("Player isn't on same location");
-        } elseif ($isHospitalized) {
-            throw new Exception("Player already is hospitalized");
-        } elseif ($isJailed) {
-            throw new Exception("Player already is Jailed");
+        if ($selfAttack) {
+            abort(403, "You can't attack yourself.");
+        }elseif($haveEnergy) {
+            abort(403, "You don't have enough energy.");
+        } elseif ($notSameLocation) {
+            abort(403, "Player isn't on same location.");
+        } elseif ($defenderHospitalized) {
+            abort(403, "Player already is hospitalized.");
+        } elseif ($defenderJailed) {
+            abort(403, "Player already is Jailed.");
         }
     }
+
 
     /**
      * Display a listing of the resource.
@@ -100,14 +134,14 @@ class AttacksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function doTurn($attacker, $defender,  $nextTurnAssignment)
+    public function doTurn($nextTurnAssignment)
     {
         if($nextTurnAssignment%2 == 0)
         {
-            return $defender;
+            return $this->defender->name;
         }
 
-    return $attacker;
+    return $this->attacker->name;
     }
 
     /**
@@ -115,10 +149,14 @@ class AttacksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function attackPerform($user)
+    public function attackPerform($user, $userStats)
     {
-        $equippedWeapon = $this->equippedWeapons($user);
-        return $this->equippedWeaponAttributes($equippedWeapon['attackerPrimaryWeaponId']) ;
+        $equippedWeapons = $this->equippedWeapons($user);
+        $equippedWeaponAttributes = $this->equippedWeaponAttributes($equippedWeapons['attackerPrimaryWeaponId']) ;
+        $defenderDefense = $userStats->getDefense($user->id);
+        $damage = $this->damage($equippedWeaponAttributes, $defenderDefense);
+        $defenderAgility = $userStats->getAgility($user->id);
+        return $this->hitRatio($defenderAgility);
     }
 
     /**
@@ -126,27 +164,37 @@ class AttacksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function equippedWeapons($user)
+    public function equippedWeapons($userId)
     {
-        $userSlots = new UserSlot();
-        $items = new Item();
-        $attackerWeapons = $userSlots->getUserWeaponsById($this->attacker->id);
-        $deffenderWeapons = $userSlots->getUserWeaponsById($user->id);
-        $attackerPrimaryWeaponName = $items->getWeaponNameById($attackerWeapons->primary_slot);
-        $attackerSecondaryWeaponName = $items->getWeaponNameById($attackerWeapons->secondary_slot);
-        $defenderPrimaryWeaponName = $items->getWeaponNameById($deffenderWeapons->primary_slot);
-        $defenderSecondaryWeaponName = $items->getWeaponNameById($deffenderWeapons->secondary_slot);
+        $weapons = $this->userSlots->getUserWeaponsById($userId);
+        $primaryWeaponName = $this->items->getWeaponNameById($weapons->primary_slot);
+        $secondaryWeaponName = $this->items->getWeaponNameById($weapons->secondary_slot);
     return [
-            'attackerPrimaryWeaponId' => $attackerWeapons->primary_slot,
-            'attackerPrimaryWeaponName' => $attackerPrimaryWeaponName,
-            'attackerSecondaryWeaponId' => $attackerWeapons->secondary_slot,
-            'attackerSecondaryWeaponName' => $attackerSecondaryWeaponName,
-            'defenderPrimaryWeaponId' => $deffenderWeapons->primary_slot,
-            'defenderPrimaryWeaponName' => $defenderPrimaryWeaponName,
-            'defenderSecondaryWeaponId' => $deffenderWeapons->secondary_slot,
-            'defenderSecondaryWeaponName' => $defenderSecondaryWeaponName
+            'primaryWeaponId' => $weapons->primary_slot,
+            'primaryWeaponName' => $primaryWeaponName,
+            'secondaryWeaponId' => $weapons->secondary_slot,
+            'secondaryWeaponName' => $secondaryWeaponName
           ];
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function selectedWeaponName($userId, $weaponId = null)
+    {
+        $wepaons = $this->equippedWeapons($userId);
+        $weaponId = ($weaponId === NULL)? $wepaons['primaryWeaponId'] : $weaponId;
+        $correctWeaponSelected = $wepaons['primaryWeaponId']  === $weaponId || $wepaons['secondaryWeaponId']  === $weaponId;
+
+        if($correctWeaponSelected){
+            return $this->items->getWeaponNameById($weaponId);
+        }
+
+    abort(403, "This weapon isn't selectable");
+    }
+
 
     public function equippedWeaponAttributes($itemId)
     {
@@ -155,148 +203,22 @@ class AttacksController extends Controller
         $weaponAtrributeId = $items->getItemAttributeById($itemId);
     return $weaponAttributes->getattributesById($weaponAtrributeId);
     }
+
+    public function damage($equippedWeaponAttributes, $defenderDefense)
+    {
+        return (int)
+            ( $equippedWeaponAttributes['damage'] * $this->attacker->stats->strength / $defenderDefense)*
+            (rand(8000, 12000) / 10000);
+    }
+
+    public function hitRatio($defenderAgility)
+    {
+        return min(50 * $this->attacker->stats->agility / $defenderAgility, 95);
+    }
+
+    public function ciritalHit($hitRatio)
+    {
+        return ($hitRatio + $this->attacker->level / 2) / 10;
+    }
+
 }
-
-
-
-
-
-
-//     protected $message = [];
-
-//     protected $attacker ;
-
-//     /**
-//      * Instantiate a new AttacksController instance.
-//      */
-//     public function __construct()
-//     {
-//         $this->middleware(function ($request, $next) {
-//             $this->attacker = auth()->user();
-//             return $next($request);
-//         });
-//     }
-
-//     /**
-//      * Display a listing of the resource.
-//      *
-//      * @return \Illuminate\Http\Response
-//      */
-//     public function attackPerform($defender)
-//     {
-
-//         $effect = UserSlot::find(1);
-//         dd($effect->getWeaponValue('damage'));
-//         // dd (UserSlot::getSlot("primary_slot", $this->attacker)->get()); , 'fire_rate', 'accuracy'
-//         // dd($attack->where("item_id", $this->attacker->userslot->primary_slot)->select('damage')->value('damage'));
-//         // $mydamage =
-//         //     (int) (($r1['damage'] * $youdata['strength'] / $odata['guard'])
-//         //         * (rand(8000, 12000) / 10000));
-//         // $hitratio = min(50 * $ir['agility'] / $odata['agility'], 95);
-//         // $damage = $this->attacker->stats->strength - (20 / 2);
-//         // dd($damage);
-//     }
-// // damage = mydamagepower * mystrength / defence * (rand(8000, 12000) / 10000));
-//     /**
-//      * To verify the Attacker's hospital, jail, energy and hp status.
-//      *
-//      * @param  \App\User  $defender
-//      * @return Boolean
-//      */
-//     public function attack(User $defender)
-//     {
-//         if(!$this->canBeAttackedBy($defender))
-//         {
-//             return $this->message;
-//         }
-
-//         if(!$this->canAttack())
-//         {
-//             return $this->message;
-//         }
-//         if(!$this->canBeAttacked($defender))
-//         {
-//             return $this->message;
-//         }
-//         $this->attackPerform($defender);
-//     }
-
-//     /**
-//      * To verify the Attacker's hospital, jail, energy and hp status.
-//      *
-//      * @param
-//      * @return Boolean
-//      */
-//     public function canAttack()
-//     {
-//         if(!empty($this->attacker->userdetails->hospital))
-//         {
-//             $this->message = 'You are in hospital.';
-//         return false;
-//         }
-
-//         if (!empty($this->attacker->userdetails->jail))
-//         {
-//             $this->message = 'You are in jail.';
-//         return false;
-//         }
-
-//         if($this->attacker->stats->energy < (int) ((50 / 100) * (int) $this->attacker->stats->max_energy))
-//         {
-//             $this->message = 'Your energy is down.';
-//         return false;
-//         }
-
-//         if($this->attacker->stats->hp < 10)
-//         {
-//             $this->message = 'Your hp is down.';
-//         return false;
-//         }
-
-//     return true;
-//     }
-
-//     /**
-//      * To verify the defender's hospital and jail status.
-//      *
-//      * @param  \App\User  $defender
-//      * @return Boolean
-//      */
-//     public function canBeAttacked($defender)
-//     {
-//         if (!empty($defender->userdetails->hospital))
-//         {
-//             $this->message = 'Defender are in hospital.';
-//         return false;
-//         }
-
-//         if (!empty($defender->userdetails->jail))
-//         {
-//            $this->message = 'Defender are in jail.';
-//         return false;
-//         }
-
-//     return true;
-//     }
-
-//     /**
-//      * To verify the defender and attacker location and protection from self attack.
-//      *
-//      * @param  \App\User  $defender
-//      * @return Boolean
-//      */
-//     public function canBeAttackedBy($defender)
-//     {
-//         // if ($this->attacker->id === $defender->id)
-//         // {
-//         //     $this->message = 'You can not attack on yourself.';
-//         // return false;
-//         // }
-//         if ($this->attacker->userdetails->location->name !== $defender->userdetails->location->name)
-//         {
-//             $this->message = 'Both should be on same location.';
-//         return false;
-//         }
-
-//     return true;
-//     }
