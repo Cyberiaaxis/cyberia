@@ -173,6 +173,7 @@ class UserStats extends Model
     {
         return $this->where('user_id', $userId)->value('defense');
     }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -182,6 +183,28 @@ class UserStats extends Model
     public function getAgility(int $userId)
     {
         return $this->where('user_id', $userId)->value('agility');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getStrength(int $userId)
+    {
+        return $this->where('user_id', $userId)->value('strength');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function decrementHP(int $userId, $newHP)
+    {
+        return $this->where('user_id', $userId)->decrement('hp', $newHP);;
     }
 }
 

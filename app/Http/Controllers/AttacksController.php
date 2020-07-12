@@ -40,7 +40,6 @@ class AttacksController extends Controller
      public function __invoke(Request $request, User $defender)
      {
         $this->defender = $defender;
-        $this->canAttack();
         return view('player.attack',[
              'attacker' => $this->attacker,
              'defender' => $this->defender,
@@ -54,18 +53,27 @@ class AttacksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function attackStart($request)
-    {
+    public function preparationForAttack($request){
+        $this->canAttack();
         $oldTurnNumber = session()->has('oldTurnNumber') ? session('oldTurnNumber') : session()->put('oldTurnNumber', 0);
         $nextTurnAssignment = $this->turn($oldTurnNumber);
         $turnOwner = $this->doTurn($nextTurnAssignment);
         $selectedAttackerWeapon = $this->selectedWeaponName($this->attacker->id, $request->weaponId );
-        $selectedDefenderWeapon = $this->selectedWeaponName($this->defender->id);
-    return [
+        $defenderWeaponId = $this->equippedWeapons($this->defender->id);
+        $selectedDefenderWeapon = $this->selectedWeaponName($this->defender->id, $defenderWeaponId['primaryWeaponId']);
+        $selectedAttackerWeaponAttributes = $this->equippedWeaponAttributes($request->weaponId);
+        $selectedDefenderWeaponAttributes = $this->equippedWeaponAttributes($defenderWeaponId['primaryWeaponId']);
+        $attackerStats = $this->getStats($this->attacker->id);
+        $defenderStats = $this->getStats($this->defender->id);
+        return [
             'turnNumber' => $nextTurnAssignment,
             'turnOwner' => $turnOwner,
-            'selectedAttackerWeapon' => $selectedAttackerWeapon
-            'selectedDefenderWeapon' =>   $selectedDefenderWeapon
+            'attackerStats' => $attackerStats,
+            'defenderStats' => $defenderStats,
+            'selectedAttackerWeapon' => $selectedAttackerWeapon,
+            'selectedDefenderWeapon' =>   $selectedDefenderWeapon,
+            'selectedAttackerWeaponAttributes' => $selectedAttackerWeaponAttributes,
+            'selectedDefenderWeaponAttributes' => $selectedDefenderWeaponAttributes
         ];
     }
 
@@ -77,8 +85,8 @@ class AttacksController extends Controller
      */
     public function attack(Request $request, User $user)
     {
-        $this->attackStart($request);
-        $this->attackPerform($user, $userStats);
+        $preparedForAttack = $this->preparationForAttack($request);
+        $this->attackPerform($preparedForAttack);
         $this->attackEnd($user);
     }
 
@@ -149,14 +157,14 @@ class AttacksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function attackPerform($user, $userStats)
-    {
-        $equippedWeapons = $this->equippedWeapons($user);
-        $equippedWeaponAttributes = $this->equippedWeaponAttributes($equippedWeapons['attackerPrimaryWeaponId']) ;
-        $defenderDefense = $userStats->getDefense($user->id);
-        $damage = $this->damage($equippedWeaponAttributes, $defenderDefense);
-        $defenderAgility = $userStats->getAgility($user->id);
-        return $this->hitRatio($defenderAgility);
+    public function attackPerform($preparedForAttack){
+        $hitRatio = $this->hitRatio($preparedForAttack);
+
+        if (rand(1, 100) <= $hitRatio)
+        {
+            $genratedDamageRatio = $this->damage($preparedForAttack);
+            $this->userStats->decrementHP($this->attacker->id, $genratedDamageRatio);
+        }
     }
 
     /**
@@ -182,11 +190,10 @@ class AttacksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function selectedWeaponName($userId, $weaponId = null)
+    public function selectedWeaponName($userId, $weaponId)
     {
-        $wepaons = $this->equippedWeapons($userId);
-        $weaponId = ($weaponId === NULL)? $wepaons['primaryWeaponId'] : $weaponId;
-        $correctWeaponSelected = $wepaons['primaryWeaponId']  === $weaponId || $wepaons['secondaryWeaponId']  === $weaponId;
+        $weapons = $this->equippedWeapons($userId);
+        $correctWeaponSelected = $weapons['primaryWeaponId']  === $weaponId || $weapons['secondaryWeaponId']  === $weaponId;
 
         if($correctWeaponSelected){
             return $this->items->getWeaponNameById($weaponId);
@@ -198,22 +205,21 @@ class AttacksController extends Controller
 
     public function equippedWeaponAttributes($itemId)
     {
-        $items = new Item();
-        $weaponAttributes = new WeaponAttribute();
-        $weaponAtrributeId = $items->getItemAttributeById($itemId);
-    return $weaponAttributes->getattributesById($weaponAtrributeId);
+        $weaponAtrributeId = $this->items->getItemAttributeById($itemId);
+    return $this->weaponAttributes->getattributesById($weaponAtrributeId);
     }
 
-    public function damage($equippedWeaponAttributes, $defenderDefense)
+    public function damage($preparedForAttack)
     {
         return (int)
-            ( $equippedWeaponAttributes['damage'] * $this->attacker->stats->strength / $defenderDefense)*
-            (rand(8000, 12000) / 10000);
+
+        ( $preparedForAttack['selectedAttackerWeaponAttributes']['damage'] * $preparedForAttack['attackerStats']['strength'] /
+          $preparedForAttack['defenderStats']['defense'])* (rand(8000, 12000) / 10000);
     }
 
-    public function hitRatio($defenderAgility)
+    public function hitRatio($preparedForAttack)
     {
-        return min(50 * $this->attacker->stats->agility / $defenderAgility, 95);
+        return min(50 * $preparedForAttack['attackerStats']['agility'] / $preparedForAttack['defenderStats']['agility'] , 95);
     }
 
     public function ciritalHit($hitRatio)
@@ -221,4 +227,11 @@ class AttacksController extends Controller
         return ($hitRatio + $this->attacker->level / 2) / 10;
     }
 
+    public function getFightStats($userId)
+    {
+        $strength = $this->userSlots->getStrength($userId);
+        $agility = $this->userSlots->getAgility($userId);
+        $defense = $this->userSlots->getDefense($userId);
+    return ['strength' => $strength, 'agility' => $agility, 'defense' => $defense];
+    }
 }
