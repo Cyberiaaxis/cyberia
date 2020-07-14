@@ -49,6 +49,7 @@ $route->group(['middleware' => ['verified']], function($route){
         $route->get('heal/{userId}', 'UsersController@heal')->name('heal');
         $route->get('bust/{userDetails}', 'UsersController@bust')->name('bust');
         $route->get('attack/{defender}', 'AttacksController')->name('attack')->middleware('checkStatus');
+        $route->get('attackstart/{defender}', 'AttacksController@attack')->name('attackstart')->middleware('checkStatus');
 
         // $route->get('itemmarket', 'CityController@itemsMarket')->name('itemmarket');
 });
