@@ -3,31 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Model\{ AttackLog, User, Item, UserDetail,  UserSlot, UserStats, WeaponAttribute};
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 
 class AttacksController extends Controller
 {
 
-    protected $message = [];
+    /**
+     * The attributes that are assignable.
+     *
+     * @var
+     */
     protected  $attacker,
                $defender,
                $userDetails,
                $userStats,
                $weaponAttributes,
                $userSlots,
-               $stepEvent = [],
                $attackLog,
-               $items;
+               $items,
+               $hitresult,
+               $carbon;
 
     /**
      * Instantiate a new AttacksController instance.
      */
-    public function __construct()
-    {
+    public function __construct(){
         $this->middleware(function ($request, $next) {
             $this->attacker = auth()->user();
-            return $next($request);
+        return $next($request);
         });
 
         $this->userDetails = new UserDetail();
@@ -37,29 +42,32 @@ class AttacksController extends Controller
         $this->userSlots = new UserSlot();
         $this->attackLog = new AttackLog();
         $this->items = new Item();
+        $this->carbon = new Carbon();
     }
 
-     public function __invoke(Request $request, User $defender)
-     {
-        //  dd($request->user());
+    /**
+     * invoke for attack
+     * @param  Request $request, User $defender
+     * @return \Illuminate\Http\Response player.attack with $array
+     */
+     public function __invoke(Request $request, User $defender) {
         $this->defender = $defender;
-        return view('player.attack',[
+        return view('player.attack', [
              'attacker' => $this->attacker,
              'defender' => $this->defender,
              'defenderEquipped' => $this->equippedWeapons($this->defender->id),
              'attackerEquipped' => $this->equippedWeapons($this->attacker->id)
-             ]);
+        ]);
      }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * both player preparation for an Attack
+     * @param  Request $request
+     * @return \Illuminate\Http\Response $array
      */
-    public function preparationForAttack($request){
+    public function preparationForAttack($request) {
         $this->canAttack();
-        $oldTurnNumber = session()->has('oldTurnNumber') ? session('oldTurnNumber') : session()->put('oldTurnNumber', 0);
-        $nextTurnAssignment = $this->turn($oldTurnNumber);
+        $nextTurnAssignment = $this->turn();
         $turnOwner = $this->doTurn($nextTurnAssignment);
         $selectedAttackerWeapon = $this->selectedWeaponName($this->attacker->id, $request->weaponId );
         $defenderWeaponId = $this->equippedWeapons($this->defender->id);
@@ -80,48 +88,47 @@ class AttacksController extends Controller
         ];
     }
 
-
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * attack preformance responsible
+     * @param  Request $request, User $defender
+     * @return \Illuminate\Http\Response $method
      */
-    public function attack(Request $request, User $defender)
-    {
+    public function attack(Request $request, User $defender) {
         $this->defender = $defender;
         $preparedForAttack = $this->preparationForAttack($request);
-    return  $this->attackPerform($preparedForAttack);
+        $singleHitResult = $this->attackPerform($preparedForAttack);
+        $this->hitresult .= $singleHitResult;
+    return $singleHitResult;
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * generate attack step event
+     * @param  $preparedForAttack, $damage
+     * @return \Illuminate\Http\Response string
      */
-    public function saveAttackStepEvent($preparedForAttack, $damage)
-    {
+    public function generateAttackStepEvent($preparedForAttack, $damage = 'missed') {
         $weaponName =  ($preparedForAttack['turnNumber'] % 2) ? $preparedForAttack['selectedDefenderWeapon'] : $preparedForAttack['selectedAttackerWeapon'];
-    return $preparedForAttack['turnNumber'] ." ". $preparedForAttack['turnOwner'] . " " . $weaponName . " " . $damage . " " . date('Y-m-d H:i:s');
+        return [
+            'turnNumber' => $preparedForAttack['turnNumber'],
+            'message' => $preparedForAttack['turnNumber'] . " " . $preparedForAttack['turnOwner'] . " " . $weaponName . " " . $damage . " " . date('Y-m-d H:i:s')
+        ] ;
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * add attack log in storage
+     * @param
+     * @return \Illuminate\Http\Response boolean
      */
-    public function attackLog()
-    {
-        // dd($this->stepEvent);
-        return $this->attackLog->addLog($this->stepEvent);
+    public function attackLog($hitResult) {
+        return $this->attackLog->addLog($hitResult);
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * cheack the eligibility for attack of both player
+     * @param
+     * @return \Illuminate\Http\Response throw expection
      */
-    public function canAttack()
-    {
+    public function canAttack() {
         // dd($this->defender);
         $haveEnergy = (int) $this->userStats->getEnergy($this->defender->id) < (int) ($this->userStats->getMaxEnergy($this->defender->id)/2);
         $notSameLocation = $this->userDetails->getLocation($this->defender->id) !== $this->userDetails->getLocation($this->attacker->id);
@@ -142,24 +149,25 @@ class AttacksController extends Controller
         }
     }
 
-
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * turn creator for attack
+     * @param
+     * @return \Illuminate\Http\Response session
      */
-    public function turn($oldTurnNumber)
-    {
-        return $oldTurnNumber++;
+    public function turn() {
+        $turn = session('oldTurnNumber');
+        $countturn = $turn+1;
+        session()->flash('oldTurnNumber', $countturn);
+    return $countturn;
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * assign the turn to players for attack
+     * @param $nextTurnAssignment
+     * @return \Illuminate\Http\Response string
      */
-    public function doTurn($nextTurnAssignment)
-    {
+    public function doTurn($nextTurnAssignment) {
+
         if($nextTurnAssignment%2 == 0)
         {
             return $this->defender->name;
@@ -169,56 +177,157 @@ class AttacksController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * attack performer
+     * @param $preparedForAttack
+     * @return \Illuminate\Http\Response string or JSON
      */
     public function attackPerform($preparedForAttack){
+        $userId = ($preparedForAttack['turnNumber'] % 2) ? $this->defender->id : $this->attacker->id;
 
-        if((int)$preparedForAttack['attackerStats']['HP'] <= 0 || (int)$preparedForAttack['defenderStats']['HP'] <= 0)
+        if($this->isChanceSuccess($preparedForAttack))
         {
-            return $this->attackLog();
+            $damageCalculation = $this->damageCalculation($preparedForAttack);
+            $this->doHPDown($userId, $damageCalculation);
+            $isrHpDown = $this->isHP($userId);
+
+            if($isrHpDown <= 0)
+            {
+                $attacker = ['attackerId' => $this->attacker->id];
+                $defender = ['defenderId' => $this->defender->id];
+                $userData = ($userId === $this->attacker->id)? $attacker: $defender;
+            return response()->json([$userData]);
+            }
+
+        return $this->generateAttackStepEvent($preparedForAttack, $damageCalculation)['message'];
         }
 
-        $hitRatio = $this->hitRatio($preparedForAttack);
-        $genratedDamageRatio = '';
-
-        if (mt_rand(1, 100) <= (int) $hitRatio)
-        {
-            $genratedDamageRatio = $this->damage($preparedForAttack);
-            $userId = ($preparedForAttack['turnNumber'] % 2) ? $this->defender->id : $this->attacker->id;
-            $this->userStats->decrementHP($userId, $genratedDamageRatio);
-        }
-
-        $genratedDamageRatio = 'missed';
-    return $this->stepEvent[] = $this->saveAttackStepEvent($preparedForAttack, $genratedDamageRatio);
+    return $this->generateAttackStepEvent($preparedForAttack)['message'];
     }
-// http://criminalimpulse.com/attackstart/96?weaponId=1
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * defender hospitalize
+     * @param $userId
+     * @return \Illuminate\Http\Response boolean
      */
-    public function equippedWeapons($userId)
+    public function hospitalize($userId) {
+        $number = mt_rand(1,5);
+        $duration = $this->carbon->now()->addHours($number);
+    return $this->userDetails->addHospitalTime($userId, $duration);
+    }
+
+    /**
+     * defender hospitalize
+     * @param $userId
+     * @return \Illuminate\Http\Response boolean
+     */
+    public function settlement($userId)
     {
+        $number = mt_rand(1, 5);
+        $duration = $this->carbon->now()->addHours($number);
+        $this->hitresult['message'] .= "You successfully done settlement";
+    return $this->attackLog($this->hitresult);
+    }
+
+    /**
+     * runway in between the attack
+     * @param $userId
+     * @return \Illuminate\Http\Response boolean
+     */
+    public function runaway($userId)
+    {
+        $number = mt_rand(1, 5);
+        $message = "You successfully managed runaway";
+
+        if($number === 3)
+        {
+            $duration = $this->carbon->now()->addHours($number);
+            $this->userDetails->addHospitalTime($userId, $duration);
+            $message = "You failed to manage the runaway";
+        }
+
+        $this->hitresult['message'] .= $message;
+    return $this->attackLog($this->hitresult);
+    }
+
+    /**
+     * defender  hospitalize
+     * @param $userId
+     * @return \Illuminate\Http\Response boolean
+     */
+    public function leave($userId) {
+        $number = mt_rand(20,30);
+        $duration = $this->carbon->now()->addMinutes($number);
+        $this->userDetails->addHospitalTime($userId, $duration);
+    return $this->attackLog($this->hitresult['message']);
+    }
+
+    /**
+     * defender  hospitalize
+     * @param $userId
+     * @return \Illuminate\Http\Response boolean
+     */
+    public function mug($userId) {
+        $number = mt_rand(20, 25);
+        $duration = $this->carbon->now()->addMinutes($number);
+        $this->userDetails->addHospitalTime($userId, $duration);
+    return $this->attackLog($this->hitresult['message']);
+    }
+
+    /**
+     * attacker hospitalize
+     * @param $userId
+     * @return \Illuminate\Http\Response boolean
+     */
+    public function lost($userId) {
+        $number = mt_rand(10, 20);
+        $duration = $this->carbon->now()->addMinutes($number);
+        $this->userDetails->addHospitalTime($userId, $duration);
+    return $this->attackLog($this->hitresult['message']);
+    }
+
+    /**
+     * equipped weapons of both players for attack
+     * @param $userId
+     * @return \Illuminate\Http\Response array
+     */
+    public function equippedWeapons($userId) {
         $weapons = $this->userSlots->getUserWeaponsById($userId);
         $primaryWeaponName = $this->items->getWeaponNameById($weapons->primary_slot);
         $secondaryWeaponName = $this->items->getWeaponNameById($weapons->secondary_slot);
-    return [
+        return [
             'primaryWeaponId' => $weapons->primary_slot,
             'primaryWeaponName' => $primaryWeaponName,
             'secondaryWeaponId' => $weapons->secondary_slot,
             'secondaryWeaponName' => $secondaryWeaponName
-          ];
+        ];
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * hitting chance of attacker
+     * @param $preparedForAttack
+     * @return \Illuminate\Http\Response boolean
      */
-    public function selectedWeaponName($userId, $weaponId)
-    {
+    public function isChanceSuccess($preparedForAttack) {
+        $genrateRandom = mt_rand(1, 100);
+        $hitRatio = (int) $this->hitRatio($preparedForAttack);
+    return $genrateRandom <= (int) $hitRatio;
+    }
+
+    /**
+     * decrement the HP of loser of hit in attack
+     * @param $userId, $damageCalculation
+     * @return \Illuminate\Http\Response boolean
+     */
+    public function doHPDown($userId, $damageCalculation) {
+        return $this->userStats->decrementHP($userId, $damageCalculation);
+    }
+
+    /**
+     * select weapon for attack by both player for attack
+     * @param $userId, $weaponId
+     * @return \Illuminate\Http\Response boolean or throw expection
+     */
+    public function selectedWeaponName($userId, $weaponId) {
         $weapons = $this->equippedWeapons($userId);
         $correctWeaponSelected = (int) $weapons['primaryWeaponId']  === (int) $weaponId || (int) $weapons['secondaryWeaponId']  === (int) $weaponId;
 
@@ -229,15 +338,22 @@ class AttacksController extends Controller
     abort(403, "This weapon isn't selectable");
     }
 
-
-    public function equippedWeaponAttributes($itemId)
-    {
+    /**
+     * as per weapon selection get attributes of weapon
+     * @param $itemId
+     * @return \Illuminate\Http\Response array
+     */
+    public function equippedWeaponAttributes($itemId) {
         $weaponAtrributeId = $this->items->getItemAttributeById($itemId);
     return $this->weaponAttributes->getattributesById($weaponAtrributeId);
     }
 
-    public function damage($preparedForAttack)
-    {
+    /**
+     * calculation of damage
+     * @param $preparedForAttack
+     * @return \Illuminate\Http\Response int
+     */
+    public function damageCalculation($preparedForAttack) {
 
         if ($preparedForAttack['turnNumber'] % 2)
         {
@@ -249,22 +365,43 @@ class AttacksController extends Controller
         $preparedForAttack['defenderStats']['defense']) * (rand(8000, 12000) / 10000);
     }
 
-    public function hitRatio($preparedForAttack)
-    {
+    /**
+     * calculation of hitratio
+     * @param $preparedForAttack
+     * @return \Illuminate\Http\Response float
+     */
+    public function hitRatio($preparedForAttack) {
         return min(50 * $preparedForAttack['attackerStats']['agility'] / $preparedForAttack['defenderStats']['agility'] , 95);
     }
 
-    public function ciritalHit($hitRatio)
-    {
+    /**
+     * calculation of cirital hit
+     * @param $hitRatio
+     * @return \Illuminate\Http\Response float
+     */
+    public function ciritalHit($hitRatio) {
         return ($hitRatio + $this->attacker->level / 2) / 10;
     }
 
-    public function getFightStats($userId)
-    {
+    /**
+     * for get the players fighting stats
+     * @param $userId
+     * @return \Illuminate\Http\Response array
+     */
+    public function getFightStats($userId) {
         $strength = $this->userStats->getStrength($userId);
         $agility = $this->userStats->getAgility($userId);
         $defense = $this->userStats->getDefense($userId);
         $hp = $this->userStats->getHp($userId);
     return ['strength' => $strength, 'agility' => $agility, 'defense' => $defense, 'HP' => $hp];
+    }
+
+    /**
+     * check the hp of player
+     * @param $userId
+     * @return \Illuminate\Http\Response string
+     */
+    public function isHP($userId) {
+        return $this->userStats->getHp($userId);
     }
 }

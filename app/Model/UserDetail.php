@@ -203,6 +203,22 @@ class UserDetail extends Model
      * @param  array  $userIda
      * @return \App\User
      */
+    public function addHospitalTime(int $userId, $newHospitalTime)
+    {
+        try {
+            return $this->where(['user_id' => $userId])->update(['hospital'=> $newHospitalTime]);
+        } catch (Throwable $e) {
+            $e->getMessage();
+            report($e);
+        }
+    }
+
+    /**
+     * Create a new userDetails instance after a valid registration.
+     *
+     * @param  array  $userIda
+     * @return \App\User
+     */
     public function busted(int $busterId)
     {
         try {
