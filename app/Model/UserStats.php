@@ -206,5 +206,16 @@ class UserStats extends Model
     {
         return $this->where('user_id', $userId)->decrement('hp', $newHP);;
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function decrementEnergy(int $userId, $newEnergy)
+    {
+        return $this->where('user_id', $userId)->decrement('energy', $newEnergy);;
+    }
 }
 

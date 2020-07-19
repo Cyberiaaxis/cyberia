@@ -68,6 +68,11 @@ class AttacksController extends Controller
     public function preparationForAttack($request) {
         $this->canAttack();
         $nextTurnAssignment = $this->turn();
+        // dd($nextTurnAssignment);
+        if((int)$nextTurnAssignment === 1){
+            $this->consumeEnergy($this->attacker->id);
+        }
+
         $turnOwner = $this->doTurn($nextTurnAssignment);
         $selectedAttackerWeapon = $this->selectedWeaponName($this->attacker->id, $request->weaponId );
         $defenderWeaponId = $this->equippedWeapons($this->defender->id);
@@ -114,6 +119,18 @@ class AttacksController extends Controller
         ] ;
     }
 
+
+    /**
+     * consume the energy for attack
+     * @param  $userId
+     * @return \Illuminate\Http\Response string
+     */
+    public function consumeEnergy($userId)
+    {
+        $consumeEnergyValue  = (int) ($this->userStats->getMaxEnergy($userId) / 3);
+        $this->userStats->decrementEnergy($userId, $consumeEnergyValue);
+    }
+
     /**
      * add attack log in storage
      * @param
@@ -155,9 +172,9 @@ class AttacksController extends Controller
      * @return \Illuminate\Http\Response session
      */
     public function turn() {
-        $turn = session('oldTurnNumber');
+        $turn = session('oldTurnNumber', 0);
         $countturn = $turn+1;
-        session()->flash('oldTurnNumber', $countturn);
+        session()->put('oldTurnNumber', $countturn);
     return $countturn;
     }
 
@@ -212,6 +229,7 @@ class AttacksController extends Controller
     public function hospitalize($userId) {
         $number = mt_rand(1,5);
         $duration = $this->carbon->now()->addHours($number);
+        session()->forget('oldTurnNumber');
     return $this->userDetails->addHospitalTime($userId, $duration);
     }
 
@@ -225,6 +243,7 @@ class AttacksController extends Controller
         $number = mt_rand(1, 5);
         $duration = $this->carbon->now()->addHours($number);
         $this->hitresult['message'] .= "You successfully done settlement";
+        session()->forget('oldTurnNumber');
     return $this->attackLog($this->hitresult);
     }
 
@@ -246,6 +265,7 @@ class AttacksController extends Controller
         }
 
         $this->hitresult['message'] .= $message;
+        session()->forget('oldTurnNumber');
     return $this->attackLog($this->hitresult);
     }
 
@@ -258,6 +278,7 @@ class AttacksController extends Controller
         $number = mt_rand(20,30);
         $duration = $this->carbon->now()->addMinutes($number);
         $this->userDetails->addHospitalTime($userId, $duration);
+        session()->forget('oldTurnNumber');
     return $this->attackLog($this->hitresult['message']);
     }
 
@@ -270,6 +291,7 @@ class AttacksController extends Controller
         $number = mt_rand(20, 25);
         $duration = $this->carbon->now()->addMinutes($number);
         $this->userDetails->addHospitalTime($userId, $duration);
+        session()->forget('oldTurnNumber');
     return $this->attackLog($this->hitresult['message']);
     }
 
@@ -282,6 +304,7 @@ class AttacksController extends Controller
         $number = mt_rand(10, 20);
         $duration = $this->carbon->now()->addMinutes($number);
         $this->userDetails->addHospitalTime($userId, $duration);
+        session()->forget('oldTurnNumber');
     return $this->attackLog($this->hitresult['message']);
     }
 
