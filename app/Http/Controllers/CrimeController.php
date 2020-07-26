@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use App\Model\{Crime, UserStats, CrimeMessage, UserCrime};
-use Dotenv\Regex\Success;
 use Illuminate\Http\Request;
 
 class CrimeController extends Controller
 {
-    protected $crime;
 
     protected $mode = ['easy', 'medium', 'hard'];
     protected $chances = [
@@ -17,6 +14,30 @@ class CrimeController extends Controller
         'medium' => ['success' => 50, 'fail' => 20, 'missed' => 30],
         'hard' => ['success' => 25, 'fail' => 50, 'missed' => 25]
     ];
+
+    /**
+     * Where to redirect users after registration.
+     *
+     * @var string
+     */
+    protected $crime,
+              $usercrime,
+              $crimeMessage,
+              $userStats;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+       // $this->middleware('guest');
+        $this->crime = new Crime();
+        $this->usercrime =  new UserCrime();
+        $this->crimeMessage = new CrimeMessage();
+        $this->userStats = new UserStats();
+    }
 
     /**
      * Display a listing of the resource.
@@ -27,8 +48,8 @@ class CrimeController extends Controller
     {
         $userLevel = auth()->user()->userdetails->level_id;
         $locationId = auth()->user()->userdetails->location_id;
-        $crime = new Crime();
-        $crimes = $crime->crimesList($locationId, $userLevel);
+        $crimes = $this->crime->crimesList($locationId, $userLevel);
+
         if ($request->ajax()) {
             return response()->json(['html' => view('ajax.crime', ['crimes' => $crimes])->render()]);
         }
@@ -55,7 +76,6 @@ class CrimeController extends Controller
     public function store(Request $request)
     {
         $request->validate([ 'crime_id' => ['required','int'] ]);
-        $this->crime = new Crime();
 
         if(!$this->canDoCrime(auth()->user()->stats->nerve, $request->crime_id))
         {
@@ -67,7 +87,6 @@ class CrimeController extends Controller
         $statusKey = 'fail';
         $statusType = 'bg-danger';
 
-
         if($successRate < 13 && $successRate > 10  ){
             $statusKey = 'success';
             $statusType = 'bg-success';
@@ -75,21 +94,18 @@ class CrimeController extends Controller
             $statusKey = 'missed';
             $statusType = 'bg-warning';
         }
-//1000 ** (1 / 3)  https://paste.gg/p/anonymous/5cd1ee6a26df41b2a601d794567e5c1e  https://paste.ubuntu.com/p/ZqM4mPCsft/
-        $message = new CrimeMessage();
-        $message = $message->message($statusKey, $request->crime_id);
+
+        $crimeMessage = $this->crimeMessage->message($statusKey, $request->crime_id);
 
         if($statusKey ==! 'missed') {
             $user = ['user_id' => auth()->user()->id, 'crime_id' => $request->crime_id];
-            $userCrime = new UserCrime();
-            $userCrime->addCrime($user, $statusKey);
+            $this->userCrime->addCrime($user, $statusKey);
 
         }
 
-        $userStats = new UserStats();
-        $userStats->decrementNerve(auth()->user()->id, auth()->user()->stats->nerve);
+        $this->userStats->decrementNerve(auth()->user()->id, auth()->user()->stats->nerve);
 
-    return response()->json(['html' => view('ajax.crime', ['statusKey' => $statusKey, 'statusType' => $statusType, 'message' => $message])->render()]);
+    return response()->json(['html' => view('ajax.crime', ['statusKey' => $statusKey, 'statusType' => $statusType, 'message' => $crimeMessage])->render()]);
     }
 
     /**
@@ -148,14 +164,10 @@ class CrimeController extends Controller
      */
     public function canDoCrime($userNerve, $crimeId)
     {
-        $nerve =  $this->crime->getNerve($crimeId);
-
-        if ($userNerve <= $nerve && $userNerve > 0 ) {
-            return true;
-        }
-
-    return false;
+        $getRequiredNerve =  $this->crime->getNerve($crimeId);
+    return $userNerve >= $getRequiredNerve;
     }
+
     /**
      * Show the form for editing the specified resource.
      *

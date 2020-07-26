@@ -88,7 +88,7 @@
                 <i class="fa fa-bars"></i>
             </button>
             <ul class="c-header-nav d-md-down-none">
-                <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#"><i class="fa fa-dashboard mfe-2"></i> Dashboard</a></li>
+                <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="/home"><i class="fa fa-dashboard mfe-2"></i> Dashboard</a></li>
                 <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#"><i class="fa fa-users mfe-2"></i> Explore</a></li>
                 <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#"><i class="fa fa-cogs mfe-2"></i> Settings</a></li>
             </ul>

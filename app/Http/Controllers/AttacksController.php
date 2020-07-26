@@ -69,7 +69,8 @@ class AttacksController extends Controller
         $this->canAttack();
         $nextTurnAssignment = $this->turn();
         // dd($nextTurnAssignment);
-        if((int)$nextTurnAssignment === 1){
+        if((int)$nextTurnAssignment === 1)
+        {
             $this->consumeEnergy($this->attacker->id);
         }
 
@@ -125,14 +126,13 @@ class AttacksController extends Controller
      * @param  $userId
      * @return \Illuminate\Http\Response string
      */
-    public function consumeEnergy($userId)
-    {
+    public function consumeEnergy($userId) {
         $consumeEnergyValue  = (int) ($this->userStats->getMaxEnergy($userId) / 3);
         $this->userStats->decrementEnergy($userId, $consumeEnergyValue);
     }
 
     /**
-     * add attack log in storage
+     * add attack log in storage                                                    \
      * @param
      * @return \Illuminate\Http\Response boolean
      */

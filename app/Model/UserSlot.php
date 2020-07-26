@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserSlot extends Model
 {
 
+    public $timestamps = false;
     /**
      * The attributes that are mass assignable.
      *
@@ -37,11 +38,21 @@ class UserSlot extends Model
         return $this->itemEffects()->where($column, $column)->select($column)->value($column);
     }
 
-
     public function getUserWeaponsById(int $userId)
     {
         return $this->where('user_id', $userId)->first();
     }
 
-
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $request
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function addUserSlots($userId)
+    {
+        return $this->create([
+            'user_id' => $userId,
+        ]);
+    }
 }

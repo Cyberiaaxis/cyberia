@@ -19,8 +19,8 @@ $route->view('/home','player.index')->middleware('auth');
 // Route::get('crime', 'CrimeController@index')->middleware('auth');
 
 // $route->group(
-//     ['middleware' => ['auth', 'verified']],
-$route->group(['middleware' => ['verified']], function($route){
+//     ,
+$route->group(['middleware' => ['auth', 'verified']], function($route){
         $route->resources([
                         '/crime'=>'CrimeController',
                         '/player' => 'PlayerController',
@@ -67,7 +67,7 @@ $route->group(['middleware' => ['verified']], function($route){
 });
     $route->group(['middleware' => ['auth']], function($route){
     Route::resources([
-        '/playeritems'=>'PlayerItemsController',
+        // '/playeritems'=>'PlayerItemsController',
     ]);
 });
 

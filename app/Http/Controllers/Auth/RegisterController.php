@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Model\{User, UserDetail, UserStats};
+use App\Model\{User, UserDetail, UserRealEstate, UserSlot, UserStats};
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Hash, Validator};
@@ -38,7 +38,11 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $user = NULL;
+    protected $user,
+              $userDetail,
+              $userStats,
+              $userSlots,
+              $userRealEstate;
 
     /**
      * Create a new controller instance.
@@ -48,6 +52,11 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->user = new User();
+        $this->userDetail = new UserDetail();
+        $this->userStats = new UserStats();
+        $this->userSlots = new UserSlot();
+        $this->userRealEstate = new UserRealEstate();
     }
 
 
@@ -75,22 +84,21 @@ class RegisterController extends Controller
      */
     protected function create($request)
     {
-        $user = new User();
-        $user->getConnection()->beginTransaction();
+        $this->user->getConnection()->beginTransaction();
 
         try {
-            $this->user  = $user->addUser($request);
-            $userDetail = new UserDetail();
-            $userDetail->addUserDetails($this->user->id);
-            $userStats = new UserStats();
-            $userStats->addUserStats($this->user->id);
+            $this->user  = $this->user->addUser($request);
+            $this->userDetail->addUserDetails($this->user->id);
+            $this->userStats->addUserStats($this->user->id);
+            $this->userSlots->addUserSlots($this->user->id);
+            $this->userRealEstate->addUserRealEstate($this->user->id, 1);
 
-            $user->getConnection()->commit();
+            $this->user->getConnection()->commit();
         } catch (Throwable $e) {
-            $user->getConnection()->rollback();
+            $this->user->getConnection()->rollback();
             report($e);
             $e->getMessage();
-            // return abort(404);
+            return abort(500, $e);
         }
     return $this->user;
     }
