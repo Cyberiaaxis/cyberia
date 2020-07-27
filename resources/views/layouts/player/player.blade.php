@@ -26,6 +26,7 @@
         <ul class="c-sidebar-nav mt-1">
             <li class="c-sidebar-nav-item ml-2 mr-2">
                 <div class="p-1">
+
                     Energy {{ auth()->user()->stats->energy }} / {{ auth()->user()->stats->max_energy }}
                     <div class="progress progress-sm">
                         <div class="progress-bar bg-danger" role="progressbar" style="width: {{ (auth()->user()->stats->energy / auth()->user()->stats->max_energy * 100) }}%;"></div>

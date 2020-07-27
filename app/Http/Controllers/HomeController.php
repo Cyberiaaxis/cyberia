@@ -27,24 +27,7 @@ class HomeController extends Controller
         return view('home');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getUserStats()
-    {
-        view()->composer(['*player'], function ($view) {
-            $userStats = null;
 
-            if (auth()->check())
-            {
-                $userStats = new UserStats();
-                $userStats =  $userStats->userStats(auth()->user()->id);
-            }
 
-            $view->with(['userStats' => $userStats]);
-        });
 
-    }
 }

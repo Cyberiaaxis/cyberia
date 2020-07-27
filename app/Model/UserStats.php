@@ -147,7 +147,7 @@ class UserStats extends Model
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getEnergy($userId)
+    public function getEnergy($userId) : int
     {
         return $this->where('user_id', $userId)->value('energy');
     }
@@ -158,7 +158,7 @@ class UserStats extends Model
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getMaxEnergy(int $userId)
+    public function getMaxEnergy(int $userId): int
     {
         return $this->where('user_id', $userId)->value('max_energy');
     }
