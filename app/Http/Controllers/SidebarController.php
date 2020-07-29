@@ -36,7 +36,7 @@ class SidebarController extends Controller
      */
     public function userBarMaxEnergy($userId)
     {
-        return $this->userBarStats->getEnergy($userId);
+        return $this->userStats->getMaxEnergy($userId);
     }
 
     /**
@@ -46,7 +46,7 @@ class SidebarController extends Controller
      */
     public function userBarEnergy($userId)
     {
-        return $this->userBarStats->getMaxEnergy($userId);
+        return $this->userStats->getEnergy($userId);
     }
 
     /**
@@ -80,7 +80,7 @@ class SidebarController extends Controller
      */
     public function userBarMaxHP($userId)
     {
-        return $this->userBarStats->getHp($userId);
+        return $this->userStats->getMaxHp($userId);
     }
 
     /**
@@ -90,7 +90,7 @@ class SidebarController extends Controller
      */
     public function userBarHP($userId)
     {
-        return $this->userBarStats->getMaxHp($userId);
+        return $this->userStats->getHp($userId);
     }
 
     /**
@@ -124,7 +124,7 @@ class SidebarController extends Controller
      */
     public function userBarMaxNerve($userId)
     {
-        return $this->userBarStats->maxNerve($userId);
+        return $this->userStats->maxNerve($userId);
     }
 
     /**
@@ -134,7 +134,7 @@ class SidebarController extends Controller
      */
     public function userBarNerve($userId)
     {
-        return $this->userBarStats->haveNerve($userId);
+        return $this->userStats->haveNerve($userId);
     }
 
     /**
@@ -161,4 +161,22 @@ class SidebarController extends Controller
     return ['userMaxNerve' => $userMaxNerve, 'userNerve' => $userNerve, 'userNervefil' => $userNervefill];
     }
 
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function bars()
+    {
+        $energyBar  = $this->energyBar($this->user->id);
+        $nerveBar = $this->nerveBar($this->user->id);
+        $hpBar = $this->hpBar($this->user->id);
+        $bars = ['energyBar' => $energyBar, 'nerveBar' => $nerveBar, 'hpBar' => $hpBar];
+    return response()->json(['html' => view('ajax.bars',$bars)->render()]);
+    }
+
+
+
 }
+
+

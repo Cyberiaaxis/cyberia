@@ -34,6 +34,7 @@ $route->group(['middleware' => ['auth', 'verified']], function($route){
                         // '/inventory' => 'InventoryController',
                         // '/attacks' => 'AttacksController',
                     ]);
+        $route->get('sidebar', 'SidebarController@bars')->name('sidebar');
         $route->get('job/{job}', 'JobController@join')->name('job');
         $route->get('jobs/leave', 'JobController@leave')->name('job.leave');
         $route->get('jobs/benefit', 'JobController@getJobBenefit')->name('job.benefit');

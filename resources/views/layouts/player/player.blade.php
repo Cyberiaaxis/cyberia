@@ -23,27 +23,10 @@
         <div class="c-sidebar-brand flex-sm-row bg-transparent">
             {{ config('app.name') }}
         </div>
-        <ul class="c-sidebar-nav mt-1">
-            <li class="c-sidebar-nav-item ml-2 mr-2">
-                <div class="p-1">
 
-                    Energy {{ auth()->user()->stats->energy }} / {{ auth()->user()->stats->max_energy }}
-                    <div class="progress progress-sm">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: {{ (auth()->user()->stats->energy / auth()->user()->stats->max_energy * 100) }}%;"></div>
-                    </div>
-                </div>
-                <div class="p-1">
-                    Nerve {{ auth()->user()->stats->nerve }} / {{ auth()->user()->stats->max_nerve }}
-                    <div class="progress progress-sm">
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: {{ (auth()->user()->stats->nerve /  auth()->user()->stats->max_nerve * 100) }}%;"></div>
-                    </div>
-                </div>
-                <div class="p-1">
-                    HP {{ auth()->user()->stats->hp }} / {{ auth()->user()->stats->max_hp }}
-                    <div class="progress progress-sm">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: {{ (auth()->user()->stats->hp / auth()->user()->stats->max_hp * 100) }}%;"></div>
-                    </div>
-                </div>
+        <ul class="c-sidebar-nav mt-1">
+            <li class="bars c-sidebar-nav-item ml-2 mr-2">
+
             </li>
             <li class="c-sidebar-nav-title m-0">Information</li>
             <li class="c-sidebar-nav-item">
@@ -309,7 +292,17 @@
     </div>
 
     @include('partials.player.footer') @yield('js')
+    <script src="{{ asset('js/requestProcess.js') }}" type="text/javascript"></script>
     <script>
+    function reloadBars(){
+        $.get('/sidebar')
+        .done(response => {
+            return $('.bars').html(response.html);
+        })
+        .fail(response => { return response });
+    }
+    // setInterval(reloadBars, 5000);
+
     function updateTime() {
     const now = "{{ time() }}";
     const currentTime = new Date();
@@ -318,6 +311,7 @@
         document.getElementById('time').innerHTML=v;
     }
     updateTime();
+
 </script>
 </body>
 
