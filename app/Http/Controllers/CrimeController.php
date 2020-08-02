@@ -79,7 +79,7 @@ class CrimeController extends Controller
 
         if(!$this->canDoCrime(auth()->user()->stats->nerve, $request->crime_id))
         {
-            return "You don't have enough nerve";
+            return response()->json(['html' => view('ajax.crime', ['error' => "You don't have enough nerve"])->render()]);
         }
 
         // return $this->getDifficulty($request->crime_id);

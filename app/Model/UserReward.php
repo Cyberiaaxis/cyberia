@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Throwable;
 
 class UserReward extends Model
 {
@@ -26,5 +27,20 @@ class UserReward extends Model
     public function medal()
     {
         return $this->belongsTo(Medal::class);
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getTotalAwards(int $userId): int
+    {
+        try {
+            return  $this->where('user_id', $userId)->count();
+        } catch (Throwable $e) {
+            $e->getMessage();
+            report($e);
+        }
     }
 }

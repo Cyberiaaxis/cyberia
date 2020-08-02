@@ -13,10 +13,10 @@ class Area extends Model
      * @param  array  $userIda
      * @return \App\User
      */
-    public function getAreaById($id)
+    public function getAreaById(int $id) : string
     {
         try {
-            return $this->find($id);
+            return  $this->where(['id' => $id])->value('name');
         } catch (Throwable $e) {
             $e->getMessage();
             report($e);

@@ -119,7 +119,7 @@ class UserDetail extends Model
      * @param  array  $userIda
      * @return \App\User
      */
-    public function getLocation(int $userId)
+    public function getLocation(int $userId) : int
     {
         try {
             return  $this->where(['user_id' => $userId])->value('location_id');
@@ -139,6 +139,22 @@ class UserDetail extends Model
     {
         try {
             return  $this->where(['user_id' => $userId])->value('travel_started');
+        } catch (Throwable $e) {
+            $e->getMessage();
+            report($e);
+        }
+    }
+
+    /**
+     * Create a new userDetails instance after a valid registration.
+     *
+     * @param  array  $userIda
+     * @return \App\User
+     */
+    public function getActiveEstate(int $userId) : int
+    {
+        try {
+            return  $this->where(['user_id' => $userId])->value('realestate');
         } catch (Throwable $e) {
             $e->getMessage();
             report($e);
@@ -236,6 +252,22 @@ class UserDetail extends Model
     {
         try {
             return  $this->where(['user_id' => $bustedId])->update(['jail', $datetime]);
+        } catch (Throwable $e) {
+            $e->getMessage();
+            report($e);
+        }
+    }
+
+    /**
+     * Create a new userDetails instance after a valid registration.
+     *
+     * @param  array  $userIda
+     * @return \App\User
+     */
+    public function getRankId(int $userId) : int
+    {
+        try {
+            return  $this->where(['user_id' => $userId])->value('rank_id');
         } catch (Throwable $e) {
             $e->getMessage();
             report($e);

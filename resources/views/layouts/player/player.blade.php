@@ -17,7 +17,7 @@
         }
     </style>
 </head>
-
+{{-- {{dd('Energy '.$userStats->getEnergy(1).' / '.$userStats->getMaxEnergy(1))}} --}}
 <body class="c-app c-dark-theme">
     <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show text-center" id="sidebar">
         <div class="c-sidebar-brand flex-sm-row bg-transparent">
@@ -294,23 +294,29 @@
     @include('partials.player.footer') @yield('js')
     <script src="{{ asset('js/requestProcess.js') }}" type="text/javascript"></script>
     <script>
-    function reloadBars(){
-        $.get('/sidebar')
-        .done(response => {
-            return $('.bars').html(response.html);
-        })
-        .fail(response => { return response });
-    }
-    // setInterval(reloadBars, 5000);
+    $(function() {
+        function bars() {
+            $.get('/sidebar')
+            .done(response => {
+                return $('.bars').html(response.html);
+            })
+            .fail(response => {
+                return response
+            });
+        }
+        bars();
+        setInterval(bars, 5000);
+        // function updateTime() {
+        // const now = "{{ time() }}";
+        // const currentTime = new Date();
+        // const v = currentTime.toLocaleString();
+        // setTimeout("updateTime()",1000);
+        //     document.getElementById('time').innerHTML=v;
+        // }
+        // updateTime();
+     });
 
-    function updateTime() {
-    const now = "{{ time() }}";
-    const currentTime = new Date();
-    const v = currentTime.toLocaleString();
-    setTimeout("updateTime()",1000);
-        document.getElementById('time').innerHTML=v;
-    }
-    updateTime();
+
 
 </script>
 </body>

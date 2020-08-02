@@ -16,11 +16,11 @@
                     <li class="list-group-item border-0">Points :</li>
                 </ul>
                 <ul class="list-group w-50">
-                    {{-- <li class="list-group-item border-0">{{ auth()->user()->name }}</li>
+                    <li class="list-group-item border-0">{{ auth()->user()->name }}</li>
                     <li class="list-group-item border-0">{{ auth()->user()->userdetails->money }}</li>
                     <li class="list-group-item border-0">{{ auth()->user()->userdetails->rank->name }}</li>
                     <li class="list-group-item border-0">{{ auth()->user()->userdetails->level->name }}</li>
-                    <li class="list-group-item border-0">{{ auth()->user()->userdetails->points }}</li> --}}
+                    <li class="list-group-item border-0">{{ auth()->user()->userdetails->points }}</li>
                 </ul>
             </div>
         </div>
@@ -57,14 +57,14 @@
             <li class="list-group-item border-left-0 border-bottom-0">Total</li>
         </ul>
         @php
-        // $totalLost = auth()->user()->attacks->attacks - auth()->user()->attacks->attacks_success + auth()->user()->attacks->defenses - auth()->user()->attacks->defenses_success;
+        $totalLost = auth()->user()->attacks->attacks - auth()->user()->attacks->attacks_success + auth()->user()->attacks->defenses - auth()->user()->attacks->defenses_success;
         @endphp
-        {{-- <ul class="list-group w-25">
+        <ul class="list-group w-25">
             <li class="list-group-item border-left-0 border-top-0">Lost</li>
             <li class="list-group-item border-left-0">{{ auth()->user()->attacks->attacks - auth()->user()->attacks->attacks_success }}</li>
             <li class="list-group-item border-left-0">{{  auth()->user()->attacks->defenses - auth()->user()->attacks->defenses_success }}</li>
             <li class="list-group-item border-left-0 border-bottom-0">{{ $totalLost }}</li>
-        </ul> --}}
+        </ul>
         @php
         // $totalWon = auth()->user()->attacks->attacks_success + auth()->user()->attacks->defenses_success;
         @endphp

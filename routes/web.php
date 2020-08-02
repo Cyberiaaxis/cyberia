@@ -14,7 +14,7 @@ $route->view('/profile', 'player.profile');
 $route->view('/attack', 'player.attack');
 $route->view('/gang', 'player.gang');
 $route->view('/forum', 'player.forums.index');
-$route->view('/home','player.index')->middleware('auth');
+
 // Route::view('/crime','player.crime')->middleware('auth');
 // Route::get('crime', 'CrimeController@index')->middleware('auth');
 
@@ -34,6 +34,7 @@ $route->group(['middleware' => ['auth', 'verified']], function($route){
                         // '/inventory' => 'InventoryController',
                         // '/attacks' => 'AttacksController',
                     ]);
+        $route->view('home', 'player.index')->name('sidebar');
         $route->get('sidebar', 'SidebarController@bars')->name('sidebar');
         $route->get('job/{job}', 'JobController@join')->name('job');
         $route->get('jobs/leave', 'JobController@leave')->name('job.leave');

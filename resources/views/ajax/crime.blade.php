@@ -1,3 +1,6 @@
+@isset($error)
+    <div class="alert alert-danger">{{ $error }}</div>
+@endisset
 @isset($crimes)
 <ul class="list-group crime accordion">
     <li class="list-group">
