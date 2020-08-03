@@ -75,26 +75,5 @@ class Crime extends Model
         return $this->where('parent_id', $id)->toSql();
     }
 
-    /**
-     * Scope a query to only include crimes of a given type.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  mixed  $type
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function getSuccessCrimes(int $userId) : int
-    {
-        return $this->where('user_id', $userId)->value('success');
-    }
-    /**
-     * Scope a query to only include crimes of a given type.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  mixed  $type
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function getFailCrimes(int $userId): int
-    {
-        return $this->where('user_id', $userId)->value('fail');
-    }
+
 }

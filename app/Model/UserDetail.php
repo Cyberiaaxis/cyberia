@@ -135,6 +135,22 @@ class UserDetail extends Model
      * @param  array  $userIda
      * @return \App\User
      */
+    public function getLevelId(int $userId): int
+    {
+        try {
+            return  $this->where(['user_id' => $userId])->value('level_id');
+        } catch (Throwable $e) {
+            $e->getMessage();
+            report($e);
+        }
+    }
+
+    /**
+     * Create a new userDetails instance after a valid registration.
+     *
+     * @param  array  $userIda
+     * @return \App\User
+     */
     public function getReaminTravelTime(int $userId)
     {
         try {

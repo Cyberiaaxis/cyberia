@@ -21,5 +21,5 @@ class Area extends Model
             $e->getMessage();
             report($e);
         }
-    }    //
+    }
 }

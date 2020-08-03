@@ -22,6 +22,7 @@ $route->view('/forum', 'player.forums.index');
 //     ,
 $route->group(['middleware' => ['auth', 'verified']], function($route){
         $route->resources([
+                        '/home' => 'HomeController',
                         '/crime'=>'CrimeController',
                         '/player' => 'PlayerController',
                         '/profile' => 'UsersController',
@@ -34,7 +35,7 @@ $route->group(['middleware' => ['auth', 'verified']], function($route){
                         // '/inventory' => 'InventoryController',
                         // '/attacks' => 'AttacksController',
                     ]);
-        $route->view('home', 'player.index')->name('sidebar');
+        // $route->view('home', 'player.index')->name('home');
         $route->get('sidebar', 'SidebarController@bars')->name('sidebar');
         $route->get('job/{job}', 'JobController@join')->name('job');
         $route->get('jobs/leave', 'JobController@leave')->name('job.leave');

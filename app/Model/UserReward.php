@@ -34,7 +34,7 @@ class UserReward extends Model
      *
      * @return \Illuminate\Http\Response
      */
-    public function getTotalAwards(int $userId): int
+    public function getTotalRewards(int $userId): int
     {
         try {
             return  $this->where('user_id', $userId)->count();

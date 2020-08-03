@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\{UserReward, UserDetail, UserCrime, User, Rank, Attack, Area, RealEstate, UserStats};
+use App\Model\{UserReward, UserDetail, UserCrime, User, Rank, Attack, Area, Level, RealEstate, UserStats};
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -35,6 +35,9 @@ class HomeController extends Controller
             $this->loginUser = auth()->user();
             return $next($request);
         });
+
+        $this->area = new Area();
+        $this->level = new Level();
         $this->rank = new Rank();
         $this->user = new User();
         $this->userDetails = new UserDetail();
@@ -53,10 +56,55 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-        $name = $this->user->getUserNameById($this->loginUser->id);
-
-    return view('home');
+        $name = $this->name();
+        $rank = $this->rank();
+        $activeHouse = $this->activeHouse();
+        $area = $this->area();
+        $totalAwards = $this->totalAwards();
+        $level = $this->level();
+        $totalCrimes = $this->totalCrimes();
+        $asAttackerLost = $this->asAttackerLost();
+        $asDefenderLost = $this->asDefenderLost();
+        $totalLost = $this->totalLost();
+        $asAttackerWon = $this->asAttackerWon();
+        $asDefenderWon = $this->asDefenderWon();
+        $totalWon = $this->totalWon();
+        $asAttackerSettlement = $this->asAttackerSettlement();
+        $asDefenderSettlement = $this->asDefenderSettlement();
+        $totalSettlement = $this->totalSettlement();
+        $strength = $this->strength();
+        $agility = $this->agility();
+        $defense = $this->defense();
+        $endurance = $this->endurance();
+        $asAttackerEscaped = $this->asAttackerEscaped();
+        $asDefenderEscaped = $this->asDefenderEscaped();
+        $totalEscaped = $this->totalEscaped();
+        $details =  [
+            "name" => $name ,
+            "rank" => $rank,
+            "level" => $level,
+            "activeHouse" => $activeHouse,
+            "area" => $area,
+            "totalAwards" => $totalAwards,
+            "totalCrimes" => $totalCrimes,
+            "asAttackerLost" => $asAttackerLost,
+            "asDefenderLost" => $asDefenderLost,
+            "totalLost" => $totalLost,
+            "asAttackerWon" => $asAttackerWon,
+            "asDefenderWon" => $asDefenderWon,
+            "totalWon" => $totalWon,
+            "asAttackerSettlement" => $asAttackerSettlement,
+            "asDefenderSettlement" => $asDefenderSettlement,
+            "totalSettlement" => $totalSettlement,
+            "strength" => $strength,
+            "agility" => $agility,
+            "defense" => $defense,
+            "endurance" => $endurance,
+            "asAttackerEscaped" => $asAttackerEscaped,
+            "asDefenderEscaped" => $asDefenderEscaped,
+            "totalEscaped" => $totalEscaped,
+        ];
+    return view('player.index', $details);
     }
 
     /**
@@ -78,6 +126,17 @@ class HomeController extends Controller
     {
         $rankId = $this->userDetails->getRankId($this->loginUser->id);
     return $this->rank->getRankById($rankId);
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function level()
+    {
+        $levelId = $this->userDetails->getLevelId($this->loginUser->id);
+    return $this->level->getLevelById($levelId);
     }
 
     /**
@@ -139,14 +198,36 @@ class HomeController extends Controller
      */
     public function asAttackerLost()
     {
-        $attack = new Attack();
         $totalAttacks = $this->totalAttacks();
-        $asAttackerWon = $attack->getAttackSuccess(auth()->user()->id);
-        $asAttackerSettlement = $attack->getSettlementAttacker(auth()->user()->id);
-        $asAttackerEscaped = $attack->getEscapedAttacker(auth()->user()->id);
+        $asAttackerWon = $this->asAttackerWon();
+        $asAttackerSettlement = $this->asAttackerSettlement();
+        $asAttackerEscaped = $this->asAttackerEscaped();
     return $totalAttacks - ($asAttackerWon + $asAttackerSettlement + $asAttackerEscaped);
     }
 
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function totalLost()
+    {
+        $asAttackerLost = $this->asAttackerLost();
+        $asDefenderLost = $this->asDefenderLost();
+    return ($asAttackerLost + $asDefenderLost);
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function totalWon()
+    {
+        $asAttackerWon = $this->asAttackerWon();
+        $asDefenderWon = $this->asDefenderWon();
+    return ($asAttackerWon + $asDefenderWon);
+    }
     /**
      * Show the application dashboard.
      *
@@ -194,8 +275,11 @@ class HomeController extends Controller
      */
     public function asDefenderLost()
     {
-        // $attack = new Attack();
-        // return $attack->getDefenseSuccess(auth()->user()->id);
+        $totalDefender = $this->totalDefender();
+        $asDefenderWon = $this->asDefenderWon();
+        $asDefenderSettlement = $this->asDefenderSettlement();
+        $asDefenderEscaped = $this->asDefenderEscaped();
+    return $totalDefender - ($asDefenderWon + $asDefenderSettlement + $asDefenderEscaped);
     }
 
     /**
@@ -203,7 +287,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function asDefender()
+    public function totalDefender()
     {
         return $this->attack->getDefenses($this->loginUser->id);
     }
@@ -223,8 +307,70 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function totalEscaped()
+    {
+        return $this->asDefenderEscaped() + $this->asAttackerEscaped();
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function asDefenderSettlement()
     {
         return $this->attack->getSettlementDefender($this->loginUser->id);
     }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function totalSettlement()
+    {
+        return $this->asDefenderSettlement() + $this->asAttackerSettlement();
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function strength()
+    {
+        return $this->userStats->getStrength($this->loginUser->id);
+    }
+
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function agility()
+    {
+        return $this->userStats->getAgility($this->loginUser->id);
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function endurance()
+    {
+        return $this->userStats->getEndurance($this->loginUser->id);
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function defense()
+    {
+        return $this->userStats->getDefense($this->loginUser->id);
+    }
+
 }

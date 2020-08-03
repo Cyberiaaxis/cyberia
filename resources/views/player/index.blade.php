@@ -1,4 +1,5 @@
 @extends('layouts.player.player') @section('content')
+
 <p>Home</p>
 <div class="row">
     <div class="col-sm-12">
@@ -16,10 +17,10 @@
                     <li class="list-group-item border-0">Points :</li>
                 </ul>
                 <ul class="list-group w-50">
-                    <li class="list-group-item border-0">{{ auth()->user()->name }}</li>
+                    <li class="list-group-item border-0">{{ $name }}</li>
                     <li class="list-group-item border-0">{{ auth()->user()->userdetails->money }}</li>
-                    <li class="list-group-item border-0">{{ auth()->user()->userdetails->rank->name }}</li>
-                    <li class="list-group-item border-0">{{ auth()->user()->userdetails->level->name }}</li>
+                    <li class="list-group-item border-0">{{ $rank }}</li>
+                    <li class="list-group-item border-0">{{ $level }}</li>
                     <li class="list-group-item border-0">{{ auth()->user()->userdetails->points }}</li>
                 </ul>
             </div>
@@ -35,13 +36,13 @@
                     <li class="list-group-item border-0">House :</li>
                     <li class="list-group-item border-0">Total Crime :</li>
                 </ul>
-                {{-- <ul class="list-group w-50">
-                    <li class="list-group-item border-0"> 1 </li>
+                <ul class="list-group w-50">
+                    <li class="list-group-item border-0"> {{$totalAwards}} </li>
                     <li class="list-group-item border-0">{{ auth()->user()->created_at->diffForHumans() }}</li>
-                    <li class="list-group-item border-0">{{ auth()->user()->userdetails->location->name }}</li>
-                    <li class="list-group-item border-0">{{  auth()->user()->scopeGetHouse()->name  }}</li>
-                    <li class="list-group-item border-0">200</li>
-                </ul> --}}
+                    <li class="list-group-item border-0">{{ $area }}</li>
+                    <li class="list-group-item border-0">{{ $activeHouse  }}</li>
+                    <li class="list-group-item border-0">{{ $totalCrimes }}</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -56,42 +57,30 @@
             <li class="list-group-item border-left-0">As Defender </li>
             <li class="list-group-item border-left-0 border-bottom-0">Total</li>
         </ul>
-        @php
-        $totalLost = auth()->user()->attacks->attacks - auth()->user()->attacks->attacks_success + auth()->user()->attacks->defenses - auth()->user()->attacks->defenses_success;
-        @endphp
         <ul class="list-group w-25">
             <li class="list-group-item border-left-0 border-top-0">Lost</li>
-            <li class="list-group-item border-left-0">{{ auth()->user()->attacks->attacks - auth()->user()->attacks->attacks_success }}</li>
-            <li class="list-group-item border-left-0">{{  auth()->user()->attacks->defenses - auth()->user()->attacks->defenses_success }}</li>
+            <li class="list-group-item border-left-0">{{ $asAttackerLost }}</li>
+            <li class="list-group-item border-left-0">{{  $asDefenderLost }}</li>
             <li class="list-group-item border-left-0 border-bottom-0">{{ $totalLost }}</li>
         </ul>
-        @php
-        // $totalWon = auth()->user()->attacks->attacks_success + auth()->user()->attacks->defenses_success;
-        @endphp
-        {{-- <ul class="list-group w-25">
+        <ul class="list-group w-25">
             <li class="list-group-item border-left-0 border-top-0">Won</li>
-            <li class="list-group-item border-left-0">{{ auth()->user()->attacks->attacks_success }}</li>
-            <li class="list-group-item border-left-0">{{ auth()->user()->attacks->defenses_success }}</li>
+            <li class="list-group-item border-left-0">{{ $asAttackerWon }}</li>
+            <li class="list-group-item border-left-0">{{ $asDefenderWon }}</li>
             <li class="list-group-item border-left-0 border-bottom-0">{{ $totalWon }}</li>
-        </ul> --}}
-        @php
-        // $totalSettlement =  auth()->user()->attacks->settlement_attacker + auth()->user()->attacks->settlement_defender;
-        @endphp
-        {{-- <ul class="list-group w-25">
+        </ul>
+        <ul class="list-group w-25">
             <li class="list-group-item border-left-0 border-right-0 border-top-0">Settlement</li>
-            <li class="list-group-item border-left-0">{{ auth()->user()->attacks->settlement_attacker }}</li>
-            <li class="list-group-item border-left-0">{{  auth()->user()->attacks->settlement_defender }}</li>
+            <li class="list-group-item border-left-0">{{ $asAttackerSettlement }}</li>
+            <li class="list-group-item border-left-0">{{  $asDefenderSettlement }}</li>
             <li class="list-group-item border-left-0 border-bottom-0">{{ $totalSettlement }}</li>
-        </ul> --}}
-        @php
-        // $totalRunaway =  auth()->user()->attacks->escaped_attacker  + auth()->user()->attacks->escaped_defender;
-        @endphp
-        {{-- <ul class="list-group w-25">
+        </ul>
+        <ul class="list-group w-25">
             <li class="list-group-item border-right-0 border-top-0">Run away</li>
-            <li class="list-group-item border-right-0 border-left-0"> {{ auth()->user()->attacks->escaped_attacker }}</li>
-            <li class="list-group-item border-right-0 border-left-0">{{ auth()->user()->attacks->escaped_defender }}</li>
-            <li class="list-group-item border-right-0 border-left-0 border-bottom-0">{{ $totalRunaway }}</li>
-        </ul> --}}
+            <li class="list-group-item border-right-0 border-left-0"> {{ $asAttackerEscaped }}</li>
+            <li class="list-group-item border-right-0 border-left-0">{{ $asDefenderEscaped }}</li>
+            <li class="list-group-item border-right-0 border-left-0 border-bottom-0">{{ $totalEscaped }}</li>
+        </ul>
     </div>
 </div>
 <h5 class="card-header">Stats</h5>
@@ -101,11 +90,11 @@
             <div class="card-body d-inline-flex">
                 <ul class="list-group w-50">
                     <li class="list-group-item border-left-0 border-top-0">Strength</li>
-                {{-- <li class="list-group-item border-left-0 border-bottom-0">{{ auth()->user()->stats->strength }}</li> --}}
+                <li class="list-group-item border-left-0 border-bottom-0">{{ $strength }}</li>
                 </ul>
                 <ul class="list-group w-50">
                     <li class="list-group-item border-right-0 border-top-0">Agility</li>
-                    {{-- <li class="list-group-item border-right-0 border-bottom-0">{{ auth()->user()->stats->agility }}</li> --}}
+                    <li class="list-group-item border-right-0 border-bottom-0">{{ $agility }}</li>
                 </ul>
             </div>
         </div>
@@ -116,11 +105,11 @@
             <div class="card-body d-inline-flex">
                 <ul class="list-group w-50">
                     <li class="list-group-item border-left-0 border-top-0">Defense</li>
-                    {{-- <li class="list-group-item border-left-0 border-bottom-0">{{ auth()->user()->stats->defense }}</li> --}}
+                    <li class="list-group-item border-left-0 border-bottom-0">{{ $defense }}</li>
                 </ul>
                 <ul class="list-group w-50">
                     <li class="list-group-item border-right-0 border-top-0">Endurance</li>
-                    {{-- <li class="list-group-item border-right-0 border-bottom-0">{{ auth()->user()->stats->endurance }}</li> --}}
+                    <li class="list-group-item border-right-0 border-bottom-0">{{ $endurance }}</li>
                 </ul>
             </div>
         </div>
