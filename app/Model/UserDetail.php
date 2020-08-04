@@ -15,7 +15,7 @@ class UserDetail extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'jail', 'money',  'hospital',  'points', 'rates', 'rank_id', 'level_id', 'location_id', 'gang_id',  'active_course', 'course_started','job'
+        'user_id', 'jail', 'money',  'hospital',  'points', 'rates', 'rank_id', 'level_id', 'location_id', 'gang_id',  'active_course', 'course_started', 'job'
     ];
 
 
@@ -85,6 +85,38 @@ class UserDetail extends Model
      * @param  array  $userIda
      * @return \App\User
      */
+    public function getUserMoney(int $userId)
+    {
+        try {
+            return  $this->where(['user_id' => $userId])->value('money');
+        } catch (Throwable $e) {
+            $e->getMessage();
+            report($e);
+        }
+    }
+
+    /**
+     * Create a new userDetails instance after a valid registration.
+     *
+     * @param  array  $userIda
+     * @return \App\User
+     */
+    public function getUserPoints(int $userId)
+    {
+        try {
+            return  $this->where(['user_id' => $userId])->value('points');
+        } catch (Throwable $e) {
+            $e->getMessage();
+            report($e);
+        }
+    }
+
+    /**
+     * Create a new userDetails instance after a valid registration.
+     *
+     * @param  array  $userIda
+     * @return \App\User
+     */
     public function decrementMoney($userId, $money)
     {
         try {
@@ -93,7 +125,6 @@ class UserDetail extends Model
         } catch (Throwable $e) {
             $e->getMessage();
             report($e);
-
         }
     }
 
@@ -106,7 +137,7 @@ class UserDetail extends Model
     public function changeTravelStatus(int $userId, int $location, string $startedAt = NULL)
     {
         try {
-            return  $this->where(['user_id' => $userId])->update(['location_id' => $location, 'travel_started' => $startedAt ]);
+            return  $this->where(['user_id' => $userId])->update(['location_id' => $location, 'travel_started' => $startedAt]);
         } catch (Throwable $e) {
             $e->getMessage();
             report($e);
@@ -119,7 +150,7 @@ class UserDetail extends Model
      * @param  array  $userIda
      * @return \App\User
      */
-    public function getLocation(int $userId) : int
+    public function getLocation(int $userId): int
     {
         try {
             return  $this->where(['user_id' => $userId])->value('location_id');
@@ -167,7 +198,7 @@ class UserDetail extends Model
      * @param  array  $userIda
      * @return \App\User
      */
-    public function getActiveEstate(int $userId) : int
+    public function getActiveEstate(int $userId): int
     {
         try {
             return  $this->where(['user_id' => $userId])->value('realestate');
@@ -235,7 +266,7 @@ class UserDetail extends Model
     public function addHospitalTime(int $userId, $newHospitalTime)
     {
         try {
-            return $this->where(['user_id' => $userId])->update(['hospital'=> $newHospitalTime]);
+            return $this->where(['user_id' => $userId])->update(['hospital' => $newHospitalTime]);
         } catch (Throwable $e) {
             $e->getMessage();
             report($e);
@@ -280,7 +311,7 @@ class UserDetail extends Model
      * @param  array  $userIda
      * @return \App\User
      */
-    public function getRankId(int $userId) : int
+    public function getRankId(int $userId): int
     {
         try {
             return  $this->where(['user_id' => $userId])->value('rank_id');
@@ -289,5 +320,4 @@ class UserDetail extends Model
             report($e);
         }
     }
-
 }

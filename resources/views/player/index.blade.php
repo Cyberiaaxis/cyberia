@@ -18,10 +18,10 @@
                 </ul>
                 <ul class="list-group w-50">
                     <li class="list-group-item border-0">{{ $name }}</li>
-                    <li class="list-group-item border-0">{{ auth()->user()->userdetails->money }}</li>
+                    <li class="list-group-item border-0">{{ $money }}</li>
                     <li class="list-group-item border-0">{{ $rank }}</li>
                     <li class="list-group-item border-0">{{ $level }}</li>
-                    <li class="list-group-item border-0">{{ auth()->user()->userdetails->points }}</li>
+                    <li class="list-group-item border-0">{{ $points }}</li>
                 </ul>
             </div>
         </div>
@@ -38,10 +38,11 @@
                 </ul>
                 <ul class="list-group w-50">
                     <li class="list-group-item border-0"> {{$totalAwards}} </li>
-                    <li class="list-group-item border-0">{{ auth()->user()->created_at->diffForHumans() }}</li>
+                    <li class="list-group-item border-0">{{ $age }}</li>
                     <li class="list-group-item border-0">{{ $area }}</li>
                     <li class="list-group-item border-0">{{ $activeHouse  }}</li>
                     <li class="list-group-item border-0">{{ $totalCrimes }}</li>
+                    {{-- auth()->user()->created_at->diffForHumans() --}}
                 </ul>
             </div>
         </div>

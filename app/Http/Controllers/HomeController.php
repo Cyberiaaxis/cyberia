@@ -14,14 +14,14 @@ class HomeController extends Controller
      * @var
      */
     protected   $area,
-                $attack,
-                $userDetails,
-                $userStats,
-                $userRank,
-                $userCrime,
-                $realEstate,
-                $userReward,
-                $carbon;
+        $attack,
+        $userDetails,
+        $userStats,
+        $userRank,
+        $userCrime,
+        $realEstate,
+        $userReward,
+        $carbon;
 
 
     /**
@@ -47,6 +47,7 @@ class HomeController extends Controller
         $this->realEstate = new RealEstate();
         $this->userReward = new UserReward();
         $this->attack = new Attack();
+        $this->carbon = new Carbon();
     }
 
     /**
@@ -79,8 +80,11 @@ class HomeController extends Controller
         $asAttackerEscaped = $this->asAttackerEscaped();
         $asDefenderEscaped = $this->asDefenderEscaped();
         $totalEscaped = $this->totalEscaped();
+        $age = $this->age();
+        $money = $this->money();
+        $points = $this->points();
         $details =  [
-            "name" => $name ,
+            "name" => $name,
             "rank" => $rank,
             "level" => $level,
             "activeHouse" => $activeHouse,
@@ -103,8 +107,11 @@ class HomeController extends Controller
             "asAttackerEscaped" => $asAttackerEscaped,
             "asDefenderEscaped" => $asDefenderEscaped,
             "totalEscaped" => $totalEscaped,
+            "age" => $age,
+            "money" => $money,
+            "points" => $points,
         ];
-    return view('player.index', $details);
+        return view('player.index', $details);
     }
 
     /**
@@ -125,7 +132,7 @@ class HomeController extends Controller
     public function rank()
     {
         $rankId = $this->userDetails->getRankId($this->loginUser->id);
-    return $this->rank->getRankById($rankId);
+        return $this->rank->getRankById($rankId);
     }
 
     /**
@@ -136,7 +143,7 @@ class HomeController extends Controller
     public function level()
     {
         $levelId = $this->userDetails->getLevelId($this->loginUser->id);
-    return $this->level->getLevelById($levelId);
+        return $this->level->getLevelById($levelId);
     }
 
     /**
@@ -147,7 +154,7 @@ class HomeController extends Controller
     public function activeHouse()
     {
         $houseId = $this->userDetails->getActiveEstate($this->loginUser->id);
-    return $this->realEstate->getHouseById($houseId);
+        return $this->realEstate->getHouseById($houseId);
     }
 
     /**
@@ -158,7 +165,7 @@ class HomeController extends Controller
     public function area()
     {
         $areaId = $this->userDetails->getLocation($this->loginUser->id);
-    return $this->area->getAreaById($areaId);
+        return $this->area->getAreaById($areaId);
     }
 
     /**
@@ -202,7 +209,7 @@ class HomeController extends Controller
         $asAttackerWon = $this->asAttackerWon();
         $asAttackerSettlement = $this->asAttackerSettlement();
         $asAttackerEscaped = $this->asAttackerEscaped();
-    return $totalAttacks - ($asAttackerWon + $asAttackerSettlement + $asAttackerEscaped);
+        return $totalAttacks - ($asAttackerWon + $asAttackerSettlement + $asAttackerEscaped);
     }
 
     /**
@@ -214,7 +221,7 @@ class HomeController extends Controller
     {
         $asAttackerLost = $this->asAttackerLost();
         $asDefenderLost = $this->asDefenderLost();
-    return ($asAttackerLost + $asDefenderLost);
+        return ($asAttackerLost + $asDefenderLost);
     }
 
     /**
@@ -226,7 +233,7 @@ class HomeController extends Controller
     {
         $asAttackerWon = $this->asAttackerWon();
         $asDefenderWon = $this->asDefenderWon();
-    return ($asAttackerWon + $asDefenderWon);
+        return ($asAttackerWon + $asDefenderWon);
     }
     /**
      * Show the application dashboard.
@@ -279,7 +286,7 @@ class HomeController extends Controller
         $asDefenderWon = $this->asDefenderWon();
         $asDefenderSettlement = $this->asDefenderSettlement();
         $asDefenderEscaped = $this->asDefenderEscaped();
-    return $totalDefender - ($asDefenderWon + $asDefenderSettlement + $asDefenderEscaped);
+        return $totalDefender - ($asDefenderWon + $asDefenderSettlement + $asDefenderEscaped);
     }
 
     /**
@@ -339,7 +346,7 @@ class HomeController extends Controller
      */
     public function strength()
     {
-        return $this->userStats->getStrength($this->loginUser->id);
+        return round($this->userStats->getStrength($this->loginUser->id), 3);
     }
 
 
@@ -350,7 +357,7 @@ class HomeController extends Controller
      */
     public function agility()
     {
-        return $this->userStats->getAgility($this->loginUser->id);
+        return round($this->userStats->getAgility($this->loginUser->id), 3);
     }
 
     /**
@@ -360,7 +367,7 @@ class HomeController extends Controller
      */
     public function endurance()
     {
-        return $this->userStats->getEndurance($this->loginUser->id);
+        return round($this->userStats->getEndurance($this->loginUser->id), 3);
     }
 
     /**
@@ -370,7 +377,36 @@ class HomeController extends Controller
      */
     public function defense()
     {
-        return $this->userStats->getDefense($this->loginUser->id);
+        return round($this->userStats->getDefense($this->loginUser->id), 3);
     }
 
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function age()
+    {
+        return $this->carbon->parse($this->user->getAge($this->loginUser->id))->diffForHumans($this->carbon->now());
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function money()
+    {
+        return $this->userDetails->getUserMoney($this->loginUser->id);
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function points()
+    {
+        return $this->userDetails->getUserPoints($this->loginUser->id);
+    }
 }

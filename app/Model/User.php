@@ -9,6 +9,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Throwable;
+
 // use Chatter\Core\Traits\CanDiscuss;
 // use Laravel\Passport\HasApiTokens;
 
@@ -135,7 +137,21 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->where('id', $userId)->value('name');
     }
 
-
+    /**
+     * Create a new userDetails instance after a valid registration.
+     *
+     * @param  array  $userIda
+     * @return \App\User
+     */
+    public function getAge(int $userId)
+    {
+        try {
+            return  $this->where(['id' => $userId])->value('created_at');
+        } catch (Throwable $e) {
+            $e->getMessage();
+            report($e);
+        }
+    }
 
 }
 
