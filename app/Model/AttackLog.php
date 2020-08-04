@@ -3,18 +3,22 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Throwable;
 
 class AttackLog extends Model
 {
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * get a Area name instance.
+     * @param  $id INT
+     * @return name string
      */
     public function addLog($log)
     {
-        return $this->insert(['attackLog' => $log]);
+        try {
+            return $this->insert(['attackLog' => $log]);
+        } catch (Throwable $e) {
+            $e->getMessage();
+            report($e);
+        }
     }
 }
-

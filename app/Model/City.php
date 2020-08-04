@@ -8,15 +8,14 @@ use Throwable;
 class City extends Model
 {
     /**
-     * Create a new userDetails instance after a valid registration.
-     *
-     * @param  array  $userIda
-     * @return \App\User
+     * get city name by id from storage.
+     * @param  variable $id INT
+     * @return string name
      */
-    public function getCityById($id)
+    public function getCityById(int $id): string
     {
         try {
-            return $this->find($id);
+            return $this->find($id)->value('name');
         } catch (Throwable $e) {
             $e->getMessage();
             report($e);

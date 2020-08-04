@@ -8,15 +8,14 @@ use Throwable;
 class Area extends Model
 {
     /**
-     * Create a new userDetails instance after a valid registration.
-     *
-     * @param  array  $userIda
-     * @return \App\User
+     * get a Area name instance.
+     * @param  $id INT
+     * @return name string
      */
-    public function getAreaById(int $id) : string
+    public function getAreaById(int $id): string
     {
         try {
-            return  $this->where(['id' => $id])->value('name');
+            return  $this->find($id)->value('name');
         } catch (Throwable $e) {
             $e->getMessage();
             report($e);

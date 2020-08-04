@@ -8,9 +8,9 @@ use Throwable;
 class Attack extends Model
 {
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
+     * get attacks (attackers total attack number) from storage.
+     * @param  $userId INT
+     * @return attacks INT
      */
     public function getAttacks(int $userId): int
     {
@@ -22,11 +22,10 @@ class Attack extends Model
         }
     }
 
-
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
+     * get attackwon from storage.
+     * @param  $userId INT
+     * @return attacks_success INT
      */
     public function getAttackSuccess(int $userId): int
     {
@@ -39,9 +38,9 @@ class Attack extends Model
     }
 
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
+     * got number of fight as a defender from storage.
+     * @param  $userId INT
+     * @return defenses INT
      */
     public function getDefenses(int $userId): int
     {
@@ -54,9 +53,9 @@ class Attack extends Model
     }
 
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
+     * got number of fight as a defender won from storage.
+     * @param  $userId INT
+     * @return defenses_success INT
      */
     public function getDefenseSuccess(int $userId): int
     {
@@ -69,9 +68,9 @@ class Attack extends Model
     }
 
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
+     * got number of fight as a attacker settlement from storage.
+     * @param  $userId INT
+     * @return settlement_attacker INT
      */
     public function getSettlementAttacker(int $userId): int
     {
@@ -84,9 +83,9 @@ class Attack extends Model
     }
 
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
+     * got number of fight as a defender settlement from storage.
+     * @param  $userId INT
+     * @return settlement_defender INT
      */
     public function getSettlementDefender(int $userId): int
     {
@@ -99,9 +98,9 @@ class Attack extends Model
     }
 
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
+     * got number of fight as a attacker escaped from storage.
+     * @param  $userId INT
+     * @return escaped_attacker INT
      */
     public function getEscapedAttacker(int $userId): int
     {
@@ -114,9 +113,9 @@ class Attack extends Model
     }
 
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
+     * got number of fight as a defender escaped from storage.
+     * @param  $userId INT
+     * @return escaped_defender INT
      */
     public function getEscapedDefender(int $userId): int
     {
@@ -127,6 +126,4 @@ class Attack extends Model
             report($e);
         }
     }
-
-
 }
