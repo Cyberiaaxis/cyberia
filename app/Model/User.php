@@ -47,52 +47,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $dates = ['created_at', 'updated_at', 'last_seen'];
 
-    public function userdetails()
-    {
-        return $this->HasOne(UserDetail::class);
-    }
-
-    public function items()
-    {
-         return $this->belongsToMany(Item::class, 'user_items');
-    }
-
-    public function house()
-    {
-        return $this->belongsToMany(House::class, 'user_houses');
-    }
-
-    public function scopeGetHouse()
-    {
-        return $this->house()->wherePivot('active', 1)->first();
-    }
-
-    public function attacks()
-    {
-        return $this->hasOne(Attack::class);
-    }
-
-    public function stats()
-    {
-        return $this->hasOne(UserStats::class);
-    }
-
-    public function userSlot()
-    {
-        return $this->hasOne(UserSlot::class);
-    }
-
-
-    public function rewards()
-    {
-        return $this->belongsToMany(Reward::class, 'user_rewards');
-    }
-
-    public function posts()
-    {
-        return $this->hasMany(Post::class);
-    }
-
     /**
     * get total posts
     */
@@ -112,10 +66,9 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * add a new user instance after a valid registration.
-     *
-     * @param  array  $request
-     * @return \App\User
+     * add a new user.
+     * @param  request $request
+     * @return UserId $id
      */
     public function addUser($request)
     {
@@ -145,12 +98,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getAge(int $userId)
     {
-        try {
-            return  $this->where(['id' => $userId])->value('created_at');
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->where(['id' => $userId])->value('created_at');
     }
 
 }

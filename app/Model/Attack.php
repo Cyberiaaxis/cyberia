@@ -14,12 +14,7 @@ class Attack extends Model
      */
     public function getAttacks(int $userId): int
     {
-        try {
-            return  $this->where(['user_id' => $userId])->value('attacks');
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->where(['user_id' => $userId])->value('attacks');
     }
 
     /**
@@ -29,12 +24,7 @@ class Attack extends Model
      */
     public function getAttackSuccess(int $userId): int
     {
-        try {
-            return  $this->where(['user_id' => $userId])->value('attacks_success');
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->where(['user_id' => $userId])->value('attacks_success');
     }
 
     /**
@@ -44,12 +34,7 @@ class Attack extends Model
      */
     public function getDefenses(int $userId): int
     {
-        try {
-            return  $this->where(['user_id' => $userId])->value('defenses');
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->where(['user_id' => $userId])->value('defenses');
     }
 
     /**
@@ -59,12 +44,7 @@ class Attack extends Model
      */
     public function getDefenseSuccess(int $userId): int
     {
-        try {
-            return  $this->where(['user_id' => $userId])->value('defenses_success');
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->where(['user_id' => $userId])->value('defenses_success');
     }
 
     /**
@@ -74,12 +54,7 @@ class Attack extends Model
      */
     public function getSettlementAttacker(int $userId): int
     {
-        try {
-            return  $this->where(['user_id' => $userId])->value('settlement_attacker');
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->where(['user_id' => $userId])->value('settlement_attacker');
     }
 
     /**
@@ -89,12 +64,7 @@ class Attack extends Model
      */
     public function getSettlementDefender(int $userId): int
     {
-        try {
-            return  $this->where(['user_id' => $userId])->value('settlement_defender');
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->where(['user_id' => $userId])->value('settlement_defender');
     }
 
     /**
@@ -104,12 +74,7 @@ class Attack extends Model
      */
     public function getEscapedAttacker(int $userId): int
     {
-        try {
-            return  $this->where(['user_id' => $userId])->value('escaped_attacker');
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->where(['user_id' => $userId])->value('escaped_attacker');
     }
 
     /**
@@ -119,11 +84,6 @@ class Attack extends Model
      */
     public function getEscapedDefender(int $userId): int
     {
-        try {
-            return  $this->where(['user_id' => $userId])->value('escaped_defender');
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->where(['user_id' => $userId])->value('escaped_defender');
     }
 }

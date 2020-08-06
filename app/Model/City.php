@@ -14,11 +14,6 @@ class City extends Model
      */
     public function getCityById(int $id): string
     {
-        try {
-            return $this->find($id)->value('name');
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return $this->find($id)->value('name');
     }
 }

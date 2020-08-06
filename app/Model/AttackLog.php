@@ -14,11 +14,6 @@ class AttackLog extends Model
      */
     public function addLog($log)
     {
-        try {
-            return $this->insert(['attackLog' => $log]);
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return $this->insert(['attackLog' => $log]);
     }
 }

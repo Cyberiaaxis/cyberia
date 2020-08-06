@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class WeaponAttribute extends Model
 {
-    public function getattributesById($attributeId)
+    /**
+     * get weapon's attribute by id from storage.
+     * @param  INT $id INT
+     * @return variable string
+     */
+    public function getattributesById(int $attributeId)
     {
         return $this->find($attributeId);
     }

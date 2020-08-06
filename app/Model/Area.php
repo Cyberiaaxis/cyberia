@@ -3,7 +3,6 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Throwable;
 
 class Area extends Model
 {
@@ -14,11 +13,6 @@ class Area extends Model
      */
     public function getAreaById(int $id): string
     {
-        try {
-            return  $this->find($id)->value('name');
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->find($id)->value('name');
     }
 }
