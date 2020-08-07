@@ -7,23 +7,23 @@ use Throwable;
 
 class UserTravel extends Model
 {
-
+    /**
+     * off the datetime via this property.
+     */
     public $timestamps = false;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
+     * get weapon's attribute by id from storage.
+     * @array
      */
     protected $fillable = [
         'user_id', 'location', 'travelled'
     ];
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Crime  $crime
-     * @return \Illuminate\Http\Response
+     * get weapon's attribute by id from storage.
+     * @param  INT $id INT
+     * @return variable string
      */
     public function addUserTravel(int $user, int $destination)
     {

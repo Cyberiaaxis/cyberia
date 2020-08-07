@@ -3,11 +3,13 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Throwable;
 
 class UserStats extends Model
 {
-  public $timestamps = false;
+    /**
+     * off the datetime via this property.
+     */
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -17,8 +19,9 @@ class UserStats extends Model
     protected $fillable = [
         'user_id', 'strength', 'defense', 'agility', 'endurance',  'hp', 'max_hp', 'energy', 'max_energy', 'max_nerve', 'will', 'max_will'
     ];
+
     /**
-     * Create a new userstats instance after a valid registration.
+     * Create a new userstats instance.
      *
      * @param  $userId
      * @return \App\User
@@ -43,10 +46,9 @@ class UserStats extends Model
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * doing decrement of nerve of a user.
+     * @param  int $userId, int $userNerve
+     * @return query result in boolean
      */
     public function decrementNerve(int $userId, int $userNerve)
     {
@@ -54,109 +56,90 @@ class UserStats extends Model
     }
 
     /**
-     * Create a new userDetails instance after a valid registration.
-     *
-     * @param  array  $userIda
-     * @return \App\User
+     * Decrement of bustExperince.
+     * @param  int $userId, $bustExperience
+     * @return query result in boolean
      */
-    public function decrementBustExperince(int $userId, $bustExperience)
+    public function decrementBustExperince(int $userId, string $bustExperience)
     {
-        try {
-            return  $this->where(['user_id' => $userId])->decrement(['bust_experience', $bustExperience]);
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->where(['user_id' => $userId])->decrement(['bust_experience', $bustExperience]);
     }
 
 
     /**
-     * Create a new userDetails instance after a valid registration.
-     *
-     * @param  array  $userIda
-     * @return \App\User
+     * increment bust experince.
+     * @param  int $userId, string $bustExperience
+     * @return query result in boolean
      */
     public function incrementBustExperince(int $userId, string $bustExperience)
     {
-        try {
-            return  $this->where(['user_id' => $userId])->increment(['bust_experience', $bustExperience]);
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->where(['user_id' => $userId])->increment(['bust_experience', $bustExperience]);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * update max will.
+     * @param  int $userId, string $will
+     * @return update query output as boolean
      */
-    public function changeWill($userId, $will)
+    public function changeWill(int $userId, string $will)
     {
-        return $this->where('user_id', $userId)->update(['max_will'=> $will]);
+        return $this->where('user_id', $userId)->update(['max_will' => $will]);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * get the user nerve .
+     * @param  int  $userId
+     * @return int nerve
      */
-    public function haveNerve($userId)
+    public function haveNerve(int $userId): int
     {
         return $this->where('user_id', $userId)->value('nerve');
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * get max nerve of user.
+     * @param  int $userId
+     * @return int max_nerve
      */
-    public function maxNerve($userId)
+    public function maxNerve(int $userId): int
     {
         return $this->where('user_id', $userId)->value('max_nerve');
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * get hp of user.
+     * @param  int $userId
+     * @return hp
      */
-    public function getHp($userId)
+    public function getHp(int $userId): int
     {
         return $this->where('user_id', $userId)->value('hp');
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * get hp of user.
+     * @param  int $userId
+     * @return max hp
      */
-    public function getMaxHp($userId)
+    public function getMaxHp(int $userId): int
     {
         return $this->where('user_id', $userId)->value('max_hp');
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * get energy of user.
+     * @param  int $userId
+     * @return int energy
      */
-    public function getEnergy($userId) : int
+    public function getEnergy($userId): int
     {
         return $this->where('user_id', $userId)->value('energy');
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * get max energy of user.
+     * @param  int $userId
+     * @return max hp
      */
     public function getMaxEnergy(int $userId): int
     {
@@ -164,43 +147,39 @@ class UserStats extends Model
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * get defence of user.
+     * @param  int $userId
+     * @return string defence
      */
-    public function getDefense(int $userId)
+    public function getDefense(int $userId): string
     {
         return $this->where('user_id', $userId)->value('defense');
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * get agility of user.
+     * @param  int $userId
+     * @return string agility
      */
-    public function getAgility(int $userId)
+    public function getAgility(int $userId): string
     {
         return $this->where('user_id', $userId)->value('agility');
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * get strength of user.
+     * @param  int $userId
+     * @return string strength
      */
-    public function getStrength(int $userId)
+    public function getStrength(int $userId): string
     {
         return $this->where('user_id', $userId)->value('strength');
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * decrement hp of user.
+     * @param  int $userId, new hp
+     * @return boolean
      */
     public function decrementHP(int $userId, $newHP)
     {
@@ -208,10 +187,9 @@ class UserStats extends Model
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * decrement enegry of user.
+     * @param  int $userId, new hp
+     * @return boolean
      */
     public function decrementEnergy(int $userId, $newEnergy)
     {
@@ -230,14 +208,12 @@ class UserStats extends Model
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * get endurance of user.
+     * @param  int $userId
+     * @return boolean
      */
     public function getEndurance(int $userId)
     {
         return $this->where('user_id', $userId)->value('endurance');
     }
 }
-
