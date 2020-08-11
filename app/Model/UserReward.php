@@ -30,17 +30,12 @@ class UserReward extends Model
     }
 
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
+     * get total number of rewards credit to player from storage.
+     * @param  INT $userId
+     * @return int
      */
     public function getTotalRewards(int $userId): int
     {
-        try {
-            return  $this->where('user_id', $userId)->count();
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->where('user_id', $userId)->count();
     }
 }

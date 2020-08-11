@@ -45,6 +45,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
     protected $dates = ['created_at', 'updated_at', 'last_seen'];
 
     /**
@@ -60,15 +65,20 @@ class User extends Authenticatable implements MustVerifyEmail
          return $this->belongsToMany(Course::class, 'user_courses');
     }
 
-    public function doneCourse($course_id)
+    /**
+     * get player's current course status.
+     * @param  int $course_id
+     * @return boolean
+     */
+    public function doneCourse(int $course_id)
     {
          return $this->course()->where('course_id',$course_id)->exists();
     }
 
     /**
-     * add a new user.
-     * @param  request $request
-     * @return UserId $id
+     * regiration of new player's in storage.
+     * @param  int $course_id
+     * @return boolean
      */
     public function addUser($request)
     {
@@ -80,23 +90,21 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * add a new user instance after a valid registration.
-     *
-     * @param  array  $request
-     * @return \App\User
+     * get player's name by id from storage.
+     * @param  int $userId
+     * @return string
      */
-    public function getUserNameById($userId)
+    public function getUserNameById(int $userId) :string
     {
         return $this->where('id', $userId)->value('name');
     }
 
     /**
-     * Create a new userDetails instance after a valid registration.
-     *
-     * @param  array  $userIda
-     * @return \App\User
+     * get player's total age from storage.
+     * @param  int $userId
+     * @return string
      */
-    public function getAge(int $userId)
+    public function getAge(int $userId) : string
     {
         return  $this->where(['id' => $userId])->value('created_at');
     }

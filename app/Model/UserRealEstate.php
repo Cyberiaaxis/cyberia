@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class UserRealEstate extends Model
 {
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     public $timestamps = false;
 
     /**
@@ -19,9 +24,9 @@ class UserRealEstate extends Model
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
+     * add player property in storage.
+     * @param  INT $userId int $realEstateId
+     * @return boolean
      */
     public function addUserRealEstate(int $user, int $realEstateId)
     {
@@ -29,9 +34,9 @@ class UserRealEstate extends Model
     }
 
     /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
+     * verify players properties from storage.
+     * @param  INT $userId int $realEstateId
+     * @return boolean
      */
     public function isUserRealEstate(int $user, int $realEstateId)
     {

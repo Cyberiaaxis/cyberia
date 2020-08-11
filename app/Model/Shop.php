@@ -8,10 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Shop extends Model
 {
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Crime  $crime;
-     * @return \Illuminate\Http\Response
+     * get shops from storage.
+     * @param
+     * @return array
      */
     public function getShops()
     {
@@ -19,17 +18,13 @@ class Shop extends Model
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Crime  $crime;
-     * @return \Illuminate\Http\Response
+     * get shops items from storage.
+     * @param
+     * @return array
      */
-    public function getShopItems($typeId)
+    public function getShopItems(int $typeId)
     {
-        $typeattribute = new TypeAttribute();
-        $getAttribute = $typeattribute->getAttributeId($typeId);
-        $item = new Item();        // $attributetoitems  = $typeattribute->with('items')->find($typeId);
-    return $item->where('type_attribute_id', $getAttribute)->get();
+
     }
 
 }

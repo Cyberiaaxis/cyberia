@@ -8,11 +8,11 @@ class TypeAttribute extends Model
 {
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * get item's effect id from storage.
+     * @param  INT $typeId
+     * @return int
      */
-    public function getEffectsId($typeId)
+    public function getEffectsId(int $typeId) : int
     {
         return $this->where('type_id', $typeId)->value('item_effect_id');
     }

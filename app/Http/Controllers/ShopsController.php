@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\{Inventory, Shop, UserDetail};
+use App\Model\{Inventory, Shop, TypeAttribute, UserDetail};
 use Illuminate\Http\Request;
 
 class ShopsController extends Controller
@@ -37,6 +37,11 @@ class ShopsController extends Controller
      */
     public function shopInventory(Shop $shop)
     {
+        $typeattribute = new TypeAttribute();
+        $getAttribute = $typeattribute->getAttributeId($shop->item_type);
+
+        $item = new Item();        // $attributetoitems  = $typeattribute->with('items')->find($typeId);
+        return $item->where('type_attribute_id', $getAttribute)->get();
         $shopItems = $shop->getShopItems($shop->item_type);
     return ['shopDetails' => $shop, 'shopItems' => $shopItems];
     }

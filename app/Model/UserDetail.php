@@ -8,6 +8,11 @@ use Throwable;
 
 class UserDetail extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     public $timestamps = false;
     /**
      * The attributes that are mass assignable.
@@ -62,12 +67,11 @@ class UserDetail extends Model
 
 
     /**
-     * Create a new userDetails instance after a valid registration.
-     *
-     * @param  array  $userIda
-     * @return \App\User
+     * adding new datails a player from storage.
+     * @param  INT $userId
+     * @return boolean
      */
-    public function addUserDetails($userId)
+    public function addUserDetails(int $userId)
     {
         return $this->create([
             'user_id' => $userId,
@@ -80,244 +84,152 @@ class UserDetail extends Model
     }
 
     /**
-     * Create a new userDetails instance after a valid registration.
-     *
-     * @param  array  $userIda
-     * @return \App\User
+     * get player's money from storage.
+     * @param  INT $userId
+     * @return int
      */
-    public function getUserMoney(int $userId)
+    public function getUserMoney(int $userId): int
     {
-        try {
-            return  $this->where(['user_id' => $userId])->value('money');
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->where(['user_id' => $userId])->value('money');
     }
 
     /**
-     * Create a new userDetails instance after a valid registration.
-     *
-     * @param  array  $userIda
-     * @return \App\User
+     * get player's point from storage.
+     * @param  INT $userId
+     * @return int
      */
-    public function getUserPoints(int $userId)
+    public function getUserPoints(int $userId): int
     {
-        try {
-            return  $this->where(['user_id' => $userId])->value('points');
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->where(['user_id' => $userId])->value('points');
     }
 
     /**
-     * Create a new userDetails instance after a valid registration.
-     *
-     * @param  array  $userIda
-     * @return \App\User
+     * decrement the player's money from storage.
+     * @param  INT $userId int $money
+     * @return boolean
      */
-    public function decrementMoney($userId, $money)
+    public function decrementMoney(int $userId, int $money)
     {
-        try {
-            $details = ['user_id' => $userId];
-            return  $this->where($details)->decrement('money', $money);
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->where(['user_id' => $userId])->decrement('money', $money);
     }
 
     /**
-     * Create a new userDetails instance after a valid registration.
-     *
-     * @param  array  $userIda
-     * @return \App\User
+     * update player's current tavel status from storage.
+     * @param  int $userId, int $location, string $startedAt = NULL
+     * @return boolean
      */
     public function changeTravelStatus(int $userId, int $location, string $startedAt = NULL)
     {
-        try {
-            return  $this->where(['user_id' => $userId])->update(['location_id' => $location, 'travel_started' => $startedAt]);
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->where(['user_id' => $userId])->update(['location_id' => $location, 'travel_started' => $startedAt]);
     }
 
     /**
-     * Create a new userDetails instance after a valid registration.
-     *
-     * @param  array  $userIda
-     * @return \App\User
+     * get player's current location status from storage.
+     * @param  int $userId
+     * @return int
      */
     public function getLocation(int $userId): int
     {
-        try {
-            return  $this->where(['user_id' => $userId])->value('location_id');
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->where(['user_id' => $userId])->value('location_id');
     }
 
     /**
-     * Create a new userDetails instance after a valid registration.
-     *
-     * @param  array  $userIda
-     * @return \App\User
+     * get player's current level id from storage.
+     * @param  int $userId
+     * @return int
      */
     public function getLevelId(int $userId): int
     {
-        try {
-            return  $this->where(['user_id' => $userId])->value('level_id');
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->where(['user_id' => $userId])->value('level_id');
     }
 
     /**
-     * Create a new userDetails instance after a valid registration.
-     *
-     * @param  array  $userIda
-     * @return \App\User
+     * get player's current tavel started time from storage.
+     * @param  int $userId
+     * @return string
      */
     public function getReaminTravelTime(int $userId)
     {
-        try {
-            return  $this->where(['user_id' => $userId])->value('travel_started');
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->where(['user_id' => $userId])->value('travel_started');
     }
 
     /**
-     * Create a new userDetails instance after a valid registration.
-     *
-     * @param  array  $userIda
-     * @return \App\User
+     * get player's current real estate from storage.
+     * @param  int $userId
+     * @return int
      */
     public function getActiveEstate(int $userId): int
     {
-        try {
-            return  $this->where(['user_id' => $userId])->value('realestate');
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->where(['user_id' => $userId])->value('realestate');
     }
 
     /**
-     * Create a new userDetails instance after a valid registration.
-     *
-     * @param  array  $userIda
-     * @return \App\User
+     * set player's current real estate from storage.
+     * @param  int $userId
+     * @return int
      */
     public function setActiveEstate(int $userId, int $realEstateId)
     {
-        try {
-            return  $this->where(['user_id' => $userId])->update(['realestate' => $realEstateId]);
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->where(['user_id' => $userId])->update(['realestate' => $realEstateId]);
     }
 
-
     /**
-     * Create a new userDetails instance after a valid registration.
-     *
-     * @param  array  $userIda
-     * @return \App\User
+     * get player's jail time from storage.
+     * @param  int $userId
+     * @return string
      */
     public function getJailTime(int $bustingId)
     {
-        try {
-            return $this->where(['user_id' => $bustingId])->value('jail');
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return $this->where(['user_id' => $bustingId])->value('jail');
     }
 
     /**
-     * Create a new userDetails instance after a valid registration.
-     *
-     * @param  array  $userIda
-     * @return \App\User
+     * get player's current hospital time from storage.
+     * @param  int $userId
+     * @return int
      */
     public function getHospitalTime(int $userId)
     {
-        try {
-            return $this->where(['user_id' => $userId])->value('hospital');
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return $this->where(['user_id' => $userId])->value('hospital');
     }
 
     /**
-     * Create a new userDetails instance after a valid registration.
-     *
-     * @param  array  $userIda
-     * @return \App\User
+     * set player's current hospital time from storage.
+     * @param  int $userId
+     * @return int
      */
     public function addHospitalTime(int $userId, $newHospitalTime)
     {
-        try {
-            return $this->where(['user_id' => $userId])->update(['hospital' => $newHospitalTime]);
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return $this->where(['user_id' => $userId])->update(['hospital' => $newHospitalTime]);
     }
 
     /**
-     * Create a new userDetails instance after a valid registration.
-     *
-     * @param  array  $userIda
-     * @return \App\User
+     * set player's busted times from storage.
+     * @param  int $userId
+     * @return int
      */
     public function busted(int $busterId)
     {
-        try {
-            return  $this->where(['user_id' => $busterId])->update(['jail' => Null]);
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->where(['user_id' => $busterId])->update(['jail' => Null]);
     }
 
     /**
-     * Create a new userDetails instance after a valid registration.
-     *
-     * @param  array  $userIda
-     * @return \App\User
+     * update player's failed as buster from storage.
+     * @param  int $userId, string $datetime
+     * @return boolean
      */
     public function failbuster(int $bustedId, string $datetime)
     {
-        try {
-            return  $this->where(['user_id' => $bustedId])->update(['jail', $datetime]);
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return $this->where(['user_id' => $bustedId])->update(['jail', $datetime]);
     }
 
     /**
-     * Create a new userDetails instance after a valid registration.
-     *
-     * @param  array  $userIda
-     * @return \App\User
+     * get rank id from storage.
+     * @param  int $userId
+     * @return int
      */
     public function getRankId(int $userId): int
     {
-        try {
-            return  $this->where(['user_id' => $userId])->value('rank_id');
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return  $this->where(['user_id' => $userId])->value('rank_id');
     }
 }

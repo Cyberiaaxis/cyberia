@@ -23,7 +23,7 @@ class UserTravel extends Model
     /**
      * get weapon's attribute by id from storage.
      * @param  INT $id INT
-     * @return variable string
+     * @return boolean
      */
     public function addUserTravel(int $user, int $destination)
     {

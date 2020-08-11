@@ -44,12 +44,11 @@ class UserSlot extends Model
     }
 
     /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $request
-     * @return \Illuminate\Contracts\Validation\Validator
+     * add weapons on slots at time new user registration.
+     * @param  int $userId
+     * @return query string
      */
-    public function addUserSlots($userId)
+    public function addUserSlots(int $userId)
     {
         return $this->create([
             'user_id' => $userId,

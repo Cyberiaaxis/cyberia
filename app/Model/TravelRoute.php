@@ -8,19 +8,13 @@ use Throwable;
 class TravelRoute extends Model
 {
     /**
-     * Create a new userDetails instance after a valid registration.
-     *
-     * @param  array  $userIda
-     * @return \App\User
+     * get travelling lists from storage.
+     * @param
+     * @return array()
      */
     public function getTravelList()
     {
-        try {
-             return $this->all();
-        } catch (Throwable $e) {
-            $e->getMessage();
-            report($e);
-        }
+        return $this->all();
     }
 
     // /**

@@ -15,36 +15,36 @@ class UserCrime extends Model
         'user_id', 'crime_id', 'success', 'fail'
     ];
 
-    public $timestamps = false;
-    // public $incrementing = false;
-    // protected $primaryKey = ['user_id', 'crime_id'];
     /**
-     * Display the specified resource.
+     * The attributes that are mass assignable.
      *
-     * @param  \App\Crime  $crime
-     * @return \Illuminate\Http\Response
+     * @var array
      */
-    public function addCrime($user, $statusKey){
+    public $timestamps = false;
+
+    /**
+     * add or update player's crime count in storage.
+     * @param  INT $userId
+     * @return int
+     */
+    public function addCrime(int $user, int $statusKey){
         return $this->updateOrCreate($user)->increment($statusKey);
     }
 
     /**
-     * Scope a query to only include crimes of a given type.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  mixed  $type
-     * @return \Illuminate\Database\Eloquent\Builder
+     * get player's success crimes sum from storage.
+     * @param  INT $userId
+     * @return int
      */
     public function getSuccessCrimes(int $userId): int
     {
         return $this->where('user_id', $userId)->sum('success');
     }
+
     /**
-     * Scope a query to only include crimes of a given type.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  mixed  $type
-     * @return \Illuminate\Database\Eloquent\Builder
+     * get player's failed crimes sum from storage.
+     * @param  INT $userId
+     * @return int
      */
     public function getFailCrimes(int $userId): int
     {

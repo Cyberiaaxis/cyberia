@@ -60,14 +60,14 @@ class Item extends Model
     /**
      * get Item Type Name
      */
-    public function getWeaponNameById($itemId)
+    public function getWeaponNameById(int $itemId)
     {
         return $this->find($itemId)->value('name');
     }
     /**
      * get Item Type Name
      */
-    public function getItemAttributeById($itemId)
+    public function getItemAttributeById(int $itemId)
     {
         return $this->find($itemId)->value('type_attribute_id');
     }
