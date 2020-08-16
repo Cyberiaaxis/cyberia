@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMedalsTable extends Migration
+class CreateTypeAttributesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class CreateMedalsTable extends Migration
      */
     public function up()
     {
-        Schema::create('medals', function (Blueprint $table) {
+        Schema::create('type_attributes', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('title');
+            $table->unsignedBigInteger('attribute_id');
+            $table->unsignedBigInteger('type_id');
+            $table->unsignedBigInteger('item_effect_id');
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ class CreateMedalsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('medals');
+        Schema::dropIfExists('type_attributes');
     }
 }

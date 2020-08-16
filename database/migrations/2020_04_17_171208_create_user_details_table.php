@@ -25,7 +25,7 @@ class CreateUserDetailsTable extends Migration
             $table->bigInteger('realestate');
             $table->bigInteger('travel_started');
             $table->bigInteger('active_course')->nullable();
-            $table->timestamp('course_started');
+            $table->timestamp('course_started')->nullable();
             $table->bigInteger('job');
         });
     }
