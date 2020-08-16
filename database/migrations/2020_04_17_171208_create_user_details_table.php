@@ -18,7 +18,7 @@ class CreateUserDetailsTable extends Migration
             $table->timestamp('hospital')->nullable();
             $table->timestamp('jail')->nullable();
             $table->bigInteger('points');
-            $table->bigInteger('rates');
+            $table->bigInteger('rates')->nullable();
             $table->bigInteger('rank_id');
             $table->bigInteger('money');
             $table->bigInteger('level_id');
