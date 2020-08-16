@@ -15,7 +15,9 @@ class CreateRealEstatesTable extends Migration
     {
         Schema::create('real_estates', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->string('name');
+            $table->bigInteger('will');
+            $table->bigInteger('cost');
         });
     }
 

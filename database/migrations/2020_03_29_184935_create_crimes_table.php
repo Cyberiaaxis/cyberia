@@ -15,7 +15,12 @@ class CreateCrimesTable extends Migration
     {
         Schema::create('crimes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->string('name');
+            $table->bigInteger('nerve');
+            $table->bigInteger('parent_id')->nullable();
+            $table->bigInteger('location_id');
+            $table->bigInteger('level');
+            $table->text('text');
         });
     }
 

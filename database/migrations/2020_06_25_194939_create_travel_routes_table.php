@@ -15,9 +15,12 @@ class CreateTravelRoutesTable extends Migration
     {
         Schema::create('travel_routes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->bigInteger('destination');
+            $table->bigInteger('duration');
+            $table->bigInteger('origin');
         });
     }
+
 
     /**
      * Reverse the migrations.

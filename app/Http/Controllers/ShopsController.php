@@ -16,7 +16,7 @@ class ShopsController extends Controller
     public function index()
     {
         $shops = new Shop();
-    return $shops->getShops();
+        return $shops->getShops();
     }
 
     /**
@@ -26,8 +26,8 @@ class ShopsController extends Controller
      */
     public function show(Shop $market)
     {
-    //     $shop = new Shop();
-    // return $shop->getShopItems($market->item_type);
+        //     $shop = new Shop();
+        // return $shop->getShopItems($market->item_type);
     }
 
     /**
@@ -37,13 +37,10 @@ class ShopsController extends Controller
      */
     public function shopInventory(Shop $shop)
     {
-        $typeattribute = new TypeAttribute();
-        $getAttribute = $typeattribute->getAttributeId($shop->item_type);
-
-        $item = new Item();        // $attributetoitems  = $typeattribute->with('items')->find($typeId);
+        $item = new Item();
         return $item->where('type_attribute_id', $getAttribute)->get();
         $shopItems = $shop->getShopItems($shop->item_type);
-    return ['shopDetails' => $shop, 'shopItems' => $shopItems];
+        return ['shopDetails' => $shop, 'shopItems' => $shopItems];
     }
 
     /**
@@ -53,8 +50,7 @@ class ShopsController extends Controller
      */
     public function buyItem(Request $request)
     {
-        if($this->canBuy($request) === false)
-        {
+        if ($this->canBuy($request) === false) {
             return $this->message;
         }
 
@@ -62,7 +58,7 @@ class ShopsController extends Controller
         $inventory->incrementItem(auth()->user()->id, $request->itemId);
         $userdetails = new UserDetail();
         $userdetails->decrementMoney(auth()->user()->id, $request->money);
-    return "You successfully bought the items";
+        return "You successfully bought the items";
     }
 
     /**
@@ -72,22 +68,16 @@ class ShopsController extends Controller
      */
     public function canBuy($request)
     {
-        if (auth()->user()->userdetails->money < $request->money)
-        {
+        if (auth()->user()->userdetails->money < $request->money) {
             $this->message =  "You dont have enough money to buy this item";
             return false;
         }
 
-        if (auth()->user()->userdetails->location_id === $request->location_id)
-        {
+        if (auth()->user()->userdetails->location_id === $request->location_id) {
             $this->message =  "You are not on same location as per required";
             return false;
         }
 
-    return true;
+        return true;
     }
-
-
-
-
 }

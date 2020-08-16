@@ -15,7 +15,8 @@ class CreateUserRewardsTable extends Migration
     {
         Schema::create('user_rewards', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->bigInteger('user_id');
+            $table->bigInteger('reward_id');
         });
     }
 

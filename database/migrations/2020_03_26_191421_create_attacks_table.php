@@ -14,8 +14,15 @@ class CreateAttacksTable extends Migration
     public function up()
     {
         Schema::create('attacks', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->timestamps();
+            $table->unsignedBigInteger('user_id');
+            $table->bigInteger('attacks');
+            $table->bigInteger('attacks_success');
+            $table->bigInteger('defenses');
+            $table->bigInteger('defenses_success');
+            $table->bigInteger('settlement_attacker');
+            $table->bigInteger('settlement_defender');
+            $table->bigInteger('escaped_attacker');
+            $table->bigInteger('escaped_defender');
         });
     }
 

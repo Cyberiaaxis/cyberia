@@ -15,6 +15,7 @@ class CreateGangsTable extends Migration
     {
         Schema::create('gangs', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
             $table->timestamps();
         });
     }

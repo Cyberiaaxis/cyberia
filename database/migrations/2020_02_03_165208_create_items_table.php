@@ -15,6 +15,14 @@ class CreateItemsTable extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
+            $table->bigInteger('type_attribute_id');
+            $table->decimal('buyPrice', 11, 2);
+            $table->decimal('sellPrice', 11, 2);
+            $table->bigInteger('locationId');
+            $table->bigInteger('expiry');
+            $table->text('description');
+            $table->string('image');
             $table->timestamps();
         });
     }

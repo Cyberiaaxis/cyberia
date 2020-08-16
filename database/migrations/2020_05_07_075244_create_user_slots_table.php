@@ -15,7 +15,9 @@ class CreateUserSlotsTable extends Migration
     {
         Schema::create('user_slots', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->bigInteger('user_id');
+            $table->bigInteger('primary_slot');
+            $table->bigInteger('secondary_slot');
         });
     }
 

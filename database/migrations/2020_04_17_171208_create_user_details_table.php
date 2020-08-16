@@ -14,8 +14,19 @@ class CreateUserDetailsTable extends Migration
     public function up()
     {
         Schema::create('user_details', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->timestamps();
+            $table->unsignedBigInteger('user_id');
+            $table->timestamp('hospital')->nullable();
+            $table->timestamp('jail')->nullable();
+            $table->bigInteger('points');
+            $table->bigInteger('rates');
+            $table->bigInteger('rank_id');
+            $table->bigInteger('level_id');
+            $table->bigInteger('location_id');
+            $table->bigInteger('realestate');
+            $table->bigInteger('travel_started');
+            $table->bigInteger('active_course')->nullable();
+            $table->timestamp('course_started');
+            $table->bigInteger('job');
         });
     }
 
