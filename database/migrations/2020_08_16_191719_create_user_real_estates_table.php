@@ -17,7 +17,7 @@ class CreateUserRealEstatesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('real_estate_id');
-            $table->bigInteger('total');
+            $table->bigInteger('total')->nullable();
         });
     }
 

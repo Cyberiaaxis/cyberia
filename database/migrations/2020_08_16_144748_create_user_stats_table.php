@@ -15,23 +15,23 @@ class CreateUserStatsTable extends Migration
     {
         Schema::create('user_stats', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
-            $table->double('strength');
-            $table->double('defense');
-            $table->double('agility');
-            $table->double('endurance');
-            $table->bigInteger('hp');
-            $table->bigInteger('max_hp');
-            $table->bigInteger('energy');
-            $table->bigInteger('max_energy');
-            $table->bigInteger('nerve');
-            $table->bigInteger('max_nerve');
-            $table->bigInteger('will');
-            $table->bigInteger('max_will');
-            $table->bigInteger('intelligence');
-            $table->decimal('level_experience', 10, 0);
-            $table->decimal('bust_experience', 10, 0);
-            $table->decimal('heal_experience', 10, 0);
-            $table->decimal('attack_experience', 10, 0);
+            $table->double('strength')->default(10);
+            $table->double('defense')->default(10);
+            $table->double('agility')->default(10);
+            $table->double('endurance')->default(10);
+            $table->bigInteger('hp')->default(100);
+            $table->bigInteger('max_hp')->default(100);
+            $table->bigInteger('energy')->default(100);
+            $table->bigInteger('max_energy')->default(100);
+            $table->bigInteger('nerve')->default(100);
+            $table->bigInteger('max_nerve')->default(100);
+            $table->bigInteger('will')->default(100);
+            $table->bigInteger('max_will')->default(100);
+            $table->bigInteger('intelligence')->default(100);
+            $table->decimal('level_experience', 10, 0)->default(10);
+            $table->decimal('bust_experience', 10, 0)->default(10);
+            $table->decimal('heal_experience', 10, 0)->default(10);
+            $table->decimal('attack_experience', 10, 0)->default(10);
 
 
         });

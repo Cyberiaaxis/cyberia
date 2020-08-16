@@ -17,17 +17,17 @@ class CreateUserDetailsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->timestamp('hospital')->nullable();
             $table->timestamp('jail')->nullable();
-            $table->bigInteger('points');
+            $table->bigInteger('points')->nullable();
             $table->bigInteger('rates')->nullable();
             $table->bigInteger('rank_id');
             $table->bigInteger('money');
             $table->bigInteger('level_id');
             $table->bigInteger('location_id');
-            $table->bigInteger('realestate');
-            $table->bigInteger('travel_started');
+            $table->bigInteger('realestate')->nullable();
+            $table->timestamp('travel_started')->nullable();
             $table->bigInteger('active_course')->nullable();
             $table->timestamp('course_started')->nullable();
-            $table->bigInteger('job');
+            $table->bigInteger('job')->nullable();
         });
     }
 
