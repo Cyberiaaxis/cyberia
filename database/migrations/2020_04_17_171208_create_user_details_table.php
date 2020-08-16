@@ -20,6 +20,7 @@ class CreateUserDetailsTable extends Migration
             $table->bigInteger('points');
             $table->bigInteger('rates');
             $table->bigInteger('rank_id');
+            $table->bigInteger('money');
             $table->bigInteger('level_id');
             $table->bigInteger('location_id');
             $table->bigInteger('realestate');
