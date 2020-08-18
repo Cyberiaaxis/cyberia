@@ -15,6 +15,6 @@ class Rank extends Model
      */
     public function getRankById(int $id) : string
     {
-        return  $this->where(['id' => $id])->value('name');
+       dd($this->where(['id' => $id])->value('name'));
     }
 }
