@@ -132,6 +132,7 @@ class HomeController extends Controller
     public function rank()
     {
         $rankId = $this->userDetails->getRankId($this->loginUser->id);
+        dd($rankId);
         return $this->rank->getRankById($rankId);
     }
 
