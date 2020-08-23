@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Model\{User, UserDetail, UserRealEstate, UserSlot, UserStats};
+use App\Model\{Attack, User, UserCrime, UserDetail, UserRealEstate, UserSlot, UserStats};
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Hash, Validator};
@@ -42,7 +42,8 @@ class RegisterController extends Controller
               $userDetail,
               $userStats,
               $userSlots,
-              $userRealEstate;
+              $userRealEstate,
+              $attacks;
 
     /**
      * Create a new controller instance.
@@ -57,6 +58,8 @@ class RegisterController extends Controller
         $this->userStats = new UserStats();
         $this->userSlots = new UserSlot();
         $this->userRealEstate = new UserRealEstate();
+        $this->attacks = new Attack();
+        $this->userCrimes = new UserCrime();
     }
 
 
@@ -92,7 +95,8 @@ class RegisterController extends Controller
             $this->userStats->addUserStats($this->user->id);
             $this->userSlots->addUserSlots($this->user->id);
             $this->userRealEstate->addUserRealEstate($this->user->id, 1);
-
+            $this->userCrimes->addCrimeRecords($this->user->id);
+            $this->attacks->addAttackRecods($this->user->id);
             $this->user->getConnection()->commit();
         } catch (Throwable $e) {
             $this->user->getConnection()->rollback();

@@ -8,6 +8,28 @@ use Throwable;
 class Attack extends Model
 {
     /**
+     * add or update player's crime count in storage.
+     * @param  INT $userId
+     * @return int
+     */
+    public function addAttackRecords(int $userId)
+    {
+        return $this->create(
+            [
+                'user_id' => $userId,
+                'attacks' => 0,
+                'attacks_success' => 0,
+                'defenses' => 0,
+                'defenses_success' => 0,
+                'settlement_attacker' => 0,
+                'settlement_defender' => 0,
+                'escaped_attacker' => 0,
+                'escaped_defender' => 0,
+            ]
+        );
+    }
+
+    /**
      * get attacks (attackers total attack number) from storage.
      * @param  $userId INT
      * @return attacks INT

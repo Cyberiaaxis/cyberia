@@ -52,15 +52,11 @@
 <span id="time"></span>
 <div class="row">
     <div class="col-2 text-center">
-        @if($user->userdetails->hospital > 0)
-            <p class="text-center m-0 shadow">Hospitalized for {{ $user->userdetails->hospital ?? 0 }}</p>
-        @elseif ($user->userdetails->jail > 0)
-            <p class="text-center m-0 shadow">Jailed for {{ $user->userdetails->jail ?? 0 }}</p>
-        @endif
+            <p class="text-center m-0 shadow"> Locked due to hospitalized</p>
         <p class="text-center m-0 shadow">OK</p>
         <img class="img-fluid  fixed-img border border-primary mt-1" alt="No Image" src="https://www.broadheathcentral.co.uk/wp-content/uploads/2015/06/passport-photo-234x300.jpg">
         <p class="card-text text-center shadow">
-            {{ getStatus($user->last_seen->diffInMinutes(date('m/d/Y h:i:s a', time()))) }}
+            {{-- {{ getStatus($user->last_seen->diffInMinutes(date('m/d/Y h:i:s a', time()))) }} --}}
          </p>
     </div>
     <div class="col-lg-8 mt-4">
@@ -83,7 +79,9 @@
             </li>
             <li class="list-group-item p-0  d-flex justify-content-around">
                 <span class="w-100 text-left">Last Active</span>
-                <span class="w-100 text-left"><time title="{{ $user->last_seen }}">{{ $user->last_seen->diffForHumans() }}</time></span>
+                <span class="w-100 text-left">
+                    Times comes here
+                </span>
             </li>
             <li class="list-group-item p-0  d-flex justify-content-around">
                 <span class="w-100 text-left">Posts</span>
@@ -112,14 +110,16 @@
     <div class="col-2 text-center">
         <p class="text-center m-0">Gang In War</p>
         <img class="rounded-circle img-fluid shadow fixed-img border border-primary mt-1" alt="No Image" src="https://www.broadheathcentral.co.uk/wp-content/uploads/2015/06/passport-photo-234x300.jpg">
-        <p class="card-text text-center">{{ $user->userdetails->gang->name }}
+        <p class="card-text text-center"> GangName
+            {{-- {{ $user->userdetails->gang->name }} --}}
             <br> New Delhi</p>
     </div>
 </div>
 <div class="row border-top border-bottom">
     <ul class="list-inline m-auto">
         <li class="list-inline-item">
-            <a class="btn btn-outline-secondary rpg-gun rounded btn-sm" href="{{ route('attacks',  $user->id )}}" data-toggle="tooltip" data-placement="right" title="Attack"></a>
+            {{-- <a class="btn btn-outline-secondary rpg-gun rounded btn-sm" href="{{ route('attacks',  $user->id )}}" data-toggle="tooltip" data-placement="right" title="Attack"></a> --}}
+            <a class="btn btn-outline-secondary rpg-gun rounded btn-sm" data-toggle="tooltip" data-placement="right" title="Attack"></a>
         </li>
         <li class="list-inline-item">
             <button type="button" class="btn btn-outline-secondary rpg-gun rounded btn-sm" data-toggle="tooltip" data-placement="right" title="Attack"></button>
@@ -167,17 +167,20 @@
         <div class="carousel-inner w-100" role="listbox">
 
         <div class="carousel-inner w-100" role="listbox">
- @foreach (array_chunk($user->rewards->toArray(),15) as $items)
-            <div class="carousel-item @if($loop->first) active @endif">
-                @foreach ($items as $item)
+ {{-- @foreach (array_chunk($user->rewards->toArray(),15) as $items) --}}
+            <div class="carousel-item
+            {{-- @if($loop->first) active @endif --}}
+            ">
+                {{-- @foreach ($items as $item) --}}
                 <div class="col-md-1">
                     <div class="card border-0">
-                    <button type="button" class="btn btn-outline-secondary rpg-medal rounded btn-sm m-2" data-toggle="tooltip" data-placement="right" title="{{ $item['name'] }}"></button>
+                        {{-- {{ $item['name'] }} --}}
+                    <button type="button" class="btn btn-outline-secondary rpg-medal rounded btn-sm m-2" data-toggle="tooltip" data-placement="right" title=""></button>
                     </div>
                 </div>
-                @endforeach
+                {{-- @endforeach --}}
             </div>
-            @endforeach
+            {{-- @endforeach --}}
         </div>
         </div>
         <a class="carousel-control-prev w-auto pb-4" href="#recipeCarousel" role="button" data-slide="prev">

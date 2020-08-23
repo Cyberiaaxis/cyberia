@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Model\{UserReward, UserDetail, UserCrime, User, Rank, Attack, Area, Level, RealEstate, UserStats};
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -132,7 +131,6 @@ class HomeController extends Controller
     public function rank()
     {
         $rankId = $this->userDetails->getRankId($this->loginUser->id);
-        dd($rankId);
         return $this->rank->getRankById($rankId);
     }
 

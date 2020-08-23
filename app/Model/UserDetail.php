@@ -79,6 +79,7 @@ class UserDetail extends Model
             'points' => 10,
             'rank_id' => 1,
             'level_id' => 1,
+            'realestate' => 1,
             'location_id'  => 1,
         ]);
     }

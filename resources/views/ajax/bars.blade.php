@@ -19,3 +19,9 @@
                     </div>
                 </div>
             </li>
+            <li class="c-sidebar-nav-title m-0">Information</li>
+            <li class="c-sidebar-nav-item">
+                 <!-- https://www.php.net/manual/en/numberformatter.formatcurrency.php -->
+                   Money :  {{ $money }} <br>
+                   Point :  {{ $points }}
+            </li>

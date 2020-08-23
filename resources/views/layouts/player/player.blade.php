@@ -25,15 +25,8 @@
         </div>
 
         <ul class="c-sidebar-nav mt-1">
-            <li class="bars c-sidebar-nav-item ml-2 mr-2">
+            <div class="bars"></div>
 
-            </li>
-            <li class="c-sidebar-nav-title m-0">Information</li>
-            <li class="c-sidebar-nav-item">
-                 <!-- https://www.php.net/manual/en/numberformatter.formatcurrency.php -->
-                   Money :  {{ auth()->user()->userdetails->money }} <br>
-                   Point :  {{ auth()->user()->userdetails->points }}
-            </li>
             <li class="c-sidebar-nav-title m-0">Menu</li>
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link" href=" {{ route('crime.index')}} "> <i class="fa fa-inbox mr-2"></i> Crime </a>

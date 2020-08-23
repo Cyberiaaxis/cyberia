@@ -171,10 +171,36 @@ class SidebarController extends Controller
         $energyBar  = $this->energyBar($this->user->id);
         $nerveBar = $this->nerveBar($this->user->id);
         $hpBar = $this->hpBar($this->user->id);
-        $bars = ['energyBar' => $energyBar, 'nerveBar' => $nerveBar, 'hpBar' => $hpBar];
+        $money = $this->money();
+        $points = $this->points();
+        $bars = [
+            'energyBar' => $energyBar,
+            'nerveBar' => $nerveBar,
+            'hpBar' => $hpBar,
+            'money' => $money,
+            'points' => $points];
     return response()->json(['html' => view('ajax.bars',$bars)->render()]);
     }
 
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function money()
+    {
+        return $this->userDetails->getUserMoney($this->user->id);
+    }
+
+        /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function points()
+    {
+        return $this->userDetails->getUserPoints($this->user->id);
+    }
 
 
 }

@@ -14,7 +14,7 @@ class CrimeMessage extends Model
      */
     public function message($statusKey, $crimeId)
     {
-        return $this->where('status', $statusKey)->where('crime_id', $crimeId)->first();
+        return $this->where('message_type', $statusKey)->where('crime_id', $crimeId)->first();
     }
 
 }

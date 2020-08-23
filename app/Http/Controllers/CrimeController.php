@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\{Crime, UserStats, CrimeMessage, UserCrime};
+use App\Model\{Crime, UserStats, CrimeMessage, UserCrime, UserDetail};
 use Illuminate\Http\Request;
 
 class CrimeController extends Controller
@@ -23,7 +23,9 @@ class CrimeController extends Controller
     protected $crime,
               $usercrime,
               $crimeMessage,
-              $userStats;
+              $user,
+              $userStats,
+              $userDetails;
 
     /**
      * Create a new controller instance.
@@ -32,11 +34,16 @@ class CrimeController extends Controller
      */
     public function __construct()
     {
-       // $this->middleware('guest');
+        $this->middleware(function ($request, $next) {
+            $this->user = auth()->user();
+            return $next($request);
+        });
+
         $this->crime = new Crime();
         $this->usercrime =  new UserCrime();
         $this->crimeMessage = new CrimeMessage();
         $this->userStats = new UserStats();
+        $this->userDetails = new UserDetail();
     }
 
     /**
@@ -46,8 +53,8 @@ class CrimeController extends Controller
      */
     public function index(Request $request)
     {
-        $userLevel = auth()->user()->userdetails->level_id;
-        $locationId = auth()->user()->userdetails->location_id;
+        $userLevel = $this->userDetails->getLevelId($this->user->id);
+        $locationId = $this->userDetails->getLocation($this->user->id);
         $crimes = $this->crime->crimesList($locationId, $userLevel);
 
         if ($request->ajax()) {
@@ -76,8 +83,8 @@ class CrimeController extends Controller
     public function store(Request $request)
     {
         $request->validate([ 'crime_id' => ['required','int'] ]);
-
-        if(!$this->canDoCrime(auth()->user()->stats->nerve, $request->crime_id))
+        $nerve = $this->userStats->haveNerve($this->user->id);
+        if(!$this->canDoCrime($nerve, $request->crime_id))
         {
             return response()->json(['html' => view('ajax.crime', ['error' => "You don't have enough nerve"])->render()]);
         }
@@ -103,7 +110,7 @@ class CrimeController extends Controller
 
         }
 
-        $this->userStats->decrementNerve(auth()->user()->id, auth()->user()->stats->nerve);
+        $this->userStats->decrementNerve($this->user->id, $nerve);
 
     return response()->json(['html' => view('ajax.crime', ['statusKey' => $statusKey, 'statusType' => $statusType, 'message' => $crimeMessage])->render()]);
     }
