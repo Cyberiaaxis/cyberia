@@ -105,12 +105,14 @@ class CrimeController extends Controller
         $crimeMessage = $this->crimeMessage->message($statusKey, $request->crime_id);
 
         if($statusKey ==! 'missed') {
-            $user = ['user_id' => auth()->user()->id, 'crime_id' => $request->crime_id];
+            $user = ['user_id' => $this->user->id, 'crime_id' => $request->crime_id];
             $this->userCrime->addCrime($user, $statusKey);
 
         }
 
-        $this->userStats->decrementNerve($this->user->id, $nerve);
+        $consumedNerve = $nerve - $this->crime->getNerve($request->crime_id);
+        // dd($consumedNerve);
+        $this->userStats->decrementNerve($this->user->id, $consumedNerve);
 
     return response()->json(['html' => view('ajax.crime', ['statusKey' => $statusKey, 'statusType' => $statusType, 'message' => $crimeMessage])->render()]);
     }

@@ -50,9 +50,9 @@ class UserStats extends Model
      * @param  int $userId, int $userNerve
      * @return query result in boolean
      */
-    public function decrementNerve(int $userId, int $userNerve)
+    public function decrementNerve(int $userId, int $newNerve)
     {
-        return $this->where('user_id', $userId)->decrement('nerve', $userNerve);
+        return $this->where('user_id', $userId)->update(['nerve' => $newNerve]);
     }
 
     /**
@@ -216,4 +216,25 @@ class UserStats extends Model
     {
         return $this->where('user_id', $userId)->value('endurance');
     }
+
+    /**
+     * get endurance of user.
+     * @param  int $userId
+     * @return boolean
+     */
+    public function getWill(int $userId) : int
+    {
+        return $this->where('user_id', $userId)->value('will');
+    }
+
+    /**
+     * get endurance of user.
+     * @param  int $userId
+     * @return boolean
+     */
+    public function incermentStats(int $userId, $field, $totalgain, $newenergy, $will)
+    {
+        return $this->where(['user_id' => $userId])->increment($field, $totalgain, ['energy' => $newenergy, 'will' => $will]);
+    }
+
 }

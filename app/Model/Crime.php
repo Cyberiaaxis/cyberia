@@ -58,7 +58,7 @@ class Crime extends Model
      * @param  mixed  $type
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function getNerve($crimeId)
+    public function getNerve(int $crimeId) : int
     {
         return $this->where('id', $crimeId)->value('nerve');
     }

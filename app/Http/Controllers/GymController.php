@@ -2,10 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\UserDetail;
+use App\Model\UserStats;
 use Illuminate\Http\Request;
 
 class GymController extends Controller
 {
+
+    /**
+     * The attributes that are assignable.
+     *
+     * @var
+     */
+    protected   $user,
+                $userDetails,
+                $userStats;
+
+    /**
+     * Instantiate a new AttacksController instance.
+     */
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->user = auth()->user();
+            return $next($request);
+        });
+
+        $this->userDetails = new UserDetail();
+        $this->userStats = new UserStats();
+    }
+
     /**
      * Show the profile for the given user.
      *
@@ -16,6 +42,7 @@ class GymController extends Controller
     {
         return view('player.gym');
     }
+
     /**
      * Show the profile for the given user.
      *
@@ -24,28 +51,31 @@ class GymController extends Controller
      */
     public function store(Request $request)
     {
-        if($this->energy(auth()->user()->stats->energy) === false){
+        $playerEnergy = $this->userStats->getEnergy($this->user->id);
+
+        if($this->energy($playerEnergy) === false)
+        {
             return response()->json(['success' => false, 'message' => "You've no more enegry to train"]);
         }
 
         $getTrain = $this->canTrain($request);
-        $updatedenergy = (int) auth()->user()->stats->energy - $getTrain['gymtimes'];
+        $updatedenergy = (int) $playerEnergy - $getTrain['gymtimes'];
         $totalgain = 0; $will = 0;
 
-        for ($i = 0; $i <= $getTrain['gymtimes'] && auth()->user()->stats->energy > 0; $i++)
+        for ($i = 0; $i <= $getTrain['gymtimes'] && $playerEnergy > 0; $i++)
         {
             $gain = rand(1, 3) / rand(800, 1000) * rand(800, 1000)
-                * ((auth()->user()->stats->will + 20) / 150);
+                * (($this->userStats->getWill($this->user->id) + 20) / 150);
             $totalgain += $gain;
             $willrandom = (int) (rand(1, 3));
 
-            if (auth()->user()->stats->will >= $willrandom)
+            if ($this->userStats->getWill($this->user->id) >= $willrandom)
             {
-                $will = auth()->user()->stats->will -= $willrandom;
+                $will = $this->userStats->getWill($this->user->id) - $willrandom;
             }
         }
 
-        auth()->user()->stats()->increment($getTrain['field'], $totalgain, ['energy'=> $updatedenergy, 'will' => $will]);
+        $this->userStats->incermentStats($this->user->id, $getTrain['field'], $totalgain, $updatedenergy,  $will);
     return response()->json(['success' => true, 'message' => "You've successfully gained ". $getTrain['field'] . " " . $totalgain ]);
     }
 
@@ -58,28 +88,29 @@ class GymController extends Controller
     public function canTrain($request){
 
         $gymtimes = $field = null;
+        $energy = $this->userStats->getEnergy($this->user->id);
 
         if ($request->has('strength')) {
             $request->validate(['strength' => ['required', 'integer', 'min:1']]);
-            $gymtimes = ($request->strength > auth()->user()->stats->energy) ?  (int) auth()->user()->stats->energy : (int) $request->strength;
+            $gymtimes = ($request->strength > $energy) ?  (int)  $energy : (int) $request->strength;
             $field = 'strength';
         }
 
         if ($request->has('agility')) {
             $request->validate(['agility' => ['required', 'integer', 'min:1']]);
-            $gymtimes = ($request->agility > auth()->user()->stats->energy) ? (int) auth()->user()->stats->energy : (int) $request->agility;
+            $gymtimes = ($request->agility > $energy) ? (int) $energy : (int) $request->agility;
             $field = 'agility';
         }
 
         if ($request->has('endurance')) {
             $request->validate(['endurance' => ['required', 'integer', 'min:1']]);
-            $gymtimes = ($request->endurance > auth()->user()->stats->energy) ? (int) auth()->user()->stats->energy : (int) $request->endurance;
+            $gymtimes = ($request->endurance > $energy) ? (int) $energy : (int) $request->endurance;
             $field = 'endurance';
         }
 
         if ($request->has('defense')) {
             $request->validate(['defense' => ['required', 'integer', 'min:1']]);
-            $gymtimes = ($request->defense > auth()->user()->stats->energy) ? (int) auth()->user()->stats->energy : (int) $request->defense;
+            $gymtimes = ($request->defense > $energy) ? (int) $energy : (int) $request->defense;
             $field = 'defense';
         }
 
