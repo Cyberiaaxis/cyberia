@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ProcessRefill;
 use App\Model\UserDetail;
 use App\Model\UserStats;
 use Illuminate\Http\Request;
@@ -40,6 +41,7 @@ class GymController extends Controller
      */
     public function index()
     {
+        dispatch((new ProcessRefill)->onQueue('high'));
         return view('player.gym');
     }
 

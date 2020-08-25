@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Model\UserStats;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -11,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 class ProcessRefill implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
+    protected $userStats;
     /**
      * Create a new job instance.
      *
@@ -29,6 +30,7 @@ class ProcessRefill implements ShouldQueue
      */
     public function handle()
     {
-        //
+        $stats = new UserStats();
+        $stats->where('energy', '<', 100)->increment('energy', 1);
     }
 }
