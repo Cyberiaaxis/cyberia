@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\AttackRecord;
+use App\Models\AttackRecord;
 use Illuminate\Http\Request;
 
 class AttackRecordController extends Controller

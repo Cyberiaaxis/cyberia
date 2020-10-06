@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\ItemResource;
-use App\Model\{Item, ItemCategory, ItemType};
-use DB;
-
+use App\Models\{Item, ItemCategory, ItemType};
 
 class ItemsController extends Controller
 {

@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\RealEstate;
-use App\Model\UserDetail;
-use App\Model\UserRealEstate;
-use App\Model\UserStats;
+use App\Models\{RealEstate, UserDetail, UserRealEstate, UserStats};
 use Exception;
 use Illuminate\Http\Request;
 

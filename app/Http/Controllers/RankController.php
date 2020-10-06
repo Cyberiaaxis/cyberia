@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Rank;
+use App\Models\Rank;
 use Illuminate\Http\Request;
 
 class RankController extends Controller

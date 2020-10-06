@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Reward;
+use App\Models\Reward;
 use Illuminate\Http\Request;
 
 class RewardController extends Controller

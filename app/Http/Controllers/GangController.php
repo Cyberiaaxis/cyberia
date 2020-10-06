@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Gang;
+use App\Models\Gang;
 use Illuminate\Http\Request;
 
 class GangController extends Controller

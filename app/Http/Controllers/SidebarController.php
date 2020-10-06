@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\UserDetail;
-use App\Model\UserStats;
+use App\Models\{UserDetail, UserStats};
 use Illuminate\Http\Request;
 
 class SidebarController extends Controller

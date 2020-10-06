@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Area;
-use App\Model\City;
-use App\Model\Country;
-use App\Model\TravelRoute;
+use App\Models\{Area, City, Country, TravelRoute};
 use Illuminate\Http\Request;
 
 class TravelRoutesController extends Controller
@@ -93,7 +90,7 @@ class TravelRoutesController extends Controller
      * @param  \App\Model\TravelRoutes  $travelRoutes
      * @return \Illuminate\Http\Response
      */
-    public function edit(TravelRoutes $travelRoutes)
+    public function edit(TravelRoute $travelRoutes)
     {
         //
     }
@@ -105,7 +102,7 @@ class TravelRoutesController extends Controller
      * @param  \App\Model\TravelRoutes  $travelRoutes
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TravelRoutes $travelRoutes)
+    public function update(Request $request, TravelRoute $travelRoutes)
     {
         //
     }
@@ -116,7 +113,7 @@ class TravelRoutesController extends Controller
      * @param  \App\Model\TravelRoutes  $travelRoutes
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TravelRoutes $travelRoutes)
+    public function destroy(TravelRoute $travelRoutes)
     {
         //
     }

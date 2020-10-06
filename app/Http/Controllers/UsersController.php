@@ -6,7 +6,7 @@ use Spatie\Permission\Models\{Role, Permission};
 use Hash;
 use Carbon\Carbon;
 use App\Http\Resources\UserResource;
-use App\Model\{UserTravel, TravelRoute, UserDetail, User, UserStats};
+use App\Models\{UserTravel, TravelRoute, UserDetail, User, UserStats};
 use Exception;
 
 // use Auth;

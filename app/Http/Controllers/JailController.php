@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Jail;
+use App\Models\Jail;
 use Illuminate\Http\Request;
 
 class JailController extends Controller

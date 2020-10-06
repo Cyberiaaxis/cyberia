@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\ProcessRefill;
-use App\Model\UserDetail;
-use App\Model\UserStats;
+use App\Models\{UserStats, UserDetail};
 use Illuminate\Http\Request;
 
 class GymController extends Controller

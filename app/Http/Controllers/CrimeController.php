@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\{Crime, UserStats, CrimeMessage, UserCrime, UserDetail};
+use App\Models\{Crime, UserStats, CrimeMessage, UserCrime, UserDetail};
 use Illuminate\Http\Request;
 
 class CrimeController extends Controller
@@ -51,28 +51,15 @@ class CrimeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function crimes()
     {
         $userLevel = $this->userDetails->getLevelId($this->user->id);
         $locationId = $this->userDetails->getLocation($this->user->id);
         $crimes = $this->crime->crimesList($locationId, $userLevel);
-
-        if ($request->ajax()) {
-            return response()->json(['html' => view('ajax.crime', ['crimes' => $crimes])->render()]);
-        }
-
-    return view('player.crime');
+    return response()->json(['crimes' => $crimes]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -86,7 +73,7 @@ class CrimeController extends Controller
         $nerve = $this->userStats->haveNerve($this->user->id);
         if(!$this->canDoCrime($nerve, $request->crime_id))
         {
-            return response()->json(['html' => view('ajax.crime', ['error' => "You don't have enough nerve"])->render()]);
+            return response()->json(['error' => "You don't have enough nerve"]);
         }
 
         // return $this->getDifficulty($request->crime_id);
@@ -114,7 +101,7 @@ class CrimeController extends Controller
         // dd($consumedNerve);
         $this->userStats->decrementNerve($this->user->id, $consumedNerve);
 
-    return response()->json(['html' => view('ajax.crime', ['statusKey' => $statusKey, 'statusType' => $statusType, 'message' => $crimeMessage])->render()]);
+    return response()->json(['statusKey' => $statusKey, 'statusType' => $statusType, 'message' => $crimeMessage]);
     }
 
     /**
@@ -133,7 +120,7 @@ class CrimeController extends Controller
             $data = ['done_crime' => $crime];
         }
 
-    return response()->json([ 'html' => view('ajax.crime', $data)->render() ]);
+    return response()->json($data);
     }
 
     /**
@@ -207,6 +194,15 @@ class CrimeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Crime $crime)
+    {
+        //
+    }
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
         //
     }

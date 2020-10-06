@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\{Inventory, Shop, TypeAttribute, UserDetail};
+use App\Models\{Inventory, Shop, TypeAttribute, UserDetail};
 use Illuminate\Http\Request;
 
 class ShopsController extends Controller

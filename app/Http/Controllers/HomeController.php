@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\{UserReward, UserDetail, UserCrime, User, Rank, Attack, Area, Level, RealEstate, UserStats};
+use App\Models\{UserReward, UserDetail, UserCrime, User, Rank, Attack, Area, Level, RealEstate, UserStats};
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -110,7 +110,7 @@ class HomeController extends Controller
             "money" => $money,
             "points" => $points,
         ];
-        return view('player.index', $details);
+    return response()->json($details);
     }
 
     /**

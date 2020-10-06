@@ -18,7 +18,7 @@ class CreateUserCrimesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('crime_id');
             $table->bigInteger('success');
-            $table->bigInteger('success');
+            $table->bigInteger('fail');
         });
     }
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\UserSlot;
+use App\Models\UserSlot;
 use Illuminate\Http\Request;
 
 class UserSlotController extends Controller

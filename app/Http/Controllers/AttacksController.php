@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\{ AttackLog, User, Item, UserDetail,  UserSlot, UserStats, WeaponAttribute};
+use App\Models\{ AttackLog, User, Item, UserDetail,  UserSlot, UserStats, WeaponAttribute};
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 

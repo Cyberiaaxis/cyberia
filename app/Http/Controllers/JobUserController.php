@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\JobUser;
+use App\Models\JobUser;
 use Illuminate\Http\Request;
 
 class JobUserController extends Controller

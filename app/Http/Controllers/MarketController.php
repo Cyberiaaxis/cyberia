@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Market;
+use App\Models\Market;
 use Illuminate\Http\Request;
 
 class MarketController extends Controller

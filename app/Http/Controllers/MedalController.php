@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Medal;
+use App\Models\Medal;
 use Illuminate\Http\Request;
 
 class MedalController extends Controller

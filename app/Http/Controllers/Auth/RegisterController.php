@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Model\{Attack, User, UserCrime, UserDetail, UserRealEstate, UserSlot, UserStats};
+use App\Models\{Attack, User, UserCrime, UserDetail, UserRealEstate, UserSlot, UserStats};
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Hash, Validator};

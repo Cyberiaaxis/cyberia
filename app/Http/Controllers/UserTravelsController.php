@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\UserTravel;
+use App\Models\UserTravel;
 use Illuminate\Http\Request;
 
 class UserTravelsController extends Controller

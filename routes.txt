@@ -1,80 +1,399 @@
-+--------+-----------+-----------------------------------------+-----------------------------------+---------------------------------------------------------------------------+------------------------------+
-| Domain | Method    | URI                                     | Name                              | Action                                                                    | Middleware                   |
-+--------+-----------+-----------------------------------------+-----------------------------------+---------------------------------------------------------------------------+------------------------------+
-|        | GET|HEAD  | /                                       |                                   | Closure                                                                   | web                          |
-|        | GET|HEAD  | api/chatter/category                    | chatter.api.category.index        | Chatter\Core\Http\Controllers\Api\CategoryController@index                | api                          |
-|        | POST      | api/chatter/category                    | chatter.api.category.store        | Chatter\Core\Http\Controllers\Api\CategoryController@store                | api,auth:api                 |
-|        | GET|HEAD  | api/chatter/category/{category}         | chatter.api.category.show         | Chatter\Core\Http\Controllers\Api\CategoryController@show                 | api                          |
-|        | DELETE    | api/chatter/category/{category}         | chatter.api.category.destroy      | Chatter\Core\Http\Controllers\Api\CategoryController@destroy              | api,auth:api                 |
-|        | PUT|PATCH | api/chatter/category/{category}         | chatter.api.category.update       | Chatter\Core\Http\Controllers\Api\CategoryController@update               | api,auth:api                 |
-|        | GET|HEAD  | api/chatter/discussion                  | chatter.api.discussion.index      | Chatter\Core\Http\Controllers\Api\DiscussionController@index              | api                          |
-|        | POST      | api/chatter/discussion                  | chatter.api.discussion.store      | Chatter\Core\Http\Controllers\Api\DiscussionController@store              | api,auth:api                 |
-|        | GET|HEAD  | api/chatter/discussion/{discussion}     | chatter.api.discussion.show       | Chatter\Core\Http\Controllers\Api\DiscussionController@show               | api                          |
-|        | PUT|PATCH | api/chatter/discussion/{discussion}     | chatter.api.discussion.update     | Chatter\Core\Http\Controllers\Api\DiscussionController@update             | api,auth:api                 |
-|        | DELETE    | api/chatter/discussion/{discussion}     | chatter.api.discussion.destroy    | Chatter\Core\Http\Controllers\Api\DiscussionController@destroy            | api,auth:api                 |
-|        | GET|HEAD  | api/chatter/post                        | chatter.api.post.index            | Chatter\Core\Http\Controllers\Api\PostController@index                    | api                          |
-|        | POST      | api/chatter/post                        | chatter.api.post.store            | Chatter\Core\Http\Controllers\Api\PostController@store                    | api,auth:api                 |
-|        | POST      | api/chatter/post/react/{id}             | chatter.api.post.reaction         | Chatter\Core\Http\Controllers\Api\ReactionController@toggle               | api,auth:api                 |
-|        | GET|HEAD  | api/chatter/post/{post}                 | chatter.api.post.show             | Chatter\Core\Http\Controllers\Api\PostController@show                     | api                          |
-|        | PUT|PATCH | api/chatter/post/{post}                 | chatter.api.post.update           | Chatter\Core\Http\Controllers\Api\PostController@update                   | api,auth:api                 |
-|        | DELETE    | api/chatter/post/{post}                 | chatter.api.post.destroy          | Chatter\Core\Http\Controllers\Api\PostController@destroy                  | api,auth:api                 |
-|        | POST      | api/chatter/username                    | chatter.api.username.store        | Chatter\Core\Http\Controllers\Api\UsernameController@store                | api,auth:api                 |
-|        | GET|HEAD  | api/user                                |                                   | Closure                                                                   | api,auth:api                 |
-|        | POST      | email/resend                            | verification.resend               | App\Http\Controllers\Auth\VerificationController@resend                   | web,auth,throttle:6,1        |
-|        | GET|HEAD  | email/verify                            | verification.notice               | App\Http\Controllers\Auth\VerificationController@show                     | web,auth                     |
-|        | GET|HEAD  | email/verify/{id}/{hash}                | verification.verify               | App\Http\Controllers\Auth\VerificationController@verify                   | web,auth,signed,throttle:6,1 |
-|        | GET|HEAD  | forums                                  | chatter.home                      | Chatter\Core\Http\Controllers\IndexController@index                       | web                          |
-|        | GET|HEAD  | forums.atom                             | chatter.atom                      | Chatter\Core\Http\Controllers\AtomController@index                        | web                          |
-|        | GET|HEAD  | forums/category/{category}              | chatter.category                  | Chatter\Core\Http\Controllers\IndexController@index                       | web                          |
-|        | GET|HEAD  | forums/discussion/{category}/{title}    | chatter.discussion                | Chatter\Core\Http\Controllers\IndexController@index                       | web                          |
-|        | POST      | login                                   |                                   | App\Http\Controllers\Auth\LoginController@login                           | web,guest                    |
-|        | GET|HEAD  | login                                   | login                             | App\Http\Controllers\Auth\LoginController@showLoginForm                   | web,guest                    |
-|        | POST      | logout                                  | logout                            | App\Http\Controllers\Auth\LoginController@logout                          | web                          |
-|        | GET|HEAD  | mailable                                |                                   | Closure                                                                   |                              |
-|        | GET|HEAD  | oauth/authorize                         | passport.authorizations.authorize | Laravel\Passport\Http\Controllers\AuthorizationController@authorize       | web,auth                     |
-|        | DELETE    | oauth/authorize                         | passport.authorizations.deny      | Laravel\Passport\Http\Controllers\DenyAuthorizationController@deny        | web,auth                     |
-|        | POST      | oauth/authorize                         | passport.authorizations.approve   | Laravel\Passport\Http\Controllers\ApproveAuthorizationController@approve  | web,auth                     |
-|        | POST      | oauth/clients                           | passport.clients.store            | Laravel\Passport\Http\Controllers\ClientController@store                  | web,auth                     |
-|        | GET|HEAD  | oauth/clients                           | passport.clients.index            | Laravel\Passport\Http\Controllers\ClientController@forUser                | web,auth                     |
-|        | DELETE    | oauth/clients/{client_id}               | passport.clients.destroy          | Laravel\Passport\Http\Controllers\ClientController@destroy                | web,auth                     |
-|        | PUT       | oauth/clients/{client_id}               | passport.clients.update           | Laravel\Passport\Http\Controllers\ClientController@update                 | web,auth                     |
-|        | POST      | oauth/personal-access-tokens            | passport.personal.tokens.store    | Laravel\Passport\Http\Controllers\PersonalAccessTokenController@store     | web,auth                     |
-|        | GET|HEAD  | oauth/personal-access-tokens            | passport.personal.tokens.index    | Laravel\Passport\Http\Controllers\PersonalAccessTokenController@forUser   | web,auth                     |
-|        | DELETE    | oauth/personal-access-tokens/{token_id} | passport.personal.tokens.destroy  | Laravel\Passport\Http\Controllers\PersonalAccessTokenController@destroy   | web,auth                     |
-|        | GET|HEAD  | oauth/scopes                            | passport.scopes.index             | Laravel\Passport\Http\Controllers\ScopeController@all                     | web,auth                     |
-|        | POST      | oauth/token                             | passport.token                    | Laravel\Passport\Http\Controllers\AccessTokenController@issueToken        | throttle                     |
-|        | POST      | oauth/token/refresh                     | passport.token.refresh            | Laravel\Passport\Http\Controllers\TransientTokenController@refresh        | web,auth                     |
-|        | GET|HEAD  | oauth/tokens                            | passport.tokens.index             | Laravel\Passport\Http\Controllers\AuthorizedAccessTokenController@forUser | web,auth                     |
-|        | DELETE    | oauth/tokens/{token_id}                 | passport.tokens.destroy           | Laravel\Passport\Http\Controllers\AuthorizedAccessTokenController@destroy | web,auth                     |
-|        | POST      | password/email                          | password.email                    | App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail     | web,guest                    |
-|        | GET|HEAD  | password/reset                          | password.request                  | App\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm    | web,guest                    |
-|        | POST      | password/reset                          | password.update                   | App\Http\Controllers\Auth\ResetPasswordController@reset                   | web,guest                    |
-|        | GET|HEAD  | password/reset/{token}                  | password.reset                    | App\Http\Controllers\Auth\ResetPasswordController@showResetForm           | web,guest                    |
-|        | POST      | register                                |                                   | App\Http\Controllers\Auth\RegisterController@register                     | web,guest                    |
-|        | GET|HEAD  | register                                | register                          | App\Http\Controllers\Auth\RegisterController@showRegistrationForm         | web,guest                    |
-|        | GET|HEAD  | staff                                   | index                             | App\Http\Controllers\StaffsController@index                               | web,auth                     |
-|        | POST      | staff                                   | store                             | App\Http\Controllers\StaffsController@store                               | web,auth                     |
-|        | GET|HEAD  | staff/create                            | create                            | App\Http\Controllers\StaffsController@create                              | web,auth                     |
-|        | GET|HEAD  | staff/operations/{id}                   | operations                        | App\Http\Controllers\OperationsController@show                            | web,auth,role:admin          |
-|        | POST      | staff/operations/{id}                   | operations.store                  | App\Http\Controllers\OperationsController@createPermission                | web,auth,role:admin          |
-|        | DELETE    | staff/operations/{id}                   |                                   | App\Http\Controllers\OperationsController@removePermission                | web,auth,role:admin          |
-|        | POST      | staff/permissions                       | permissions.store                 | App\Http\Controllers\PermissionsController@store                          | web,auth                     |
-|        | GET|HEAD  | staff/permissions                       | permissions.index                 | App\Http\Controllers\PermissionsController@index                          | web,auth                     |
-|        | GET|HEAD  | staff/permissions/create                | permissions.create                | App\Http\Controllers\PermissionsController@create                         | web,auth                     |
-|        | GET|HEAD  | staff/permissions/{permission}          | permissions.show                  | App\Http\Controllers\PermissionsController@show                           | web,auth                     |
-|        | PUT|PATCH | staff/permissions/{permission}          | permissions.update                | App\Http\Controllers\PermissionsController@update                         | web,auth                     |
-|        | DELETE    | staff/permissions/{permission}          | permissions.destroy               | App\Http\Controllers\PermissionsController@destroy                        | web,auth                     |
-|        | GET|HEAD  | staff/permissions/{permission}/edit     | permissions.edit                  | App\Http\Controllers\PermissionsController@edit                           | web,auth                     |
-|        | POST      | staff/roles                             | roles.store                       | App\Http\Controllers\RolesController@store                                | web,auth                     |
-|        | GET|HEAD  | staff/roles                             | roles.index                       | App\Http\Controllers\RolesController@index                                | web,auth                     |
-|        | GET|HEAD  | staff/roles/create                      | roles.create                      | App\Http\Controllers\RolesController@create                               | web,auth                     |
-|        | GET|HEAD  | staff/roles/{role}                      | roles.show                        | App\Http\Controllers\RolesController@show                                 | web,auth                     |
-|        | PUT|PATCH | staff/roles/{role}                      | roles.update                      | App\Http\Controllers\RolesController@update                               | web,auth                     |
-|        | DELETE    | staff/roles/{role}                      | roles.destroy                     | App\Http\Controllers\RolesController@destroy                              | web,auth                     |
-|        | GET|HEAD  | staff/roles/{role}/edit                 | roles.edit                        | App\Http\Controllers\RolesController@edit                                 | web,auth                     |
-|        | DELETE    | staff/staff/operations/{id}             |                                   | App\Http\Controllers\RolesController@edit                                 | web,auth,role:admin          |
-|        | DELETE    | staff/{}                                | destroy                           | App\Http\Controllers\StaffsController@destroy                             | web,auth                     |
-|        | PUT|PATCH | staff/{}                                | update                            | App\Http\Controllers\StaffsController@update                              | web,auth                     |
-|        | GET|HEAD  | staff/{}                                | show                              | App\Http\Controllers\StaffsController@show                                | web,auth                     |
-|        | GET|HEAD  | staff/{}/edit                           | edit                              | App\Http\Controllers\StaffsController@edit                                | web,auth                     |
-+--------+-----------+-----------------------------------------+-----------------------------------+---------------------------------------------------------------------------+------------------------------+
++--------+-----------+------------------------------------------+------------------------+------------------------------------------------------------------------+--------------+
+| Domain | Method    | URI                                      | Name                   | Action                                                                 | Middleware   |
++--------+-----------+------------------------------------------+------------------------+------------------------------------------------------------------------+--------------+
+|        | GET|HEAD  | /                                        |                        | Illuminate\Routing\ViewController                                      | web          |
+|        |           |                                          |                        |                                                                        | guest        |
+|        | GET|HEAD  | api/user                                 |                        | Closure                                                                | api          |
+|        |           |                                          |                        |                                                                        | auth:api     |
+|        | GET|HEAD  | attack                                   |                        | Illuminate\Routing\ViewController                                      | web          |
+|        | GET|HEAD  | attack/{defender}                        | attack                 | App\Http\Controllers\AttacksController                                 | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | checkStatus  |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | GET|HEAD  | attacks/{defender}                       | attacks                | App\Http\Controllers\AttacksController@attack                          | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | GET|HEAD  | attackstart/{defender}                   | attackstart            | App\Http\Controllers\AttacksController@attack                          | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | checkStatus  |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | GET|HEAD  | bust/{userDetails}                       | bust                   | App\Http\Controllers\UsersController@bust                              | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | POST      | checkemail                               | checkemail             | App\Http\Controllers\Auth\RegisterController@checkEmail                | web          |
+|        |           |                                          |                        |                                                                        | guest        |
+|        | POST      | course                                   | course.store           | App\Http\Controllers\CoursesController@store                           | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | course                                   | course.index           | App\Http\Controllers\CoursesController@index                           | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | course/create                            | course.create          | App\Http\Controllers\CoursesController@create                          | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | PUT|PATCH | course/{course}                          | course.update          | App\Http\Controllers\CoursesController@update                          | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | course/{course}                          | course.show            | App\Http\Controllers\CoursesController@show                            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | DELETE    | course/{course}                          | course.destroy         | App\Http\Controllers\CoursesController@destroy                         | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | course/{course}/edit                     | course.edit            | App\Http\Controllers\CoursesController@edit                            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | POST      | crime                                    | crime.store            | App\Http\Controllers\CrimeController@store                             | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | GET|HEAD  | crime                                    | crime.index            | App\Http\Controllers\CrimeController@index                             | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | GET|HEAD  | crime/create                             | crime.create           | App\Http\Controllers\CrimeController@create                            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | DELETE    | crime/{crime}                            | crime.destroy          | App\Http\Controllers\CrimeController@destroy                           | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | PUT|PATCH | crime/{crime}                            | crime.update           | App\Http\Controllers\CrimeController@update                            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | GET|HEAD  | crime/{crime}                            | crime.show             | App\Http\Controllers\CrimeController@show                              | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | GET|HEAD  | crime/{crime}/edit                       | crime.edit             | App\Http\Controllers\CrimeController@edit                              | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | POST      | email/resend                             | verification.resend    | App\Http\Controllers\Auth\VerificationController@resend                | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | throttle:6,1 |
+|        | GET|HEAD  | email/verify                             | verification.notice    | App\Http\Controllers\Auth\VerificationController@show                  | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | email/verify/{id}/{hash}                 | verification.verify    | App\Http\Controllers\Auth\VerificationController@verify                | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | signed       |
+|        |           |                                          |                        |                                                                        | throttle:6,1 |
+|        | GET|HEAD  | endtravel/{travelroute}                  | endtravel              | App\Http\Controllers\UsersController@endTravel                         | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | forum                                    |                        | Illuminate\Routing\ViewController                                      | web          |
+|        | POST      | forums                                   | forums.store           | App\Http\Controllers\ForumsController@store                            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | forums                                   | forums.index           | App\Http\Controllers\ForumsController@index                            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | forums/create                            | forums.create          | App\Http\Controllers\ForumsController@create                           | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | forums/{forum}                           | forums.show            | App\Http\Controllers\ForumsController@show                             | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | PUT|PATCH | forums/{forum}                           | forums.update          | App\Http\Controllers\ForumsController@update                           | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | DELETE    | forums/{forum}                           | forums.destroy         | App\Http\Controllers\ForumsController@destroy                          | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | forums/{forum}/edit                      | forums.edit            | App\Http\Controllers\ForumsController@edit                             | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | POST      | forums/{forum}/thread                    | thread.store           | App\Http\Controllers\ThreadsController@store                           | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | forums/{forum}/thread                    | thread.index           | App\Http\Controllers\ThreadsController@index                           | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | forums/{forum}/thread/create             | thread.create          | App\Http\Controllers\ThreadsController@create                          | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | forums/{forum}/thread/{thread}           | thread.show            | App\Http\Controllers\ThreadsController@show                            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | PUT|PATCH | forums/{forum}/thread/{thread}           | thread.update          | App\Http\Controllers\ThreadsController@update                          | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | DELETE    | forums/{forum}/thread/{thread}           | thread.destroy         | App\Http\Controllers\ThreadsController@destroy                         | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | forums/{forum}/thread/{thread}/edit      | thread.edit            | App\Http\Controllers\ThreadsController@edit                            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | gang                                     | gang.index             | App\Http\Controllers\GangController@index                              | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | POST      | gang                                     | gang.store             | App\Http\Controllers\GangController@store                              | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | gang/create                              | gang.create            | App\Http\Controllers\GangController@create                             | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | PUT|PATCH | gang/{gang}                              | gang.update            | App\Http\Controllers\GangController@update                             | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | gang/{gang}                              | gang.show              | App\Http\Controllers\GangController@show                               | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | DELETE    | gang/{gang}                              | gang.destroy           | App\Http\Controllers\GangController@destroy                            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | gang/{gang}/edit                         | gang.edit              | App\Http\Controllers\GangController@edit                               | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | gym                                      | gym.index              | App\Http\Controllers\GymController@index                               | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | POST      | gym                                      | gym.store              | App\Http\Controllers\GymController@store                               | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | GET|HEAD  | gym/create                               | gym.create             | App\Http\Controllers\GymController@create                              | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | GET|HEAD  | gym/{gym}                                | gym.show               | App\Http\Controllers\GymController@show                                | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | PUT|PATCH | gym/{gym}                                | gym.update             | App\Http\Controllers\GymController@update                              | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | DELETE    | gym/{gym}                                | gym.destroy            | App\Http\Controllers\GymController@destroy                             | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | GET|HEAD  | gym/{gym}/edit                           | gym.edit               | App\Http\Controllers\GymController@edit                                | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | GET|HEAD  | heal/{userId}                            | heal                   | App\Http\Controllers\UsersController@heal                              | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | home                                     | home.index             | App\Http\Controllers\HomeController@index                              | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | POST      | home                                     | home.store             | App\Http\Controllers\HomeController@store                              | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | GET|HEAD  | home/create                              | home.create            | App\Http\Controllers\HomeController@create                             | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | PUT|PATCH | home/{home}                              | home.update            | App\Http\Controllers\HomeController@update                             | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | GET|HEAD  | home/{home}                              | home.show              | App\Http\Controllers\HomeController@show                               | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | DELETE    | home/{home}                              | home.destroy           | App\Http\Controllers\HomeController@destroy                            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | GET|HEAD  | home/{home}/edit                         | home.edit              | App\Http\Controllers\HomeController@edit                               | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | GET|HEAD  | inventory/trade/{item}                   | inventory.trade        | App\Http\Controllers\InventoryController@tradeItem                     | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | inventory/use/{item}                     | inventory.use          | App\Http\Controllers\InventoryController@useItem                       | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | job/{job}                                | job                    | App\Http\Controllers\JobController@join                                | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | jobs/benefit                             | job.benefit            | App\Http\Controllers\JobController@getJobBenefit                       | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | jobs/leave                               | job.leave              | App\Http\Controllers\JobController@leave                               | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | POST      | login                                    |                        | App\Http\Controllers\Auth\LoginController@login                        | web          |
+|        |           |                                          |                        |                                                                        | guest        |
+|        | GET|HEAD  | login                                    | login                  | App\Http\Controllers\Auth\LoginController@showLoginForm                | web          |
+|        |           |                                          |                        |                                                                        | guest        |
+|        | GET|HEAD  | login/{provider}                         | provider               | App\Http\Controllers\Auth\LoginController@redirectToProvider           | web          |
+|        |           |                                          |                        |                                                                        | guest        |
+|        | GET|HEAD  | login/{provider}/callback                | provider.callback      | App\Http\Controllers\Auth\LoginController@handleProviderCallback       | web          |
+|        |           |                                          |                        |                                                                        | guest        |
+|        | POST      | logout                                   | logout                 | App\Http\Controllers\Auth\LoginController@logout                       | web          |
+|        | POST      | password/confirm                         |                        | App\Http\Controllers\Auth\ConfirmPasswordController@confirm            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | password/confirm                         | password.confirm       | App\Http\Controllers\Auth\ConfirmPasswordController@showConfirmForm    | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | POST      | password/email                           | password.email         | App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail  | web          |
+|        |           |                                          |                        |                                                                        | guest        |
+|        | POST      | password/reset                           | password.update        | App\Http\Controllers\Auth\ResetPasswordController@reset                | web          |
+|        |           |                                          |                        |                                                                        | guest        |
+|        | GET|HEAD  | password/reset                           | password.request       | App\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm | web          |
+|        |           |                                          |                        |                                                                        | guest        |
+|        | GET|HEAD  | password/reset/{token}                   | password.reset         | App\Http\Controllers\Auth\ResetPasswordController@showResetForm        | web          |
+|        |           |                                          |                        |                                                                        | guest        |
+|        | GET|HEAD  | player                                   | player.index           | App\Http\Controllers\PlayerController@index                            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | POST      | player                                   | player.store           | App\Http\Controllers\PlayerController@store                            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | player/create                            | player.create          | App\Http\Controllers\PlayerController@create                           | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | player/{player}                          | player.show            | App\Http\Controllers\PlayerController@show                             | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | PUT|PATCH | player/{player}                          | player.update          | App\Http\Controllers\PlayerController@update                           | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | DELETE    | player/{player}                          | player.destroy         | App\Http\Controllers\PlayerController@destroy                          | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | player/{player}/edit                     | player.edit            | App\Http\Controllers\PlayerController@edit                             | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | POST      | profile                                  | profile.store          | App\Http\Controllers\UsersController@store                             | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | profile                                  | profile.index          | App\Http\Controllers\UsersController@index                             | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | profile/create                           | profile.create         | App\Http\Controllers\UsersController@create                            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | profile/{profile}                        | profile.show           | App\Http\Controllers\UsersController@show                              | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | PUT|PATCH | profile/{profile}                        | profile.update         | App\Http\Controllers\UsersController@update                            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | DELETE    | profile/{profile}                        | profile.destroy        | App\Http\Controllers\UsersController@destroy                           | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | profile/{profile}/edit                   | profile.edit           | App\Http\Controllers\UsersController@edit                              | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | realestateactive/{realEstate}            | realestateactive       | App\Http\Controllers\RealEstateController@activeRealEstate             | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | realestatebuy/{realEstate}               | realestatebuy          | App\Http\Controllers\RealEstateController@buy                          | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | register                                 | register               | App\Http\Controllers\Auth\RegisterController@showRegistrationForm      | web          |
+|        |           |                                          |                        |                                                                        | guest        |
+|        | POST      | register                                 |                        | App\Http\Controllers\Auth\RegisterController@register                  | web          |
+|        |           |                                          |                        |                                                                        | guest        |
+|        | GET|HEAD  | shops/{shop}                             | shops                  | App\Http\Controllers\ShopsController@shopInventory                     | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | sidebar                                  | sidebar                | App\Http\Controllers\SidebarController@bars                            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        |           |                                          |                        |                                                                        | Closure      |
+|        | POST      | staff                                    | store                  | App\Http\Controllers\StaffsController@store                            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff                                    | index                  | App\Http\Controllers\StaffsController@index                            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff/create                             | create                 | App\Http\Controllers\StaffsController@create                           | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff/itemCategories                     | itemCategories.index   | App\Http\Controllers\ItemCategoriesController@index                    | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | POST      | staff/itemCategories                     | itemCategories.store   | App\Http\Controllers\ItemCategoriesController@store                    | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff/itemCategories/create              | itemCategories.create  | App\Http\Controllers\ItemCategoriesController@create                   | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | DELETE    | staff/itemCategories/{itemCategory}      | itemCategories.destroy | App\Http\Controllers\ItemCategoriesController@destroy                  | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | PUT|PATCH | staff/itemCategories/{itemCategory}      | itemCategories.update  | App\Http\Controllers\ItemCategoriesController@update                   | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff/itemCategories/{itemCategory}      | itemCategories.show    | App\Http\Controllers\ItemCategoriesController@show                     | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff/itemCategories/{itemCategory}/edit | itemCategories.edit    | App\Http\Controllers\ItemCategoriesController@edit                     | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff/items                              | items.index            | App\Http\Controllers\ItemsController@index                             | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | POST      | staff/items                              | items.store            | App\Http\Controllers\ItemsController@store                             | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff/items/create                       | items.create           | App\Http\Controllers\ItemsController@create                            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff/items/{item}                       | items.show             | App\Http\Controllers\ItemsController@show                              | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | PUT|PATCH | staff/items/{item}                       | items.update           | App\Http\Controllers\ItemsController@update                            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | DELETE    | staff/items/{item}                       | items.destroy          | App\Http\Controllers\ItemsController@destroy                           | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff/items/{item}/edit                  | items.edit             | App\Http\Controllers\ItemsController@edit                              | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff/permissions                        | permissions.index      | App\Http\Controllers\PermissionsController@index                       | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | POST      | staff/permissions                        | permissions.store      | App\Http\Controllers\PermissionsController@store                       | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff/permissions/create                 | permissions.create     | App\Http\Controllers\PermissionsController@create                      | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff/permissions/{permission}           | permissions.show       | App\Http\Controllers\PermissionsController@show                        | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | PUT|PATCH | staff/permissions/{permission}           | permissions.update     | App\Http\Controllers\PermissionsController@update                      | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | DELETE    | staff/permissions/{permission}           | permissions.destroy    | App\Http\Controllers\PermissionsController@destroy                     | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff/permissions/{permission}/edit      | permissions.edit       | App\Http\Controllers\PermissionsController@edit                        | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff/roles                              | roles.index            | App\Http\Controllers\RolesController@index                             | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | POST      | staff/roles                              | roles.store            | App\Http\Controllers\RolesController@store                             | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff/roles/create                       | roles.create           | App\Http\Controllers\RolesController@create                            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | DELETE    | staff/roles/{role}                       | roles.destroy          | App\Http\Controllers\RolesController@destroy                           | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff/roles/{role}                       | roles.show             | App\Http\Controllers\RolesController@show                              | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | PUT|PATCH | staff/roles/{role}                       | roles.update           | App\Http\Controllers\RolesController@update                            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff/roles/{role}/edit                  | roles.edit             | App\Http\Controllers\RolesController@edit                              | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | POST      | staff/users                              | users.store            | App\Http\Controllers\UsersController@store                             | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff/users                              | users.index            | App\Http\Controllers\UsersController@index                             | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff/users/create                       | users.create           | App\Http\Controllers\UsersController@create                            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | PUT|PATCH | staff/users/{user}                       | users.update           | App\Http\Controllers\UsersController@update                            | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff/users/{user}                       | users.show             | App\Http\Controllers\UsersController@show                              | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | DELETE    | staff/users/{user}                       | users.destroy          | App\Http\Controllers\UsersController@destroy                           | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff/users/{user}/edit                  | users.edit             | App\Http\Controllers\UsersController@edit                              | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | DELETE    | staff/{}                                 | destroy                | App\Http\Controllers\StaffsController@destroy                          | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | PUT|PATCH | staff/{}                                 | update                 | App\Http\Controllers\StaffsController@update                           | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff/{}                                 | show                   | App\Http\Controllers\StaffsController@show                             | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | staff/{}/edit                            | edit                   | App\Http\Controllers\StaffsController@edit                             | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        | GET|HEAD  | starttravel/{travelroute}                | starttravel            | App\Http\Controllers\UsersController@startTravel                       | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
+|        | GET|HEAD  | story                                    |                        | Illuminate\Routing\ViewController                                      | web          |
+|        | GET|HEAD  | test                                     |                        | Illuminate\Routing\ViewController                                      | web          |
+|        | GET|HEAD  | travel                                   | travel                 | App\Http\Controllers\TravelRoutesController@travelRoutes               | web          |
+|        |           |                                          |                        |                                                                        | auth         |
+|        |           |                                          |                        |                                                                        | verified     |
++--------+-----------+------------------------------------------+------------------------+------------------------------------------------------------------------+--------------+
