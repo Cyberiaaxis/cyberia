@@ -21,6 +21,7 @@ $route = app('router');
 // $route->view('/attack', 'player.attack');
 // $route->view('/gang', 'player.gang');
 // $route->view('/forum', 'player.forums.index');
+$route->get('/topplayerlist', 'LandginPageController@listTopPlayer');
 $route->get('login', function () {
      return response()->json();
 })->name('login');

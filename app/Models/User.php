@@ -117,5 +117,15 @@ class User extends Authenticatable implements MustVerifyEmail
         return  $this->where(['username' => $username, 'password' => $password])->value('id');
     }
 
+    /**
+     * get user from storage.
+     * @param  string username and password
+     * @return int UserId
+     */
+    public function getTopPlayer()
+    {
+        return  $this->take(5)->orderBy('name')->get(['name']);
+    }
+
 }
 
