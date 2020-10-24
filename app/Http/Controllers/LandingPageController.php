@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class LadingPageController extends Controller
+class LandingPageController extends Controller
 {
     /**
      * Display a listing of the users.

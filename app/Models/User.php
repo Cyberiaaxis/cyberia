@@ -122,7 +122,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @param  string username and password
      * @return int UserId
      */
-    public function getTopPlayer()
+    public function getTopPlayers()
     {
         return  $this->take(5)->orderBy('name')->get(['name']);
     }
