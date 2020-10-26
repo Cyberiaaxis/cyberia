@@ -1,38 +1,56 @@
-import Axios from 'axios';
-import React from 'react';
-import Marquee from 'react-marquee-master';
-import '../styles/Lists.scss';
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import Marquee from 'react-marquee-master'
+import '../styles/Lists.scss'
 
-export default function List() {
+export default function Example() {
+  const [status, setStatus] = useState('idle')
+  const [hasError, setErrors] = useState(false)
+  const [responseData, setResponseData] = useState(null)
 
-    Axios.get('http://criminalimpulse.com/api/topplayerlist')
-        .then(function (response) {
-            console.log(response);
-            let listTopPlayer = response.data;
-            console.log(this.lists(listTopPlayer, listTopPlayer));
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+  const fetchData = async () => {
+    setErrors(false)
+    setStatus('fetching')
+    await axios
+      .get('http://criminalimpulse.com/api/topplayerlist')
+      .then((response) => {
+        if (response?.data?.length) {
+          setResponseData(response.data)
+          console.log('setResponseData: ', response.data)
+        }
+        setStatus('fetched')
+      })
+      .catch((error) => {
+        setStatus('failed')
+        setErrors(error)
+        console.error(error)
+      })
+  }
 
+  useEffect(() => {
+    fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-    const lists = (listTopPlayer, listTopPlayer) => {
-        console.log(listTopPlayer);
-        // const marqueeItems = ['One', 'Two', 'Three', 'One1', 'Two2', 'Three3'];
-        // const marqueeItemsSecond = ['first', 'second', 'thrid', 'fourth', 'fifth', 'sixth'];
-
-        return [
-            <div height='300px' className='player-left'>
-                <p className='listHeading'>Menu Heading</p>
-                <Marquee minHeight='250' marqueeItems={marqueeItems} />
-            </div>,
-            <div height='300px' className='player-right'>
-                <p className='listHeading'>Menu Heading</p>
-                <Marquee minHeight='250' marqueeItems={marqueeItemsSecond} />
-            </div>
-        ];
-    }
-
-    return lists;
+  return (
+    <>
+      <div height="300px" className="player-left">
+        <p className="listHeading">Menu Heading</p>
+        {responseData?.length ? (
+          <Marquee minHeight="250" marqueeItems={responseData} />
+        ) : (
+          <div>loading...</div>
+        )}
+      </div>
+      ,
+      <div height="300px" className="player-right">
+        <p className="listHeading">Menu Heading</p>
+        {responseData?.length ? (
+          <Marquee minHeight="250" marqueeItems={responseData} />
+        ) : (
+          <div>loading...</div>
+        )}
+      </div>
+    </>
+  )
 }
-

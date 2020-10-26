@@ -5,12 +5,19 @@
 
 .player-left,
 .player-right{
+    height: 300px;
   position: fixed;
   width: 250px;
   text-align: center;
   font-size: 20px;
   color: burlywood ;
   bottom: 2.5rem !important;
+}
+
+.marquee{
+    padding: 0;
+    overflow: hidden;
+    height: 250px;
 }
 
 .player-left{

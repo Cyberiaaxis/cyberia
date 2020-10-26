@@ -22,6 +22,7 @@ $route = app('router');
 // $route->view('/gang', 'player.gang');
 // $route->view('/forum', 'player.forums.index');
 $route->get('/topplayerlist', 'LandingPageController@listTopPlayer');
+$route->get('/events','LandingPageController@events');
 $route->get('login', function () {
      return response()->json();
 })->name('login');

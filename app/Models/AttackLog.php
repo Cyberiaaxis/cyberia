@@ -16,4 +16,14 @@ class AttackLog extends Model
     {
         return $this->insert(['attackLog' => $log]);
     }
+
+    /**
+     * got number of fight as a defender escaped from storage.
+     * @param  $userId INT
+     * @return escaped_defender INT
+     */
+    public function attackEvents()
+    {
+        return  $this->take(mt_rand(2, 10))->pluck('attack_logs');
+    }
 }

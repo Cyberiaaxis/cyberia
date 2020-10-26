@@ -45,7 +45,7 @@ export default class Popup extends Component {
 
              }
 
-            return <p class='popup' key={key} data-tooltip={value.event} style={(key % 2 === 0) ? even : odd} ></p>;
+            return <p className='popup' key={key} data-tooltip={value.event} style={(key % 2 === 0) ? even : odd} ></p>;
         });
 
         return [

@@ -124,7 +124,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getTopPlayers()
     {
-        return  $this->take(5)->orderBy('name')->get(['name']);
+        return  $this->take(5)->orderBy('name')->pluck('name');
     }
 
 }
