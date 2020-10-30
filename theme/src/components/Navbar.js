@@ -29,9 +29,7 @@ export default function Navbar() {
             <LoginForm />
             <Modal body='Home' id='home'/>
             <Modal body='Screenshot' id='screens' />
-
             <Modal body='About Us' id='aboutus' />
-
             <Modal body='Contact Us' id='contactus' />
         </div>
     </>)
