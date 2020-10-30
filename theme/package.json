@@ -18,6 +18,8 @@
     "normalize.css": "^8.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-form-input-validation": "^2.0.5",
+    "react-hook-form": "^6.9.6",
     "react-marquee-line": "^1.0.1",
     "react-marquee-master": "^1.4.3",
     "react-router-dom": "^5.2.0",

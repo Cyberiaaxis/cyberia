@@ -3,7 +3,7 @@ import axios from 'axios'
 import Marquee from 'react-marquee-master'
 import '../styles/Lists.scss'
 
-export default function Example() {
+export default function Lists() {
   const [status, setStatus] = useState('idle')
   const [hasError, setErrors] = useState(false)
   const [responseData, setResponseData] = useState(null)
@@ -37,7 +37,7 @@ export default function Example() {
       <div height="300px" className="player-left">
         <p className="listHeading">Menu Heading</p>
         {responseData?.length ? (
-          <Marquee minHeight="250" marqueeItems={responseData} />
+          <Marquee  marqueeItems={responseData} />
         ) : (
           <div>loading...</div>
         )}
@@ -46,7 +46,7 @@ export default function Example() {
       <div height="300px" className="player-right">
         <p className="listHeading">Menu Heading</p>
         {responseData?.length ? (
-          <Marquee minHeight="250" marqueeItems={responseData} />
+          <Marquee  marqueeItems={responseData} />
         ) : (
           <div>loading...</div>
         )}

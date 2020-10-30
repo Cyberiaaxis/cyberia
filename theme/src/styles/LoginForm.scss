@@ -2,16 +2,25 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    // column-gap: 0.25rem;
 }
 
 .form-inline .form-group{
     font-size: small;
-    display: inherit;
-    background-color: var(--white);
     margin: 0;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius,0.25rem);
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-inline .form-group label{
+    margin: 0;
+}
+
+.form-group .input-group{
+    display: flex;
+    // background-color: var(--white);
+    margin: 0;
+    // border: 1px solid var(--border-color);
+    // border-radius: var(--border-radius,0.25rem);
+    // transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .form-group .form-addon {
@@ -31,16 +40,20 @@ p{
 
 }
 
-.top{
-    color: grayscale($color: #000000);
-}
-
 .bottom{
+    margin-left: 2rem;
     animation: blinker 1s linear infinite;
     color: red;
-    font-size: 18px; 
+    font-size: 18px;
 }
 
-@keyframes blinker {  
+.top{
+        margin-left: 15rem;
+    animation: blinker 1s linear infinite;
+    color: red;
+    font-size: 18px;
+}
+
+@keyframes blinker {
   50% { opacity: 0; }
 }

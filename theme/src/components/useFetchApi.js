@@ -1,34 +1,36 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback,useState } from "react";
 
-const useFetchApi = (url,method = 'get') => {
-    const [data, setData] = useState([]);
+export default function useFetchApi() {
+    const [result, setResult] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
 
-    useEffect(() => {
-        if (!url) return;
+    const api = useCallback(async (url, options = {}) => {
 
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json'
-            }
+        if (!url) throw new Error('URL required');
+
+        console.log(url);
+
+        setLoading(true);
+
+        options['headers'] = {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
         }
 
-        const fetchData = async () => {
-            await axios.get(url,config)
+        await axios(url, options)
             .then(res => {
                 const result = res.data;
-                setData(result);
+                setResult(result);
             })
-            .catch(err => {
-                console.log(err);
+            .catch(error => {
+                console.log(error.response.data)
+                setError(error.response.data);
             });
-        };
 
-        fetchData();
-    }, [url]);
+    }, []);
 
-    return { data };
+    // Return 'isLoading' not the 'setIsLoading' function
+    return { result, loading, error, api };
 };
-
-export default useFetchApi;

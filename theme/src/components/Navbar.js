@@ -7,24 +7,30 @@ import LoginForm from "./LoginForm";
 import Modal from "./Modal";
 
 
-class Navbar extends Component {
+export default function Navbar() {
+// const pages = (pageName) => {
+//     switch(pageName) {
+//     case "aboutus":   return <Modal body='Screens' id='images'/>;
+//     case "screens": return <Modal body='Contact Us' id='contactus'/>;
+//     case "contactus":  return <Modal body='About Us' id='aboutus'/>;
+//     default:  return <Modal body='Home' id='home'/>;
+//     }
+// }
 
-    render() {
-        return (
-            <div className="navbar bg-transparent fixed-top">
-                <div className="logo"> <img src={logo} alt='logo' /> </div>
-
-                <ul className="menu">
-                    <li><Link to='/' data-toggle="modal" data-target='#home' className="nav-link">Home</Link></li>
-                    <li><Link to='/' className="nav-link">Services</Link></li>
-                    <li><Link to='/' className="nav-link">Products</Link></li>
-                    <li><Link to='/' className="nav-link">Clients</Link></li>
-                </ul>
-                <LoginForm />
-                <Modal body='LOL' id='home'/>
-            </div>
-        )
-    }
+    return (<>
+        <div className="navbar bg-transparent fixed-top">
+            <div className="logo"> <img src={logo} alt='logo' /> </div>
+            <ul className="menu">
+                <li><Link to='/' data-toggle="modal" data-target='#home' className="nav-link">Home</Link></li>
+                <li><Link to='/' data-toggle="modal" data-target='#screens' className="nav-link">Screens</Link></li>
+                <li><Link to='/' data-toggle="modal" data-target='#aboutus' className="nav-link">AboutUs</Link></li>
+                <li><Link to='/' data-toggle="modal" data-target='#contactus' className="nav-link">Contact Us</Link></li>
+            </ul>
+            <LoginForm />
+            <Modal body='Home' id='home'/>
+            <Modal body='Screenshot' id='screens' />
+            <Modal body='About Us' id='aboutus' />
+            <Modal body='Contact Us' id='contactus' />
+        </div>
+    </>)
 }
-
-export default Navbar;
