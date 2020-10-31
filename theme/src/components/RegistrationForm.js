@@ -5,8 +5,9 @@ import { faUser, faKey, faArrowAltCircleRight } from "@fortawesome/free-solid-sv
 import { useForm } from 'react-hook-form';
 import useFetchApi from './useFetchApi';
 import { useHistory } from 'react-router-dom';
-import Modal from "./Modal";
 
+
+import {  } from 'react-router-dom';
 export default function LoginForm() {
     const { register, errors, handleSubmit, clearErrors } = useForm();
     const url = 'http://criminalimpulse.com/api/login';
