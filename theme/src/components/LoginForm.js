@@ -24,7 +24,7 @@ export default function LoginForm() {
 
     return (<>
         <div>
-            <p className='top'>Recover Account</p>
+            <p className='top'><Link to='/' data-toggle="modal" data-target='#forget' className="nav-link">Recover Account</Link></p>
             <form className="form-inline" method="post" onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-group">
                     <div className="input-group">
