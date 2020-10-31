@@ -1,1 +1,1 @@
-web: cd theme && npm start
+web: vendor/bin/heroku-php-nginx -C nginx.conf public
