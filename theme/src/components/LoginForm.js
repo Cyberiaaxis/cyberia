@@ -45,9 +45,10 @@ export default function LoginForm() {
                 </div>
                         {JSON.stringify(error.errors) && error.errors.email && <span>{error.errors.email}</span>}
             </form>
-            <p className='bottom'>Sign Up</p>
+            <p className='bottom'><Link to='/' data-toggle="modal" data-target='#registration' className="nav-link">Create Account</Link></p>
             {loading && JSON.stringify(result) }
         </div>
-
+            <Modal body='Forget' id='forget'/>
+                        <Modal body='Registration' id='registration'/>
     </>);
 }
