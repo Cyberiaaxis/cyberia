@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 export default class Modal extends Component {
     constructor(props) {
-        super(props);
+        super();
 
         this.state = {
             show: false,

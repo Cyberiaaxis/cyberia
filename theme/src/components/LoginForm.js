@@ -5,6 +5,7 @@ import { faUser, faKey, faArrowAltCircleRight } from "@fortawesome/free-solid-sv
 import { useForm } from 'react-hook-form';
 import useFetchApi from './useFetchApi';
 import Modal from "./Modal";
+import RegistrationForm from "./RegistrationForm";
 import { useHistory, Link } from 'react-router-dom';
 
 export default function LoginForm() {
@@ -25,7 +26,7 @@ export default function LoginForm() {
 
     return (<>
         <div>
-            <p className='top'><Link to='/' data-toggle="modal" data-target='#forget' className="nav-link">Recover Account</Link></p>
+            <p className='top'><Link to='/' data-toggle="modal" data-target='#forget'>Recover Account</Link></p>
             <form className="form-inline" method="post" onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-group">
                     <div className="input-group">
@@ -46,10 +47,10 @@ export default function LoginForm() {
                 </div>
                         {JSON.stringify(error.errors) && error.errors.email && <span>{error.errors.email}</span>}
             </form>
-            <p className='bottom'><Link to='/' data-toggle="modal" data-target='#registration' className="nav-link">Create Account</Link></p>
+            <p className='bottom'><Link to='/' data-toggle="modal" data-target='#registration' >Create Account</Link></p>
             {loading && JSON.stringify(result) }
         </div>
             <Modal body='Forget' id='forget'/>
-                        <Modal body='Registration' id='registration'/>
+            <Modal body='<RegistrationForm/>' id='registration'/>
     </>);
 }

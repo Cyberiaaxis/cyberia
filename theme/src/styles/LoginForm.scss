@@ -47,8 +47,16 @@ p{
     font-size: 18px;
 }
 
+.top a{
+    color: red;
+}
+
+.bottom a{
+    color: red;
+}
+
 .top{
-        margin-left: 15rem;
+    margin-left: 15rem;
     animation: blinker 1s linear infinite;
     color: red;
     font-size: 18px;
