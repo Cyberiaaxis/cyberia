@@ -54,14 +54,16 @@ export default function Modal(props) {
 
     const renderClass = { id: props.id, className: showClass };
 
+
     return (
         <div {...renderClass} ref={wrapperRef}>
             <div className="modal-backdrop"></div>
             <div className="modal-content">
                 <div className="modal-header">
-                    Hello World
+                    {props.id}
                     <button className="close" onClick={closeClick} data-ref={props.id}>&times;</button>
                 </div>
+                <hr></hr>
                 <div className="modal-body">
                     {props.body}
                 </div>

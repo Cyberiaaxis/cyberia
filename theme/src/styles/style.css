@@ -802,7 +802,7 @@ label {
 .modal .modal-header,
 .modal .modal-body,
 .modal .modal-footer{
-    display: inherit;
+    display: block;
     padding: 1rem;
 }
 

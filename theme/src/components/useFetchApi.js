@@ -13,12 +13,12 @@ export default function useFetchApi() {
         console.log(url);
 
         setLoading(true);
-        const Url  = 'http://criminalimpulse.com/api/${url}';
+        const Url  = 'http://criminalimpulse.com/api/'+url;
         options['headers'] = {
             'Content-Type': 'application/json',
             Accept: 'application/json'
         }
-
+        console.log(Url);
         await axios(Url, options)
             .then(res => {
                 const result = res.data;
