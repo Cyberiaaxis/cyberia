@@ -13,20 +13,19 @@ export default function useFetchApi() {
         console.log(url);
 
         setLoading(true);
-
+        const Url  = 'http://criminalimpulse.com/api/${url}';
         options['headers'] = {
             'Content-Type': 'application/json',
             Accept: 'application/json'
         }
 
-        await axios(url, options)
+        await axios(Url, options)
             .then(res => {
                 const result = res.data;
                 setResult(result);
             })
             .catch(error => {
-                console.log(error.response.data)
-                setError(error.response.data);
+                if(error.response) { setError(error.response.data); } else { console.log(error) }
             });
 
     }, []);

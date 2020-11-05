@@ -10,7 +10,7 @@ import { useHistory, Link } from 'react-router-dom';
 
 export default function LoginForm() {
     const { register, errors, handleSubmit, clearErrors } = useForm();
-    const url = 'http://criminalimpulse.com/api/login';
+    const url = 'login';
     const { error, result , api, loading} = useFetchApi();
     const history = useHistory();
 
@@ -51,6 +51,6 @@ export default function LoginForm() {
             {loading && JSON.stringify(result) }
         </div>
             <Modal body='Forget' id='forget'/>
-            <Modal body='<RegistrationForm/>' id='registration'/>
+            <Modal body={<RegistrationForm/>} id='registration'/>
     </>);
 }

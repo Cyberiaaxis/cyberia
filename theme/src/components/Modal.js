@@ -1,38 +1,31 @@
-import React, { Component } from "react";
+import React, { Component, createRef, useEffect, useState } from "react";
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
-export default class Modal extends Component {
-    constructor(props) {
-        super();
+export default function Modal(props) {
 
-        this.state = {
-            show: false,
-            [this.props.id]: false,
-        };
+    const [show, setShow] = useState(false);
 
-        this.wrapperRef = React.createRef();
+    console.log(props);
 
-        this.closeClick = this.closeClick.bind(this);
-    }
+    const wrapperRef = createRef();
 
-    closeClick(event) {
+    const closeClick = (event) => {
 
         const elementTarget = event.target.dataset.ref;
 
-        this.setState({
+        setShow({
             [elementTarget]: { show: false }
         });
     }
-    componentDidMount() {
-        document.addEventListener('click', this.handleClickOutside, true);
-    }
 
-    componentWillUnmount() {
-        document.removeEventListener('click', this.handleClickOutside, true);
-    }
+    useEffect(() => {
+        document.addEventListener('click', handleClickOutside, true);
+    }, []);
 
-    handleClickOutside = event => {
+    const handleClickOutside = event => {
+
+        //    event.preventDefault();
 
         if (!event.target.dataset.target && !event.target.dataset.toggle) return false;
 
@@ -41,39 +34,41 @@ export default class Modal extends Component {
         const domNode = document.getElementById(elementTarget);
 
         if (!domNode) {
-            this.setState({ [elementTarget]: { show: false } });
+            setShow({ [elementTarget]: { show: true } });
 
             return false;
         } else {
-            this.setState({ [elementTarget]: { show: true } });
+            setShow({ [elementTarget]: { show: true } });
         }
 
     }
 
-    render() {
+    let showClass, elementTarget = show[props.id];
 
-        const elementTarget = this.state[this.props.id];
-
-        let show = elementTarget.show ? 'modal flipX open' : 'modal flipX';
-
-        const renderClass = { id: this.props.id, className: show };
-
-        return (
-            <div {...renderClass} ref={this.wrapperRef}>
-                <div className="modal-backdrop"></div>
-                <div className="modal-content">
-                    <div className="modal-header">
-                        Hello World
-                    <button className="close" onClick={this.closeClick} data-ref={this.props.id}>&times;</button>
-                    </div>
-                    <div className="modal-body">
-                        {this.props.body}
-                    </div>
-                    <div className="modal-footer"></div>
-                </div>
-            </div>
-        )
+    if (show[props.id] != undefined) {
+        elementTarget = show[props.id];
+        showClass = elementTarget.show ? 'modal flipX open' : 'modal flipX';
+    } else {
+        showClass = 'modal flipX'
     }
+
+    const renderClass = { id: props.id, className: showClass };
+
+    return (
+        <div {...renderClass} ref={wrapperRef}>
+            <div className="modal-backdrop"></div>
+            <div className="modal-content">
+                <div className="modal-header">
+                    Hello World
+                    <button className="close" onClick={closeClick} data-ref={props.id}>&times;</button>
+                </div>
+                <div className="modal-body">
+                    {props.body}
+                </div>
+                <div className="modal-footer"></div>
+            </div>
+        </div>
+    );
 }
 
 Modal.propTypes = {

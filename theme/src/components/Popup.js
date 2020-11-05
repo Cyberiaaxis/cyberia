@@ -5,7 +5,7 @@ import "../styles/Pop.scss";
 
 export default function Popup() {
 
-    const url = 'http://criminalimpulse.com/api/events';
+    const url = 'events';
 
     const { result, api , loading} = useFetchApi(url);
 
