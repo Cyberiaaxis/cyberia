@@ -18,7 +18,7 @@ export default function LoginForm() {
          api(url,{method: 'post',data: res});
 
          if(!error){
-            return history.push('/player-dashboard');
+            return history.push('/dashboard');
          }
 
          console.log(res);
