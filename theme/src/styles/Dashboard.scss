@@ -31,6 +31,6 @@ article {
   grid-gap: 1em;
   grid-template-areas:
     "header header header"
-    "sidebar-1 sidebar-2"
+    "sidebar-1 article sidebar-2"
     "footer footer footer";
 }
