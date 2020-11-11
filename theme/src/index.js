@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import App from './components/App';
 import Login from './components/Login';
+import Dashboard from './components/Dashboard';
 import './styles/style.css';
 import './styles/index.scss';
 import './styles/responsive.scss';
@@ -24,6 +25,9 @@ ReactDOM.render(
       </Route>
       <Route path="/login">
         <Login />
+      </Route>
+      <Route path="/dashboard">
+        <Dashboard />
       </Route>
     </Switch>
   </Router>,
