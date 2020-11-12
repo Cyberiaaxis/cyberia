@@ -1,7 +1,7 @@
 .dashboard{
      background: url('../images/main1.jpg');
      background-size: cover;
-     height: 100%;
+     height: 100vh;
      color: mediumvioletred;
 }
 header {
@@ -12,8 +12,21 @@ footer {
   grid-area: footer;
 }
 
+.topMenu{
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+}
+
+.menuList{
+    margin: 10px;
+}
+
 .sidebar-left {
-  grid-area: sidebar-1;
+  margin-left: 1.5rem;
+  grid-area: sidebar-left;
 }
 
 article {
@@ -21,16 +34,19 @@ article {
 }
 
 .sidebar-right {
-  grid-area: sidebar-2;
+  margin-left: 5rem;
+  grid-area: sidebar-right;
 }
 
 .grid {
-  display: grid;
-  grid-template-columns: 150px auto 150px;
-  grid-template-rows: repeat(3, 100px);
-  grid-gap: 1em;
-  grid-template-areas:
-    "header header header"
-    "sidebar-1 article sidebar-2"
-    "footer footer footer";
+    display: grid;
+    grid-template-areas:
+      "header header header"
+      "sidebar-left content sidebar-right"
+      "footer footer footer";
+    grid-template-columns: 200px 1fr 200px;
+    grid-template-rows: auto 1fr auto;
+    grid-gap: 10px;
+    height: 100vh;
+    font-weight: bolder;
 }
