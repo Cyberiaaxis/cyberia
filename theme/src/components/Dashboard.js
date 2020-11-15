@@ -9,12 +9,20 @@ const Dashboard = () => {
     const right = () =>{return 'right';}
     const bottom = () =>{return 'bottom';}
     const pages = {
-        "home": "home",
+        "home": "playerHome",
+        "explore": "playerExplore",
         "city": "city",
         "market": "market",
         }
     const getPage = (page) => {
         return pages[page];
+    }
+
+    const handleClick = (event) => {
+        event.preventDefault();
+        // console.log(event.target.getAttribute('href'));
+        let pageFinal = event.target.getAttribute('href');
+       console.log(pageFinal.substring(1));
     }
 
     return(<>
@@ -23,10 +31,12 @@ const Dashboard = () => {
                     <header>
                         <div>
                             <ul className='topMenu'>
-                                <li className='menuList'>Explore
+                                <li className='menuList'>Start
                                     <ul className="dropdown-menu">
-                                        <li>Explore</li>
-                                        <li>Up Comings</li>
+                                        <li><a href='#explore' onClick={handleClick}>Explore</a></li>
+
+                                        <li onClick={handleClick}>Explore</li>
+                                        <li onClick={handleClick}>Up Comings</li>
                                     </ul>
                                 </li>
                                 <li className='menuList'>List1
