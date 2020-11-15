@@ -8,8 +8,14 @@ const Dashboard = () => {
     const left = () =>{return 'left';}
     const right = () =>{return 'right';}
     const bottom = () =>{return 'bottom';}
-
-
+    const pages = {
+        "home": "home",
+        "city": "city",
+        "market": "market",
+        }
+    const getPage = (page) => {
+        return pages[page];
+    }
 
     return(<>
             <div className="dashboard">
@@ -17,12 +23,39 @@ const Dashboard = () => {
                     <header>
                         <div>
                             <ul className='topMenu'>
-                                <li className='menuList'>Explore</li>
-                                <li className='menuList'>Top Menu Bar</li>
-                                <li className='menuList'>Top Menu Bar</li>
-                                <li className='menuList'>Top Menu Bar</li>
-                                <li className='menuList'>Top Menu Bar</li>
-                                <li className='menuList'>Top Menu Bar</li>
+                                <li className='menuList'>Explore
+                                    <ul className="dropdown-menu">
+                                        <li>Explore</li>
+                                        <li>Up Comings</li>
+                                    </ul>
+                                </li>
+                                <li className='menuList'>List1
+                                    <ul className="dropdown-menu">
+                                       <li>SubList</li>
+                                    </ul>
+                                </li>
+                                <li className='menuList'>List2
+                                     <ul className="dropdown-menu">
+                                       <li>SubList</li>
+                                    </ul>
+                                </li>
+                                <li className='menuList'>List3
+                                    <ul className="dropdown-menu">
+                                       <li>SubList</li>
+                                    </ul>
+                                </li>
+                                <li className='menuList'>List4
+                                    <ul className="dropdown-menu">
+                                       <li>SubList</li>
+                                    </ul>
+                                </li>
+                                <li className='menuList'>List5
+                                    <ul className="dropdown-menu">
+                                       <li>
+                                           SubList
+                                       </li>
+                                    </ul>
+                                </li>
                             </ul>
                         </div>
                     </header>

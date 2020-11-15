@@ -12,20 +12,58 @@ footer {
   grid-area: footer;
 }
 
+// .topMenu{
+//     margin: 10px;
+//     display: flex;
+//     justify-content: space-between;
+//     flex-wrap: wrap;
+
+// }
+
+// .menuList{
+//     margin: 10px;
+
+// }
+
+// .menuList:hover div.list{
+//     display: block;
+// }
+
+ul,
+ul li{
+  list-style: none;
+  padding:0;
+}
+
 .topMenu{
     margin: 10px;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-
 }
 
 .menuList{
-    margin: 10px;
+    width: 5%;
+  position: relative;
+  padding: 0.25rem 0.75rem;
+}
+
+.dropdown-menu{
+  top: 1.9rem;
+  display: none;
+  position: absolute;
+  height: 50vh;
+  width:50vw;
+}
+
+.menuList:hover .dropdown-menu{
+    top: 1.9rem;
+    display: block;
 }
 
 .sidebar-left {
-  margin-left: 1.5rem;
+  margin: auto;
+    margin-left: 1.5rem;
   grid-area: sidebar-left;
 }
 
@@ -34,6 +72,7 @@ article {
 }
 
 .sidebar-right {
+  margin: auto;
   margin-left: 5rem;
   grid-area: sidebar-right;
 }
