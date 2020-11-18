@@ -69,8 +69,8 @@ const AsideLeft = ({ section, setSection }) => {
     }
 
     return (
-        <aside className='sidebar-left'>
-            <nav>
+        <aside>
+            <nav className='sidebar-left'>
                 {
                     pages.map(function (value, key) {
                         return <a className={section === value.url ? 'nav-link active' : 'nav-link'} onClick={handleClick} href="#" data-href={value.url}>{value.name}</a>
@@ -90,8 +90,8 @@ const AsideRight = ({ section, setSection }) => {
     }
 
     return (
-        <aside className='sidebar-right'>
-            <nav>
+        <aside>
+            <nav  className='sidebar-right'>
                 {
                     pages.map(function (value, key) {
                         return <a className={section === value.url ? 'nav-link active' : 'nav-link'} onClick={handleClick} href="#" data-href={value.url}>{value.name}</a>

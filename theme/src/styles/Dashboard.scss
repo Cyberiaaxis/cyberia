@@ -63,7 +63,7 @@ ul li{
 
 .sidebar-left {
   margin: auto;
-    margin-left: 1.5rem;
+  text-align: left;
   grid-area: sidebar-left;
 }
 
@@ -73,6 +73,7 @@ article {
 
 .sidebar-right {
   margin: auto;
+    text-align: right;
   margin-left: 5rem;
   grid-area: sidebar-right;
 }
