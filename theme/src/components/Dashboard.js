@@ -1,131 +1,148 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import '../styles/Dashboard.scss';
 
+const pages = [
+    {
+        "url": "home",
+        "name": "playerHome"
+    },
+    {
+        "name": "playerExplore",
+        "url": "explore"
+    },
+    {
+        "name": "citye",
+        "url": "city"
+    },
+    {
+        "name": "market",
+        "url": "market"
+    }
+];
 
-const Dashboard = () => {
-    const [menu,setMenu,active,setActive] = useState(false);
-    const top = () => ({ explore: 'explore', energyMax: '100', energy: '50', hitPoint: '100' });
-    const left = () =>{return 'left';}
-    const right = () =>{return 'right';}
-    const bottom = () =>{return 'bottom';}
-    const pages = {
-        "home": "playerHome",
-        "explore": "playerExplore",
-        "city": "city",
-        "market": "market",
-        }
-    const getPage = (page) => {
-        return pages[page];
+
+const Header = ({ section, setSection }) => {
+
+    function handleClick(e) {
+        e.preventDefault();
+        setSection(e.target.dataset.href)
     }
 
-    const handleClick = (event) => {
-        event.preventDefault();
-        // console.log(event.target.getAttribute('href'));
-        let pageFinal = event.target.getAttribute('href');
-       console.log(pageFinal.substring(1));
+    return (
+        <header>
+            <nav className="navbar">
+                {
+                    pages.map(function (value, key) {
+                        return <a className={section === value.url ? 'nav-link active' : 'nav-link'} onClick={handleClick} href="#" data-href={value.url}>{value.name}</a>
+                    })
+                }
+            </nav>
+        </header>
+    );
+};
+
+const Footer = ({ section, setSection }) => {
+
+    function handleClick(e) {
+        e.preventDefault();
+        setSection(e.target.dataset.href)
     }
 
-    return(<>
-            <div className="dashboard">
-                <div className="grid">
-                    <header>
-                        <div>
-                            <ul className='topMenu'>
-                                <li className='menuList'>Start
-                                    <ul className="dropdown-menu">
-                                        <li><a href='#explore' onClick={handleClick}>Explore</a></li>
+    return (
+        <footer>
+            <nav className="navbar">
+                {
+                    pages.map(function (value, key) {
+                        return <a className={section === value.url ? 'nav-link active' : 'nav-link'} onClick={handleClick} href="#" data-href={value.url}>{value.name}</a>
+                    })
+                }
+            </nav>
+        </footer>
+    );
+};
 
-                                        <li onClick={handleClick}>Explore</li>
-                                        <li onClick={handleClick}>Up Comings</li>
-                                    </ul>
-                                </li>
-                                <li className='menuList'>List1
-                                    <ul className="dropdown-menu">
-                                       <li>SubList</li>
-                                    </ul>
-                                </li>
-                                <li className='menuList'>List2
-                                     <ul className="dropdown-menu">
-                                       <li>SubList</li>
-                                    </ul>
-                                </li>
-                                <li className='menuList'>List3
-                                    <ul className="dropdown-menu">
-                                       <li>SubList</li>
-                                    </ul>
-                                </li>
-                                <li className='menuList'>List4
-                                    <ul className="dropdown-menu">
-                                       <li>SubList</li>
-                                    </ul>
-                                </li>
-                                <li className='menuList'>List5
-                                    <ul className="dropdown-menu">
-                                       <li>
-                                           SubList
-                                       </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </header>
-                    <aside className="sidebar-left">
-                        <ul>
-                            <li>Left Sidebar</li>
-                            <li>Left Sidebar</li>
-                            <li>Left Sidebar</li>
-                            <li>Left Sidebar</li>
-                            <li>Left Sidebar</li>
-                            <li>Left Sidebar</li>
-                            <li>Left Sidebar</li>
-                            <li>Left Sidebar</li>
-                            <li>Left Sidebar</li>
-                            <li>Left Sidebar</li>
-                            <li>Left Sidebar</li>
-                            <li>Left Sidebar</li>
-                            <li>Left Sidebar</li>
-                            <li>Left Sidebar</li>
-                            <li>Left Sidebar</li>
-                            <li>Left Sidebar</li>
-                            <li>Left Sidebar</li>
-                        </ul>
-                    </aside>
-                    <aside className="sidebar-right">
-                        <ul>
-                            <li>Right Sidebar</li>
-                            <li>Right Sidebar</li>
-                            <li>Right Sidebar</li>
-                            <li>Right Sidebar</li>
-                            <li>Right Sidebar</li>
-                            <li>Right Sidebar</li>
-                            <li>Right Sidebar</li>
-                            <li>Right Sidebar</li>
-                            <li>Right Sidebar</li>
-                            <li>Right Sidebar</li>
-                            <li>Right Sidebar</li>
-                        </ul>
-                    </aside>
-                    <footer>
-                        <ul className='topMenu'>
-                            <li className='menuList'>Bottom</li>
-                            <li className='menuList'>Bottom</li>
-                            <li className='menuList'>Bottom</li>
-                            <li className='menuList'>Bottom</li>
-                            <li className='menuList'>Bottom</li>
-                            <li className='menuList'>Bottom</li>
-                            <li className='menuList'>Bottom</li>
-                            <li className='menuList'>Bottom</li>
-                            <li className='menuList'>Bottom</li>
-                            <li className='menuList'>Bottom</li>
-                            <li className='menuList'>Bottom</li>
-                            <li className='menuList'>Bottom</li>
+const AsideLeft = ({ section, setSection }) => {
 
-                        </ul>
-                    </footer>
-                </div>
+    function handleClick(e) {
+        e.preventDefault();
+        setSection(e.target.dataset.href)
+    }
+
+    return (
+        <aside className='sidebar-left'>
+            <nav>
+                {
+                    pages.map(function (value, key) {
+                        return <a className={section === value.url ? 'nav-link active' : 'nav-link'} onClick={handleClick} href="#" data-href={value.url}>{value.name}</a>
+                    })
+                }
+            </nav>
+        </aside>
+    );
+};
+
+
+const AsideRight = ({ section, setSection }) => {
+
+    function handleClick(e) {
+        e.preventDefault();
+        setSection(e.target.dataset.href)
+    }
+
+    return (
+        <aside className='sidebar-right'>
+            <nav>
+                {
+                    pages.map(function (value, key) {
+                        return <a className={section === value.url ? 'nav-link active' : 'nav-link'} onClick={handleClick} href="#" data-href={value.url}>{value.name}</a>
+                    })
+                }
+            </nav>
+        </aside>
+    );
+};
+
+const Main = ({ section }) => {
+
+    let page;
+
+    switch (section) {
+        case 'home':
+            page = "Home";
+            break;
+        case 'explore':
+            page = "Explore";
+            break;
+        case 'city':
+            page = "city";
+            break;
+        case 'market':
+            page = "Market";
+            break;
+        default:
+            page = "Home";
+            break;
+    }
+
+    return (
+        <main>
+            <h1>{page}</h1>
+        </main>
+    );
+};
+
+export default function Dashboard() {
+    const [section, setSection] = useState("home");
+
+    return (
+        <div className="dashboard">
+            <div className="grid">
+                <Header {...{ section, setSection }} />
+                <AsideLeft {...{ section, setSection }} />
+                <Main section={section} />
+                <AsideRight {...{ section, setSection }} />
+                <Footer {...{ section, setSection }} />
             </div>
-    </>)
+        </div>
+    );
 }
-
-export default Dashboard;
-
