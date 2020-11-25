@@ -2,7 +2,7 @@
      background: url('../images/main1.jpg');
      background-size: cover;
      height: 100vh;
-     color: mediumvioletred;
+     color:#15c73b;
 }
 header {
   grid-area: header;
@@ -43,7 +43,7 @@ ul li{
 }
 
 .menuList{
-    width: 5%;
+  width: 5%;
   position: relative;
   padding: 0.25rem 0.75rem;
 }
@@ -56,9 +56,12 @@ ul li{
   width:50vw;
 }
 
-.menuList:hover .dropdown-menu{
-    top: 1.9rem;
-    display: block;
+.menuList:active + .dropdown-menu,
+.menuList:focus + .dropdown-menu,
+.menuList.active + .dropdown-menu,
+.menuList:hover + .dropdown-menu {
+     top: 1.9rem;
+     display: block;
 }
 
 .sidebar-left {
@@ -74,7 +77,7 @@ article {
 .sidebar-right {
   margin: auto;
     text-align: right;
-  margin-left: 5rem;
+  margin-left: 4rem;
   grid-area: sidebar-right;
 }
 
