@@ -7,13 +7,15 @@ const useStyles = makeStyles((theme) => ({
         backgroundImage: 'url("https://www.gstatic.com/webp/gallery/1.jpg")',
         backgroundSize: "cover",
         height: "100vh",
+        width: '100%',
     },
     paper: {
-        padding: theme.spacing(1),
-        textAlign: "center",
+        // // padding: theme.spacing(1),
+        // textAlign: "center",
         background: "transparent",
         height: "82vh",
         overflow: "auto",
+        width: '100%',
     },
 }));
 
@@ -78,7 +80,7 @@ export default function FullWidthGrid() {
                         </Box>
                     </Box>
                 </Grid>
-                <Grid item xs={12} sm={2}>
+                <Grid  item xs={12} sm={1}>
                     <Box marginBottom={5} marginTop={5}>
                         <Button variant="outlined" aria-controls="simple-menu" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
                             Open Menu
@@ -140,7 +142,7 @@ export default function FullWidthGrid() {
                         </Menu>
                     </Box>
                 </Grid>
-                <Grid item xs={12} sm={8}>
+                <Grid  item xs={12} sm={10}>
                     <Paper className={classes.paper}>
                         content goes here content goes here content goes here content goes here content goes here content goes here content goes here content goes here content goes here content goes here content goes here content goes here
                         content goes here content goes here content goes here content goes here content goes here content goes here content goes here content goes here content goes here content goes here content goes here content goes here
@@ -162,8 +164,8 @@ export default function FullWidthGrid() {
                         content goes here content goes here content goes here content goes here content goes here content goes here content goes here content goes here content goes here content goes here content goes here content goes here
                     </Paper>
                 </Grid>
-                <Grid item xs={12} sm={2}>
-                    <Box marginLeft={10.5} marginBottom={5} marginTop={5}>
+                <Grid  item xs={12} sm={1}>
+                    <Box marginBottom={5} marginTop={5}>
                         <Button variant="outlined" aria-controls="simple-menu" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
                             Open Menu
                         </Button>
@@ -173,7 +175,7 @@ export default function FullWidthGrid() {
                             <MenuItem onClick={handleClose}>Logout</MenuItem>
                         </Menu>
                     </Box>
-                    <Box marginLeft={10.5} marginBottom={5} marginTop={5}>
+                    <Box marginBottom={5} marginTop={5}>
                         <Button variant="outlined" aria-controls="simple-menu" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
                             Open Menu
                         </Button>
@@ -183,7 +185,7 @@ export default function FullWidthGrid() {
                             <MenuItem onClick={handleClose}>Logout</MenuItem>
                         </Menu>
                     </Box>
-                    <Box marginLeft={10.5} marginBottom={5} marginTop={5}>
+                    <Box marginBottom={5} marginTop={5}>
                         <Button variant="outlined" aria-controls="simple-menu" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
                             Open Menu
                         </Button>
@@ -193,7 +195,7 @@ export default function FullWidthGrid() {
                             <MenuItem onClick={handleClose}>Logout</MenuItem>
                         </Menu>
                     </Box>
-                    <Box marginLeft={10.5} marginBottom={5} marginTop={5}>
+                    <Box marginBottom={5} marginTop={5}>
                         <Button variant="outlined" aria-controls="simple-menu" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
                             Open Menu
                         </Button>
@@ -203,7 +205,7 @@ export default function FullWidthGrid() {
                             <MenuItem onClick={handleClose}>Logout</MenuItem>
                         </Menu>
                     </Box>
-                    <Box marginLeft={10.5} marginBottom={5} marginTop={5}>
+                    <Box marginBottom={5} marginTop={5}>
                         <Button variant="outlined" aria-controls="simple-menu" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
                             Open Menu
                         </Button>
