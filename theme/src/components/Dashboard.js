@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Menu, MenuItem, makeStyles, withStyles, Box, Button, Grid, Paper, Badge, Avatar } from "@material-ui/core";
+import { Menu, MenuItem, makeStyles, withStyles, Box, Button, Grid, MenuList, Badge, Avatar, Popover} from "@material-ui/core";
 
 const StyledBadge = withStyles((theme) => ({
     badge: {
@@ -48,61 +48,81 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Header = () => {
-    const [anchorEl, setAnchorEl] = useState(null);
+const Header = () =>{
 
-    const handleClick = (event) => {
-        if (anchorEl !== event.currentTarget) {
-            setAnchorEl(event.currentTarget);
-        }
-    };
+   const [value, setvalue] = useState(0);
+   const [current, setCurrent] = useState(null);
+   const [anchorEl, setAnchorEl] = useState(null);
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+    setCurrent( null);
+  };
+
+  const handleClick = (e, _popno) => {
+    setAnchorEl(e.currentTarget);
+    setCurrent(e.currentTarget.getAttribute("aria-controls"));
+  };
+
+  const handleChange = (event, value) => {
+    setvalue(value);
+  };
 
     return (
         <>
-            <Box display="flex">
-                <Box p={1} flexGrow={1}>
-                    <Button aria-controls="simple-menu" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
-                        Start
-                    </Button>
-                    <Menu className="simple-menu" anchorEl={anchorEl} MenuListProps={{ onMouseLeave: handleClose }} open={Boolean(anchorEl)} onClose={handleClose}>
-                        <MenuItem onClick={handleClose}>Crimes</MenuItem>
-                        <MenuItem onClick={handleClose}>Fight</MenuItem>
-                    </Menu>
-                </Box>
-                <Box p={1}>
-                    <Button aria-controls="simple-menu" variant="outlined" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
-                        Location
-                    </Button>
-                    <Menu id="simple-menu" anchorEl={anchorEl} MenuListProps={{ onMouseLeave: handleClose }} open={Boolean(anchorEl)} onClose={handleClose}>
-                        <MenuItem onClick={handleClose}>Travel</MenuItem>
-                    </Menu>
-                </Box>
-                <Box p={1}>
-                    <Button mx="auto" aria-controls="simple-menu" variant="outlined" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
-                        Open Menu
-                    </Button>
-                    <Menu id="simple-menu" anchorEl={anchorEl} MenuListProps={{ onMouseLeave: handleClose }} open={Boolean(anchorEl)} onClose={handleClose}>
-                        <MenuItem onClick={handleClose}>Profile</MenuItem>
-                        <MenuItem onClick={handleClose}>My account</MenuItem>
-                        <MenuItem onClick={handleClose}>Logout</MenuItem>
-                    </Menu>
-                </Box>
-                <Box p={1}>
-                    <Button mx="auto" aria-controls="simple-menu" variant="outlined" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
-                        Open Menu
-                    </Button>
-                    <Menu id="simple-menu" anchorEl={anchorEl} MenuListProps={{ onMouseLeave: handleClose }} open={Boolean(anchorEl)} onClose={handleClose}>
-                        <MenuItem onClick={handleClose}>Profile</MenuItem>
-                        <MenuItem onClick={handleClose}>My account</MenuItem>
-                        <MenuItem onClick={handleClose}>Logout</MenuItem>
-                    </Menu>
-                </Box>
-                <Box paddingBottom={1}>
-                    <Button aria-controls="simple-menu" variant="outlined" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
+        <Box display="flex">
+          <Box p={1} flexGrow={1}>
+            <Button
+              aria-controls="start-menu"
+              color="secondary"
+              aria-haspopup="true"
+              onClick={handleClick}
+              onMouseOver={handleClick}
+            >
+              Start
+            </Button>
+          </Box>
+          <Box p={1}>
+            <Button
+              mx="auto"
+              aria-controls="simple-menu"
+              variant="outlined"
+              color="secondary"
+              aria-haspopup="true"
+              onClick={handleClick}
+              onMouseOver={handleClick}
+            >
+              Open Menu
+            </Button>
+          </Box>
+          <Box p={1}>
+            <Button
+              mx="auto"
+              aria-controls="simple-menu2"
+              variant="outlined"
+              color="secondary"
+              aria-haspopup="true"
+              onClick={handleClick}
+              onMouseOver={handleClick}
+            >
+              Open Menu
+            </Button>
+          </Box>
+          <Box p={1}>
+            <Button
+              mx="auto"
+              aria-controls="simple-menu3"
+              variant="outlined"
+              color="secondary"
+              aria-haspopup="true"
+              onClick={handleClick}
+              onMouseOver={handleClick}
+            >
+              Open Menu
+            </Button>
+          </Box>
+          <Box paddingBottom={1}>
+<Button aria-controls="simple-menu" variant="outlined" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
                         <StyledBadge
                             overlap="circle"
                             anchorOrigin={{
@@ -114,16 +134,47 @@ const Header = () => {
                             <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
                         </StyledBadge>
                     </Button>
-                    <Menu id="simple-menu" anchorEl={anchorEl} MenuListProps={{ onMouseLeave: handleClose }} open={Boolean(anchorEl)} onClose={handleClose}>
-                        <MenuItem onClick={handleClose}>Profile</MenuItem>
-                        <MenuItem onClick={handleClose}>My account</MenuItem>
-                        <MenuItem onClick={handleClose}>Logout</MenuItem>
-                    </Menu>
-                </Box>
-            </Box>
-        </>
-    );
-};
+          </Box>
+        </Box>
+        <Popover
+          id="menu2Popover"
+          open={anchorEl !== null}
+          onClose={handlePopoverClose}
+          anchorEl={anchorEl}
+
+        >
+          {current === "start-menu" && (
+            <MenuList onMouseLeave= {handlePopoverClose }>
+              <MenuItem>Crime</MenuItem>
+            </MenuList>
+          )}
+          {current === "simple-menu" && (
+            <MenuList onMouseLeave= {handlePopoverClose }>
+              <MenuItem>Travel</MenuItem>
+            </MenuList>
+          )}
+          {current === "simple-menu2" && (
+            <MenuList onMouseLeave= {handlePopoverClose }>
+              <MenuItem>Fight</MenuItem>
+            </MenuList>
+          )}
+          {current === "simple-menu3" && (
+            <MenuList onMouseLeave= {handlePopoverClose }>
+              <MenuItem>Bounty</MenuItem>
+              <MenuItem>Non Bounty</MenuItem>
+            </MenuList>
+          )}
+            {current === "simple-menu4" && (
+            <MenuList onMouseLeave= {handlePopoverClose }>
+                <MenuItem>Tab 5 - Submenu 1</MenuItem>
+                <MenuItem>Tab 5 - Submenu 2</MenuItem>
+              </MenuList>
+            )}
+        </Popover>
+    </>);
+
+}
+
 
 const AsideLeft = () => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -370,7 +421,7 @@ export default function Dashboard() {
                         <Main section={section}/>
                     </Paper>
                 </Grid> */}
-                {/* AsideRight */}
+                {/* {/* AsideRight */}
                 {/* <Grid item xs={2} sm={2}>
                     <AsideRight />
                 </Grid> */}
