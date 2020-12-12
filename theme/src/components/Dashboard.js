@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Menu, MenuItem, makeStyles, withStyles, Paper, Box, Button, Grid, MenuList, Badge, Avatar, Popover} from "@material-ui/core";
+import React, { useState, useEffect, useRef } from "react";
+import { MenuItem, makeStyles, withStyles, Paper, Box, Button, Grid, MenuList, Badge, Avatar, Popover} from "@material-ui/core";
+import ProgressBar from "./ProgressBar";
 
 const StyledBadge = withStyles((theme) => ({
     badge: {
@@ -50,9 +51,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () =>{
 
-   const [value, setvalue] = useState(0);
-   const [current, setCurrent] = useState(null);
-   const [anchorEl, setAnchorEl] = useState(null);
+  const [value, setvalue] = useState(0);
+  const [current, setCurrent] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handlePopoverClose = () => {
     setAnchorEl(null);
@@ -75,6 +76,7 @@ const Header = () =>{
             <Button
               aria-controls="start-menu"
               color="secondary"
+              variant="outlined"
               aria-haspopup="true"
               onClick={handleClick}
               onMouseOver={handleClick}
@@ -82,11 +84,23 @@ const Header = () =>{
               Start
             </Button>
           </Box>
-          <Box p={1}>
+          <Box margin={1.9}>
+            Energy
+{/* https://codepen.io/loga301/pen/LYVYqPz */}
+            <ProgressBar percentComplete={75} />
+</Box>
+          <Box margin={1.9}>
+            Nerve
+            <progress value={50} max={100} />
+    </Box>
+              <Box margin={1.9}>
+                HP
+            <progress value={50} max={100} />
+            </Box>
+            <Box p={1}>
             <Button
               mx="auto"
               aria-controls="simple-menu"
-              variant="outlined"
               color="secondary"
               aria-haspopup="true"
               onClick={handleClick}
@@ -95,11 +109,11 @@ const Header = () =>{
               Open Menu
             </Button>
           </Box>
+
           <Box p={1}>
             <Button
               mx="auto"
               aria-controls="simple-menu2"
-              variant="outlined"
               color="secondary"
               aria-haspopup="true"
               onClick={handleClick}
@@ -112,7 +126,6 @@ const Header = () =>{
             <Button
               mx="auto"
               aria-controls="simple-menu3"
-              variant="outlined"
               color="secondary"
               aria-haspopup="true"
               onClick={handleClick}
@@ -122,7 +135,7 @@ const Header = () =>{
             </Button>
           </Box>
           <Box paddingBottom={1}>
-<Button aria-controls="simple-menu" variant="outlined" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
+<Button aria-controls="simple-menu"  color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
                         <StyledBadge
                             overlap="circle"
                             anchorOrigin={{

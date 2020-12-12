@@ -1,0 +1,33 @@
+.bar {
+  background: hsl(0, 2%, 78%);
+  height: 10px;
+  width: 148px;
+  border-radius: 5px 5px;
+}
+
+.fill {
+  background: hsla(0, 87%, 30%, 0.979);
+  height: 100%;
+  max-width: 100%;
+//   transition: 0.3s width ease-in;
+  border-radius: 5px 5px;
+  	transform: scale(1);
+	animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
+}
