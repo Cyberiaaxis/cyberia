@@ -1,17 +1,16 @@
 .bar {
   background: hsl(0, 2%, 78%);
-  height: 10px;
+  height: 7px;
   width: 148px;
-  border-radius: 5px 5px;
-  	animation: pulse 2s infinite;
+  border-radius: 10px;
+  	animation: pulse 10s infinite;
 }
 
 .fill {
   background: hsla(0, 87%, 30%, 0.979);
   height: 100%;
   max-width: 100%;
-//   transition: 0.3s width ease-in;
-  border-radius: 5px 5px;
+  border-radius: 10px;
   	transform: scale(1);
 	animation: pulse 2s infinite;
 }

@@ -47,31 +47,17 @@ const useStyles = makeStyles((theme) => ({
         overflow: "auto",
         width: "100%",
     },
-    sideBarRight: {
-        textAlign: "right",
-    },
-    sideBarLeft: {
-        textAlign: "left",
-    },
-    paper: {
-        background: "transparent",
-        height: "82vh",
-        overflow: "auto",
-        width: "100%",
-    },
-    startButton: {
-        color: 'green',
-        background: 'linear-gradient(to left,#E4EE0D,#FC9500)',
-        height: '4em',
-        width:'13em',
-  },
+    asideRight: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'flex-end'
+   }
 }));
 
 const Header = () => {
     const [value, setvalue] = useState(0);
     const [current, setCurrent] = useState(null);
     const [anchorEl, setAnchorEl] = useState(null);
-    const classes = useStyles();
 
     const handlePopoverClose = () => {
         setAnchorEl(null);
@@ -90,36 +76,33 @@ const Header = () => {
     return (
         <>
             <Box display="flex">
-                <Box paddingTop={1} flexGrow={1}>
-                    <Button className={classes.startButton} variant="contained" color="primary" size="large">
-                        Start
+                <Box p={1} flexGrow={1}>
+                    <Button size="large" aria-controls="start-menu" color="secondary" variant="outlined" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
+                        Start Start
                     </Button>
                 </Box>
-                <Box display="flex" margin={1.9}>
-                        <Box marginRight={1}>Energy</Box>
-                        <Box marginTop={1.2}><ProgressBar percentComplete={75} /></Box>
+                <Box padding={2.3}>
+                    <ProgressBar percentComplete={75} />
                 </Box>
-                <Box display="flex" margin={1.9}>
-                        <Box marginRight={1}>Will</Box>
-                        <Box marginTop={1.2}><ProgressBar percentComplete={75} /></Box>
+                <Box padding={2.3}>
+                    <ProgressBar percentComplete={75} />
                 </Box>
-                <Box display="flex" margin={1.9}>
-                        <Box marginRight={1}>HP</Box>
-                        <Box marginTop={1.2}><ProgressBar percentComplete={75} /></Box>
+                <Box padding={2.3}>
+                    <ProgressBar percentComplete={75} />
                 </Box>
                 <Box p={1}>
-                    <Button mx="auto" aria-controls="simple-menu"  aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
+                    <Button mx="auto" aria-controls="simple-menu" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
                         Open Menu
                     </Button>
                 </Box>
 
                 <Box p={1}>
-                    <Button mx="auto" aria-controls="simple-menu2"  aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
+                    <Button mx="auto" aria-controls="simple-menu2" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
                         Open Menu
                     </Button>
                 </Box>
                 <Box p={1}>
-                    <Button mx="auto" aria-controls="simple-menu3"  aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
+                    <Button mx="auto" aria-controls="simple-menu3" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
                         Open Menu
                     </Button>
                 </Box>
@@ -172,10 +155,11 @@ const Header = () => {
 };
 
 const AsideLeft = () => {
+    const classes = useStyles();
     const [value, setvalue] = useState(0);
     const [current, setCurrent] = useState(null);
     const [anchorEl, setAnchorEl] = useState(null);
-    const classes = useStyles();
+
     const handlePopoverClose = () => {
         setAnchorEl(null);
         setCurrent(null);
@@ -192,23 +176,24 @@ const AsideLeft = () => {
 
     return (
         <>
+        <box>
             <Box marginBottom={5}>
-                <Button aria-controls="location" className={classes.startButton} variant="contained" color="primary" size="large">
-                    Location
+                <Button fullWidth='true' size="large" aria-controls="start-menu" variant="outlined" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
+                    Log Angles
                 </Button>
             </Box>
             <Box marginBottom={5}>
-                <Button mx="auto" aria-controls="simple-menu" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
+                <Button fullWidth='true' mx="auto" aria-controls="simple-menu"  color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
                     Open Menu
                 </Button>
             </Box>
             <Box marginBottom={5}>
-                <Button mx="auto" aria-controls="simple-menu2" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
+                <Button fullWidth='true' mx="auto" aria-controls="simple-menu2"  color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
                     Open Menu
                 </Button>
             </Box>
             <Box marginBottom={5}>
-                <Button mx="auto" aria-controls="simple-menu3" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
+                <Button fullWidth='true' mx="auto" aria-controls="simple-menu3" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
                     Open Menu
                 </Button>
             </Box>
@@ -241,11 +226,15 @@ const AsideLeft = () => {
                     </MenuList>
                 )}
             </Popover>
+
+        </box>
+
         </>
     );
 };
 
 const AsideRight = () => {
+    const classes = useStyles();
     const [value, setvalue] = useState(0);
     const [current, setCurrent] = useState(null);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -266,23 +255,24 @@ const AsideRight = () => {
 
     return (
         <>
-            <Box marginBottom={5} marginTop={5}>
+            <Box className={classes.asideRight}>
+            <Box marginBottom={5} marginLeft={10}>
                 <Button aria-controls="start-menu" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
                     Start
                 </Button>
             </Box>
             <Box marginBottom={5}>
-                <Button mx="auto" aria-controls="simple-menu" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
+                <Button mx="auto" aria-controls="simple-menu"  color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
+                    kkkkkkkkkkkk
+                </Button>
+            </Box>
+            <Box marginBottom={5}>
+                <Button mx="auto" aria-controls="simple-menu2"  color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
                     Open Menu
                 </Button>
             </Box>
             <Box marginBottom={5}>
-                <Button mx="auto" aria-controls="simple-menu2" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
-                    Open Menu
-                </Button>
-            </Box>
-            <Box marginBottom={5}>
-                <Button mx="auto" aria-controls="simple-menu3" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
+                <Button mx="auto" aria-controls="simple-menu3"  color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
                     Open Menu
                 </Button>
             </Box>
@@ -315,6 +305,9 @@ const AsideRight = () => {
                     </MenuList>
                 )}
             </Popover>
+
+                </Box>
+
         </>
     );
 };
@@ -375,18 +368,32 @@ const Footer = () => {
                     </Button>
                 </Box>
                 <Box p={1}>
-                    <Button mx="auto" aria-controls="simple-menu" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
+                    <Button mx="auto" aria-controls="simple-menu" variant="outlined" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
                         Open Menu
                     </Button>
                 </Box>
                 <Box p={1}>
-                    <Button mx="auto" aria-controls="simple-menu2" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
+                    <Button mx="auto" aria-controls="simple-menu2" variant="outlined" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
                         Open Menu
                     </Button>
                 </Box>
                 <Box p={1}>
-                    <Button mx="auto" aria-controls="simple-menu3" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
+                    <Button mx="auto" aria-controls="simple-menu3" variant="outlined" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
                         Open Menu
+                    </Button>
+                </Box>
+                <Box paddingBottom={1}>
+                    <Button aria-controls="simple-menu" variant="outlined" color="secondary" aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
+                        <StyledBadge
+                            overlap="circle"
+                            anchorOrigin={{
+                                vertical: "bottom",
+                                horizontal: "right",
+                            }}
+                            variant="dot"
+                        >
+                            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                        </StyledBadge>
                     </Button>
                 </Box>
             </Box>
@@ -435,17 +442,17 @@ export default function Dashboard() {
                     <Header />
                 </Grid>
                 {/* AsideLeft */}
-                <Grid item xs={2} sm={1} className={classes.sideBarLeft}>
+                <Grid item xs={2} sm={2} lg={2} spacing={0}>
                     <AsideLeft />
                 </Grid>
                 {/* Main */}
-                <Grid item xs={8} sm={10}>
-                    <Paper margin={0} padding={0} className={classes.paper}>
+                <Grid item xs={8} sm={8} lg={8} spacing={0}>
+                    <Paper className={classes.paper}>
                         <Main section={section} />
                     </Paper>
                 </Grid>
-                {/* AsideRight */}
-                <Grid item xs={1} sm={1} className={classes.sideBarRight}>
+                {/* {/* AsideRight */}
+                <Grid item xs={2} sm={2} lg={2} spacing={0}>
                     <AsideRight />
                 </Grid>
                 {/* Footer */}
