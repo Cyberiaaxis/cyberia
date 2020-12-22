@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { MenuItem, makeStyles, withStyles, Paper, Box, Button, Grid, MenuList, Badge, Avatar, Popover } from "@material-ui/core";
 import ProgressBar from "./ProgressBar";
+import Stats from "./Stats";
 
 const StyledBadge = withStyles((theme) => ({
     badge: {
@@ -67,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = () => {
+const Header = ({ section, setSection }) => {
     const [value, setvalue] = useState(0);
     const [current, setCurrent] = useState(null);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -79,8 +80,10 @@ const Header = () => {
     };
 
     const handleClick = (e, _popno) => {
+        e.preventDefault();
         setAnchorEl(e.currentTarget);
         setCurrent(e.currentTarget.getAttribute("aria-controls"));
+        setSection(e.currentTarget.getAttribute("href"));
     };
 
     const handleChange = (event, value) => {
@@ -109,7 +112,7 @@ const Header = () => {
                 </Box>
                 <Box p={1}>
                     <Button mx="auto" aria-controls="simple-menu"  aria-haspopup="true" onClick={handleClick} onMouseOver={handleClick}>
-                        Open Menu
+                        Nothing
                     </Button>
                 </Box>
 
@@ -146,7 +149,9 @@ const Header = () => {
                 )}
                 {current === "simple-menu" && (
                     <MenuList onMouseLeave={handlePopoverClose}>
-                        <MenuItem>Travel</MenuItem>
+                        <MenuItem href="profile" onClick={handleClick}>Profile</MenuItem>
+                        <MenuItem href="stats" onClick={handleClick}>Personal Stats</MenuItem>
+                        <MenuItem href="logout" onClick={handleClick}>Logout</MenuItem>
                     </MenuList>
                 )}
                 {current === "simple-menu2" && (
@@ -171,7 +176,7 @@ const Header = () => {
     );
 };
 
-const AsideLeft = () => {
+const AsideLeft = ({ section, setSection }) => {
     const [value, setvalue] = useState(0);
     const [current, setCurrent] = useState(null);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -182,8 +187,10 @@ const AsideLeft = () => {
     };
 
     const handleClick = (e, _popno) => {
+        e.preventDefault();
         setAnchorEl(e.currentTarget);
         setCurrent(e.currentTarget.getAttribute("aria-controls"));
+        setSection(e.currentTarget.getAttribute("href"));
     };
 
     const handleChange = (event, value) => {
@@ -245,7 +252,7 @@ const AsideLeft = () => {
     );
 };
 
-const AsideRight = () => {
+const AsideRight = ({ section, setSection }) => {
     const [value, setvalue] = useState(0);
     const [current, setCurrent] = useState(null);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -256,8 +263,10 @@ const AsideRight = () => {
     };
 
     const handleClick = (e, _popno) => {
+        e.preventDefault();
         setAnchorEl(e.currentTarget);
         setCurrent(e.currentTarget.getAttribute("aria-controls"));
+        setSection(e.currentTarget.getAttribute("href"));
     };
 
     const handleChange = (event, value) => {
@@ -323,8 +332,8 @@ const Main = ({ section }) => {
     let page;
 
     switch (section) {
-        case "home":
-            page = "Home";
+        case "stats":
+            page = <Stats />;
             break;
         case "explore":
             page = "Explore";
@@ -347,7 +356,7 @@ const Main = ({ section }) => {
     );
 };
 
-const Footer = () => {
+const Footer = ({ section, setSection }) => {
     const [value, setvalue] = useState(0);
     const [current, setCurrent] = useState(null);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -358,8 +367,10 @@ const Footer = () => {
     };
 
     const handleClick = (e, _popno) => {
+        e.preventDefault();
         setAnchorEl(e.currentTarget);
         setCurrent(e.currentTarget.getAttribute("aria-controls"));
+        setSection(e.currentTarget.getAttribute("href"));
     };
 
     const handleChange = (event, value) => {
@@ -432,11 +443,11 @@ export default function Dashboard() {
             <Grid container>
                 {/* Header */}
                 <Grid item xs={12}>
-                    <Header />
+                    <Header {...{ section, setSection }}/>
                 </Grid>
                 {/* AsideLeft */}
                 <Grid item xs={2} sm={1} className={classes.sideBarLeft}>
-                    <AsideLeft />
+                    <AsideLeft {...{ section, setSection }}/>
                 </Grid>
                 {/* Main */}
                 <Grid item xs={8} sm={10}>
@@ -446,11 +457,11 @@ export default function Dashboard() {
                 </Grid>
                 {/* AsideRight */}
                 <Grid item xs={1} sm={1} className={classes.sideBarRight}>
-                    <AsideRight />
+                    <AsideRight {...{ section, setSection }}/>
                 </Grid>
                 {/* Footer */}
                 <Grid item xs={12}>
-                    <Footer />
+                    <Footer {...{ section, setSection }}/>
                 </Grid>
             </Grid>
         </div>
