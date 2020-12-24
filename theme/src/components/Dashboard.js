@@ -345,7 +345,7 @@ const Main = ({ section }) => {
             page = "Market";
             break;
         default:
-            page = "Home";
+            page = <Stats />;
             break;
     }
 
