@@ -42,10 +42,11 @@ export default function Stats() {
     const [anchorEl, setAnchorEl] = useState(null);
 
     const options = {
+        height:200,
         exportEnabled: true,
         animationEnabled: true,
         title: {
-            text: "Website Traffic Sources",
+            // text: "",
         },
         data: [
             {
@@ -110,34 +111,36 @@ export default function Stats() {
                                         onClose={handlePopoverClose}
                                         disableRestoreFocus
                                     >
-                                        <TableContainer>
-                                            <Table className={classes.table} aria-label="customized table">
-                                                <TableHead>
-                                                    <TableRow>
-                                                        <StyledTableCell>Criminal Recode</StyledTableCell>
-                                                        <StyledTableCell> Total</StyledTableCell>
-                                                        <StyledTableCell align="right">Status</StyledTableCell>
-                                                    </TableRow>
-                                                </TableHead>
-                                                <TableBody>
-                                                    {rows.map((row) => (
-                                                        <StyledTableRow key={row.name}>
-                                                            <StyledTableCell component="th" scope="row">
-                                                                {row.name}
-                                                            </StyledTableCell>
-                                                            <StyledTableCell align="right">{row.calories}</StyledTableCell>
-                                                            <StyledTableCell component="th" scope="row" height='100' width='300'>
-                                                            </StyledTableCell>
-                                                        </StyledTableRow>
-                                                    ))}
-                                                                                                                    <CanvasJSChart
-                                                                    options={options}
-                                                                    /* onRef={ref => this.chart = ref} */
-                                                                />
-
-                                                </TableBody>
-                                            </Table>
-                                        </TableContainer>
+                                        <Box display="flex">
+                                            <Box width="50%">
+                                                <TableContainer>
+                                                    <Table className={classes.table} aria-label="customized table">
+                                                        <TableHead>
+                                                            <TableRow>
+                                                                <StyledTableCell>Criminal Recode</StyledTableCell>
+                                                                <StyledTableCell align="right">Status</StyledTableCell>
+                                                            </TableRow>
+                                                        </TableHead>
+                                                        <TableBody>
+                                                            {rows.map((row) => (
+                                                                <StyledTableRow key={row.name}>
+                                                                    <StyledTableCell component="th" scope="row">
+                                                                        {row.name}
+                                                                    </StyledTableCell>
+                                                                    <StyledTableCell align="right">{row.calories}</StyledTableCell>
+                                                                </StyledTableRow>
+                                                            ))}
+                                                        </TableBody>
+                                                    </Table>
+                                                </TableContainer>
+                                            </Box>
+                                            <Box width="50%">
+                                                <CanvasJSChart
+                                                    options={options}
+                                                    /* onRef={ref => this.chart = ref} */
+                                                />
+                                            </Box>
+                                        </Box>
                                     </Popover>
                                     <StyledTableCell align="right">Total</StyledTableCell>
                                 </TableRow>
@@ -176,50 +179,7 @@ export default function Stats() {
                         </Table>
                     </TableContainer>
                 </Box>
-                <Box display="flex">
-                    <TableContainer>
-                        <Table className={classes.table} aria-label="customized table">
-                            <TableHead>
-                                <TableRow>
-                                    <StyledTableCell>Criminal Recode</StyledTableCell>
-                                    <StyledTableCell align="right">Total</StyledTableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {rows.map((row) => (
-                                    <StyledTableRow key={row.name}>
-                                        <StyledTableCell component="th" scope="row">
-                                            {row.name}
-                                        </StyledTableCell>
-                                        <StyledTableCell align="right">{row.calories}</StyledTableCell>
-                                    </StyledTableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-
-                    <TableContainer>
-                        <Table className={classes.table} aria-label="customized table">
-                            <TableHead>
-                                <TableRow>
-                                    <StyledTableCell>Fight Recode</StyledTableCell>
-                                    <StyledTableCell align="right">Total</StyledTableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {rows.map((row) => (
-                                    <StyledTableRow key={row.name}>
-                                        <StyledTableCell component="th" scope="row">
-                                            {row.name}
-                                        </StyledTableCell>
-                                        <StyledTableCell align="right">{row.calories}</StyledTableCell>
-                                    </StyledTableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Box>
-            </Box>
+       </Box>
         </>
     );
 }
