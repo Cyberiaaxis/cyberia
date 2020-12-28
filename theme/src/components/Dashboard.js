@@ -338,6 +338,9 @@ const Main = ({ section }) => {
         case "explore":
             page = "Explore";
             break;
+        // case "profile":
+        //     page = <Profile />;
+        //     break;
         case "city":
             page = "city";
             break;
