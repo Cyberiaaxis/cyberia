@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import clsx from "clsx";
-import { Box, makeStyles } from "@material-ui/core";
+import { Box, Grid, makeStyles } from "@material-ui/core";
+import ProgressBar from "./ProgressBar";
 
 const useStyles = makeStyles({
     root: {
@@ -44,7 +45,22 @@ const Attack = () => {
     return (
         <>
             <Box className={clsx(classes.root, shake && classes.fire)}>
-                <button onClick={animate}>Click me</button>
+                <Grid>
+                    <Box display="flex">
+                        <Box>
+                            <Box >HP</Box>
+                            <Box ><ProgressBar percentComplete={75} /></Box>
+                        </Box>
+                                            <Box>
+                            <Box >HP</Box>
+                            <Box ><ProgressBar percentComplete={75} /></Box>
+                        </Box>
+                    </Box>
+                </Grid>
+                <Grid>
+                    <button onClick={animate}>Click me</button>
+                </Grid>
+
             </Box>
         </>
     );
