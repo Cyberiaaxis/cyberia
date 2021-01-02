@@ -1,7 +1,7 @@
 .bar {
   background: hsl(0, 2%, 78%);
   height: 7px;
-  width: 148px;
+  width: 100%;
   border-radius: 10px;
   	animation: pulse 10s infinite;
 }
@@ -14,6 +14,8 @@
   	transform: scale(1);
 	animation: pulse 2s infinite;
 }
+
+
 
 @keyframes pulse {
 	0% {

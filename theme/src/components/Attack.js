@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import clsx from "clsx";
-import { Box, Grid, makeStyles } from "@material-ui/core";
+import { Box, Grid, makeStyles, withStyles, Typography, LinearProgress, MenuItem, Select, FormControl, FormHelperText, InputLabel } from "@material-ui/core";
 import ProgressBar from "./ProgressBar";
 
 const useStyles = makeStyles({
     root: {
+        color: "#fff",
         height: "100vh",
         width: "100%",
         backgroundSize: "cover",
@@ -28,11 +29,33 @@ const useStyles = makeStyles({
     fire: {
         animation: "$shake 5s",
     },
+    topbar: {
+        flexGrow: 1,
+    },
+
+    select: {
+        color: '#fff'
+    },
 });
+
+const BorderLinearProgress = withStyles((theme) => ({
+    root: {
+        height: 10,
+        borderRadius: 5,
+    },
+    colorPrimary: {
+        backgroundColor: theme.palette.grey[theme.palette.type === "light" ? 200 : 700],
+    },
+    bar: {
+        borderRadius: 5,
+        backgroundColor: "#1a90ff",
+    },
+}))(LinearProgress);
 
 const Attack = () => {
     const classes = useStyles();
     const [shake, setShake] = useState(false);
+    const [age, setAge] = useState("");
 
     const animate = () => {
         // Button begins to shake
@@ -42,25 +65,80 @@ const Attack = () => {
         setTimeout(() => setShake(false), 5000);
     };
 
+    const handleChange = (event) => {
+        setAge(event.target.value);
+    };
+
     return (
         <>
             <Box className={clsx(classes.root, shake && classes.fire)}>
-                <Grid>
-                    <Box display="flex">
-                        <Box>
-                            <Box >HP</Box>
-                            <Box ><ProgressBar percentComplete={75} /></Box>
+                <Grid container alignItems="center">
+                    <Grid item xs sm>
+                        <Box margin={2}>
+                            <Box display="flex" alignItems="center">
+                                <Box minWidth={35}>
+                                    <Typography variant="body2">HP</Typography>
+                                </Box>
+                                <Box width="100%" mr={1}>
+                                    <ProgressBar variant="determinate" value={50} type="lg" />
+                                </Box>
+                            </Box>
+                            <Box display="flex" alignItems="center">
+                                <Box minWidth={35}>
+                                    <Typography variant="body2">HP</Typography>
+                                </Box>
+                                <Box width="100%" mr={1}>
+                                    <ProgressBar variant="determinate" value={100} type="lg" />
+                                </Box>
+                            </Box>
                         </Box>
-                                            <Box>
-                            <Box >HP</Box>
-                            <Box ><ProgressBar percentComplete={75} /></Box>
+                    </Grid>
+                    <Grid item xs>
+                        Baka baka bakaBaka baka bakaBaka baka bakaBaka baka bakaBaka baka bakaBaka baka bakaBaka baka bakaBaka baka bakaBaka baka bakaBaka baka bakaBaka baka bakaBaka baka bakaBaka baka bakaBaka baka bakaBaka baka bakaBaka
+                        baka baka
+                    </Grid>
+                    <Grid item xs sm>
+                        <Box display="flex" alignItems="center">
+                            <Box minWidth={35}>
+                                <Typography variant="body2">HP</Typography>
+                            </Box>
+                            <Box width="100%" mr={1}>
+                                <ProgressBar variant="determinate" value={50} type="lg" />
+                            </Box>
                         </Box>
-                    </Box>
-                </Grid>
-                <Grid>
-                    <button onClick={animate}>Click me</button>
+                    </Grid>
                 </Grid>
 
+                <Grid item xs>
+                    <Box display="flex">
+<Box>esrdtf</Box>
+                        <Box>
+                            <FormControl variant="filled" className={classes.formControl}>
+                                <InputLabel id="demo-simple-select-filled-label">Age</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-filled-label"
+                                    id="demo-simple-select-filled"
+                                    value={age}
+                                    onChange={handleChange}
+                                    className={classes.select}
+                                    displayEmpty={true}
+                                >
+                                    <MenuItem value={11} className={classes.select}>
+                                        <em>fists</em>
+                                    </MenuItem>
+                                    <MenuItem value={10}>Primary</MenuItem>
+                                    <MenuItem value={20}>Secondary</MenuItem>
+                                    <MenuItem value={30}>Melee</MenuItem>
+                                    <MenuItem value={30}>Armor</MenuItem>
+                                </Select>
+                            </FormControl>
+
+                            <button onClick={animate}>Click me</button>
+                        </Box>
+                        <Box></Box>
+                        <Box>lol</Box>
+                    </Box>
+                </Grid>
             </Box>
         </>
     );
