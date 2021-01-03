@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import clsx from "clsx";
-import { Box, Grid, makeStyles, withStyles, Typography, LinearProgress, MenuItem, Select, FormControl, FormHelperText, InputLabel } from "@material-ui/core";
+import { Box, Grid, makeStyles, withStyles, Typography, Switch, FormGroup, FormControlLabel, FormHelperText, FormLabel, LinearProgress, MenuItem, Select, FormControl, Button, InputLabel } from "@material-ui/core";
 import ProgressBar from "./ProgressBar";
 
 const useStyles = makeStyles({
@@ -34,7 +34,7 @@ const useStyles = makeStyles({
     },
 
     select: {
-        color: '#fff'
+        color: "#fff",
     },
 });
 
@@ -55,7 +55,12 @@ const BorderLinearProgress = withStyles((theme) => ({
 const Attack = () => {
     const classes = useStyles();
     const [shake, setShake] = useState(false);
-    const [age, setAge] = useState("");
+    const [weapon, setWeapon] = useState("");
+    const [state, setState] = useState({
+        gilad: true,
+        jason: false,
+        antoine: true,
+    });
 
     const animate = () => {
         // Button begins to shake
@@ -66,7 +71,11 @@ const Attack = () => {
     };
 
     const handleChange = (event) => {
-        setAge(event.target.value);
+        setWeapon(event.target.value);
+    };
+
+    const handleChangeSwitch = (event) => {
+        setState({ ...state, [event.target.name]: event.target.checked });
     };
 
     return (
@@ -111,20 +120,12 @@ const Attack = () => {
 
                 <Grid item xs>
                     <Box display="flex">
-<Box>esrdtf</Box>
-                        <Box>
+                        <Box border={1} width="25%">
                             <FormControl variant="filled" className={classes.formControl}>
-                                <InputLabel id="demo-simple-select-filled-label">Age</InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-filled-label"
-                                    id="demo-simple-select-filled"
-                                    value={age}
-                                    onChange={handleChange}
-                                    className={classes.select}
-                                    displayEmpty={true}
-                                >
-                                    <MenuItem value={11} className={classes.select}>
-                                        <em>fists</em>
+                                <InputLabel id="demo-simple-select-filled-label">Weapon</InputLabel>
+                                <Select labelId="demo-simple-select-filled-label" id="demo-simple-select-filled" value={weapon} onChange={handleChange} className={classes.select} displayEmpty={true} fullWidth={true}>
+                                    <MenuItem value={1} className={classes.select}>
+                                        fists
                                     </MenuItem>
                                     <MenuItem value={10}>Primary</MenuItem>
                                     <MenuItem value={20}>Secondary</MenuItem>
@@ -132,11 +133,22 @@ const Attack = () => {
                                     <MenuItem value={30}>Armor</MenuItem>
                                 </Select>
                             </FormControl>
-
-                            <button onClick={animate}>Click me</button>
+                            <Button variant="contained" color="primary" onClick={animate} fullWidth={true}>
+                                Hit Him
+                            </Button>
                         </Box>
-                        <Box></Box>
-                        <Box>lol</Box>
+                        <Box border={1} width="45%" padding={3}>
+                            <FormControl component="fieldset">
+                                <FormLabel component="legend">Assign responsibility</FormLabel>
+                                <FormGroup>
+                                    <FormControlLabel control={<Switch checked={state.gilad} onChange={handleChangeSwitch} name="gilad" />} label="Gilad Gray" />
+                                    <FormControlLabel control={<Switch checked={state.jason} onChange={handleChangeSwitch} name="jason" />} label="Jason Killian" />
+                                    <FormControlLabel control={<Switch checked={state.antoine} onChange={handleChangeSwitch} name="antoine" />} label="Antoine Llorca" />
+                                </FormGroup>
+                                <FormHelperText>Be careful</FormHelperText>
+                            </FormControl>
+                        </Box>
+                        <Box border={1} width="30%">Chat box goes here Chat box goes hereChat box goes hereChat box goes hereChat box goes hereChat box goes here </Box>
                     </Box>
                 </Grid>
             </Box>
