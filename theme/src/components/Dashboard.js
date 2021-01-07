@@ -100,7 +100,7 @@ const Header = ({ section, setSection }) => {
                 </Box>
                 <Box display="flex" margin={1.9}>
                         <Box marginRight={1}>Energy</Box>
-                        <Box marginTop={1.2}><ProgressBar percentComplete={75} /></Box>
+                        <Box marginTop={1.2}><ProgressBar variant="determinate" value={50} type="lg" /></Box>
                 </Box>
                 <Box display="flex" margin={1.9}>
                         <Box marginRight={1}>Will</Box>
