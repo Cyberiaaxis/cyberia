@@ -8,7 +8,7 @@ const useStyles = makeStyles({
         color: "#fff",
         height: "100vh",
         width: "100%",
-        opacity: '0.9',
+        opacity: "0.9",
         backgroundSize: "cover",
         backgroundImage: `url("https://deadline.com/wp-content/uploads/2018/03/pb4_master_keyart_aw_land_v2-_-35-e1584361674557.jpg")`,
         fontFamily: ["Alegreya SC", "serif"].join(","),
@@ -37,9 +37,37 @@ const useStyles = makeStyles({
     select: {
         color: "#fff",
     },
-    blood:{
+    blood: {
         // backgroundColor: '#7f0000',
     },
+    circle: {
+        width: '100%',
+        height: '160%',
+        borderRadius: '50%',
+        boxShadow: '0 0 200px inset #8A0303',
+        animation: '$pulse 5s infinite',
+
+    },
+    cloudCircle: {
+        width: "100px",
+        height: "180px",
+        background: "#8a0303",
+        borderRadius: "50%",
+        filter: `url(#filter)`,
+        animation: '$pulse2 5s infinite',
+    },
+   "@keyframes pulse": {
+        "0%": {boxShadow: '0 0 200px inset #8A0303'},
+        "50%": { boxShadow: '0 0 50px inset #8A0303' },
+        '100%': { boxShadow: '0 0 0 inset transparent' },
+    },
+
+    "@keyframes pulse2": {
+        "0%": {background: "#8a0303"},
+        "50%": { background: '#d1001c' },
+        '100%': { background: 'transparent' },
+    },
+
 
 });
 
@@ -87,7 +115,7 @@ const IOSSlider = withStyles({
         top: -22,
         "& *": {
             background: "transparent",
-            color: "#000",
+            color: "red",
         },
     },
     track: {
@@ -159,12 +187,11 @@ const Attack = () => {
                             </Box>
                         </Box>
                     </Grid>
-                    <Grid item xs>
+                    <Grid item xs sm lg>
                         <Box padding={1}>
-                            <b>1. bakaBaka baka bakaBaka baka bakaBaka baka bakaBaka</b> <br/>
+                            <b>1. bakaBaka baka bakaBaka baka bakaBaka baka bakaBaka</b> <br />
                             <b>2. baka bakaBaka baka bakaBaka baka baka</b>
                         </Box>
-
                     </Grid>
                     <Grid item xs sm>
                         <Box display="flex" alignItems="center">
@@ -178,20 +205,61 @@ const Attack = () => {
                     </Grid>
                 </Grid>
                 <Grid item xs>
-                    <Box  display="flex" height={400}>
-                        {/* https://codepen.io/giana/pen/zvZEBd */}
-                        {/* https://jsfiddle.net/qstmpx7g/4/ */}
-                        <Box className={classes.blood}  border={1} width="50%">Attacker Area</Box>
-                        <Box  border={1} width="50%">defender Area</Box>
+                    <Box display="flex">
+                        <Box width="50%">
+                            <Box display="flex">
+                                <Box className={classes.circle} display="flex">
+                                    <Box margin={10} className={classes.cloudCircle}>
+                                        <svg width="0" height="0">
+                                            <filter id="filter">
+                                                <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="10" />
+                                                <feDisplacementMap in="SourceGraphic" scale="180" />
+                                            </filter>
+                                        </svg>
+                                    </Box>
+                                                                        <Box margin={10} className={classes.cloudCircle}>
+                                        <svg width="0" height="0">
+                                            <filter id="filter">
+                                                <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="10" />
+                                                <feDisplacementMap in="SourceGraphic" scale="180" />
+                                            </filter>
+                                        </svg>
+                                    </Box>
+                                </Box>
+                            </Box>
+                        </Box>
+                        <Box width="50%">
+                            <Box display="flex">
+                                <Box className={classes.circle} display="flex">
+                                    <Box margin={10} className={classes.cloudCircle}>
+                                        <svg width="0" height="0">
+                                            <filter id="filter">
+                                                <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="10" />
+                                                <feDisplacementMap in="SourceGraphic" scale="180" />
+                                            </filter>
+                                        </svg>
+                                    </Box>
+                                                                        <Box margin={10} className={classes.cloudCircle}>
+                                        <svg width="0" height="0">
+                                            <filter id="filter">
+                                                <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="10" />
+                                                <feDisplacementMap in="SourceGraphic" scale="180" />
+                                            </filter>
+                                        </svg>
+                                    </Box>
+                                </Box>
+                            </Box>
+                        </Box>
+
                     </Box>
                 </Grid>
                 <Grid item xs>
                     <Box display="flex">
                         <Box border={1} width="30%">
                             <FormControl variant="filled" className={classes.formControl}>
-                                <InputLabel id="demo-simple-select-filled-label">Weapon</InputLabel>
+                                <InputLabel className={classes.select} id="demo-simple-select-filled-label">Weapon</InputLabel>
                                 <Select labelId="demo-simple-select-filled-label" id="demo-simple-select-filled" value={weapon} onChange={handleChange} className={classes.select} fullWidth={true}>
-                                    <MenuItem value={1} className={classes.select}>
+                                    <MenuItem value={1}>
                                         fists
                                     </MenuItem>
                                     <MenuItem value={10}>Primary</MenuItem>
@@ -201,9 +269,9 @@ const Attack = () => {
                                 </Select>
                             </FormControl>
                             <FormControl variant="filled" className={classes.formControl}>
-                                <InputLabel id="demo-simple-select-filled-label">Weapon</InputLabel>
+                                <InputLabel className={classes.select} id="demo-simple-select-filled-label">Weapon</InputLabel>
                                 <Select labelId="demo-simple-select-filled-label" id="demo-simple-select-filled" value={weapon} onChange={handleChange} className={classes.select} displayEmpty={true} fullWidth={true}>
-                                    <MenuItem value={1} className={classes.select}>
+                                    <MenuItem value={1}>
                                         fists
                                     </MenuItem>
                                     <MenuItem value={10}>Primary</MenuItem>
@@ -213,9 +281,9 @@ const Attack = () => {
                                 </Select>
                             </FormControl>
                             <FormControl variant="filled" className={classes.formControl}>
-                                <InputLabel id="demo-simple-select-filled-label">Weapon</InputLabel>
+                                <InputLabel className={classes.select} id="demo-simple-select-filled-label">Weapon</InputLabel>
                                 <Select labelId="demo-simple-select-filled-label" id="demo-simple-select-filled" value={weapon} onChange={handleChange} className={classes.select} displayEmpty={true} fullWidth={true}>
-                                    <MenuItem value={1} className={classes.select}>
+                                    <MenuItem value={1}>
                                         fists
                                     </MenuItem>
                                     <MenuItem value={10}>Primary</MenuItem>
@@ -230,7 +298,7 @@ const Attack = () => {
                         </Box>
                         <Box border={1} width="50%" padding={3}>
                             <Box display="flex" alignItems="center">
-                                <Box minWidth={25}>
+                                <Box minWidth={65}>
                                     <Typography variant="body2">Strength</Typography>
                                 </Box>
                                 <Box width="100%" mr={1}>
@@ -238,7 +306,7 @@ const Attack = () => {
                                 </Box>
                             </Box>
                             <Box display="flex" alignItems="center">
-                                <Box minWidth={35}>
+                                <Box minWidth={65}>
                                     <Typography variant="body2">Strength</Typography>
                                 </Box>
                                 <Box width="100%" mr={1}>
@@ -246,7 +314,7 @@ const Attack = () => {
                                 </Box>
                             </Box>
                             <Box display="flex" alignItems="center">
-                                <Box minWidth={35}>
+                                <Box minWidth={65}>
                                     <Typography variant="body2">Strength</Typography>
                                 </Box>
                                 <Box width="100%" mr={1}>
