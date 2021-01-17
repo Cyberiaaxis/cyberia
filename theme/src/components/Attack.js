@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import clsx from "clsx";
 import {
     Box,
@@ -8,6 +8,8 @@ import {
     Typography,
     Avatar,
     Badge,
+    Popper,
+    Fade,
     CardMedia,
     Switch,
     Slider,
@@ -24,7 +26,7 @@ import {
 } from "@material-ui/core";
 import ProgressBar from "./ProgressBar";
 
-import mafia from '../images/mafia.jpg';
+import mafia from "../images/mafia.jpg";
 
 const useStyles = makeStyles({
     body: {
@@ -67,9 +69,9 @@ const useStyles = makeStyles({
     blood: {
         // backgroundColor: '#7f0000',
     },
-     formControl: {
-  width: '100%',
-     },
+    formControl: {
+        width: "100%",
+    },
     circle: {
         width: "100%",
         height: "100%",
@@ -99,6 +101,9 @@ const useStyles = makeStyles({
         backgroundSize: "100% 100%",
         backgroundImage: `url("../images/gunaim.png")`,
     },
+      typography: {
+        padding: '2',
+  },
 
     "@keyframes pulse": {
         "0%": { boxShadow: "inset 2px 3px 300px #8A0303, 0 0 200px  #8A0303" },
@@ -217,6 +222,10 @@ const Attack = () => {
         checkedA: true,
         checkedB: true,
     });
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [placement, setPlacement] = useState();
+    const menuref = useRef(null)
 
     const animate = () => {
         // Button begins to shake
@@ -230,16 +239,33 @@ const Attack = () => {
         setWeapon(event.target.value);
     };
 
-    const colorChange = (event) => { };
+    const handleOpen = (newPlacement) => (event) => {
+        setAnchorEl(event.currentTarget);
+        setOpen((prev) => placement !== newPlacement || !prev);
+        setPlacement(newPlacement);
+    };
+
+    const handleClose = (event) => {
+        console.log("close");
+    };
+
+    const colorChange = (event) => {};
 
     return (
         <>
+            <Popper open={open} anchorEl={menuref.current} placement={placement} transition>
+                {({ TransitionProps }) => (
+                    <Fade {...TransitionProps} timeout={350}>
+                        <Typography className={classes.typography}>The content of the Popper.</Typography>
+                    </Fade>
+                )}
+            </Popper>
             <Box className={clsx(classes.root, shake && classes.fire)}>
                 <Grid container alignItems="center">
                     <Grid item xs sm>
-                        <Box margin={2} display='flex' alignItems="center">
+                        <Box margin={2} display="flex" alignItems="center">
                             <StyledBadge
-                                minWidth={35}
+                                // minWidth={35}
                                 overlap="circle"
                                 anchorOrigin={{
                                     vertical: "top",
@@ -276,7 +302,7 @@ const Attack = () => {
                         </Box>
                     </Grid>
                     <Grid item xs sm>
-                        <Box margin={2} display='flex'>
+                        <Box margin={2} display="flex">
                             <Box width="100%">
                                 <Box display="flex" alignItems="center">
                                     <Box minWidth={35}>
@@ -288,7 +314,7 @@ const Attack = () => {
                                 </Box>
                             </Box>
                             <StyledBadge
-                                minWidth={35}
+                                // minWidth={35}
                                 overlap="circle"
                                 anchorOrigin={{
                                     vertical: "top",
@@ -325,11 +351,21 @@ const Attack = () => {
                                             Primary Weapon
                                         </InputLabel>
                                         <Select labelId="demo-simple-select-filled-label" id="demo-simple-select-filled" value={weapon} onChange={handleChange} className={classes.select} displayEmpty={true} fullWidth={true}>
-                                            <MenuItem onMouseEnter={handleOpen} onMouseLeave={handleClose} value={1}>fists</MenuItem>
-                                            <MenuItem onMouseEnter={handleOpen} onMouseLeave={handleClose} value={1}>fists</MenuItem>
-                                            <MenuItem onMouseEnter={handleOpen} onMouseLeave={handleClose} value={1}>fists</MenuItem>
-                                            <MenuItem onMouseEnter={handleOpen} onMouseLeave={handleClose} value={1}>fists</MenuItem>
-                                            <MenuItem onMouseEnter={handleOpen} onMouseLeave={handleClose} value={1}>fists</MenuItem>
+                                            <MenuItem ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={1}>
+                                                fists
+                                            </MenuItem>
+                                            <MenuItem onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={1}>
+                                                fists
+                                            </MenuItem>
+                                            <MenuItem onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={1}>
+                                                fists
+                                            </MenuItem>
+                                            <MenuItem onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={1}>
+                                                fists
+                                            </MenuItem>
+                                            <MenuItem onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={1}>
+                                                fists
+                                            </MenuItem>
                                         </Select>
                                     </FormControl>
                                 </Box>
@@ -341,11 +377,20 @@ const Attack = () => {
                             </Box>
                             <Box border={1} display="flex">
                                 <Box width="75%">
-                                    <FormControl fullWidth="true" variant="filled" className={classes.formControl}>
-                                        <InputLabel fullWidth="true" className={classes.select} id="demo-simple-select-filled-label">
+                                    <FormControl variant="filled" className={classes.formControl}>
+                                        <InputLabel  className={classes.select} id="demo-simple-select-filled-label">
                                             Secondary Weapon
                                         </InputLabel>
-                                        <Select fullWidth="true" labelId="demo-simple-select-filled-label" id="demo-simple-select-filled" value={weapon} onChange={handleChange} className={classes.select} displayEmpty={true} fullWidth={true}>
+                                        <Select
+                                            fullWidth="true"
+                                            labelId="demo-simple-select-filled-label"
+                                            id="demo-simple-select-filled"
+                                            value={weapon}
+                                            onChange={handleChange}
+                                            className={classes.select}
+                                            displayEmpty={true}
+                                            fullWidth={true}
+                                        >
                                             <MenuItem value={1}>fists</MenuItem>
                                             <MenuItem value={10}>Primary</MenuItem>
                                             <MenuItem value={20}>Secondary</MenuItem>
