@@ -10,7 +10,11 @@ import {
     Badge,
     Popper,
     Fade,
+    CardActionArea,
     CardMedia,
+    CardContent,
+    CardActions,
+    Card,
     Switch,
     Slider,
     FormGroup,
@@ -23,6 +27,7 @@ import {
     FormControl,
     Button,
     InputLabel,
+    Menu,
 } from "@material-ui/core";
 import ProgressBar from "./ProgressBar";
 
@@ -71,6 +76,7 @@ const useStyles = makeStyles({
     },
     formControl: {
         width: "100%",
+        // backgroundColor: "transparent",
     },
     circle: {
         width: "100%",
@@ -101,10 +107,29 @@ const useStyles = makeStyles({
         backgroundSize: "100% 100%",
         backgroundImage: `url("../images/gunaim.png")`,
     },
-      typography: {
-        padding: '2',
-  },
+    typography: {
+        backgroundColor: "black",
+        padding: "2",
+    },
+    info: {
+        position: "absolute",
+        left: '100%',
+        top: 0,
+        width: '70%',
+        zIndex: 100,
+    },
 
+'@global': {
+
+        '.MuiPaper-root': {
+
+            background: 'transparent',
+
+            backgroundColor: 'transparent',
+            color: "white",
+        },
+
+    },
     "@keyframes pulse": {
         "0%": { boxShadow: "inset 2px 3px 300px #8A0303, 0 0 200px  #8A0303" },
         "50%": { boxShadow: "inset 2px 3px 300px #8A0303, 0 0 200px  #8A0303" },
@@ -225,7 +250,7 @@ const Attack = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [open, setOpen] = useState(false);
     const [placement, setPlacement] = useState();
-    const menuref = useRef(null)
+    const menuref = useRef(null);
 
     const animate = () => {
         // Button begins to shake
@@ -246,20 +271,43 @@ const Attack = () => {
     };
 
     const handleClose = (event) => {
-        console.log("close");
+        setAnchorEl(null);
+        setOpen(null);
+        setPlacement(null);
     };
 
     const colorChange = (event) => {};
 
     return (
         <>
-            <Popper open={open} anchorEl={menuref.current} placement={placement} transition>
-                {({ TransitionProps }) => (
-                    <Fade {...TransitionProps} timeout={350}>
-                        <Typography className={classes.typography}>The content of the Popper.</Typography>
-                    </Fade>
-                )}
-            </Popper>
+            {/* <Popper border={1} open={open} anchorEl={menuref.current} placement={placement} transition autoWidth={true}>
+               <Grid item lg>
+                <Box m={5} width="25%">
+                <Card>
+                    <CardActionArea>
+                        <CardMedia component="img" alt="Contemplative Reptile" height="140" image="../images/mafia.jpg" title="Contemplative Reptile" />
+                        <CardContent>
+                            <Typography gutterBottom variant="h5" component="h2">
+                                Lizard
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary" component="p">
+                                Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica
+                            </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                    <CardActions>
+                        <Button size="small" color="primary">
+                            Share
+                        </Button>
+                        <Button size="small" color="primary">
+                            Learn More
+                        </Button>
+                    </CardActions>
+                </Card>
+
+                </Box>
+               </Grid>
+            </Popper> */}
             <Box className={clsx(classes.root, shake && classes.fire)}>
                 <Grid container alignItems="center">
                     <Grid item xs sm>
@@ -343,27 +391,28 @@ const Attack = () => {
                 </Grid>
                 <Grid item xs>
                     <Box display="flex">
-                        <Box border={1} width="30%">
+                        <Box border={1} width="30%"  position='relative'>
+
                             <Box border={1} display="flex">
                                 <Box width="75%" display="flex">
                                     <FormControl variant="filled" className={classes.formControl}>
                                         <InputLabel className={classes.select} id="demo-simple-select-filled-label">
                                             Primary Weapon
                                         </InputLabel>
-                                        <Select labelId="demo-simple-select-filled-label" id="demo-simple-select-filled" value={weapon} onChange={handleChange} className={classes.select} displayEmpty={true} fullWidth={true}>
-                                            <MenuItem ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={1}>
+                                        <Select  labelId="demo-simple-select-filled-label" id="demo-simple-select-filled" value={weapon} onChange={handleChange} className={classes.select} displayEmpty={true} autoWidth={true}>
+                                            <MenuItem   ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={10}>
                                                 fists
                                             </MenuItem>
-                                            <MenuItem onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={1}>
+                                            <MenuItem   ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={20}>
                                                 fists
                                             </MenuItem>
-                                            <MenuItem onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={1}>
+                                            <MenuItem   ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={30}>
                                                 fists
                                             </MenuItem>
-                                            <MenuItem onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={1}>
+                                            <MenuItem   ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={40}>
                                                 fists
                                             </MenuItem>
-                                            <MenuItem onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={1}>
+                                            <MenuItem   ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={50}>
                                                 fists
                                             </MenuItem>
                                         </Select>
@@ -378,7 +427,7 @@ const Attack = () => {
                             <Box border={1} display="flex">
                                 <Box width="75%">
                                     <FormControl variant="filled" className={classes.formControl}>
-                                        <InputLabel  className={classes.select} id="demo-simple-select-filled-label">
+                                        <InputLabel className={classes.select} id="demo-simple-select-filled-label">
                                             Secondary Weapon
                                         </InputLabel>
                                         <Select
@@ -434,6 +483,30 @@ const Attack = () => {
                                     </Button>
                                 </Box>
                             </Box>
+                            <Box className={classes.info} display={anchorEl ? "block" : "none"}>
+    <Card>
+        <CardActionArea>
+            <CardMedia component="img" alt="Contemplative Reptile" height="140" image={mafia} title="Contemplative Reptile" />
+            <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                    Lizard
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                    Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica
+                </Typography>
+            </CardContent>
+        </CardActionArea>
+        <CardActions>
+            <Button size="small" color="primary">
+                Share
+            </Button>
+            <Button size="small" color="primary">
+                Learn More
+            </Button>
+        </CardActions>
+    </Card>
+</Box>;
+
                         </Box>
                         <Box border={1} width="50%" padding={3}>
                             <Box display="flex" alignItems="center">
@@ -462,7 +535,7 @@ const Attack = () => {
                             </Box>
                         </Box>
                         <Box border={1} width="20%">
-                            sssssssssssssssssssssssssss
+
                         </Box>
                     </Box>
                 </Grid>
