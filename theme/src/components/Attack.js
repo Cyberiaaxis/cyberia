@@ -8,29 +8,37 @@ import {
     Typography,
     Avatar,
     Badge,
-    Popper,
-    Fade,
+
     CardActionArea,
     CardMedia,
     CardContent,
     CardActions,
     Card,
-    Switch,
+Divider,
     Slider,
-    FormGroup,
-    FormControlLabel,
-    FormHelperText,
-    FormLabel,
-    LinearProgress,
+
     MenuItem,
     Select,
     FormControl,
     Button,
     InputLabel,
-    Menu,
+    Paper,
+
+TextField,
+
+List,
+ListItem,
+ListItemIcon,
+ListItemText,
+
+Fab,
+
 } from "@material-ui/core";
 import ProgressBar from "./ProgressBar";
+import SendIcon from '@material-ui/icons/Send';
+import { StreamChat } from "stream-chat";
 
+import "stream-chat-react/dist/css/index.css";
 import mafia from "../images/mafia.jpg";
 
 const useStyles = makeStyles({
@@ -113,22 +121,19 @@ const useStyles = makeStyles({
     },
     info: {
         position: "absolute",
-        left: '100%',
+        left: "40%",
         top: 0,
-        width: '70%',
+        width: "70%",
         zIndex: 100,
     },
 
-'@global': {
+    "@global": {
+        ".MuiPaper-root": {
+            background: "transparent",
 
-        '.MuiPaper-root': {
-
-            background: 'transparent',
-
-            backgroundColor: 'transparent',
+            backgroundColor: "transparent",
             color: "white",
         },
-
     },
     "@keyframes pulse": {
         "0%": { boxShadow: "inset 2px 3px 300px #8A0303, 0 0 200px  #8A0303" },
@@ -141,6 +146,20 @@ const useStyles = makeStyles({
         "50%": { background: "#d1001c" },
         "100%": { background: "transparent" },
     },
+  chatSection: {
+    width: '100%',
+    height: '250px',
+    overflowY: 'auto',
+  },
+  headBG: {
+      backgroundColor: '#e0e0e0'
+  },
+  borderRight500: {
+      borderRight: '1px solid #e0e0e0'
+  },
+  messageArea: {
+    overflowY: 'auto'
+  }
 });
 
 const iOSBoxShadow = "0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)";
@@ -239,6 +258,24 @@ const StyledBadge = withStyles((theme) => ({
     },
 }))(Badge);
 
+    const chatClient = new StreamChat("gx5a64bj4ptz");
+    const userToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoib2xkLWZsb3dlci0yIn0.vIQ6eZQf7AHozSVvZEq9tX4Y_5BnkneaKfuxDHhTSYw";
+
+    chatClient.connectUser(
+        {
+            id: "old-flower-2",
+            name: "Old flower",
+            image: "https://getstream.io/random_png/?id=old-flower-2&name=Old+flower",
+        },
+        userToken
+    );
+
+    const channel = chatClient.channel("livestream", "spacex", {
+        image: "https://goo.gl/Zefkbx",
+        name: "SpaceX launch discussion",
+    });
+
+
 const Attack = () => {
     const classes = useStyles();
     const [shake, setShake] = useState(false);
@@ -275,6 +312,7 @@ const Attack = () => {
         setOpen(null);
         setPlacement(null);
     };
+
 
     const colorChange = (event) => {};
 
@@ -391,28 +429,27 @@ const Attack = () => {
                 </Grid>
                 <Grid item xs>
                     <Box display="flex">
-                        <Box border={1} width="30%"  position='relative'>
-
-                            <Box border={1} display="flex">
+                        <Box width="30%" position="relative">
+                            <Box display="flex">
                                 <Box width="75%" display="flex">
                                     <FormControl variant="filled" className={classes.formControl}>
                                         <InputLabel className={classes.select} id="demo-simple-select-filled-label">
                                             Primary Weapon
                                         </InputLabel>
-                                        <Select  labelId="demo-simple-select-filled-label" id="demo-simple-select-filled" value={weapon} onChange={handleChange} className={classes.select} displayEmpty={true} autoWidth={true}>
-                                            <MenuItem   ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={10}>
+                                        <Select labelId="demo-simple-select-filled-label" id="demo-simple-select-filled" value={weapon} onChange={handleChange} className={classes.select} displayEmpty={true} autoWidth={true}>
+                                            <MenuItem ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={10}>
                                                 fists
                                             </MenuItem>
-                                            <MenuItem   ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={20}>
+                                            <MenuItem ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={20}>
                                                 fists
                                             </MenuItem>
-                                            <MenuItem   ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={30}>
+                                            <MenuItem ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={30}>
                                                 fists
                                             </MenuItem>
-                                            <MenuItem   ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={40}>
+                                            <MenuItem ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={40}>
                                                 fists
                                             </MenuItem>
-                                            <MenuItem   ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={50}>
+                                            <MenuItem ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={50}>
                                                 fists
                                             </MenuItem>
                                         </Select>
@@ -424,7 +461,7 @@ const Attack = () => {
                                     </Button>
                                 </Box>
                             </Box>
-                            <Box border={1} display="flex">
+                            <Box display="flex">
                                 <Box width="75%">
                                     <FormControl variant="filled" className={classes.formControl}>
                                         <InputLabel className={classes.select} id="demo-simple-select-filled-label">
@@ -454,7 +491,7 @@ const Attack = () => {
                                     </Button>
                                 </Box>
                             </Box>
-                            <Box border={1} display="flex">
+                            <Box display="flex">
                                 <Box width="75%">
                                     <FormControl variant="filled" className={classes.formControl}>
                                         <InputLabel className={classes.select} id="demo-simple-select-filled-label">
@@ -484,31 +521,31 @@ const Attack = () => {
                                 </Box>
                             </Box>
                             <Box className={classes.info} display={anchorEl ? "block" : "none"}>
-    <Card>
-        <CardActionArea>
-            <CardMedia component="img" alt="Contemplative Reptile" height="140" image={mafia} title="Contemplative Reptile" />
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                    Lizard
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica
-                </Typography>
-            </CardContent>
-        </CardActionArea>
-        <CardActions>
-            <Button size="small" color="primary">
-                Share
-            </Button>
-            <Button size="small" color="primary">
-                Learn More
-            </Button>
-        </CardActions>
-    </Card>
-</Box>;
-
+                                <Card>
+                                    <CardActionArea>
+                                        <CardMedia component="img" alt="Contemplative Reptile" height="140" image={mafia} title="Contemplative Reptile" />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h5" component="h2">
+                                                Lizard
+                                            </Typography>
+                                            <Typography variant="body2" color="textSecondary" component="p">
+                                                Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica
+                                            </Typography>
+                                        </CardContent>
+                                    </CardActionArea>
+                                    <CardActions>
+                                        <Button size="small" color="primary">
+                                            Share
+                                        </Button>
+                                        <Button size="small" color="primary">
+                                            Learn More
+                                        </Button>
+                                    </CardActions>
+                                </Card>
+                            </Box>
+                            ;
                         </Box>
-                        <Box border={1} width="50%" padding={3}>
+                        <Box border={1} width="40%" padding={3}>
                             <Box display="flex" alignItems="center">
                                 <Box minWidth={65}>
                                     <Typography variant="body2">Strength</Typography>
@@ -534,9 +571,73 @@ const Attack = () => {
                                 </Box>
                             </Box>
                         </Box>
-                        <Box border={1} width="20%">
-
-                        </Box>
+                        <Box border={1} width="30%">
+        <Grid container component={Paper} className={classes.chatSection}>
+            <Grid item xs={3} className={classes.borderRight500}>
+                <List>
+                    <ListItem button key="RemySharp">
+                        <ListItemIcon>
+                            <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
+                        </ListItemIcon>
+                        <ListItemText secondary="online" align="right"></ListItemText>
+                    </ListItem>
+                    <ListItem button key="Alice">
+                        <ListItemIcon>
+                            <Avatar alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
+                        </ListItemIcon>
+                    </ListItem>
+                    <ListItem button key="CindyBaker">
+                        <ListItemIcon>
+                            <Avatar alt="Cindy Baker" src="https://material-ui.com/static/images/avatar/2.jpg" />
+                        </ListItemIcon>
+                    </ListItem>
+                </List>
+            </Grid>
+            <Grid item xs={9}>
+                <List className={classes.messageArea}>
+                    <ListItem key="1">
+                        <Grid container>
+                            <Grid item xs={12}>
+                                <ListItemText align="right" primary="Hey man, What's up ?"></ListItemText>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <ListItemText align="right" secondary="09:30"></ListItemText>
+                            </Grid>
+                        </Grid>
+                    </ListItem>
+                    <ListItem key="2">
+                        <Grid container>
+                            <Grid item xs={12}>
+                                <ListItemText align="left" primary="Hey, Iam Good! What about you ?"></ListItemText>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <ListItemText align="left" secondary="09:31"></ListItemText>
+                            </Grid>
+                        </Grid>
+                    </ListItem>
+                    <ListItem key="3">
+                        <Grid container>
+                            <Grid item xs={12}>
+                                <ListItemText align="right" primary="Cool. i am good, let's catch up!"></ListItemText>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <ListItemText align="right" secondary="10:30"></ListItemText>
+                            </Grid>
+                        </Grid>
+                    </ListItem>
+                </List>
+                <Divider />
+                <Grid container style={{padding: '20px'}}>
+                    <Grid item xs={10}>
+                        <TextField id="outlined-basic-email" label="Type Something" fullWidth />
+                    </Grid>
+                    <Grid xs={2}>
+                        <Fab color="primary" aria-label="add"><SendIcon /></Fab>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+</Box>
                     </Box>
                 </Grid>
             </Box>
