@@ -8,40 +8,32 @@ import {
     Typography,
     Avatar,
     Badge,
-
     CardActionArea,
     CardMedia,
     CardContent,
     CardActions,
     Card,
-Divider,
+    Divider,
     Slider,
-
     MenuItem,
     Select,
     FormControl,
     Button,
     InputLabel,
     Paper,
-
-TextField,
-
-List,
-ListItem,
-ListItemIcon,
-ListItemText,
-
-Fab,
-
+    TextField,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    Fab,
 } from "@material-ui/core";
 import ProgressBar from "./ProgressBar";
-import SendIcon from '@material-ui/icons/Send';
-import { StreamChat } from "stream-chat";
-
+import Chat from "./Chat";
 import "stream-chat-react/dist/css/index.css";
 import mafia from "../images/mafia.jpg";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     body: {
         margin: 0,
     },
@@ -146,21 +138,8 @@ const useStyles = makeStyles({
         "50%": { background: "#d1001c" },
         "100%": { background: "transparent" },
     },
-  chatSection: {
-    width: '100%',
-    height: '250px',
-    overflowY: 'auto',
-  },
-  headBG: {
-      backgroundColor: '#e0e0e0'
-  },
-  borderRight500: {
-      borderRight: '1px solid #e0e0e0'
-  },
-  messageArea: {
-    overflowY: 'auto'
-  }
-});
+
+}));
 
 const iOSBoxShadow = "0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)";
 
@@ -258,24 +237,6 @@ const StyledBadge = withStyles((theme) => ({
     },
 }))(Badge);
 
-    const chatClient = new StreamChat("gx5a64bj4ptz");
-    const userToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoib2xkLWZsb3dlci0yIn0.vIQ6eZQf7AHozSVvZEq9tX4Y_5BnkneaKfuxDHhTSYw";
-
-    chatClient.connectUser(
-        {
-            id: "old-flower-2",
-            name: "Old flower",
-            image: "https://getstream.io/random_png/?id=old-flower-2&name=Old+flower",
-        },
-        userToken
-    );
-
-    const channel = chatClient.channel("livestream", "spacex", {
-        image: "https://goo.gl/Zefkbx",
-        name: "SpaceX launch discussion",
-    });
-
-
 const Attack = () => {
     const classes = useStyles();
     const [shake, setShake] = useState(false);
@@ -312,7 +273,6 @@ const Attack = () => {
         setOpen(null);
         setPlacement(null);
     };
-
 
     const colorChange = (event) => {};
 
@@ -571,73 +531,9 @@ const Attack = () => {
                                 </Box>
                             </Box>
                         </Box>
-                        <Box border={1} width="30%">
-        <Grid container component={Paper} className={classes.chatSection}>
-            <Grid item xs={3} className={classes.borderRight500}>
-                <List>
-                    <ListItem button key="RemySharp">
-                        <ListItemIcon>
-                            <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
-                        </ListItemIcon>
-                        <ListItemText secondary="online" align="right"></ListItemText>
-                    </ListItem>
-                    <ListItem button key="Alice">
-                        <ListItemIcon>
-                            <Avatar alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
-                        </ListItemIcon>
-                    </ListItem>
-                    <ListItem button key="CindyBaker">
-                        <ListItemIcon>
-                            <Avatar alt="Cindy Baker" src="https://material-ui.com/static/images/avatar/2.jpg" />
-                        </ListItemIcon>
-                    </ListItem>
-                </List>
-            </Grid>
-            <Grid item xs={9}>
-                <List className={classes.messageArea}>
-                    <ListItem key="1">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" primary="Hey man, What's up ?"></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" secondary="09:30"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                    <ListItem key="2">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="left" primary="Hey, Iam Good! What about you ?"></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="left" secondary="09:31"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                    <ListItem key="3">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" primary="Cool. i am good, let's catch up!"></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" secondary="10:30"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                </List>
-                <Divider />
-                <Grid container style={{padding: '20px'}}>
-                    <Grid item xs={10}>
-                        <TextField id="outlined-basic-email" label="Type Something" fullWidth />
-                    </Grid>
-                    <Grid xs={2}>
-                        <Fab color="primary" aria-label="add"><SendIcon /></Fab>
-                    </Grid>
-                </Grid>
-            </Grid>
-        </Grid>
-</Box>
+                        <Box  width="30%">
+                            <Chat />
+                       </Box>
                     </Box>
                 </Grid>
             </Box>
