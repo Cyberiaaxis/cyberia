@@ -30,7 +30,6 @@ import {
 } from "@material-ui/core";
 import ProgressBar from "./ProgressBar";
 import Chat from "./Chat";
-import "stream-chat-react/dist/css/index.css";
 import mafia from "../images/mafia.jpg";
 
 const useStyles = makeStyles((theme) => ({
@@ -269,6 +268,8 @@ const Attack = () => {
     };
 
     const handleClose = (event) => {
+        console.log(event);
+         event.preventDefault();
         setAnchorEl(null);
         setOpen(null);
         setPlacement(null);
@@ -278,34 +279,6 @@ const Attack = () => {
 
     return (
         <>
-            {/* <Popper border={1} open={open} anchorEl={menuref.current} placement={placement} transition autoWidth={true}>
-               <Grid item lg>
-                <Box m={5} width="25%">
-                <Card>
-                    <CardActionArea>
-                        <CardMedia component="img" alt="Contemplative Reptile" height="140" image="../images/mafia.jpg" title="Contemplative Reptile" />
-                        <CardContent>
-                            <Typography gutterBottom variant="h5" component="h2">
-                                Lizard
-                            </Typography>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                                Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica
-                            </Typography>
-                        </CardContent>
-                    </CardActionArea>
-                    <CardActions>
-                        <Button size="small" color="primary">
-                            Share
-                        </Button>
-                        <Button size="small" color="primary">
-                            Learn More
-                        </Button>
-                    </CardActions>
-                </Card>
-
-                </Box>
-               </Grid>
-            </Popper> */}
             <Box className={clsx(classes.root, shake && classes.fire)}>
                 <Grid container alignItems="center">
                     <Grid item xs sm>
@@ -425,23 +398,24 @@ const Attack = () => {
                                 <Box width="75%">
                                     <FormControl variant="filled" className={classes.formControl}>
                                         <InputLabel className={classes.select} id="demo-simple-select-filled-label">
-                                            Secondary Weapon
+                                            Primary Weapon
                                         </InputLabel>
-                                        <Select
-                                            fullWidth="true"
-                                            labelId="demo-simple-select-filled-label"
-                                            id="demo-simple-select-filled"
-                                            value={weapon}
-                                            onChange={handleChange}
-                                            className={classes.select}
-                                            displayEmpty={true}
-                                            fullWidth={true}
-                                        >
-                                            <MenuItem value={1}>fists</MenuItem>
-                                            <MenuItem value={10}>Primary</MenuItem>
-                                            <MenuItem value={20}>Secondary</MenuItem>
-                                            <MenuItem value={30}>Melee</MenuItem>
-                                            <MenuItem value={30}>Armor</MenuItem>
+                                        <Select labelId="demo-simple-select-filled-label" id="demo-simple-select-filled" value={weapon} onChange={handleChange} className={classes.select} displayEmpty={true} autoWidth={true}>
+                                            <MenuItem ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={60}>
+                                                fists
+                                            </MenuItem>
+                                            <MenuItem ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={70}>
+                                                fists
+                                            </MenuItem>
+                                            <MenuItem ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={80}>
+                                                fists
+                                            </MenuItem>
+                                            <MenuItem ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={90}>
+                                                fists
+                                            </MenuItem>
+                                            <MenuItem ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={100}>
+                                                fists
+                                            </MenuItem>
                                         </Select>
                                     </FormControl>
                                 </Box>
@@ -455,24 +429,27 @@ const Attack = () => {
                                 <Box width="75%">
                                     <FormControl variant="filled" className={classes.formControl}>
                                         <InputLabel className={classes.select} id="demo-simple-select-filled-label">
-                                            Armor
+                                            Primary Weapon
                                         </InputLabel>
-                                        <Select labelId="demo-simple-select-filled-label" id="demo-simple-select-filled" value={weapon} onChange={handleChange} className={classes.select} displayEmpty={true} fullWidth={true}>
-                                            <MenuItem value={1}>
-                                                <Box display="flex">
-                                                    <Box width="50%" flexGrow={1}>
-                                                        fists
-                                                    </Box>
-                                                    <Box width="50%">
-                                                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                                                    </Box>
-                                                </Box>
+                                        <Select labelId="demo-simple-select-filled-label" id="demo-simple-select-filled" value={weapon} onChange={handleChange} className={classes.select} displayEmpty={true} autoWidth={true}>
+                                            <MenuItem ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={102}>
+                                                fists
                                             </MenuItem>
-                                            <MenuItem value={1}>fists</MenuItem>
-                                            <MenuItem value={1}>fists</MenuItem>
-                                            <MenuItem value={1}>Primary Weapon</MenuItem>
+                                            <MenuItem ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={103}>
+                                                fists
+                                            </MenuItem>
+                                            <MenuItem ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={104}>
+                                                fists
+                                            </MenuItem>
+                                            <MenuItem ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={105}>
+                                                fists
+                                            </MenuItem>
+                                            <MenuItem ref={menuref} onMouseEnter={handleOpen("right-start")} onMouseLeave={handleClose} value={106}>
+                                                fists
+                                            </MenuItem>
                                         </Select>
                                     </FormControl>
+
                                 </Box>
                                 <Box width="25%" padding={1}>
                                     <Button variant="contained" color="primary" onClick={animate} className={classes.primaryHitButton}>
@@ -503,7 +480,6 @@ const Attack = () => {
                                     </CardActions>
                                 </Card>
                             </Box>
-                            ;
                         </Box>
                         <Box border={1} width="40%" padding={3}>
                             <Box display="flex" alignItems="center">

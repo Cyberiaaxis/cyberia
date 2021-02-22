@@ -31,7 +31,7 @@ export default function LoginForm() {
                 <div className="form-group">
                     <div className="input-group">
                         <span className="form-addon"><FontAwesomeIcon icon={faUser} color='#63102f' size="xs" /></span>
-                        <input type="email" placeholder='Username' className='form-control' name='email' ref={register({ required: true })} />
+                        <input type="email" placeholder='Username'  ref={register({ required: true })} />
                     </div>
                     {errors.email && <span>This field is required</span>}
                 </div>

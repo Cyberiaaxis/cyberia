@@ -5,6 +5,7 @@ import App from './components/App';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Attack from './components/Attack';
+import Chat from './components/Chat';
 import './styles/style.css';
 import './styles/index.scss';
 import './styles/responsive.scss';
@@ -33,6 +34,7 @@ ReactDOM.render(
       <Route path="/attack">
         <Attack />
       </Route>
+      <Route path="/chat" component={Chat} />
     </Switch>
   </Router>,
   document.getElementById('root')
